@@ -44,6 +44,7 @@ class AppColors {
   static const Color progressBarSecondaryColor = Color(0xFFDAE7E9);
 
   static const Color redColor = Color(0xFFDD2323);
+  static const Color textBlueColor = Color(0xFF00059F);
 
 
   static const Color prColor = Color(0xFF14D731);

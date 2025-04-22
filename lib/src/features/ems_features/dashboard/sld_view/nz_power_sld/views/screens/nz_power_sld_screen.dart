@@ -330,68 +330,75 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
 
     return Scaffold(
         backgroundColor: Colors.white,
-        body: LayoutBuilder(
-            builder: (context, constraints) {
-              // Calculate content dimensions
-              double minX = _getMinX();
-              double minY = _getMinY();
-              double contentWidth = _getMaxX() - minX;
-              double contentHeight = _getMaxY() - minY;
+        appBar: AppBar(title: Text("Electricity"),),
+        body: SizedBox(
+          height: MediaQuery.sizeOf(context).height * 0.77,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: LayoutBuilder(
+                builder: (context, constraints) {
+                  // Calculate content dimensions
+                  double minX = _getMinX();
+                  double minY = _getMinY();
+                  double contentWidth = _getMaxX() - minX;
+                  double contentHeight = _getMaxY() - minY;
 
-              // Calculate scale to fit screen
-              double scaleX = constraints.maxWidth / contentWidth;
-              double scaleY = constraints.maxHeight / contentHeight;
-              double scale = min(scaleX, scaleY) * 1;
+                  // Calculate scale to fit screen
+                  double scaleX = constraints.maxWidth / contentWidth;
+                  double scaleY = constraints.maxHeight / contentHeight;
+                  double scale = min(scaleX, scaleY) * 1;
 
 
-              debugPrint("--scale---> $scale");
+                  debugPrint("--scale---> $scale");
 
-              return PhotoViewGallery.builder(
-                itemCount: 1,
-                builder: (context, index) {
-                  return PhotoViewGalleryPageOptions.customChild(
-                    childSize: Size(contentWidth * scale, contentHeight * scale),
-                    minScale: PhotoViewComputedScale.contained * 0.2,
-                    maxScale: PhotoViewComputedScale.contained * 8.0,
-                    initialScale: PhotoViewComputedScale.contained,
-                    basePosition: Alignment.center,
-                    child: Center(
-                      child: SizedBox(
-                        width: contentWidth * scale,
-                        height: contentHeight * scale,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
+                  return PhotoViewGallery.builder(
+                    itemCount: 1,
+                    builder: (context, index) {
+                      return PhotoViewGalleryPageOptions.customChild(
+                        childSize: Size(contentWidth * scale, contentHeight * scale),
+                        minScale: PhotoViewComputedScale.contained * 0.2,
+                        maxScale: PhotoViewComputedScale.contained * 8.0,
+                        initialScale: PhotoViewComputedScale.contained,
+                        basePosition: Alignment.center,
+                        child: Center(
                           child: SizedBox(
-                            width: contentWidth,
-                            height: contentHeight,
-                            child: Stack(
-                              children: [
-                                CustomPaint(
-                                  size: Size(contentWidth, contentHeight),
-                                  painter: AnimatedLinePainter(
-                                    viewPageData: _viewPageData,
-                                    liveData: _liveData,
-                                    minX: minX,
-                                    minY: minY,
-                                    animation: _controller.view,
-                                  ),
+                            width: contentWidth * scale,
+                            height: contentHeight * scale,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: SizedBox(
+                                width: contentWidth,
+                                height: contentHeight,
+                                child: Stack(
+                                  children: [
+                                    CustomPaint(
+                                      size: Size(contentWidth, contentHeight),
+                                      painter: AnimatedLinePainter(
+                                        viewPageData: _viewPageData,
+                                        liveData: _liveData,
+                                        minX: minX,
+                                        minY: minY,
+                                        animation: _controller.view,
+                                      ),
+                                    ),
+                                    ..._buildWidgets(minX, minY),
+                                    ..._buildPFWidgets(minX, minY),
+                                  ],
                                 ),
-                                ..._buildWidgets(minX, minY),
-                                ..._buildPFWidgets(minX, minY),
-                              ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
+                    scrollDirection: Axis.horizontal,
+                    backgroundDecoration: const BoxDecoration(color: Colors.white),
+                    gaplessPlayback: true,
                   );
                 },
-                scrollDirection: Axis.horizontal,
-                backgroundDecoration: const BoxDecoration(color: Colors.white),
-                gaplessPlayback: true,
-              );
-            },
-            ),
+                ),
+          ),
+        ),
         );
     }
 

@@ -156,6 +156,7 @@ class _EnergyManagementSystemState extends State<EnergyManagementSystem> {
       home: const  SplashScreen(),
 
 
+
     );
   }
 

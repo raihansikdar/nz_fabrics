@@ -24,6 +24,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/controller/live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/controller/lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/views/screens/nz_power_sld_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/sld_tab_view/sld_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/load_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
@@ -405,8 +406,6 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                       Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
                                                                                     });
 
-
-
                                                                                   },
                                                                                   child: Container(
                                                                                     height: size.height * 0.050,
@@ -551,7 +550,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
                                                                       SizedBox(
                                                                           height: size.height * 0.77,
-                                                                          child: const NZPowerSldScreen(),
+                                                                        //  child: const NZPowerSldScreen(),
+                                                                          child: const SldTabViewScreen(),
                                                                       ) : SizedBox(
                                                                             height: /*size.height * 0.78*/ size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.95,
                                                                             /*decoration: BoxDecoration(
