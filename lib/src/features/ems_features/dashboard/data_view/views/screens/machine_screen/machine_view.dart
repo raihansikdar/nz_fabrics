@@ -54,7 +54,7 @@ class _MachineViewState extends State<MachineView> {
                 //      height: 580,
                 //      child: const MachineDataPage()) ,
                  SizedBox(
-                     height:  size.width > 500 ? (controllerExitOrNot.buttonList.isEmpty ? size.height * 0.72 :  size.height * 0.66 ) : size.height * 0.808,
+                     height:  size.width > 500 ? (controllerExitOrNot.buttonList.isEmpty ? size.height * 0.72 :  size.height * 0.66 ) : size.height * 0.77,
                      child:  CombinedMachineScreen()),
                // SizedBox(
                //     height: 300,

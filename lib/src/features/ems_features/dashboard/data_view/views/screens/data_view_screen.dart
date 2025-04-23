@@ -3,7 +3,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/control
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/controllers/data_view_ui_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/details_screen/details_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/machine_view.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/new_machine_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/shed_screen/shed_views.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -48,7 +47,7 @@ class _DataViewScreenState extends State<DataViewScreen> with SingleTickerProvid
                   Padding(
                     padding: EdgeInsets.only(top: size.height * 0.035,left: size.height * k8TextSize,right:size.height * k8TextSize ),
                     child: Container(
-                      height: MediaQuery.sizeOf(context).width > 500 ? controllerExitOrNot.buttonList.isEmpty ? MediaQuery.sizeOf(context).height * 0.79 : MediaQuery.sizeOf(context).height * 0.72 : MediaQuery.sizeOf(context).height * 0.91,
+                      height: MediaQuery.sizeOf(context).width > 500 ? controllerExitOrNot.buttonList.isEmpty ? MediaQuery.sizeOf(context).height * 0.75 : MediaQuery.sizeOf(context).height * 0.72 : MediaQuery.sizeOf(context).height * 0.83,
                       decoration: BoxDecoration(
                         border: Border.all(color: AppColors.containerBorderColor),
                         borderRadius: BorderRadius.only(

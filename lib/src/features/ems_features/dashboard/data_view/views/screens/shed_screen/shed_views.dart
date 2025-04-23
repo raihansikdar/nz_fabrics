@@ -43,7 +43,7 @@ class ShedView extends StatelessWidget {
               //     child: /*ShedWiseTodayScreen()*/ ShedDataPage()
               //     ) :
                    SizedBox(
-                  height:size.width > 500 ? size.height * 0.66 : size.height * 0.808,
+                  height:size.width > 500 ? size.height * 0.66 : size.height * 0.77,
                   child:  ShedWiseCustomScreen()),
 
 

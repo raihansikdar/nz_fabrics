@@ -16,6 +16,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/control
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/search_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/tab_bar_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/controller/machine_view_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/data_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/data_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/views/widgets/navigation_drawer_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/new_machine_screen.dart';
@@ -557,7 +558,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                           borderRadius: BorderRadius.circular(size.height * k16TextSize),
                                                                           border: Border.all(color: AppColors.containerBorderColor, width: 1.0)),*/
 
-                                                                            child: const DataViewScreen()) ,
+                                                                            child: const /*DataViewScreen*/ DataTabViewScreen()) ,
                                                                       ],
                                                                     );
                                                                   }
