@@ -2207,7 +2207,7 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: SizedBox(
-                height: 70,
+                height: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

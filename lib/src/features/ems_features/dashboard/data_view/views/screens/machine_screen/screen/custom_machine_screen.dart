@@ -4181,7 +4181,7 @@ class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8, top: 16.0),
+              padding: const EdgeInsets.only(left: 8.0, right: 8, top: 0.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
