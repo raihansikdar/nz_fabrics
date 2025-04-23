@@ -26,7 +26,7 @@ class SldTabViewScreen extends StatelessWidget {
                 children: [
                   const ElectricityShortSldScreen(),
                   const WaterShortSldScreen(),
-                      SteamShortSldScreen(),
+                  const SteamShortSldScreen(),
                 ],
               ),
             ),

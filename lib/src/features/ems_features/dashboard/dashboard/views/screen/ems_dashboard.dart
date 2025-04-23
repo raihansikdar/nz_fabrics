@@ -60,7 +60,7 @@ class EmsDashboardScreen extends StatefulWidget {
 
 class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerProviderStateMixin {
 
-  late final TabController _tabController;
+  //late final TabController _tabController;
   late final ScrollController _scrollController;
   TextEditingController searchTEController = TextEditingController();
 
@@ -71,7 +71,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
   void initState() {
     super.initState();
 
-    _tabController = TabController(length: 4, vsync: this);
+    //_tabController = TabController(length: 4, vsync: this);
     _scrollController = ScrollController();
 
     // _notificationService = NotificationService();
@@ -99,7 +99,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
   @override
   void dispose() {
-    _tabController.dispose();
+    //_tabController.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -465,7 +465,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                           ),),
 
 
-                                                                        dashBoardRadioButtonController.selectedValue == 1 ?      Padding(
+                                                                        dashBoardRadioButtonController.selectedValue == 1 ?      /*Padding(
                                                                           padding: EdgeInsets.symmetric(horizontal: size.height * k14TextSize),
                                                                           child: TabBar(
                                                                             controller: controller.tabController,
@@ -488,7 +488,34 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                               radius: size.height * k20TextSize,
                                                                             ),
                                                                           ),
-                                                                        ): const SizedBox(),
+                                                                        )*/ SizedBox(
+                                                                            height:size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.83,
+                                                                            child: DefaultTabController(
+                                                                                length: 3,
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    // TabBar in the body
+                                                                                    const TabBar(
+                                                                                      tabs: [
+                                                                                        Tab(text: 'Electricity'),
+                                                                                        Tab(text: 'Water'),
+                                                                                        Tab(text: 'Steam'),
+                                                                                      ],
+                                                                                    ),
+                                                                                    // TabBarView takes the remaining space
+                                                                                    Expanded(
+                                                                                      child: TabBarView(
+                                                                                        children: [
+                                                                                          const PowerSummaryChartScreen(),
+                                                                                           const WaterSummaryChartScreen(),
+                                                                                          const PowerSummaryChartScreen(),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ],
+                                                                                )
+
+                                                                            ))/*: const SizedBox(),
 
                                                                         dashBoardRadioButtonController.selectedValue == 1 ?      Expanded(
                                                                           child: TabBarView(
@@ -501,41 +528,12 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                     builder: (radioController) {
                                                                                       switch (tabName.toLowerCase()) {
                                                                                         case 'electricity':
-                                                                                        // /*------------- Start Api in Electricity---------------*/
-                                                                                        //   Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-                                                                                        //   Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
-                                                                                        //   Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
-                                                                                        //   Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
-                                                                                        //
-                                                                                        //
-                                                                                        //   /*------------- Stop Api in Electricity ---------------*/
-                                                                                        //   Get.find<SourceWaterController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<LoadWaterController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<LtProductionVsCapacityController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<LiveAllNodePowerController>().stopApiCallOnScreenChange();
-
                                                                                           return  const PowerSummaryChartScreen();
 
-                                                                                      // case 'n.gas':
-                                                                                      //   return radioController.selectedValue == 1
-                                                                                      //       ? const /*NaturalGasSummaryChartScreen()*/ SizedBox()
-                                                                                      //       : const /*NaturalGasSLDScreen()*/ SizedBox();
                                                                                         case 'water':
-                                                                                        // /*------------- Start Api in Water ---------------*/
-                                                                                        //   Get.find<SourceWaterController>().startApiCallOnScreenChange();
-                                                                                        //   Get.find<LoadWaterController>().startApiCallOnScreenChange();
-                                                                                        //   Get.find<PieChartWaterSourceController>().startApiCallOnScreenChange();
-                                                                                        //   Get.find<PieChartWaterLoadController>().startApiCallOnScreenChange();
-                                                                                        //   /*------------- Stop Api in Water ---------------*/
-                                                                                        //   Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
-                                                                                        //   Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
-                                                                                          return /*radioController.selectedValue == 1? */
-                                                                                            const WaterSummaryChartScreen();
-                                                                                      /* : const *//*WaterSLDScreen()*//* SizedBox();*/
+
+                                                                                          return const WaterSummaryChartScreen();
+
                                                                                         default:
                                                                                           return const Center(child: Text("No information available"));
                                                                                       }
@@ -545,7 +543,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                               );
                                                                             }).toList(),
                                                                           ),
-                                                                        ) : dashBoardRadioButtonController.selectedValue == 2 ?
+                                                                        )*/ : dashBoardRadioButtonController.selectedValue == 2 ?
 
 
                                                                       SizedBox(
