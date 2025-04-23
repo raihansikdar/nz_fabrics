@@ -549,7 +549,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
 
                                                                       SizedBox(
-                                                                          height: size.height * 0.77,
+                                                                          height:size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.82,
                                                                         //  child: const NZPowerSldScreen(),
                                                                           child: const SldTabViewScreen(),
                                                                       ) : SizedBox(
