@@ -5,8 +5,8 @@ import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/views/screens/nz_power_sld_screen.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 
-class ElectricityShortSldScreen extends StatelessWidget {
-  const ElectricityShortSldScreen({super.key});
+class WaterShortSldScreen extends StatelessWidget {
+  const WaterShortSldScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +28,13 @@ class ElectricityShortSldScreen extends StatelessWidget {
                   color: AppColors.textBlueColor,
                   borderRadius: BorderRadius.circular(8),
                   child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextComponent(text: "See Full SLD",color: AppColors.textBlueColor,),
-                  SizedBox(width: 5,),
-                  Icon(Icons.login_outlined,color: AppColors.textBlueColor,)
-                ],
-              )),
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextComponent(text: "See Full SLD",color: AppColors.textBlueColor,),
+                      SizedBox(width: 5,),
+                      Icon(Icons.login_outlined,color: AppColors.textBlueColor,)
+                    ],
+                  )),
             ),
           )
         ],
