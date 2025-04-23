@@ -1730,9 +1730,11 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
   Future<void> fetchShedData() async {
     if (startDate == null || endDate == null) return;
 
-    setState(() {
-      isLoadingHierarchical = true;
-    });
+   if(mounted){
+     setState(() {
+       isLoadingHierarchical = true;
+     });
+   }
 
     final url = Uri.parse('${Urls.baseUrl}/api/filter-shedwise-date-view/');
     final response = await http.post(
@@ -1798,17 +1800,21 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
         }
       });
 
-      setState(() {
-        allRows = rows;
-        isLoadingHierarchical = false;
-      });
+     if(mounted){
+       setState(() {
+         allRows = rows;
+         isLoadingHierarchical = false;
+       });
+     }
 
       await _fetchInitialNodeData(rows);
     } else {
       log('Failed to load shed data: ${response.statusCode}');
+    if(mounted){
       setState(() {
         isLoadingHierarchical = false;
       });
+    }
     }
   }
 
@@ -1855,10 +1861,12 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
 
         _updateNodeValues(nodeName, nodeData);
 
-        setState(() {
-          selectedNodeData = nodeData;
-          isLoadingNodeData = false;
-        });
+        if(mounted){
+          setState(() {
+            selectedNodeData = nodeData;
+            isLoadingNodeData = false;
+          });
+        }
       } else {
         log('Failed to load node data: ${response.statusCode}');
         if (mounted) {
@@ -1918,9 +1926,11 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
   Future<void> fetchPerDayShedData() async {
     if (startDate == null || endDate == null) return;
 
-    setState(() {
-      isLoadingPerDay = true;
-    });
+   if(mounted){
+     setState(() {
+       isLoadingPerDay = true;
+     });
+   }
 
     try {
       final response = await http.post(
@@ -1953,10 +1963,12 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
             }
           });
 
-          setState(() {
-            perDayData = formattedData;
-            isLoadingPerDay = false;
-          });
+          if(mounted){
+            setState(() {
+              perDayData = formattedData;
+              isLoadingPerDay = false;
+            });
+          }
         } else {
           throw Exception('Empty response received');
         }
@@ -1965,13 +1977,15 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
       }
     } catch (e) {
       log('Error: $e');
-      setState(() {
-        perDayData = [];
-        if (shedNames.isEmpty) {
-          shedNames = ['No sheds available'];
-        }
-        isLoadingPerDay = false;
-      });
+      if(mounted){
+        setState(() {
+          perDayData = [];
+          if (shedNames.isEmpty) {
+            shedNames = ['No sheds available'];
+          }
+          isLoadingPerDay = false;
+        });
+      }
     }
   }
 
@@ -2191,7 +2205,9 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
       onNodeSelected: _onNodeSelected,
       selectedNodeName: selectedNodeName,
       onRowCountChanged: () {
-        setState(() {}); // Rebuild UI when row count changes
+        if(mounted){
+          setState(() {});
+        }
       },
     );
     final dateFormat = DateFormat('yyyy-MM-dd');

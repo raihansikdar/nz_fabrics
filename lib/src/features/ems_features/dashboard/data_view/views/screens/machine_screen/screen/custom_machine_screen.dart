@@ -3794,9 +3794,11 @@ class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
     };
 
     try {
-      setState(() {
-        _isLoadingTable1 = true;
-      });
+     if(mounted){
+       setState(() {
+         _isLoadingTable1 = true;
+       });
+     }
 
       final responses = await Future.wait([
         http.post(
@@ -3838,19 +3840,23 @@ class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
           }
         });
 
-        setState(() {
-          _dataGridRows = _buildDataGridRows();
-          _filteredRows = _dataGridRows;
-        });
+       if(mounted){
+         setState(() {
+           _dataGridRows = _buildDataGridRows();
+           _filteredRows = _dataGridRows;
+         });
+       }
       } else {
         throw Exception('Failed to fetch Table 1 data: ${responses[0].statusCode}, ${responses[1].statusCode}');
       }
     } catch (e) {
       log('Table 1 Error: $e');
     } finally {
-      setState(() {
-        _isLoadingTable1 = false;
-      });
+     if(mounted){
+       setState(() {
+         _isLoadingTable1 = false;
+       });
+     }
     }
   }
 
@@ -3891,9 +3897,11 @@ class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
     }
 
     try {
-      setState(() {
-        _isLoadingTable2 = true;
-      });
+     if(mounted){
+       setState(() {
+         _isLoadingTable2 = true;
+       });
+     }
 
       final response = await http.post(
         Uri.parse('${Urls.baseUrl}/api/filter-perday-machine-view-data/'),
@@ -3915,37 +3923,47 @@ class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
         log('Table 2 JSON Response Keys: ${jsonResponse.keys.toList()}');
 
         if (jsonResponse.isNotEmpty) {
-          setState(() {
-            machineNames = jsonResponse.keys.toList();
-          });
+         if(mounted){
+           setState(() {
+             machineNames = jsonResponse.keys.toList();
+           });
+         }
           log('Table 2 Machine Names: $machineNames');
           List<FormattedMachineData> formattedData = _formatData(jsonResponse);
           log('Table 2 Formatted Data Length: ${formattedData.length}');
-          setState(() {
-            dataFuture = Future.value(formattedData);
-          });
+         if(mounted){
+           setState(() {
+             dataFuture = Future.value(formattedData);
+           });
+         }
         } else {
           log('Table 2: Empty response');
-          setState(() {
-            dataFuture = Future.value([]);
-            machineNames = ['No machines available'];
-          });
+         if(mounted){
+           setState(() {
+             dataFuture = Future.value([]);
+             machineNames = ['No machines available'];
+           });
+         }
         }
       } else {
         throw Exception('Failed to load Table 2 data: ${response.statusCode}');
       }
     } catch (e) {
       log('Table 2 Error: $e');
-      setState(() {
-        dataFuture = Future.error(e);
-        if (machineNames.isEmpty) {
-          machineNames = ['No machines available'];
-        }
-      });
+      if(mounted){
+        setState(() {
+          dataFuture = Future.error(e);
+          if (machineNames.isEmpty) {
+            machineNames = ['No machines available'];
+          }
+        });
+      }
     } finally {
-      setState(() {
-        _isLoadingTable2 = false;
-      });
+      if(mounted){
+        setState(() {
+          _isLoadingTable2 = false;
+        });
+      }
     }
   }
 
