@@ -26,7 +26,7 @@ class DataTabViewScreen extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
-                //  const ElectricityShortSldScreen(),
+                  const ElectricityShortSldScreen(),
                   DataViewScreen(),
                   const SteamShortSldScreen(),
                   const SteamShortSldScreen(),
