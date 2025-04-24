@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/views/screens/nz_power_sld_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/screens/electricity_long_sld_screen.dart';
 
 class SldViewScreen extends StatefulWidget {
   const SldViewScreen({super.key});
@@ -23,7 +23,7 @@ class _SldViewScreenState extends State<SldViewScreen> {
             height: size.height * .68,
             width: size.width,
             //child:  const PowerSLDScreen(),
-            child: NZPowerSldScreen(),
+            child: ElectricityLongSldScreen(),
           ),
         )
       ),

@@ -41,12 +41,12 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/c
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/controller/acknowledge_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/daily_machine_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/shed_screen/controller/shed_view_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/get_all_info_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/live_all_node_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/live_pf_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/lt_production_vs_capacity_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/main_bus_bar_true_controller/filter_bus_bar_energy_cost_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/views/screens/nz_power_sld_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_pf_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_main_bus_bar_true_controller/electricity_long_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/screens/electricity_long_sld_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/load_natural_gas_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/pie_chart_natural_gas_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/pie_chart_natural_gas_source_controller.dart';
@@ -346,12 +346,12 @@ class StateHolderBinders extends Bindings{
 
 
      /* ->>--------------------------> SLD <---------------------------<<- */
-     Get.put(LtProductionVsCapacityController());
-     Get.put(LiveAllNodePowerController());
-     Get.put(LivePfDataController());
-     Get.put(GetAllInfoController());
+     Get.put(ElectricityLongSLDLtProductionVsCapacityController());
+     Get.put(ElectricityLongSLDLiveAllNodePowerController());
+     Get.put(ElectricityLongSldLivePfDataController());
+     Get.put(ElectricityLongSLDAllInfoController());
      Get.put(GetAllInfoControllers());
-     Get.put(FilterBusBarEnergyCostController());
+     Get.put(ElectricityLongSLDFilterBusBarEnergyCostController());
 
 
      Get.put(LayoutPositionController());

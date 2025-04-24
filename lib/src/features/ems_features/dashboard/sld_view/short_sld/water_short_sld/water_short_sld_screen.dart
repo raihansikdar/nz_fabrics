@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/views/screens/nz_power_sld_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/screens/electricity_long_sld_screen.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 
 class WaterShortSldScreen extends StatelessWidget {
@@ -30,7 +30,7 @@ class WaterShortSldScreen extends StatelessWidget {
             ),
           ),
           onPressed: (){
-            Get.to(()=>NZPowerSldScreen());
+            Get.to(()=>ElectricityLongSldScreen());
           },child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

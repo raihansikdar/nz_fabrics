@@ -17,9 +17,9 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/control
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/tab_bar_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/data_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/views/widgets/navigation_drawer_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/get_all_info_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/live_all_node_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/sld_tab_view/sld_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/load_power_controller.dart';
@@ -83,7 +83,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
       Get.find<AllNotificationController>().fetchNotificationData();
       Get.find<LoadPowerController>().fetchLoadPowerData();
 
-      Get.find<GetAllInfoController>().fetchSourcePowerData();
+      Get.find<ElectricityLongSLDAllInfoController>().fetchSourcePowerData();
 
 
 
@@ -305,8 +305,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                             Get.find<LoadWaterController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
-                            Get.find<LtProductionVsCapacityController>().stopApiCallOnScreenChange();
-                            Get.find<LiveAllNodePowerController>().stopApiCallOnScreenChange();
+                            Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
+                            Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                           });
                         }else if(pieChartPowerSourceController.pageState == PageState.noInternet){
                           return NoInternetPage(onRetry: () {
@@ -329,8 +329,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                             Get.find<LoadWaterController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
-                            Get.find<LtProductionVsCapacityController>().stopApiCallOnScreenChange();
-                            Get.find<LiveAllNodePowerController>().stopApiCallOnScreenChange();
+                            Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
+                            Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                   
                           },);
                         }
