@@ -13,31 +13,34 @@ class ElectricityShortSldScreen extends StatelessWidget {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: AppColors.whiteTextColor,
-      body: Stack(
+      body: Column(
         children: [
-          Positioned(
-            right: 5,
-            bottom: 5,
-            child: GestureDetector(
-              onTap: (){
-                Get.to(()=>NZPowerSldScreen());
-              },
-              child: CustomContainer(
-                  height: size.height* 0.05,
-                  width: size.width * 0.35,
-                  color: AppColors.textBlueColor,
-                  borderRadius: BorderRadius.circular(8),
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextComponent(text: "See Full SLD",color: AppColors.textBlueColor,),
-                  SizedBox(width: 5,),
-                  Icon(Icons.login_outlined,color: AppColors.textBlueColor,)
-                ],
-              )),
-            ),
-          )
+
         ],
+      ),
+      floatingActionButton: SizedBox(
+          height: 40,
+          width: 155,
+          child: FloatingActionButton.large(
+            backgroundColor: AppColors.whiteTextColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                color: AppColors.textBlueColor, // Border color
+                width: 1, // Border width
+              ),
+            ),
+            onPressed: (){
+            Get.to(()=>NZPowerSldScreen());
+          },child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextComponent(text: "See Full SLD",color: AppColors.textBlueColor,),
+              SizedBox(width: 5,),
+              Icon(Icons.login_outlined,color: AppColors.textBlueColor,size: 25,)
+            ],
+            ),
+          ),
       ),
     );
   }
