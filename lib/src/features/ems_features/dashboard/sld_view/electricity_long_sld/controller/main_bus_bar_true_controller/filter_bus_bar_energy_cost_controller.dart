@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:nz_fabrics/src/common_widgets/flutter_smart_download_widget/flutter_smart_download_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/model/main_bus_bar_true_model/filter_bus_bar_const_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/model/main_bus_bar_true_model/filter_bus_bar_const_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';

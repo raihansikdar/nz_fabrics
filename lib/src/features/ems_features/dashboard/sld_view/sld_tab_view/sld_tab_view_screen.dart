@@ -15,7 +15,7 @@ class SldTabViewScreen extends StatelessWidget {
             // TabBar in the body
             const TabBar(
               tabs: [
-                Tab(text: 'Electricity'),
+                Tab(text: 'Electricity',),
                 Tab(text: 'Water'),
                 Tab(text: 'Steam'),
               ],

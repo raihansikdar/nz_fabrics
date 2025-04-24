@@ -2,8 +2,8 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/model/view_page_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/views/screens/nz_power_sld_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/model/view_page_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/views/screens/nz_power_sld_screen.dart';
 
 class AnimatedLinePainter extends CustomPainter {
   final List<ViewPageModel> viewPageData;

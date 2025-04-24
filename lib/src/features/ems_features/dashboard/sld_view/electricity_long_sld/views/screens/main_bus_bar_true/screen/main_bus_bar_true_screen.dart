@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/controller/main_bus_bar_true_controller/filter_bus_bar_energy_cost_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/views/screens/main_bus_bar_true/widget/date_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/views/screens/main_bus_bar_true/widget/filter_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/controller/main_bus_bar_true_controller/filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/views/screens/main_bus_bar_true/widget/date_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/views/screens/main_bus_bar_true/widget/filter_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 

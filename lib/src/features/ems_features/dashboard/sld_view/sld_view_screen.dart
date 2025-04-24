@@ -1,5 +1,5 @@
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/nz_power_sld/views/screens/nz_power_sld_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/electricity_long_sld/views/screens/nz_power_sld_screen.dart';
 
 class SldViewScreen extends StatefulWidget {
   const SldViewScreen({super.key});
@@ -9,11 +9,7 @@ class SldViewScreen extends StatefulWidget {
 
 class _SldViewScreenState extends State<SldViewScreen> {
 
-  @override
-  void initState() {
-    super.initState();
 
-  }
 
   @override
   Widget build(BuildContext context) {
