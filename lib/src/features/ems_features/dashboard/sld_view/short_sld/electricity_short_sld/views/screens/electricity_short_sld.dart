@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
@@ -10,6 +11,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/loop_and_bus_cupler_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/view_page_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/screens/electricity_long_sld_main_bus_bar_true/screen/electricity_long_sld_main_bus_bar_true_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/screens/electricity_long_sld_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/bus_couplar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/line_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/main_bus_bar_2.dart';
@@ -42,14 +44,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
-class WaterLongSldScreen extends StatefulWidget {
-  const WaterLongSldScreen({super.key});
+class ElectricityShortSld extends StatefulWidget {
+  const ElectricityShortSld({super.key});
 
   @override
-  State<WaterLongSldScreen> createState() => _WaterLongSldScreenState();
+  State<ElectricityShortSld> createState() => _ElectricityShortSldState();
 }
 
-class _WaterLongSldScreenState extends State<WaterLongSldScreen>
+class _ElectricityShortSldState extends State<ElectricityShortSld>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   List<ViewPageModel> _viewPageData = [];
   Map<dynamic, LiveDataModel> _liveData = {};
@@ -201,7 +203,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
     if (!mounted) return;
     try {
       final response = await http.get(
-        Uri.parse(Urls.longWateryUrl),
+        Uri.parse(Urls.shortElectricityUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
 
@@ -332,7 +334,6 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBarWidget(text: "Water SLD", backPreviousScreen: true),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: LayoutBuilder(

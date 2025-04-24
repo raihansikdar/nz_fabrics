@@ -12,7 +12,7 @@ import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
-class ElectricityLongSLDLiveAllNodePowerController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
+class WaterShortSLDLiveAllNodePowerController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
 
 
   bool _isConnected = true;
@@ -106,24 +106,24 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController with I
   }
 
   void stopApiCallOnScreenChange() {
-    if (Get.isRegistered<ElectricityLongSLDLiveAllNodePowerController>()) {
-      final controller = Get.find<ElectricityLongSLDLiveAllNodePowerController>();
+    if (Get.isRegistered<WaterShortSLDLiveAllNodePowerController>()) {
+      final controller = Get.find<WaterShortSLDLiveAllNodePowerController>();
       controller._stopPeriodicApiCall();
       log("LiveAllNodePowerController Stop Api Call");
     }
   }
 
   void startApiCallOnScreenChange() {
-    if (!Get.isRegistered<ElectricityLongSLDLiveAllNodePowerController>()) {
-      final controller = Get.put(ElectricityLongSLDLiveAllNodePowerController());
+    if (!Get.isRegistered<WaterShortSLDLiveAllNodePowerController>()) {
+      final controller = Get.put(WaterShortSLDLiveAllNodePowerController());
       controller._startPeriodicApiCall();
     } else {
-      final controller = Get.find<ElectricityLongSLDLiveAllNodePowerController>();
+      final controller = Get.find<WaterShortSLDLiveAllNodePowerController>();
       controller._startPeriodicApiCall();
       log("LiveAllNodePowerController Start Api Call");
     }
     _isStopApiCall = false;
-    //update();
+    update();
 
   }
 

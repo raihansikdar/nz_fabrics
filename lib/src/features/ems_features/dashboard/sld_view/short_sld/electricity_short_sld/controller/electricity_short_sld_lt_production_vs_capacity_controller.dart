@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/live_all_node_power_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/lt_production_vs_capacity_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -12,18 +12,19 @@ import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
-class ElectricityLongSLDLiveAllNodePowerController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
+
+class ElectricityShortSLDLtProductionVsCapacityController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
 
 
   bool _isConnected = true;
-  bool _isLiveAllNodePowerInProgress = false;
+  bool _isLtProductionVsCapacityInProgress = false;
   String _errorMessage = '';
-  List<LiveAllNodePowerModel>  _liveAllNodePowerModel = [];
+  LTProductionVsCapacityModel  _ltProductionVsCapacityModel = LTProductionVsCapacityModel ();
 
   bool get isConnected => _isConnected;
-  bool get isLiveAllNodePowerInProgress => _isLiveAllNodePowerInProgress;
+  bool get isLtProductionVsCapacityInProgress => _isLtProductionVsCapacityInProgress;
   String get errorMessage => _errorMessage;
-  List<LiveAllNodePowerModel>  get liveAllNodePowerModel => _liveAllNodePowerModel;
+  LTProductionVsCapacityModel  get ltProductionVsCapacityModel => _ltProductionVsCapacityModel;
 
 
 
@@ -34,16 +35,15 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController with I
   @override
   void onInit() {
     super.onInit();
-
     WidgetsBinding.instance.addObserver(this);
-
     ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
       if (token != null) {
-        fetchLiveAllNodePower();
-       // _startPeriodicApiCall();
-      } /*else {
-        _stopPeriodicApiCall();
-      }*/
+        fetchProductVsCapacityData();
+        //_startPeriodicApiCall();
+       }
+      //else {
+      //   _stopPeriodicApiCall();
+      // }
     });
   }
 
@@ -74,7 +74,7 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController with I
   void _startPeriodicApiCall() {
     _stopPeriodicApiCall();
     _timer = Timer.periodic(const Duration(seconds: kTimer), (timer) {
-      fetchLiveAllNodePower();
+      fetchProductVsCapacityData();
     });
   }
 
@@ -106,58 +106,59 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController with I
   }
 
   void stopApiCallOnScreenChange() {
-    if (Get.isRegistered<ElectricityLongSLDLiveAllNodePowerController>()) {
-      final controller = Get.find<ElectricityLongSLDLiveAllNodePowerController>();
+    if (Get.isRegistered<ElectricityShortSLDLtProductionVsCapacityController>()) {
+      final controller = Get.find<ElectricityShortSLDLtProductionVsCapacityController>();
       controller._stopPeriodicApiCall();
-      log("LiveAllNodePowerController Stop Api Call");
+      log("LtProductionVsCapacityController Stop Api Call");
     }
   }
 
   void startApiCallOnScreenChange() {
-    if (!Get.isRegistered<ElectricityLongSLDLiveAllNodePowerController>()) {
-      final controller = Get.put(ElectricityLongSLDLiveAllNodePowerController());
+    if (!Get.isRegistered<ElectricityShortSLDLtProductionVsCapacityController>()) {
+      final controller = Get.put(ElectricityShortSLDLtProductionVsCapacityController());
       controller._startPeriodicApiCall();
     } else {
-      final controller = Get.find<ElectricityLongSLDLiveAllNodePowerController>();
+      final controller = Get.find<ElectricityShortSLDLtProductionVsCapacityController>();
       controller._startPeriodicApiCall();
-      log("LiveAllNodePowerController Start Api Call");
+      log("LtProductionVsCapacityController Start Api Call");
     }
     _isStopApiCall = false;
-    //update();
+    update();
 
   }
 
 
-  Future<bool> fetchLiveAllNodePower() async {
 
-    _isLiveAllNodePowerInProgress = true;
-    //update();
+  Future<bool> fetchProductVsCapacityData() async {
+
+    _isLtProductionVsCapacityInProgress = true;
+    update();
 
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getLiveAllNodePowerUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getLTProductionVsCapacityUrl);
 
-     // log("getLiveAllNodePowerUrl statusCode ==> ${response.statusCode}");
-     // log("getLiveAllNodePowerUrl body ==> ${response.body}");
+      //log("getLTProductionVsCapacityUrl statusCode ==> ${response.statusCode}");
+      // log("getLTProductionVsCapacityUrl body ==> ${response.body}");
 
-      _isLiveAllNodePowerInProgress = false;
+      _isLtProductionVsCapacityInProgress = false;
       update();
 
       if (response.isSuccess) {
-        final jsonData = (response.body as List<dynamic>);
-        _liveAllNodePowerModel = jsonData.map((json)=> LiveAllNodePowerModel.fromJson(json)).toList();
+        final jsonData = (response.body);
+        _ltProductionVsCapacityModel = LTProductionVsCapacityModel.fromJson(jsonData);
 
         update();
         return true;
 
       } else {
-        _errorMessage = "Failed to fetch Live All Node Power Data.";
+        _errorMessage = "Failed to fetch LT Production Vs Capacity Data.";
         update();
         return false;
       }
     } catch (e) {
-      _isLiveAllNodePowerInProgress = false;
+      _isLtProductionVsCapacityInProgress = false;
       _errorMessage = e.toString();
 
       if (e is AppException) {
@@ -165,8 +166,8 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController with I
         _isConnected = false;
       }
 
-      log('Error in fetching Live All Node Power Data : $_errorMessage');
-      _errorMessage = "Failed to fetch Live All Node Power Data.";
+      log('Error in fetching LT Production Vs Capacity Data : $_errorMessage');
+      _errorMessage = "Failed to fetch LT Production Vs Capacity Data.";
 
       return false;
     }

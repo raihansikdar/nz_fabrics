@@ -198,6 +198,9 @@ class Urls{
  static String shortElectricityUrl = "$_baseUrl/api/layout-node-positions/?page_type=es";
  static String longElectricityUrl = "$_baseUrl/get-all-info?sld_type=electricity";
 
+ static String shortWaterUrl = "$_baseUrl/api/layout-node-positions/?page_type=ws";
+ static String longWateryUrl = "$_baseUrl/get-all-info?sld_type=water";
+
 
  static String logoutUrl = "$_baseUrl/logout/";
  //static String logoutUrl = "$_baseUrl/api-logout-V2/";
