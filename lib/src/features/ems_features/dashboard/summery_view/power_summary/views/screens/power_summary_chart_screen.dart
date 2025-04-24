@@ -128,8 +128,8 @@ class _PowerSummaryChartScreenState extends State<PowerSummaryChartScreen> {
                               border: Border.all(color:AppColors.containerBorderColor,width: 1.0)
                           ),
                           child: Scrollbar(
-                            thumbVisibility: true,
-                            trackVisibility: true,
+                            thumbVisibility: false,
+                            trackVisibility: false,
                             radius: Radius.circular(size.height * k16TextSize),
                             thickness: 6,
                             child: dashBoardRadioButtonController.selectedSourceLoadValue== 1 ? GetBuilder<CategoryWiseLiveDataController>(

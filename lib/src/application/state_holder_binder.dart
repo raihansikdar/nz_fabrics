@@ -350,7 +350,7 @@ class StateHolderBinders extends Bindings{
      Get.put(ElectricityLongSLDLiveAllNodePowerController());
      Get.put(ElectricityLongSldLivePfDataController());
      Get.put(ElectricityLongSLDAllInfoController());
-     Get.put(GetAllInfoControllers());
+    // Get.put(GetAllInfoControllers());
      Get.put(ElectricityLongSLDFilterBusBarEnergyCostController());
 
 

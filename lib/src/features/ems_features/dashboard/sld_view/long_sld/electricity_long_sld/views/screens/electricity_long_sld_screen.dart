@@ -191,9 +191,11 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     } else {
       // Handle the error case when the API call fails
       debugPrint('-------Failed to fetch live data------------');
-      setState(() {
-        _isLoading = false;
-      });
+     if(mounted){
+       setState(() {
+         _isLoading = false;
+       });
+     }
     }
   }
 
