@@ -104,3 +104,4 @@ class BoxWithIconWidget extends StatelessWidget {
     );
   }
 }
+

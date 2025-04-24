@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 class ViewPageModel {
   final int id;
   final String nodeName;
@@ -28,10 +31,12 @@ class ViewPageModel {
   final String shape;
   final List<Line> lines;
   final List<int> connectedWith;
-  final String? color;
+  final String color;
   final String? icon;
-  final String? borderColor;
+  final String borderColor;
   final String? textColor;
+  final double textSize;
+  final String orientation;
 
   ViewPageModel({
     required this.id,
@@ -63,48 +68,78 @@ class ViewPageModel {
     required this.shape,
     required this.lines,
     required this.connectedWith,
-    this.color,
+    required this.color,
     this.icon,
-    this.borderColor,
+    required this.borderColor,
     this.textColor,
+    required this.textSize,
+    required this.orientation,
   });
 
   factory ViewPageModel.fromJson(Map<String, dynamic> json) {
-    return ViewPageModel(
-      id: json['id'],
-      nodeName: json['node_name'],
-      sourceType: json['source_type'],
-      category: json['category'],
-      mainBusbar: json['main_busbar'],
-      machineType: json['machine_type'],
-      machineMaxPower: json['machine_max_power']?.toDouble(),
-      deviceType: json['device_type'],
-      meterModel: json['meter_model'],
-      connectionType: json['connection_type'],
-      nodeId: (json['node_id'] != null) ? List<String>.from(json['node_id']) : null,
-      blockNo: json['block_no'],
-      plcNo: json['plc_no'],
-      portNo: json['port_no'],
-      meterNo: json['meter_no'],
-      ip3: json['ip3'],
-      ip4UnitId: json['ip4_unit_id'],
-      aiMinValue: json['ai_min_value']?.toDouble(),
-      aiMaxValue: json['ai_max_value']?.toDouble(),
-      doCmd: json['do_cmd'],
-      unitCost: json['unit_cost']?.toDouble(),
-      scalingFactor: json['scaling_factor']?.toDouble(),
-      height: json['height'].toDouble(),
-      width: json['width'].toDouble(),
-      positionX: json['position_x'].toDouble(),
-      positionY: json['position_y'].toDouble(),
-      shape: json['shape'],
-      lines: List<Line>.from(json['lines']?.map((line) => Line.fromJson(line)) ?? []),
-      connectedWith: List<int>.from(json['connected_with'] ?? []),
-      color: json['color'],
-      icon: json['icon'],
-      borderColor: json['border_color'],
-      textColor: json['text_color'],
-    );
+    if (json['position_x'] == null ||
+        json['position_y'] == null ||
+        json['width'] == null ||
+        json['height'] == null) {
+      debugPrint("Invalid node data: $json");
+      throw Exception("Missing or invalid position/width/height in node data");
+    }
+
+    debugPrint('ViewPageModel: node_name=${json['node_name']}, '
+        'source_type=${json['source_type']}, '
+        'category=${json['category']}, '
+        'shape=${json['shape']}, '
+        'color=${json['color']}, '
+        'border_color=${json['border_color']}, '
+        'text_color=${json['text_color']}, '
+        'text_size=${json['text_size']}, '
+        'orientation=${json['orientation']}');
+
+    try {
+      return ViewPageModel(
+        id: json['id'] as int,
+        nodeName: json['node_name']?.toString() ?? '',
+        sourceType: json['source_type']?.toString() ?? '',
+        category: json['category']?.toString() ?? '',
+        mainBusbar: json['main_busbar'] as bool?,
+        machineType: json['machine_type']?.toString(),
+        machineMaxPower: json['machine_max_power']?.toDouble(),
+        deviceType: json['device_type']?.toString(),
+        meterModel: json['meter_model']?.toString(),
+        connectionType: json['connection_type']?.toString(),
+        nodeId: json['node_id'] != null
+            ? List<String>.from(json['node_id'])
+            : null,
+        blockNo: json['block_no'] as int?,
+        plcNo: json['plc_no'] as int?,
+        portNo: json['port_no'] as int?,
+        meterNo: json['meter_no'] as int?,
+        ip3: json['ip3'] as int?,
+        ip4UnitId: json['ip4_unit_id'] as int?,
+        aiMinValue: json['ai_min_value']?.toDouble(),
+        aiMaxValue: json['ai_max_value']?.toDouble(),
+        doCmd: json['do_cmd'] as bool? ?? false,
+        unitCost: json['unit_cost']?.toDouble(),
+        scalingFactor: json['scaling_factor']?.toDouble(),
+        height: (json['height'] as num?)?.toDouble() ?? 100.0,
+        width: (json['width'] as num?)?.toDouble() ?? 100.0,
+        positionX: (json['position_x'] as num?)?.toDouble() ?? 0.0,
+        positionY: (json['position_y'] as num?)?.toDouble() ?? 0.0,
+        shape: json['shape']?.toString() ?? 'box',
+        lines: List<Line>.from(
+            json['lines']?.map((line) => Line.fromJson(line)) ?? []),
+        connectedWith: List<int>.from(json['connected_with'] ?? []),
+        color: json['color']?.toString() ?? '#FF0000',
+        icon: json['icon']?.toString(),
+        borderColor: json['border_color']?.toString() ?? '#FF0000',
+        textColor: json['text_color']?.toString(),
+        textSize: (json['text_size'] as num?)?.toDouble() ?? 12.0,
+        orientation: json['orientation']?.toString() ?? 'horizontal',
+      );
+    } catch (e) {
+      debugPrint('Error in ViewPageModel.fromJson: $e');
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() => {
@@ -141,6 +176,8 @@ class ViewPageModel {
     'icon': icon,
     'border_color': borderColor,
     'text_color': textColor,
+    'text_size': textSize,
+    'orientation': orientation,
   };
 }
 
@@ -160,19 +197,25 @@ class Line {
     required this.endItemId,
     required this.startEdgeIndex,
     required this.endEdgeIndex,
-    required this.lineColor,
+    this.lineColor,
   });
 
   factory Line.fromJson(Map<String, dynamic> json) {
-    return Line(
-      lineId: json['lineID'],
-      points: List<Point>.from(json['points']?.map((point) => Point.fromJson(point)) ?? []),
-      startItemId: json['startItemId'],
-      endItemId: json['endItemId'],
-      startEdgeIndex: json['startEdgeIndex'],
-      endEdgeIndex: json['endEdgeIndex'],
-      lineColor: json['lineColor'],
-    );
+    debugPrint('Line.fromJson: lineID=${json['lineID']}, lineColor=${json['lineColor']}');
+    try {
+      return Line(
+        lineId: json['lineID']?.toString() ?? '',
+        points: List<Point>.from(json['points']?.map((point) => Point.fromJson(point)) ?? []),
+        startItemId: json['startItemId'] as int? ?? 0,
+        endItemId: json['endItemId'] as int? ?? 0,
+        startEdgeIndex: json['startEdgeIndex'] as int? ?? 0,
+        endEdgeIndex: json['endEdgeIndex'] as int? ?? 0,
+        lineColor: json['lineColor']?.toString(),
+      );
+    } catch (e) {
+      debugPrint('Error in Line.fromJson: $e');
+      rethrow;
+    }
   }
 
   Map<String, dynamic> toJson() => {
@@ -197,8 +240,8 @@ class Point {
 
   factory Point.fromJson(Map<String, dynamic> json) {
     return Point(
-      x: json['x'].toDouble(),
-      y: json['y'].toDouble(),
+      x: (json['x'] as num?)?.toDouble() ?? 0.0,
+      y: (json['y'] as num?)?.toDouble() ?? 0.0,
     );
   }
 
@@ -207,7 +250,6 @@ class Point {
     'y': y,
   };
 }
-
 // LiveDataModel liveDataModelFromJson(String str) => LiveDataModel.fromJson(json.decode(str));
 //
 // String liveDataModelToJson(LiveDataModel data) => json.encode(data.toJson());

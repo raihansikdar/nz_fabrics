@@ -1,12 +1,8 @@
 class Urls{
   Urls._();
-   //static const String _baseUrl = "http://192.168.60.60:8080/react";
-   // static const String _baseUrl = "http://203.95.221.58/react";
-   //static const String _baseUrl = "http://192.168.68.20/react";
-    //static const String _baseUrl = "http://192.168.15.60:8081/react";
-   //static const String _baseUrl = "http://192.168.68.136/react";
-  //static const String _baseUrl = "http://192.168.15.60:8080/react";
-  static const String _baseUrl = "http://175.29.189.138/react";
+
+  static const String _baseUrl = "http://192.168.15.61:8086/react";
+ // static const String _baseUrl = "http://175.29.189.138/react";
 
 
   static  String get baseUrl => _baseUrl;
@@ -23,6 +19,7 @@ class Urls{
 
 /*----------------- get api call --------------------*/
  static String getAllInfoUrl = "$_baseUrl/get-all-info/";
+
  static String getSourceCategoryWiseLiveDataUrl = "$_baseUrl/api/get-source-categorywise-live-data/";
  static String getLoadMachineWiseLiveDataUrl = "$_baseUrl/api/get-load-machinewise-live-data/";
  static String getLiveDataUrl(String sourceName) => "$_baseUrl/get-live-data/$sourceName/";
@@ -196,6 +193,10 @@ class Urls{
  static String getLiveAllNodePowerUrl = "$_baseUrl/live-all-node-power/";
  static String getLivePFDataUrl(String nodeName) => "$_baseUrl/api/get-live-pf-data/$nodeName/";
  static String filterBusBarEnergyCostUrl(String busBarName) => "$_baseUrl/api/filter-busbar-energy-cost/$busBarName/";
+
+
+ static String shortElectricityUrl = "$_baseUrl/api/layout-node-positions/?page_type=es";
+ static String longElectricityUrl = "$_baseUrl/get-all-info?sld_type=electricity";
 
 
  static String logoutUrl = "$_baseUrl/logout/";

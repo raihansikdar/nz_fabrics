@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
+import 'dart:math';
 
 class SuperBusBarWidget extends StatelessWidget {
   final bool sensorStatus;
@@ -23,6 +24,7 @@ class SuperBusBarWidget extends StatelessWidget {
   final dynamic solarValue;
   final dynamic generatorValue;
   final double y;
+  final String orientation;
 
   const SuperBusBarWidget({
     super.key,
@@ -46,23 +48,17 @@ class SuperBusBarWidget extends StatelessWidget {
     required this.solarValue,
     required this.generatorValue,
     required this.y,
+    required this.orientation,
   });
-
 
   Color hexToColor(String hex) {
     return Color(int.parse('0xFF${hex.replaceAll('#', '')}'));
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
-    double totalPercentage = gridPercentage + generatorPercentage + solarPercentage;
-
-    if (totalPercentage == 0) {
-      totalPercentage = 1;
-    }
+    double totalPercentage = (gridPercentage + generatorPercentage + solarPercentage).toDouble();
+    totalPercentage = totalPercentage == 0 ? 1 : totalPercentage;
 
     double normalizedGrid = (gridPercentage / totalPercentage) * 100;
     double normalizedGenerator = (generatorPercentage / totalPercentage) * 100;
@@ -80,21 +76,18 @@ class SuperBusBarWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                // Grid Percentage
                 Expanded(
                   flex: normalizedGrid.toInt(),
                   child: Container(
                     color: hexToColor(gridColor),
                   ),
                 ),
-                // Generator Percentage
                 Expanded(
                   flex: normalizedGenerator.toInt(),
                   child: Container(
                     color: hexToColor(generatorColor),
                   ),
                 ),
-                // Solar Percentage
                 Expanded(
                   flex: normalizedSolar.toInt(),
                   child: Container(
@@ -104,103 +97,131 @@ class SuperBusBarWidget extends StatelessWidget {
               ],
             ),
             Center(
-              child: Text(
-                nodeName,
-                style: TextStyle(color: textColor, fontSize: 18,fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+              child: Transform.rotate(
+                angle: orientation == 'vertical' ? -pi / 2 : 0,
+                child: Text(
+                  nodeName,
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-
-        Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
-          child: Align(
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-               if(gridPercentage > 0.00)
-                 Row(
-                   children: [
-                     Container(
-                       transform: Matrix4.translationValues(0, y, 0),
-                       height: 20,
-                       width: 20,
-                       decoration: BoxDecoration(
-                           color: hexToColor(gridColor),
-                           borderRadius: BorderRadius.circular(10)
-                       ),
-                     ),
-                     const SizedBox(width: 10,),
-                     Container(
-                       transform: Matrix4.translationValues(0, y, 0),
-                       child: const TextComponent(text: 'Grid: ',fontFamily: boldFontFamily,),
-                     ),
-                     Container(
-                       transform: Matrix4.translationValues(0, y, 0),
-                       child:  TextComponent(text: "${gridValue.toStringAsFixed(2)} kW (${gridPercentage.toStringAsFixed(2)}%)",fontFamily: boldFontFamily,),
-                     ),
-                   ],
-                 ),
-                const SizedBox(width: 15,),
-                if(solarPercentage > 0.00)
-                  Row(
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Align(
+                alignment: Alignment.center,
+                child: Transform.rotate(
+                  angle: orientation == 'vertical' ? -pi / 2 : 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        transform: Matrix4.translationValues(0, y, 0),
-                        height: 20,
-                        width: 20,
-                        decoration: BoxDecoration(
-                            color: hexToColor(solarColor),
-                            borderRadius: BorderRadius.circular(10)
+                      if (gridPercentage > 0.00)
+                        Row(
+                          children: [
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                color: hexToColor(gridColor),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              child: const TextComponent(
+                                text: 'Grid: ',
+                                fontFamily: boldFontFamily,
+                              ),
+                            ),
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              child: TextComponent(
+                                text:
+                                "${gridValue.toStringAsFixed(2)} kW (${gridPercentage.toStringAsFixed(2)}%)",
+                                fontFamily: boldFontFamily,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 10,),
-                      Container(
-                        transform: Matrix4.translationValues(0, y, 0),
-                        child: const TextComponent(text: 'Solar: ',fontFamily: boldFontFamily,),
-                      ),
-                      Container(
-                        transform: Matrix4.translationValues(0, y, 0),
-                        child:  TextComponent(text: "${solarValue.toStringAsFixed(2)} kW (${solarPercentage.toStringAsFixed(2)}%)",fontFamily: boldFontFamily,),
-                      ),
+                      const SizedBox(width: 15),
+                      if (solarPercentage > 0.00)
+                        Row(
+                          children: [
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                color: hexToColor(solarColor),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              child: const TextComponent(
+                                text: 'Solar: ',
+                                fontFamily: boldFontFamily,
+                              ),
+                            ),
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              child: TextComponent(
+                                text:
+                                "${solarValue.toStringAsFixed(2)} kW (${solarPercentage.toStringAsFixed(2)}%)",
+                                fontFamily: boldFontFamily,
+                              ),
+                            ),
+                          ],
+                        ),
+                      const SizedBox(width: 15),
+                      if (generatorPercentage > 0.00)
+                        Row(
+                          children: [
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              height: 20,
+                              width: 20,
+                              decoration: BoxDecoration(
+                                color: hexToColor(generatorColor),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              child: const TextComponent(
+                                text: 'Generator: ',
+                                fontFamily: boldFontFamily,
+                              ),
+                            ),
+                            Container(
+                              transform: Matrix4.translationValues(0, y, 0),
+                              child: TextComponent(
+                                text:
+                                "${generatorValue.toStringAsFixed(2)} kW (${generatorPercentage.toStringAsFixed(2)}%)",
+                                fontFamily: boldFontFamily,
+                              ),
+                            ),
+                          ],
+                        ),
                     ],
                   ),
-                const SizedBox(width: 15,),
-               if(generatorPercentage > 0.00)
-                 Row(
-                   children: [
-                     Container(
-                       transform: Matrix4.translationValues(0, y, 0),
-                       height: 20,
-                       width: 20,
-                       decoration: BoxDecoration(
-                           color: hexToColor(generatorColor),
-                           borderRadius: BorderRadius.circular(10)
-                       ),
-                     ),
-                     const SizedBox(width: 10,),
-                     Container(
-                       transform: Matrix4.translationValues(0, y, 0),
-                       child: const TextComponent(text: 'Generator: ',fontFamily: boldFontFamily,),
-                     ),
-                     Container(
-                       transform: Matrix4.translationValues(0, y, 0),
-                       child:  TextComponent(text: "${generatorValue.toStringAsFixed(2)} kW (${generatorPercentage.toStringAsFixed(2)}%)",fontFamily: boldFontFamily,),
-                     ),
-                   ],
-                 ),
-              ],
+                ),
+              ),
             ),
-          ),
-        )
-
           ],
         ),
       ),
     );
   }
 }
-
-

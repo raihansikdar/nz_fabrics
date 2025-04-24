@@ -199,7 +199,7 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
     if (!mounted) return;
     try {
       final response = await http.get(
-        Uri.parse(Urls.getAllInfoUrl),
+        Uri.parse(Urls.longElectricityUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
 
@@ -329,78 +329,124 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
     }
 
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(title: Text("Electricity"),),
-        body: SizedBox(
-          height: MediaQuery.sizeOf(context).height * 0.77,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: LayoutBuilder(
-                builder: (context, constraints) {
-                  // Calculate content dimensions
-                  double minX = _getMinX();
-                  double minY = _getMinY();
-                  double contentWidth = _getMaxX() - minX;
-                  double contentHeight = _getMaxY() - minY;
+      backgroundColor: Colors.white,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Handle empty or invalid viewPageData
+            if (_viewPageData.isEmpty) {
+              return const Center(
+                child: Text('No data available'),
+              );
+            }
 
-                  // Calculate scale to fit screen
-                  double scaleX = constraints.maxWidth / contentWidth;
-                  double scaleY = constraints.maxHeight / contentHeight;
-                  double scale = min(scaleX, scaleY) * 1;
+            // Calculate content dimensions with validation
+            double minX = _getMinX();
+            double minY = _getMinY();
+            double maxX = _getMaxX();
+            double maxY = _getMaxY();
 
+            // Ensure valid content dimensions
+            double contentWidth = maxX - minX;
+            double contentHeight = maxY - minY;
 
-                  debugPrint("--scale---> $scale");
+            // Fallback dimensions to prevent division by zero
+            contentWidth = contentWidth.isFinite && contentWidth > 0 ? contentWidth : constraints.maxWidth;
+            contentHeight = contentHeight.isFinite && contentHeight > 0 ? contentHeight : constraints.maxHeight;
 
-                  return PhotoViewGallery.builder(
-                    itemCount: 1,
-                    builder: (context, index) {
-                      return PhotoViewGalleryPageOptions.customChild(
-                        childSize: Size(contentWidth * scale, contentHeight * scale),
-                        minScale: PhotoViewComputedScale.contained * 0.2,
-                        maxScale: PhotoViewComputedScale.contained * 8.0,
-                        initialScale: PhotoViewComputedScale.contained,
-                        basePosition: Alignment.center,
-                        child: Center(
-                          child: SizedBox(
-                            width: contentWidth * scale,
-                            height: contentHeight * scale,
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: SizedBox(
-                                width: contentWidth,
-                                height: contentHeight,
-                                child: Stack(
-                                  children: [
-                                    CustomPaint(
-                                      size: Size(contentWidth, contentHeight),
-                                      painter: AnimatedLinePainter(
-                                        viewPageData: _viewPageData,
-                                        liveData: _liveData,
-                                        minX: minX,
-                                        minY: minY,
-                                        animation: _controller.view,
-                                      ),
-                                    ),
-                                    ..._buildWidgets(minX, minY),
-                                    ..._buildPFWidgets(minX, minY),
-                                  ],
+            // Calculate scale to fit screen
+            double scaleX = constraints.maxWidth / contentWidth;
+            double scaleY = constraints.maxHeight / contentHeight;
+            double scale = min(scaleX, scaleY);
+
+            // Ensure scale is finite
+            scale = scale.isFinite ? scale : 1.0;
+
+            debugPrint('minX: $minX, minY: $minY, maxX: $maxX, maxY: $maxY');
+            debugPrint('contentWidth: $contentWidth, contentHeight: $contentHeight, scale: $scale');
+
+            return PhotoViewGallery.builder(
+              itemCount: 1,
+              builder: (context, index) {
+                return PhotoViewGalleryPageOptions.customChild(
+                  childSize: Size(contentWidth * scale, contentHeight * scale),
+                  minScale: PhotoViewComputedScale.contained * 0.2,
+                  maxScale: PhotoViewComputedScale.contained * 8.0,
+                  initialScale: PhotoViewComputedScale.contained,
+                  basePosition: Alignment.center,
+                  child: Center(
+                    child: SizedBox(
+                      width: contentWidth * scale,
+                      height: contentHeight * scale,
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: SizedBox(
+                          width: contentWidth,
+                          height: contentHeight,
+                          child: Stack(
+                            children: [
+                              CustomPaint(
+                                size: Size(contentWidth, contentHeight),
+                                painter: AnimatedLinePainter(
+                                  viewPageData: _viewPageData,
+                                  liveData: _liveData,
+                                  minX: minX,
+                                  minY: minY,
+                                  animation: _controller.view,
                                 ),
                               ),
-                            ),
+                              ..._buildWidgets(minX, minY),
+                              ..._buildPFWidgets(minX, minY),
+                            ],
                           ),
                         ),
-                      );
-                    },
-                    scrollDirection: Axis.horizontal,
-                    backgroundDecoration: const BoxDecoration(color: Colors.white),
-                    gaplessPlayback: true,
-                  );
-                },
-                ),
-          ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+              scrollDirection: Axis.horizontal,
+              backgroundDecoration: const BoxDecoration(color: Colors.white),
+              gaplessPlayback: true,
+            );
+          },
         ),
-        );
-    }
+      ),
+    );
+  }
+
+  double _getMinX() {
+    if (_viewPageData.isEmpty) return 0.0;
+    return _viewPageData
+        .where((e) => e.positionX.isFinite)
+        .map((e) => e.positionX)
+        .reduce(min);
+  }
+
+  double _getMinY() {
+    if (_viewPageData.isEmpty) return 0.0;
+    return _viewPageData
+        .where((e) => e.positionY.isFinite)
+        .map((e) => e.positionY)
+        .reduce(min);
+  }
+
+  double _getMaxX() {
+    if (_viewPageData.isEmpty) return 0.0;
+    return _viewPageData
+        .where((e) => (e.positionX + e.width).isFinite)
+        .map((e) => e.positionX + e.width)
+        .reduce(max);
+  }
+
+  double _getMaxY() {
+    if (_viewPageData.isEmpty) return 0.0;
+    return _viewPageData
+        .where((e) => (e.positionY + e.height).isFinite)
+        .map((e) => e.positionY + e.height)
+        .reduce(max);
+  }
 
 
   /*--------------Pf here----------*/
@@ -509,13 +555,7 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
     });
   }
 
-  double _getMinX() => _viewPageData.isEmpty ? 0 : _viewPageData.map((e) => e.positionX).reduce(min);
 
-  double _getMinY() => _viewPageData.isEmpty ? 0 : _viewPageData.map((e) => e.positionY).reduce(min);
-
-  double _getMaxX() => _viewPageData.isEmpty ? 0 : _viewPageData.map((e) => e.positionX + e.width).reduce(max);
-
-  double _getMaxY() => _viewPageData.isEmpty ? 0 : _viewPageData.map((e) => e.positionY + e.height).reduce(max);
 
   List<Widget> _buildWidgets(double minX, double minY) {
     return _viewPageData.map((item) {
@@ -523,32 +563,117 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
       final double power = liveData?.power ?? 0.0;
       final bool sensorStatus = power != 0.0;
 
-
       Widget widget;
+
+      Color hexToColor(String hex) {
+        hex = hex.isEmpty ? '#000000' : hex.replaceAll('#', '');
+        try {
+          return Color(int.parse('0xFF$hex'));
+        } catch (e) {
+          debugPrint('Invalid hex color: $hex, using default #000000');
+          return const Color(0xFF000000);
+        }
+      }
 
       switch (item.shape) {
         case 'circle':
           widget = CircleWithIcon(
             sensorStatus: liveData?.sensorStatus ?? true,
             value: power,
+            // textColor: item.textColor,
+            // textSize: item.textSize,
+            borderColor: item.borderColor ?? '#FF0000',
             icon: FontAwesomeIcons.bolt,
             text: item.nodeName,
             width: item.width.toDouble(),
             height: item.height.toDouble(),
             onTap: () {
               debugPrint("----->CircleWithIcon<-----");
-              if (item.category == 'Diesel_Generator' ||
-                  item.category == 'Diesel_Generator') {
-                Get.to(() => GeneratorElementDetailsScreen(
+              if (item.category == 'Diesel_Generator') {
+                Get.to(
+                      () => GeneratorElementDetailsScreen(
+                    elementName: item.nodeName,
+                    gaugeValue: power,
+                    gaugeUnit: 'kW',
+                    elementCategory: 'Power',
+                  ),
+                  transition: Transition.rightToLeft,
+                  duration: const Duration(seconds: 1),
+                );
+              } else {
+                Get.to(
+                      () => PowerAndEnergyElementDetailsScreen(
+                    elementName: item.nodeName,
+                    gaugeValue: power,
+                    gaugeUnit: 'kW',
+                    elementCategory: 'Power',
+                    solarCategory: item.category,
+                  ),
+                  transition: Transition.rightToLeft,
+                  duration: const Duration(seconds: 1),
+                );
+              }
+            },
+            unit: 'kW',
+          );
+          break;
+        case 'LB_Meter':
+          widget = GetBuilder<LiveAllNodePowerController>(builder: (controller) {
+            final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                  (element) => element.node == item.nodeName,
+              orElse: () => LiveAllNodePowerModel(),
+            );
+            return BoxWithIconWidget(
+              sensorStatus: sensorStatus,
+              value: power,
+              icon: FontAwesomeIcons.solarPanel,
+              label: item.nodeName,
+              width: item.width.toDouble(),
+              height: item.height.toDouble(),
+              onTap: () {},
+              unit: 'kW',
+              // color: item.color ?? '#FF0000',
+              // textColor: item.textColor,
+              // textSize: item.textSize,
+              borderColor: item.borderColor ?? '#FF0000',
+              percentage: nodeData.percentage != null
+                  ? nodeData.percentage.toStringAsFixed(2)
+                  : "0.00",
+              capacity: nodeData.capacity != null
+                  ? nodeData.capacity.toStringAsFixed(2)
+                  : "0.00",
+            );
+          });
+          break;
+        case 'box':
+          widget = GetBuilder<LiveAllNodePowerController>(builder: (controller) {
+            final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                  (element) => element.node == item.nodeName,
+              orElse: () => LiveAllNodePowerModel(),
+            );
+            return TrBoxWithIconWidget(
+              sensorStatus: liveData?.sensorStatus ?? true,
+              value: power,
+              icon: FontAwesomeIcons.solarPanel,
+              label: item.nodeName,
+              width: item.width.toDouble(),
+              height: item.height.toDouble(),
+              onTap: () {
+                debugPrint("----->TrBoxWithIconWidget<-----");
+                if (item.category == 'Diesel_Generator') {
+                  Get.to(
+                        () => GeneratorElementDetailsScreen(
                       elementName: item.nodeName,
                       gaugeValue: power,
                       gaugeUnit: 'kW',
                       elementCategory: 'Power',
                     ),
                     transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1));
-              } else {
-                Get.to(() => PowerAndEnergyElementDetailsScreen(
+                    duration: const Duration(seconds: 1),
+                  );
+                } else {
+                  Get.to(
+                        () => PowerAndEnergyElementDetailsScreen(
                       elementName: item.nodeName,
                       gaugeValue: power,
                       gaugeUnit: 'kW',
@@ -556,164 +681,151 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
                       solarCategory: item.category,
                     ),
                     transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1));
-              }
-            },
-            unit: 'kW',
-            borderColor: item.color ?? '',
-          );
-          break;
-        case 'LB_Meter':
-          widget =
-              GetBuilder<LiveAllNodePowerController>(builder: (controller) {
-                final nodeData = controller.liveAllNodePowerModel.firstWhere(
-                      (element) => element.node == item.nodeName,
-                  orElse: () => LiveAllNodePowerModel(),
-                );
-
-                return BoxWithIconWidget(
-                  sensorStatus: sensorStatus,
-                  value: power,
-                  icon: FontAwesomeIcons.solarPanel,
-                  label: item.nodeName,
-                  width: item.width.toDouble(),
-                  height: item.height.toDouble(),
-                  onTap: () {},
-                  unit: 'kW',
-                  borderColor: item.color ?? '#000000',
-                  percentage: nodeData.percentage != null
-                      ? nodeData.percentage.toStringAsFixed(2)
-                      : "0.00",
-                  capacity: nodeData.capacity != null
-                      ? nodeData.capacity.toStringAsFixed(2)
-                      : "0.00",
-                );
-              });
-          break;
-        case 'box':
-          widget =
-              GetBuilder<LiveAllNodePowerController>(builder: (controller) {
-                final nodeData = controller.liveAllNodePowerModel.firstWhere(
-                      (element) => element.node == item.nodeName,
-                  orElse: () => LiveAllNodePowerModel(),
-                );
-                return TrBoxWithIconWidget(
-                  sensorStatus: liveData?.sensorStatus ?? true,
-                  value: power,
-                  icon: FontAwesomeIcons.solarPanel,
-                  label: item.nodeName,
-                  width: item.width.toDouble(),
-                  height: item.height.toDouble(),
-                  onTap: () {
-                    debugPrint("----->TrBoxWithIconWidget<-----");
-
-                    if (item.category == 'Diesel_Generator' ||
-                        item.category == 'Diesel_Generator') {
-                      Get.to(() => GeneratorElementDetailsScreen(
-                            elementName: item.nodeName,
-                            gaugeValue: power,
-                            gaugeUnit: 'kW',
-                            elementCategory: 'Power',
-                          ),
-                          transition: Transition.rightToLeft,
-                          duration: const Duration(seconds: 1));
-                    } else {
-                      Get.to(() => PowerAndEnergyElementDetailsScreen(
-                            elementName: item.nodeName,
-                            gaugeValue: power,
-                            gaugeUnit: 'kW',
-                            elementCategory: 'Power',
-                            solarCategory: item.category,
-                          ),
-                          transition: Transition.rightToLeft,
-                          duration: const Duration(seconds: 1));
-                    }
-                  },
-                  unit: 'kW',
-                  borderColor: item.color ?? '#000000',
-                  percentage: nodeData.percentage != null
-                      ? nodeData.percentage.toStringAsFixed(2)
-                      : "0.00",
-                  capacity: nodeData.capacity != null
-                      ? nodeData.capacity.toStringAsFixed(2)
-                      : "0.00",
-                );
-              });
+                    duration: const Duration(seconds: 1),
+                  );
+                }
+              },
+              unit: 'kW',
+              borderColor: item.borderColor ?? '#FF0000',
+              percentage: nodeData.percentage != null
+                  ? nodeData.percentage.toStringAsFixed(2)
+                  : "0.00",
+              capacity: nodeData.capacity != null
+                  ? nodeData.capacity.toStringAsFixed(2)
+                  : "0.00",
+            );
+          });
           break;
         case 'Bus_Bar':
           if (item.sourceType == 'Super_Bus_Bar') {
-            widget = GetBuilder<LtProductionVsCapacityController>(
-                builder: (controller) {
-                  return SuperBusBarWidget(
-                    sensorStatus: liveData?.sensorStatus ?? true,
-                    value: power,
-                    nodeName: item.nodeName,
-                    backgroundColor: item.color ?? '#000000',
-                    borderColor: item.borderColor ?? '#000000',
-                    textColor: Colors.black,
-                    loadBoxHeight: item.height.toDouble(),
-                    loadBoxWidth: item.width.toDouble(),
-                    onTap: () {},
-                    unit: 'kW',
-                    gridColor: controller.ltProductionVsCapacityModel.gridColor ?? '#ffffff', generatorColor: controller.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
-                    solarColor: controller.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
-
-
-                    gridPercentage: item.nodeName == "LT-02 A" ? controller.ltProductionVsCapacityModel.lt02AGridPercentage ?? 0.00 : item.nodeName == "LT-02 B" ? controller.ltProductionVsCapacityModel.lt02BGridPercentage ?? 0.00 : item.nodeName == "LT-01 A" ? controller.ltProductionVsCapacityModel.lt01AGridPercentage ?? 0.00 : item.nodeName == "LT-01 B" ? controller.ltProductionVsCapacityModel.lt01BGridPercentage ?? 0.00 : 0.00,
-                    generatorPercentage: item.nodeName == "LT-02 A" ? controller.ltProductionVsCapacityModel.lt02AGeneratorPercentage ?? 0.00 : item.nodeName == "LT-02 B" ? controller.ltProductionVsCapacityModel.lt02BGeneratorPercentage ?? 0.00 : item.nodeName == "LT-01 A" ? controller.ltProductionVsCapacityModel.lt01AGeneratorPercentage ?? 0.00 : item.nodeName == "LT-01 B" ? controller.ltProductionVsCapacityModel.lt01BGeneratorPercentage ?? 0.00 : 0.00,
-                    solarPercentage: item.nodeName == "LT-02 A" ? controller.ltProductionVsCapacityModel.lt02ASolarPercentage ?? 0.00 : item.nodeName == "LT-02 B" ? controller.ltProductionVsCapacityModel.lt02BSolarPercentage ?? 0.00 : item.nodeName == "LT-01 A" ? controller.ltProductionVsCapacityModel.lt01ASolarPercentage ?? 0.00 : item.nodeName == "LT-01 B" ? controller.ltProductionVsCapacityModel.lt01BSolarPercentage ?? 0.00 : 0.00,
-
-
-                    gridValue: item.nodeName == "LT-02 A" ? controller.ltProductionVsCapacityModel.lt02AGridPower ?? 0.00 : item.nodeName == "LT-02 B" ? controller.ltProductionVsCapacityModel.lt02BGridPower ?? 0.00 : item.nodeName == "LT-01 A" ? controller.ltProductionVsCapacityModel.lt01AGridPower ?? 0.00 : item.nodeName == "LT-01 B" ? controller.ltProductionVsCapacityModel.lt01BGridPower ?? 0.00 : 0.00,
-                    generatorValue: item.nodeName == "LT-02 A" ? controller.ltProductionVsCapacityModel.lt02AGeneratorPower ?? 0.00 : item.nodeName == "LT-02 B" ? controller.ltProductionVsCapacityModel.lt02BGeneratorPower ?? 0.00 : item.nodeName == "LT-01 A" ? controller.ltProductionVsCapacityModel.lt01AGeneratorPower ?? 0.00 : item.nodeName == "LT-01 B" ? controller.ltProductionVsCapacityModel.lt01AGeneratorPower ?? 0.00 : 0.00,
-                    solarValue: item.nodeName == "LT-02 A" ? controller.ltProductionVsCapacityModel.lt02ASolarPower ?? 0.00 : item.nodeName == "LT-02 B" ? controller.ltProductionVsCapacityModel.lt02BSolarPower ?? 0.00 : item.nodeName == "LT-01 A" ? controller.ltProductionVsCapacityModel.lt01ASolarPower ?? 0.00 : item.nodeName == "LT-01 B" ? controller.ltProductionVsCapacityModel.lt01BSolarPower ?? 0.00 : 0.00,
-                    y: (item.nodeName == "LT-02 A" || item.nodeName == "LT-02 B") ? 40 : -95,
-                  );
-                });
-          } else if (item.sourceType == 'Load_Bus_Bar' ||
-              item.sourceType == 'Bus_Bar') {
+            widget = GetBuilder<LtProductionVsCapacityController>(builder: (controller) {
+              return SuperBusBarWidget(
+                sensorStatus: liveData?.sensorStatus ?? true,
+                value: power,
+                nodeName: item.nodeName,
+                backgroundColor: item.color ?? '#FF0000',
+                borderColor: item.borderColor ?? '#FF0000',
+                textColor: item.textColor != null ? hexToColor(item.textColor!) : Colors.black,
+                loadBoxHeight: item.height.toDouble(),
+                loadBoxWidth: item.width.toDouble(),
+                onTap: () {},
+                unit: 'kW',
+                gridColor: controller.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
+                generatorColor: controller.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
+                solarColor: controller.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
+                gridPercentage: item.nodeName == "LT-02 A"
+                    ? controller.ltProductionVsCapacityModel.lt02AGridPercentage ?? 0.00
+                    : item.nodeName == "LT-02 B"
+                    ? controller.ltProductionVsCapacityModel.lt02BGridPercentage ?? 0.00
+                    : item.nodeName == "LT-01 A"
+                    ? controller.ltProductionVsCapacityModel.lt01AGridPercentage ?? 0.00
+                    : item.nodeName == "LT-01 B"
+                    ? controller.ltProductionVsCapacityModel.lt01BGridPercentage ?? 0.00
+                    : 0.00,
+                generatorPercentage: item.nodeName == "LT-02 A"
+                    ? controller.ltProductionVsCapacityModel.lt02AGeneratorPercentage ?? 0.00
+                    : item.nodeName == "LT-02 B"
+                    ? controller.ltProductionVsCapacityModel.lt02BGeneratorPercentage ?? 0.00
+                    : item.nodeName == "LT-01 A"
+                    ? controller.ltProductionVsCapacityModel.lt01AGeneratorPercentage ?? 0.00
+                    : item.nodeName == "LT-01 B"
+                    ? controller.ltProductionVsCapacityModel.lt01BGeneratorPercentage ?? 0.00
+                    : 0.00,
+                solarPercentage: item.nodeName == "LT-02 A"
+                    ? controller.ltProductionVsCapacityModel.lt02ASolarPercentage ?? 0.00
+                    : item.nodeName == "LT-02 B"
+                    ? controller.ltProductionVsCapacityModel.lt02BSolarPercentage ?? 0.00
+                    : item.nodeName == "LT-01 A"
+                    ? controller.ltProductionVsCapacityModel.lt01ASolarPercentage ?? 0.00
+                    : item.nodeName == "LT-01 B"
+                    ? controller.ltProductionVsCapacityModel.lt01BSolarPercentage ?? 0.00
+                    : 0.00,
+                gridValue: item.nodeName == "LT-02 A"
+                    ? controller.ltProductionVsCapacityModel.lt02AGridPower ?? 0.00
+                    : item.nodeName == "LT-02 B"
+                    ? controller.ltProductionVsCapacityModel.lt02BGridPower ?? 0.00
+                    : item.nodeName == "LT-01 A"
+                    ? controller.ltProductionVsCapacityModel.lt01AGridPower ?? 0.00
+                    : item.nodeName == "LT-01 B"
+                    ? controller.ltProductionVsCapacityModel.lt01BGridPower ?? 0.00
+                    : 0.00,
+                generatorValue: item.nodeName == "LT-02 A"
+                    ? controller.ltProductionVsCapacityModel.lt02AGeneratorPower ?? 0.00
+                    : item.nodeName == "LT-02 B"
+                    ? controller.ltProductionVsCapacityModel.lt02BGeneratorPower ?? 0.00
+                    : item.nodeName == "LT-01 A"
+                    ? controller.ltProductionVsCapacityModel.lt01AGeneratorPower ?? 0.00
+                    : item.nodeName == "LT-01 B"
+                    ? controller.ltProductionVsCapacityModel.lt01BGeneratorPower ?? 0.00
+                    : 0.00,
+                solarValue: item.nodeName == "LT-02 A"
+                    ? controller.ltProductionVsCapacityModel.lt02ASolarPower ?? 0.00
+                    : item.nodeName == "LT-02 B"
+                    ? controller.ltProductionVsCapacityModel.lt02BSolarPower ?? 0.00
+                    : item.nodeName == "LT-01 A"
+                    ? controller.ltProductionVsCapacityModel.lt01ASolarPower ?? 0.00
+                    : item.nodeName == "LT-01 B"
+                    ? controller.ltProductionVsCapacityModel.lt01BSolarPower ?? 0.00
+                    : 0.00,
+                y: (item.nodeName == "LT-02 A" || item.nodeName == "LT-02 B") ? 40 : -95,
+                orientation: item.orientation,
+              );
+            });
+          } else if (item.sourceType == 'Load_Bus_Bar' || item.sourceType == 'Bus_Bar') {
             if (item.mainBusbar ?? false) {
-              widget =
-                  GetBuilder<LiveAllNodePowerController>(builder: (controller) {
-                    final nodeData = controller.liveAllNodePowerModel.firstWhere(
-                          (element) => element.node == item.nodeName,
-                      orElse: () => LiveAllNodePowerModel(),
+              widget = GetBuilder<LiveAllNodePowerController>(builder: (controller) {
+                final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                      (element) => element.node == item.nodeName,
+                  orElse: () => LiveAllNodePowerModel(),
+                );
+                return MainBusBarTrue(
+                  sensorStatus: liveData?.sensorStatus ?? true,
+                  value: power,
+                  nodeName: item.nodeName,
+                  color: item.color ?? '#FF0000',
+                 borderColor: item.borderColor ?? '#FF0000',
+                 textColor: item.textColor,
+                 textSize: item.textSize,
+                  loadBoxHeight: item.height.toDouble(),
+                  loadBoxWidth: item.width.toDouble(),
+                  onTap: () {
+                    Get.to(
+                          () => MainBusBarTrueScreen(busBarName: item.nodeName),
+                      transition: Transition.rightToLeft,
+                      duration: const Duration(seconds: 1),
                     );
-                    return MainBusBarTrue(
-                      sensorStatus: liveData?.sensorStatus ?? true,
-                      value: power,
-                      nodeName: item.nodeName,
-                      color: item.color ?? '',
-                      textColor: Colors.white,
-                      loadBoxHeight: item.height.toDouble(),
-                      loadBoxWidth: item.width.toDouble(),
-                      onTap: () {
-                        Get.to(()=> MainBusBarTrueScreen(busBarName: item.nodeName,),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
-
-                      },
-                      unit: 'kW',
-                      percentage: nodeData.percentage != null
-                          ? nodeData.percentage.toStringAsFixed(2)
-                          : "0.00",
-                      capacity: nodeData.capacity != null
-                          ? nodeData.capacity.toStringAsFixed(2)
-                          : "0.00",
-                    );
-                  });
+                  },
+                  unit: 'kW',
+                  percentage: nodeData.percentage != null
+                      ? nodeData.percentage.toStringAsFixed(2)
+                      : "0.00",
+                  capacity: nodeData.capacity != null
+                      ? nodeData.capacity.toStringAsFixed(2)
+                      : "0.00",
+                  orientation: item.orientation ?? 'horizontal',
+                );
+              });
             } else {
               widget = SourceAndLoadBoxWidget(
                 sensorStatus: liveData?.sensorStatus ?? true,
                 value: power,
                 nodeName: item.nodeName,
-                borderColor: item.borderColor ?? '#000000',
-                textColor: Colors.black,
+                borderColor: item.borderColor ?? '#FF0000',
+                textColor: item.textColor,
+                textSize: item.textSize,
                 loadBoxHeight: item.height.toDouble(),
                 loadBoxWidth: item.width.toDouble(),
-                onTap: () {
-                  Get.to(()=> MainBusBarTrueScreen(busBarName: item.nodeName,),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
+                color: item.color ?? '#FF0000',
 
+                onTap: () {
+                  Get.to(
+                        () => MainBusBarTrueScreen(busBarName: item.nodeName),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(seconds: 1),
+                  );
                 },
                 unit: 'kW',
+                orientation: item.orientation,
               );
             }
           } else if (item.sourceType == 'Meter_Bus_Bar') {
@@ -721,26 +833,25 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
               sensorStatus: liveData?.sensorStatus ?? true,
               value: power,
               nodeName: item.nodeName,
-              borderColor: item.borderColor ?? "#000000",
-              textColor: Colors.black,
+              color: item.color,
+              borderColor: item.borderColor,
+              textColor: item.textColor,
+              textSize: item.textSize,
               loadBoxHeight: item.height.toDouble(),
               loadBoxWidth: item.width.toDouble(),
               onTap: () {},
               unit: 'kW',
+              orientation: item.orientation,
             );
           } else {
             widget = const SizedBox.shrink();
           }
           break;
-
         case 'BusCoupler':
           widget = GetBuilder<GetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
-
-           //   debugPrint("BusCoupler ${item.nodeName}: Power = $powerMeter, Status = $isActive");
-
               return BusCouplerWidget(
                 key: ValueKey('${item.id}-${liveData?.sensorStatus}'),
                 label: item.nodeName,
@@ -753,7 +864,6 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
             },
           );
           break;
-
         case 'Loop':
           widget = GetBuilder<GetAllInfoControllers>(
             builder: (controller) {
@@ -772,7 +882,6 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
             },
           );
           break;
-
         default:
           widget = const SizedBox.shrink();
       }
@@ -781,12 +890,14 @@ class _NZPowerSldScreenState extends State<NZPowerSldScreen>
         left: item.positionX.toDouble() - minX,
         top: item.positionY.toDouble() - minY,
         child: Opacity(
-          opacity: 1.0, // Always show with full opacity
+          opacity: 1.0,
           child: widget,
         ),
       );
     }).toList();
   }
+
+
 }
 
 T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
