@@ -426,14 +426,14 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                            columnNames: ['electricity_energy', 'electricity_cost'],
                            child: Container(
                              alignment: Alignment.center,
-                             child: const Text('Electricity'),
+                             child:  Text('Electricity',style: TextStyle(color: AppColors.whiteTextColor),),
                            ),
                          ),
                          StackedHeaderCell(
                            columnNames: ['water_volume', 'water_cost'],
                            child: Container(
                              alignment: Alignment.center,
-                             child: const Text('Water'),
+                             child: const Text('Water',style: TextStyle(color: AppColors.whiteTextColor),),
                            ),
                          ),
                        ]),
@@ -443,35 +443,35 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                          columnName: 'date',
                          label: Container(
                            alignment: Alignment.center,
-                           child: const Text('Date'),
+                           child: const Text('Date',style: TextStyle(color: AppColors.whiteTextColor),),
                          ),
                        ),
                        GridColumn(
                          columnName: 'electricity_energy',
                          label: Container(
                            alignment: Alignment.center,
-                           child: const Text('Energy (kWh)'),
+                           child: const Text('Energy (kWh)',style: TextStyle(color: AppColors.whiteTextColor),),
                          ),
                        ),
                        GridColumn(
                          columnName: 'electricity_cost',
                          label: Container(
                            alignment: Alignment.center,
-                           child: const Text('Cost (৳)'),
+                           child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
                          ),
                        ),
                        GridColumn(
                          columnName: 'water_volume',
                          label: Container(
                            alignment: Alignment.center,
-                           child: const Text('Volume (L)'),
+                           child: const Text('Volume (L)',style: TextStyle(color: AppColors.whiteTextColor),),
                          ),
                        ),
                        GridColumn(
                          columnName: 'water_cost',
                          label: Container(
                            alignment: Alignment.center,
-                           child: const Text('Cost (৳)'),
+                           child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
                          ),
                        ),
                      ],

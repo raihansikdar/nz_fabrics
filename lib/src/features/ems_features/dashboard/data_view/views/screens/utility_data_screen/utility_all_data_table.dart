@@ -129,7 +129,7 @@ class _UtilityAllDataTableState extends State<UtilityAllDataTable> {
                 label: Container(
                   padding: const EdgeInsets.all(8.0),
                   alignment: Alignment.center,
-                  child: const Text('Category'),
+                  child: const Text('Category',style: TextStyle(color: AppColors.whiteTextColor),),
                 ),
               ),
               GridColumn(
@@ -137,7 +137,7 @@ class _UtilityAllDataTableState extends State<UtilityAllDataTable> {
                 label: Container(
                   padding: const EdgeInsets.all(8.0),
                   alignment: Alignment.center,
-                  child: const Text('Live Data'),
+                  child: const Text('Live Data',style: TextStyle(color: AppColors.whiteTextColor),),
                 ),
               ),
               GridColumn(
@@ -145,7 +145,7 @@ class _UtilityAllDataTableState extends State<UtilityAllDataTable> {
                 label: Container(
                   padding: const EdgeInsets.all(8.0),
                   alignment: Alignment.center,
-                  child: const Text('Consumption'),
+                  child: const Text('Consumption',style: TextStyle(color: AppColors.whiteTextColor),),
                 ),
               ),
               GridColumn(
@@ -153,7 +153,7 @@ class _UtilityAllDataTableState extends State<UtilityAllDataTable> {
                 label: Container(
                   padding: const EdgeInsets.all(8.0),
                   alignment: Alignment.center,
-                  child: const Text('Cost'),
+                  child: const Text('Cost',style: TextStyle(color: AppColors.whiteTextColor),),
                 ),
               ),
             ],
