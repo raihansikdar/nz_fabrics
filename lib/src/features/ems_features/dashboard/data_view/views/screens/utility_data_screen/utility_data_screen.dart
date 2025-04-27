@@ -292,9 +292,9 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                             SizedBox(height: size.width > 500 ? 16: 8),
                             SizedBox(
-                              height: size.width > 500 ? size.height * 0.05 : size.width * 0.09,
+                              height: size.width > 500 ? size.height * 0.04 : size.width * 0.09,
                               width: size.width * 0.4,
                               child: ElevatedButton(
                                 onPressed: () async {
@@ -1361,7 +1361,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                     Transform.rotate(
                       angle: 90 * 3.14159 / 180,
                       child: Container(
-                        transform: Matrix4.translationValues(-25, 40, 0),
+                        transform: Matrix4.translationValues(-25, 42, 0),
                         child: const Text(
                           'Water',
                           style: TextStyle(
