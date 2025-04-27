@@ -220,6 +220,16 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -1034,8 +1044,6 @@ class _LineChartWidgetState extends State<LineChartWidget> {
 }*/
 
 
-
-
 class LineChartWidget extends StatefulWidget {
   final List<ElectricityData> electricityData;
   final List<WaterData> waterData;
@@ -1066,7 +1074,9 @@ class _LineChartWidgetState extends State<LineChartWidget> {
     _showWater = widget.showWater;
     _zoomPanBehavior = ZoomPanBehavior(
       enablePanning: true,
-      zoomMode: ZoomMode.x,
+      enablePinching: true, // Enable pinch-to-zoom
+      zoomMode: ZoomMode.x, // Restrict zooming to x-axis
+      enableDoubleTapZooming: true, // Allow double-tap to zoom
     );
 
     // Debug: Log data counts and all values
@@ -1121,6 +1131,19 @@ class _LineChartWidgetState extends State<LineChartWidget> {
       return DateTime.now();
     }
   }
+    double determineInterval(int dataLength) {
+      if (dataLength > 720) {
+        return 720.0;
+      } else if (dataLength > 450) {
+        return 450.0;
+      } else if (dataLength > 360) {
+        return 360.0;
+      } else {
+        return 240.0;
+      }
+    }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -1223,17 +1246,20 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                     overflowMode: LegendItemOverflowMode.wrap,
                   ),
                   primaryXAxis: DateTimeAxis(
-                    dateFormat: DateFormat('dd-MMM-yyyy HH:mm'),
+                    dateFormat: DateFormat('dd-MMM-yyyy'),
                     majorGridLines: const MajorGridLines(width: 0),
                     labelStyle: TextStyle(
                       color: Colors.grey.shade500,
                       fontWeight: FontWeight.bold,
                     ),
-                    intervalType: DateTimeIntervalType.hours,
+                    intervalType: DateTimeIntervalType.days,
+                     interval: 1,
                     minimum: minDate,
                     maximum: maxDate,
+                    initialZoomFactor: 0.5, // Show 50% of the data range initially
+                    initialZoomPosition: 0.0, // Start from the beginning
                     axisLabelFormatter: (AxisLabelRenderDetails args) {
-                      final String text = DateFormat('dd/MMM HH:mm').format(
+                      final String text = DateFormat('dd/MMM').format(
                         DateTime.fromMillisecondsSinceEpoch(args.value.toInt()),
                       );
                       return ChartAxisLabel(text, args.textStyle);
@@ -1287,8 +1313,9 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                         safeToDouble(data.power) / 1000, // Convert to kW if in watts
                         yAxisName: 'PowerAxis',
                         color: Colors.blue,
+                        width: 2.0, // Make the line slightly thicker for visibility
                         dataLabelSettings: const DataLabelSettings(
-                          isVisible: false, // Disable data labels
+                          isVisible: false, // Data labels disabled
                         ),
                       ),
                     if (_showWater && waterChartData.isNotEmpty)
@@ -1301,8 +1328,9 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                             safeToDouble(data.instantFlow),
                         yAxisName: 'FlowAxis',
                         color: Colors.green,
+                        width: 2.0, // Make the line slightly thicker for visibility
                         dataLabelSettings: const DataLabelSettings(
-                          isVisible: false, // Disable data labels
+                          isVisible: false, // Data labels disabled
                         ),
                       ),
                   ],
@@ -1319,7 +1347,6 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                       angle: 90 * 3.14159 / 180,
                       child: Container(
                         transform: Matrix4.translationValues(-15, -20, 0),
-
                         child: const Text(
                           'Electricity',
                           style: TextStyle(
