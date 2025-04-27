@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/utility_data_screen/utility_all_data_table.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
@@ -225,104 +226,106 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
     return Scaffold(
       backgroundColor: AppColors.whiteTextColor,
       body:  SingleChildScrollView(
-        padding: const EdgeInsets.all(4),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              height: size.height * 0.14,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.containerBorderColor),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: size.height * 0.020,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              SizedBox(
-                                width: size.width * 0.4,
-                                child: TextFormField(
-                                  onTap: formDatePicker,
-                                  style: const TextStyle(fontSize: 18),
-                                  controller: fromDateTEController,
-                                  readOnly: true,
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 16),
-                                    hintText: "From Date",
-                                    suffixIcon: Icon(Icons.calendar_today_outlined, size: 24),
-                                    border: OutlineInputBorder(),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0,left: 8.0,right: 8.0),
+              child: Container(
+                height: size.height * 0.14,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: AppColors.containerBorderColor),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: size.height * 0.020,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                SizedBox(
+                                  width: size.width * 0.4,
+                                  child: TextFormField(
+                                    onTap: formDatePicker,
+                                    style: const TextStyle(fontSize: 18),
+                                    controller: fromDateTEController,
+                                    readOnly: true,
+                                    decoration: const InputDecoration(
+                                      contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 16),
+                                      hintText: "From Date",
+                                      suffixIcon: Icon(Icons.calendar_today_outlined, size: 24),
+                                      border: OutlineInputBorder(),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(width: size.width * 0.02),
-                              SizedBox(
-                                width: size.width * 0.42,
-                                child: TextFormField(
-                                  onTap: toDatePicker,
-                                  style: const TextStyle(fontSize: 18),
-                                  controller: toDateTEController,
-                                  readOnly: true,
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 16),
-                                    hintText: "To Date",
-                                    suffixIcon: Icon(Icons.calendar_today_outlined, size: 24),
-                                    border: OutlineInputBorder(),
+                                SizedBox(width: size.width * 0.02),
+                                SizedBox(
+                                  width: size.width * 0.42,
+                                  child: TextFormField(
+                                    onTap: toDatePicker,
+                                    style: const TextStyle(fontSize: 18),
+                                    controller: toDateTEController,
+                                    readOnly: true,
+                                    decoration: const InputDecoration(
+                                      contentPadding: EdgeInsets.only(top: 0, bottom: 0, left: 16),
+                                      hintText: "To Date",
+                                      suffixIcon: Icon(Icons.calendar_today_outlined, size: 24),
+                                      border: OutlineInputBorder(),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          SizedBox(
-                            height: size.width > 600 ? size.height * 0.05 : size.width * 0.1,
-                            width: size.width * 0.4,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                dateDifferenceDates();
-                                final fromDate = DateTime.tryParse(fromDateTEController.text);
-                                final toDate = DateTime.tryParse(toDateTEController.text);
-                                if (fromDate == null || toDate == null || toDate.isBefore(fromDate)) {
-                                  return;
-                                }
-                                setState(() {
-                                  isFilterButtonProgress = true;
-                                });
-                                await fetchData(
-                                  fromDate,
-                                  DateTime(toDate.year, toDate.month, toDate.day, 23, 59, 59),
-                                );
-                                setState(() {
-                                  isFilterButtonProgress = false;
-                                });
-                              },
-                              child: isFilterButtonProgress
-                                  ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                                  : const Text("Submit", style: TextStyle(color: Colors.white)),
+                              ],
                             ),
-                          ),
-                        ],
+                            const SizedBox(height: 8),
+                            SizedBox(
+                              height: size.width > 600 ? size.height * 0.05 : size.width * 0.1,
+                              width: size.width * 0.4,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  dateDifferenceDates();
+                                  final fromDate = DateTime.tryParse(fromDateTEController.text);
+                                  final toDate = DateTime.tryParse(toDateTEController.text);
+                                  if (fromDate == null || toDate == null || toDate.isBefore(fromDate)) {
+                                    return;
+                                  }
+                                  setState(() {
+                                    isFilterButtonProgress = true;
+                                  });
+                                  await fetchData(
+                                    fromDate,
+                                    DateTime(toDate.year, toDate.month, toDate.day, 23, 59, 59),
+                                  );
+                                  setState(() {
+                                    isFilterButtonProgress = false;
+                                  });
+                                },
+                                child: isFilterButtonProgress
+                                    ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                )
+                                    : const Text("Submit", style: TextStyle(color: Colors.white)),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -347,7 +350,7 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                 const Text('Show Water', style: TextStyle(fontSize: 16)),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
             isLoading
                 ? const Center(child: Padding(
                   padding: EdgeInsets.only(top: 158.0),
@@ -378,6 +381,11 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                  showElectricity: showElectricity,
                  showWater: showWater,
                ),
+               const SizedBox(height: 16),
+               SizedBox(
+                   height: 160,
+                   child: UtilityAllDataTable()),
+
                const SizedBox(height: 16),
 
                tableData.isEmpty
