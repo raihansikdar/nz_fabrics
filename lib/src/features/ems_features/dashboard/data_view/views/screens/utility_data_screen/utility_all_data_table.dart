@@ -119,6 +119,8 @@ class _UtilityAllDataTableState extends State<UtilityAllDataTable> {
             gridLineStrokeWidth: 0.4,
                     ),
                     child: SfDataGrid(
+                      showHorizontalScrollbar: false,
+                      verticalScrollPhysics: NeverScrollableScrollPhysics(),
             columnWidthMode: size.width > 500 ? ColumnWidthMode.fill : ColumnWidthMode.auto,
             headerGridLinesVisibility: GridLinesVisibility.both,
             gridLinesVisibility: GridLinesVisibility.both,

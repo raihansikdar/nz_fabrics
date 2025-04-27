@@ -284,7 +284,7 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                             ),
                             const SizedBox(height: 8),
                             SizedBox(
-                              height: size.width > 600 ? size.height * 0.05 : size.width * 0.1,
+                              height: size.width > 500 ? size.height * 0.05 : size.width * 0.09,
                               width: size.width * 0.4,
                               child: ElevatedButton(
                                 onPressed: () async {
@@ -314,7 +314,7 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                                     color: Colors.white,
                                   ),
                                 )
-                                    : const Text("Submit", style: TextStyle(color: Colors.white)),
+                                    : const Text("Submit", style: TextStyle(color: Colors.white,fontSize: 16)),
                               ),
                             ),
                           ],

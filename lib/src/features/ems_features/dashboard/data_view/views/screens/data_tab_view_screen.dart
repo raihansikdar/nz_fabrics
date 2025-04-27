@@ -26,6 +26,7 @@ class DataTabViewScreen extends StatelessWidget {
             // TabBarView takes the remaining space
             Expanded(
               child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   UtilityDataScreen(),
                   DataViewScreen(),
