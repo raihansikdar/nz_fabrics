@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_radio_button/custom_radio_button.dart';
@@ -34,7 +36,7 @@ class _WaterElementDetailsScreenState extends State<WaterElementDetailsScreen> w
   void initState() {
     super.initState();
 
-
+   log("--------->${widget.elementCategory}");
     Get.find<WaterTodayRuntimeDataController>().fetchTodayRuntimeData(sourceName: widget.elementName);
     Get.find<WaterThisDayDataController>().fetchThisDayData(sourceName: widget.elementName);
     Get.find<WaterThisMonthDataController>().fetchThisMonthData(sourceName: widget.elementName);

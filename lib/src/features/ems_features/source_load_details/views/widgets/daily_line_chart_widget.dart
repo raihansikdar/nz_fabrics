@@ -183,7 +183,7 @@ class DailyLineChartWidget extends StatelessWidget {
                     DateTime originalTime = DateTime.parse(data.timedate ?? DateTime.now().toIso8601String());
                     return originalTime.subtract(const Duration(hours: 6));
 
-                  },yValueMapper: (WaterDailyDataModel data, _) => data.instantCost ?? 0.0,
+                  },yValueMapper: (WaterDailyDataModel data, _) => data.cost ?? 0.0,
                   name: 'Cost(BDT)',
                 ),
               ] : <CartesianSeries>[

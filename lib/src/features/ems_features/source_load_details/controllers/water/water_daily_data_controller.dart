@@ -24,8 +24,8 @@ class WaterDailyDataController extends GetxController with InternetConnectivityC
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.dailyDataUrl(elementName));
       isLoading = false;
 
-      // log("water dailyDataUrl statusCode ==> ${response.statusCode}");
-      // log("water dailyDataUrl body ==> ${response.body}");
+    //  log("water dailyDataUrl statusCode ==> ${response.statusCode}");
+     // log("water dailyDataUrl body ==> ${response.body}");
 
       if (response.isSuccess) {
         List<dynamic> dataList = response.body;

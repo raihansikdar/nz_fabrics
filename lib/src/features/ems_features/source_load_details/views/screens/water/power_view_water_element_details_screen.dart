@@ -138,7 +138,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                   ),
 
                   RunTimeInformationWidget(
-                    viewName: "power",
+                    viewName: "Water",
                     elementCategory: widget.elementCategory,
                     size: size,
                     elementName: widget.elementName,
