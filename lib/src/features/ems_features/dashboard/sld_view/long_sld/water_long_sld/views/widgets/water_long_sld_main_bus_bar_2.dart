@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class MainBusBarTrue extends StatelessWidget {
+class WaterLongSLDMainBusBarTrue extends StatelessWidget {
   final bool sensorStatus;
   final double value;
   final String nodeName;
@@ -17,7 +17,7 @@ class MainBusBarTrue extends StatelessWidget {
   final dynamic capacity;
   final String orientation;
 
-  const MainBusBarTrue({
+  const WaterLongSLDMainBusBarTrue({
     Key? key,
     required this.sensorStatus,
     required this.value,

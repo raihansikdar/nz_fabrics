@@ -1,4 +1,4 @@
-class LiveAllNodePowerModel {
+class WaterLiveAllNodePowerModel {
   dynamic power;
   dynamic instantFlow;
   String? timedate;
@@ -9,7 +9,7 @@ class LiveAllNodePowerModel {
   dynamic percentage;
   dynamic capacity;
 
-  LiveAllNodePowerModel(
+  WaterLiveAllNodePowerModel(
       {this.power,
         this.instantFlow,
         this.timedate,
@@ -18,7 +18,7 @@ class LiveAllNodePowerModel {
         this.sensorStatus,
         this.sourceType});
 
-  LiveAllNodePowerModel.fromJson(Map<String, dynamic> json) {
+  WaterLiveAllNodePowerModel.fromJson(Map<String, dynamic> json) {
     power = json['power'];
     instantFlow = json['instant_flow'];
     timedate = json['timedate'];

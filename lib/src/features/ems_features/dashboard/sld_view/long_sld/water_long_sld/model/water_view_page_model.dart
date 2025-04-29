@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'dart:convert';
 
-class ViewPageModel {
+class WaterViewPageModel {
   final int id;
   final String nodeName;
   final String sourceType;
@@ -38,7 +38,7 @@ class ViewPageModel {
   final double textSize;
   final String orientation;
 
-  ViewPageModel({
+  WaterViewPageModel({
     required this.id,
     required this.nodeName,
     required this.sourceType,
@@ -76,7 +76,7 @@ class ViewPageModel {
     required this.orientation,
   });
 
-  factory ViewPageModel.fromJson(Map<String, dynamic> json) {
+  factory WaterViewPageModel.fromJson(Map<String, dynamic> json) {
     if (json['position_x'] == null ||
         json['position_y'] == null ||
         json['width'] == null ||
@@ -96,7 +96,7 @@ class ViewPageModel {
         'orientation=${json['orientation']}');
 
     try {
-      return ViewPageModel(
+      return WaterViewPageModel(
         id: json['id'] as int,
         nodeName: json['node_name']?.toString() ?? '',
         sourceType: json['source_type']?.toString() ?? '',

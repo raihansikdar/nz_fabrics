@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class SourceAndLoadBoxWidget extends StatelessWidget {
+class WaterLongSLDSourceAndLoadBoxWidget extends StatelessWidget {
   final bool sensorStatus;
   final double value;
   final String nodeName;
@@ -15,7 +15,7 @@ class SourceAndLoadBoxWidget extends StatelessWidget {
   final String unit;
   final String orientation;
 
-  const SourceAndLoadBoxWidget({
+  const WaterLongSLDSourceAndLoadBoxWidget({
     super.key,
     required this.sensorStatus,
     required this.value,

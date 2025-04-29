@@ -6,14 +6,14 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 
 import '../screens/electricity_short_sld.dart';
 
-class AnimatedLinePainter extends CustomPainter {
+class ElectricityShortSLDAnimatedLinePainter extends CustomPainter {
   final List<ViewPageModel> viewPageData;
   final Map<dynamic, LiveDataModel> liveData;
   final double minX;
   final double minY;
   final Animation<double> animation;
 
-  AnimatedLinePainter({
+  ElectricityShortSLDAnimatedLinePainter({
     required this.viewPageData,
     required this.liveData,
     required this.minX,
@@ -347,7 +347,7 @@ class AnimatedLinePainter extends CustomPainter {
     }
 
   @override
-  bool shouldRepaint(AnimatedLinePainter oldDelegate) {
+  bool shouldRepaint(ElectricityShortSLDAnimatedLinePainter oldDelegate) {
     return oldDelegate.animation != animation;
     }
 }

@@ -1,14 +1,14 @@
-class LoopAndBusCouplerModel {
+class WaterLoopAndBusCouplerModel {
   String? timedate;
   dynamic powerMeter;
   String? node;
   List<Lines>? lines;
   String? sourceType;
 
-  LoopAndBusCouplerModel(
+  WaterLoopAndBusCouplerModel(
       {this.timedate, this.powerMeter, this.node, this.lines, this.sourceType});
 
-  LoopAndBusCouplerModel.fromJson(Map<String, dynamic> json) {
+  WaterLoopAndBusCouplerModel.fromJson(Map<String, dynamic> json) {
     timedate = json['timedate'];
     powerMeter = json['power_meter'];
     node = json['node'];

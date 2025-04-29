@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 
-class TrBoxWithIconWidget extends StatelessWidget {
+class WaterLongSLDTrBoxWithIconWidget extends StatelessWidget {
   final double value;
   final IconData icon;
   final String label;
@@ -15,7 +15,7 @@ class TrBoxWithIconWidget extends StatelessWidget {
   final dynamic percentage;
   final dynamic capacity;
 
-  const TrBoxWithIconWidget({
+  const WaterLongSLDTrBoxWithIconWidget({
     super.key,
     required this.value,
     required this.icon,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class BusCouplerWidget extends StatelessWidget {
+class WaterLongSLDBusCouplerWidget extends StatelessWidget {
   final String label;
   final double width, height;
   final bool status; // ✅ Ensure status is a boolean
   final String shape, sourceType;
 
-  const BusCouplerWidget({
+  const WaterLongSLDBusCouplerWidget({
     required this.label,
     required this.width,
     required this.height,

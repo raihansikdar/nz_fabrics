@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 
-class CircleWithIcon extends StatelessWidget {
+class WaterLongSLDCircleWithIcon extends StatelessWidget {
   final double value;
   final IconData icon;
   final String text;
@@ -12,7 +12,7 @@ class CircleWithIcon extends StatelessWidget {
   final bool sensorStatus;
   final String borderColor;
 
-  const CircleWithIcon({
+  const WaterLongSLDCircleWithIcon({
     required this.value,
     required this.icon,
     required this.text,

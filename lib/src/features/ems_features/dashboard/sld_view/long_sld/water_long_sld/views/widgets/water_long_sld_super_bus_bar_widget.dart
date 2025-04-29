@@ -3,7 +3,7 @@ import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'dart:math';
 
-class SuperBusBarWidget extends StatelessWidget {
+class WaterLongSLDSuperBusBarWidget extends StatelessWidget {
   final bool sensorStatus;
   final double value;
   final String nodeName;
@@ -26,7 +26,7 @@ class SuperBusBarWidget extends StatelessWidget {
   final double y;
   final String orientation;
 
-  const SuperBusBarWidget({
+  const WaterLongSLDSuperBusBarWidget({
     super.key,
     required this.sensorStatus,
     required this.value,
