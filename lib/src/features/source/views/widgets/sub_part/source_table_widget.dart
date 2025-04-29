@@ -772,6 +772,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 
@@ -1149,7 +1150,10 @@ class SourceTableWidget extends StatelessWidget {
                 future: controller.dataFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return  Center(child: SpinKitFadingCircle(
+                      color: AppColors.primaryColor,
+                      size: 50.0,
+                    ),);
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {

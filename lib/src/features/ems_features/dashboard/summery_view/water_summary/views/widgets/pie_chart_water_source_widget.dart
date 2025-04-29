@@ -1,13 +1,11 @@
-import 'package:nz_fabrics/src/features/ems_features/all_live_data/views/screens/all_live_data_screen.dart';import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_pie_chart_data_model.dart';
-import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../common_widget/static_pie_chart.dart';
@@ -64,7 +62,10 @@ class _PieChartWaterSourceWidgetState extends State<PieChartWaterSourceWidget> {
 
 
               if (controller.isLoading) {
-                return Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12));
+                return Center(child: SpinKitFadingCircle(
+                  color: AppColors.primaryColor,
+                  size: 50.0,
+                ),);
               }
 
               if (controller.hasError) {

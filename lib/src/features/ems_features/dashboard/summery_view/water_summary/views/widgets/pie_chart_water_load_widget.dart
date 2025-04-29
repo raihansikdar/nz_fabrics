@@ -1,4 +1,5 @@
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/static_pie_chart.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
@@ -63,7 +64,10 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
 
 
           if (controller.isLoading) {
-            return Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12));
+            return Center(child: SpinKitFadingCircle(
+              color: AppColors.primaryColor,
+              size: 50.0,
+            ),);
           }
 
           if (controller.hasError) {

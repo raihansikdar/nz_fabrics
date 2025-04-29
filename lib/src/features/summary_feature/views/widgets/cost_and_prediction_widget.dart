@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
@@ -61,7 +62,10 @@ class _CostAndPredictionWidgetState extends State<CostAndPredictionWidget> {
     return Scaffold(
       backgroundColor: AppColors.whiteTextColor,
       body: _isLoading
-          ? Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12))
+          ? Center(child: SpinKitFadingCircle(
+        color: AppColors.primaryColor,
+        size: 50.0,
+      ),)
         : SfCartesianChart(
         primaryXAxis: CategoryAxis(),
        // title: ChartTitle(text: 'Energy Usage in Percentage'),

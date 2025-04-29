@@ -1,3 +1,4 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/pie_chart_data_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
@@ -49,7 +50,10 @@ class _PieChartPowerSourceWidgetState extends State<PieChartPowerSourceWidget> {
              // init: _controller,
               builder: (controller) {
                 if (controller.pageState == PageState.loading) {
-                  return Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12));
+                  return Center(child: SpinKitFadingCircle(
+                    color: AppColors.primaryColor,
+                    size: 50.0,
+                  ),);
                 }
                 else if (!controller.isConnected) {
                   return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Power',unitText: 'kW');
