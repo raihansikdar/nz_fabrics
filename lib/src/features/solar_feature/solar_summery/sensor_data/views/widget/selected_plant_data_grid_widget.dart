@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
@@ -40,9 +41,9 @@ class SelectedPlantDataGridWidget extends StatelessWidget {
         builder: (controller) {
           if (controller.isLoading) {
             return Center(
-              child: Lottie.asset(
-                AssetsPath.loadingJson,
-                height: size.height * 0.12,
+              child: SpinKitFadingCircle(
+                color: AppColors.primaryColor,
+                size: 50.0,
               ),
             );
           }

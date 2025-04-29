@@ -24,6 +24,7 @@ class SldTabViewScreen extends StatelessWidget {
             // TabBarView takes the remaining space
             Expanded(
               child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   const ElectricityShortSldScreen(),
                   const WaterShortSldScreen(),

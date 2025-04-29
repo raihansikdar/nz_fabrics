@@ -188,6 +188,7 @@
 // }
 
 import 'dart:developer';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
@@ -245,7 +246,10 @@ class _PlantLiveDataTableState extends State<PlantLiveDataTable> {
     return Scaffold(
       backgroundColor: AppColors.whiteTextColor,
       body: isLoading
-          ?  Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12))
+          ?  Center(child: SpinKitFadingCircle(
+        color: AppColors.primaryColor,
+        size: 50.0,
+      ),)
           : Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(

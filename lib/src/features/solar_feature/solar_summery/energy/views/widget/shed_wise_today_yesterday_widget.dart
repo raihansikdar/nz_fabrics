@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
@@ -371,7 +372,14 @@ class _ShedWiseEnergyChartWidgetState extends State<ShedWiseEnergyChartWidget> {
           ],
         ),
       )
-          : Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12)),
+          : Padding(
+
+            padding: const EdgeInsets.only(bottom: 120.0),
+            child: Center(child:SpinKitFadingCircle(
+                    color: AppColors.primaryColor,
+                    size: 50.0,
+                  ),),
+          ),
     );
   }
 }

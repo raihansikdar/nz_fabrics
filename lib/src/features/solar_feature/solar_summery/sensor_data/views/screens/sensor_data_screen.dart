@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -266,7 +267,10 @@ class _SensorDataScreenState extends State<SensorDataScreen> with WidgetsBinding
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: isLoading
-          ? Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12))
+          ? Center(child: SpinKitFadingCircle(
+        color: AppColors.primaryColor,
+        size: 50.0,
+      ),)
           : SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: size.height * k8TextSize),

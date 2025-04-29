@@ -1,9 +1,11 @@
   import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/empty_page_widget/empty_page_widget.dart';
 import 'package:nz_fabrics/src/features/solar_feature/solar_summery/active_power_controller/controller/plant_today_data_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
+import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,10 @@ class PowerControlLineChartWidget extends StatelessWidget {
           if (controller.isAssortedDataInProgress) {
             return Center(child: Padding(
               padding: EdgeInsets.only(top: size.height * 0.3),
-              child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12),
+              child: SpinKitFadingCircle(
+                color: AppColors.primaryColor,
+                size: 50.0,
+              ),
             ));
           }
 

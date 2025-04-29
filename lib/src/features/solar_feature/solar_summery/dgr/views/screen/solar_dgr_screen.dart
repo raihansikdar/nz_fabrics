@@ -84,6 +84,7 @@
 // }
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
@@ -129,9 +130,9 @@ class _SolarDgrScreenState extends State<SolarDgrScreen> {
                   return Center(
                     child: Padding(
                       padding: EdgeInsets.only(top: size.height * 0.35),
-                      child: Lottie.asset(
-                        AssetsPath.loadingJson,
-                        height: size.height * 0.12,
+                      child: SpinKitFadingCircle(
+                        color: AppColors.primaryColor,
+                        size: 50.0,
                       ),
                     ),
                   );

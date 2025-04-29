@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
@@ -116,7 +117,10 @@ class _InverterDataScreenState extends State<InverterDataScreen> with WidgetsBin
       backgroundColor: AppColors.whiteTextColor,
       appBar: const CustomAppBarWidget(text: "Inverter", backPreviousScreen: true),
       body: _isLoading
-          ? Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12))
+          ? Center(child: SpinKitFadingCircle(
+        color: AppColors.primaryColor,
+        size: 50.0,
+      ),)
           : Padding(
         padding: EdgeInsets.only(left: size.height * k8TextSize,right: size.height * k8TextSize),
         child: SfDataGridTheme(
