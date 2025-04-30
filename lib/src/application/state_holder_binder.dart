@@ -69,6 +69,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/source_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/find_water_value_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/load_water_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
@@ -158,6 +160,10 @@ class StateHolderBinders extends Bindings{
      Get.put(GetLiveDataController());
 
 
+     Get.put(WaterSourceCategoryWiseDataController());
+     Get.put(WaterLoadCategoryWiseDataController());
+
+
 
 
      Get.put(GetButtonFromAllController());
@@ -169,8 +175,8 @@ class StateHolderBinders extends Bindings{
      Get.put(PieChartPowerSourceController());
      Get.put(PieChartPowerLoadController());
 
-     Get.put(LoadWaterController());
-     Get.put(SourceWaterController());
+     ///Get.put(LoadWaterController());
+   ///  Get.put(SourceWaterController());
      Get.put(PieChartWaterSourceController());
      Get.put(PieChartWaterLoadController());
 
@@ -322,7 +328,7 @@ class StateHolderBinders extends Bindings{
      Get.put(LiveDataSourcePieChartController());
 
 
-     Get.put(FindWaterValueController());
+     //Get.put(FindWaterValueController());
      Get.put(FindPowerValueController());
 
 

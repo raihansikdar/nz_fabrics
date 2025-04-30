@@ -301,8 +301,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                   
                   
                             /*------------- Stop Api in Electricity ---------------*/
-                            Get.find<SourceWaterController>().stopApiCallOnScreenChange();
-                            Get.find<LoadWaterController>().stopApiCallOnScreenChange();
+                            //Get.find<SourceWaterController>().stopApiCallOnScreenChange();
+                            //Get.find<LoadWaterController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
                             Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
@@ -325,8 +325,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                   
                   
                             /*------------- Stop Api in Electricity ---------------*/
-                            Get.find<SourceWaterController>().stopApiCallOnScreenChange();
-                            Get.find<LoadWaterController>().stopApiCallOnScreenChange();
+                         //   Get.find<SourceWaterController>().stopApiCallOnScreenChange();
+                           // Get.find<LoadWaterController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
                             Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
@@ -670,8 +670,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
                     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
                     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
-                    Get.find<SourceWaterController>().stopApiCallOnScreenChange();
-                    Get.find<LoadWaterController>().stopApiCallOnScreenChange();
+                   // Get.find<SourceWaterController>().stopApiCallOnScreenChange();
+                  //  Get.find<LoadWaterController>().stopApiCallOnScreenChange();
 
                   } else {
                     Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();

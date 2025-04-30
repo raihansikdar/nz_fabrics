@@ -8,6 +8,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/find_water_value_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/load_water_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
@@ -41,8 +43,11 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
 
       /*------------- Start Api in Water ---------------*/
-      Get.find<SourceWaterController>().startApiCallOnScreenChange();
-      Get.find<LoadWaterController>().startApiCallOnScreenChange();
+      Get.find<WaterSourceCategoryWiseDataController>().fetchWaterCategoryWiseLiveData();
+      Get.find<WaterLoadCategoryWiseDataController>().fetchWaterCategoryWiseLiveData();
+
+      //Get.find<SourceWaterController>().startApiCallOnScreenChange();
+     // Get.find<LoadWaterController>().startApiCallOnScreenChange();
       Get.find<PieChartWaterSourceController>().startApiCallOnScreenChange();
       Get.find<PieChartWaterLoadController>().startApiCallOnScreenChange();
       /*------------- Stop Api in Water ---------------*/
@@ -54,22 +59,22 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
 
 
 
-
-     Get.find<SourceWaterController>().fetchSourceWaterData().then((_){
-
-         Get.find<FindWaterValueController>().fetchFindWaterData(
-           nodeNameList: Get.find<SourceWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
-            );
-
-     });
-
-     Get.find<LoadWaterController>().fetchLoadWaterData().then((_){
-       Future.delayed(const Duration(seconds: 1),(){
-         Get.find<FindWaterValueController>().fetchFindWaterData(
-           nodeNameList: Get.find<LoadWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
-            );
-       });
-     });
+     //
+     // Get.find<CategorySourceCategoryWiseDataController>().fetchWaterCategoryWiseLiveData().then((_){
+     //
+     //     Get.find<FindWaterValueController>().fetchFindWaterData(
+     //       nodeNameList: Get.find<CategorySourceCategoryWiseDataController>().waterSourceCategoryWiseLiveData.map((e) => e.nodeName ?? '').toList(),
+     //        );
+     //
+     // });
+     //
+     // Get.find<LoadWaterController>().fetchLoadWaterData().then((_){
+     //   Future.delayed(const Duration(seconds: 1),(){
+     //     Get.find<FindWaterValueController>().fetchFindWaterData(
+     //       nodeNameList: Get.find<LoadWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
+     //        );
+     //   });
+     // });
 
 
 
@@ -86,17 +91,17 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
       body: RefreshIndicator(
         onRefresh: () async{
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            Get.find<SourceWaterController>().fetchSourceWaterData().then((_){
-              Get.find<FindWaterValueController>().fetchFindWaterData(
-                nodeNameList: Get.find<SourceWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
-              );
-            });
-
-            Get.find<LoadWaterController>().fetchLoadWaterData().then((_){
-                Get.find<FindWaterValueController>().fetchFindWaterData(
-                  nodeNameList: Get.find<LoadWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
-                );
-            });
+            // Get.find<SourceWaterController>().fetchSourceWaterData().then((_){
+            //   Get.find<FindWaterValueController>().fetchFindWaterData(
+            //     nodeNameList: Get.find<SourceWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
+            //   );
+            // });
+            //
+            // Get.find<LoadWaterController>().fetchLoadWaterData().then((_){
+            //     Get.find<FindWaterValueController>().fetchFindWaterData(
+            //       nodeNameList: Get.find<LoadWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
+            //     );
+            // });
           });
         },
         child: Column(
@@ -141,7 +146,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
               padding: EdgeInsets.symmetric( horizontal: size.height * k16TextSize),
               child: const Divider(thickness: 3,),
             ),
-            GetBuilder<SourceWaterController>(
+            GetBuilder<WaterSourceCategoryWiseDataController>(
                 builder: (controller) {
                   if(controller.hasError){
                     return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
@@ -162,30 +167,30 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                 trackVisibility: true,
                                 radius: Radius.circular(size.height * k16TextSize),
                                 thickness: 6,
-                                child: dashBoardRadioButtonController.selectedSourceLoadValue== 1 ? GetBuilder<SourceWaterController>(
-                                    builder: (sourceWaterController) {
+                                child: dashBoardRadioButtonController.selectedSourceLoadValue== 1 ? GetBuilder<WaterSourceCategoryWiseDataController>(
+                                    builder: (controller) {
                                       return   ListView.separated(
                                         shrinkWrap: true,
                                         primary: false,
-                                        itemCount: sourceWaterController.isLoading
+                                        itemCount: controller.isLoading
                                             ? 4
-                                            : sourceWaterController.waterList.isEmpty || sourceWaterController.hasError
+                                            : controller.waterSourceCategoryWiseLiveData.data!.isEmpty || controller.hasError
                                             ? 1
-                                            : sourceWaterController.waterList.length,
+                                            : controller.waterSourceCategoryWiseLiveData.data!.length,
                                         itemBuilder: (context,index){
-                                          if(sourceWaterController.isLoading){
+                                          if(controller.isLoading){
                                             return Padding(
                                               padding: EdgeInsets.all(size.height * k8TextSize),
                                               child: CustomShimmerWidget(height: size.height * 0.09 , width: double.infinity,),
                                             );
-                                          } else if(sourceWaterController.waterList.isEmpty){
+                                          } else if(controller.waterSourceCategoryWiseLiveData.data!.isEmpty){
                                             return Center(child: Lottie.asset(AssetsPath.emptyJson,height: size.height * 0.250));
-                                          } else if(sourceWaterController.hasError){
+                                          } else if(controller.hasError){
                                             return  Lottie.asset(AssetsPath.errorJson,height: size.height * 0.250);
                                           }
 
                                           else{
-                                            dynamic waterData = sourceWaterController.waterList[index];
+                                             dynamic waterData = controller.waterSourceCategoryWiseLiveData.data?[index];
 
                                             return OpenContainer(
                                                 transitionDuration: const Duration(milliseconds: 1400),
@@ -200,9 +205,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                           side: const BorderSide(color: AppColors.containerBorderColor)
                                                       ),
                                                       color: AppColors.listTileColor,
-                                                      child: GetBuilder<FindWaterValueController>(
-                                                        builder: (findWaterValueController) {
-                                                          return Column(
+                                                      child: Column(
                                                             children: [
                                                               ListTile(
                                                                 //'Solar','Diesel_Generator','Gas_Generator','Grid'
@@ -223,7 +226,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
 
                                                                             ),
                                                                             SizedBox(width: size.width * k16TextSize,),
-                                                                            TextComponent(text: waterData.nodeName ?? ''),
+                                                                            TextComponent(text: controller.waterSourceCategoryWiseLiveData.data?[index].category ?? ''),
                                                                           ],
                                                                         ),
                                                                         Row(
@@ -250,11 +253,11 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                                             Column(
                                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
-                                                                                TextComponent(text: " ${findWaterValueController.waterValues[waterData.nodeName]?.instantFlow?.toStringAsFixed(2) ?? '0.00'} m³/s"),
+                                                                                TextComponent(text: " ${waterData.totalInstantFlow?.toStringAsFixed(2) ?? '0.00'} m³/s"),
                                                                                 SizedBox(width: size.height * k16TextSize,),
-                                                                                TextComponent(text: " ${findWaterValueController.waterValues[waterData.nodeName]?.cost?.toStringAsFixed(2) ?? '0.00'} ৳"),
+                                                                                TextComponent(text: " ${waterData.totalCost?.toStringAsFixed(2) ?? '0.00'} ৳"),
                                                                                 SizedBox(width: size.height * k16TextSize,),
-                                                                                TextComponent(text: " ${findWaterValueController.waterValues[waterData.nodeName]?.volume?.toStringAsFixed(2) ?? '0.00'} L"),
+                                                                                TextComponent(text: " ${waterData.totalVolume?.toStringAsFixed(2) ?? '0.00'} L"),
                                                                               ],
                                                                             ),
                                                                           ],
@@ -266,29 +269,28 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                               ),
 
                                                             ],
-                                                          );
-                                                        }
-                                                      ),
+                                                          ),
+
                                                     ),
                                                   );
                                                 }, openBuilder: (BuildContext _, VoidCallback __){
-                                              return  WaterElementDetailsScreen(elementName: waterData.nodeName ?? '',
-                                                  gaugeValue:  Get.find<FindWaterValueController>().waterValues[waterData.nodeName ?? '']?.instantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
+                                              return  WaterElementDetailsScreen(elementName: waterData.category ?? '',
+                                                  gaugeValue: waterData.totalInstantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
                                               );
                                             });
                                           }
                                         }, separatorBuilder: (context,index) => const SizedBox(height: 0,),);
                                     }
-                                ) : GetBuilder<LoadWaterController>(
+                                ) : GetBuilder<WaterLoadCategoryWiseDataController>(
                                     builder: (loadWaterController) {
                                       return   ListView.separated(
                                         shrinkWrap: true,
                                         primary: false,
                                         itemCount: loadWaterController.isLoading
                                             ? 3
-                                            : loadWaterController.waterList.isEmpty || loadWaterController.hasError
+                                            : loadWaterController.waterLoadCategoryWiseLiveData.data!.isEmpty || loadWaterController.hasError
                                             ? 1
-                                            : loadWaterController.waterList.length,
+                                            : loadWaterController.waterLoadCategoryWiseLiveData.data!.length,
 
                                         itemBuilder: (context,index){
                                           if(loadWaterController.isLoading){
@@ -296,14 +298,14 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                               padding: EdgeInsets.all(size.height * k8TextSize),
                                               child: CustomShimmerWidget(height: size.height * 0.09 , width: double.infinity,),
                                             );
-                                          } else if(loadWaterController.waterList.isEmpty){
+                                          } else if(loadWaterController.waterLoadCategoryWiseLiveData.data!.isEmpty){
                                             return Center(child: Lottie.asset(AssetsPath.emptyJson,height: size.height * 0.250));
                                           } else if(loadWaterController.hasError){
                                             return  Lottie.asset(AssetsPath.errorJson,height: size.height * 0.250);
                                           }
 
                                           else{
-                                            dynamic waterData = loadWaterController.waterList[index];
+                                            dynamic waterLoadData = loadWaterController.waterLoadCategoryWiseLiveData.data?[index];
 
                                             return OpenContainer(
                                                 transitionDuration: const Duration(milliseconds: 1400),
@@ -318,10 +320,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                           side: const BorderSide(color: AppColors.containerBorderColor)
                                                       ),
                                                       color: AppColors.listTileColor,
-                                                      child: GetBuilder<FindWaterValueController>(
-                                                        builder: (findWaterValueController) {
-
-                                                          return Column(
+                                                      child:  Column(
                                                             children: [
                                                               ListTile(
                                                                 //'Solar','Diesel_Generator','Gas_Generator','Grid'
@@ -343,7 +342,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
 
                                                                         ),
                                                                         SizedBox(width: size.width * k16TextSize,),
-                                                                        TextComponent(text: waterData.nodeName ?? ''),
+                                                                        TextComponent(text: waterLoadData.category ?? ''),
                                                                       ],
                                                                     ),
 
@@ -371,11 +370,11 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                                         Column(
                                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                                           children: [
-                                                                            TextComponent(text: " ${findWaterValueController.waterValues[waterData.nodeName]?.instantFlow?.toStringAsFixed(2) ?? '0.00'} m³/s"),
+                                                                            TextComponent(text: " ${waterLoadData?.totalInstantFlow?.toStringAsFixed(2) ?? '0.00'} m³/s"),
                                                                             SizedBox(width: size.height * k16TextSize,),
-                                                                            TextComponent(text: " ${findWaterValueController.waterValues[waterData.nodeName]?.cost?.toStringAsFixed(2) ?? '0.00'} ৳"),
+                                                                            TextComponent(text: " ${waterLoadData?.totalCost?.toStringAsFixed(2) ?? '0.00'} ৳"),
                                                                             SizedBox(width: size.height * k16TextSize,),
-                                                                            TextComponent(text: " ${findWaterValueController.waterValues[waterData.nodeName]?.volume?.toStringAsFixed(2) ?? '0.00'} L"),
+                                                                            TextComponent(text: " ${waterLoadData.totalVolume?.toStringAsFixed(2) ?? '0.00'} L"),
                                                                           ],
                                                                         ),
                                                                       ],
@@ -386,14 +385,13 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                               ),
 
                                                             ],
-                                                          );
-                                                        }
-                                                      ),
+                                                          ),
+
                                                     ),
                                                   );
                                                 }, openBuilder: (BuildContext _, VoidCallback __){
-                                              return  WaterElementDetailsScreen(elementName: waterData.nodeName ?? '',
-                                                  gaugeValue:   Get.find<FindWaterValueController>().waterValues[waterData.nodeName ?? '']?.instantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
+                                              return  WaterElementDetailsScreen(elementName: waterLoadData.nodeName ?? '',
+                                                  gaugeValue:   waterLoadData.totalInstantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
                                               );
                                             });
                                           }

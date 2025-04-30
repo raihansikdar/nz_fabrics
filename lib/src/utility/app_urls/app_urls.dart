@@ -23,6 +23,12 @@ class Urls{
 
  static String getSourceCategoryWiseLiveDataUrl = "$_baseUrl/api/get-source-categorywise-live-data/";
  static String getLoadMachineWiseLiveDataUrl = "$_baseUrl/api/get-load-machinewise-live-data/";
+
+ static String getWaterSourceCategoryWiseLiveDataUrl = "$_baseUrl/api/get-water-source-categorywise-live-data/";
+ static String getWaterLoadMachineWiseLiveDataUrl = "$_baseUrl/api/get-water-load-machinewise-live-data/";
+
+
+
  static String getLiveDataUrl(String sourceName) => "$_baseUrl/get-live-data/$sourceName/";
  static String getEachCategoryLiveDataUrl(String categoryName) => "$_baseUrl/api/get-each-category-live-data/$categoryName/";
  static String getEachMachineWiseLoadLiveDataUrl(String categoryName) => "$_baseUrl/api/get-machinewise-load-live-data/$categoryName/";

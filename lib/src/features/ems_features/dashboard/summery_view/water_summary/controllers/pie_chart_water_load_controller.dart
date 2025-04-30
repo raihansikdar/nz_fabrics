@@ -2,31 +2,33 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_pie_chart_data_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_pie_chart_total_data_model.dart';
+import 'package:get/get.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_load_category_wise_live_data_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
-import 'package:get/get.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
-
 class PieChartWaterLoadController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
-  List<WaterPieChartDataModel> waterPieChartDataModelList = [];
-  WaterPieChartTotalDataModel waterPieChartTotalDataList = WaterPieChartTotalDataModel();
-  bool isLoading = false;
-  bool hasError = false;
-  bool isConnected = true;
+
+  List<Data> pieChartDataList = [];
+  bool _isLoading = false;
+  bool _isConnected = true;
+  bool _hasError = false;
   bool isFirstTimeLoading = true;
-  var errorMessage = ''.obs;
+  String _errorMessage = '';
+  WaterLoadCategoryWiseLiveDataModel _waterLoadCategoryWiseLiveData = WaterLoadCategoryWiseLiveDataModel();
 
-
+  bool get isLoading => _isLoading;
+  bool get isConnected => _isConnected;
+  bool get hasError => _hasError;
+  String get errorMessage => _errorMessage;
+  WaterLoadCategoryWiseLiveDataModel get waterLoadCategoryWiseLiveData => _waterLoadCategoryWiseLiveData;
 
   Timer? _timer;
-
 
   bool _isComeFromBackGround = false;
   bool _isStopApiCall = false;
@@ -38,7 +40,10 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
 
     ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
       if (token != null) {
-        fetchPieChartData();
+        fetchWaterCategoryWiseLiveData();
+        _startPeriodicApiCall();
+      } else {
+        _stopPeriodicApiCall();
       }
     });
   }
@@ -51,10 +56,10 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
       _isComeFromBackGround  = true;
       _stopPeriodicApiCallWhenBackGround();
       update();
-
     } else if (state == AppLifecycleState.resumed) {
+
       if (!_isStopApiCall && _isComeFromBackGround) {
-        fetchPieChartData();
+        fetchWaterCategoryWiseLiveData();
         _startPeriodicApiCall();
         _isComeFromBackGround = false;
         _isStopApiCall = false;
@@ -67,16 +72,15 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
   void _startPeriodicApiCall() {
     _stopPeriodicApiCall();
     _timer = Timer.periodic(const Duration(seconds: kTimer), (timer) {
-      fetchPieChartData();
+      fetchWaterCategoryWiseLiveData();
     });
   }
 
   void _stopPeriodicApiCall() {
     _isStopApiCall = true;
-
     _timer?.cancel();
     _timer = null;
-    // update();
+    //update();
   }
 
 
@@ -86,8 +90,6 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
     update();
   }
 
-
-
   @override
   void onClose() {
     _stopPeriodicApiCall();
@@ -96,13 +98,14 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
   }
 
 
+
   void stopApiCallOnScreenChange() {
     if (Get.isRegistered<PieChartWaterLoadController>()) {
       final controller = Get.find<PieChartWaterLoadController>();
       controller._stopPeriodicApiCall();
       // Optionally, you can delete the controller if it's no longer needed
       // Get.delete<PieChartPowerSourceController>();
-      log("PieChartWaterSourceController Stop Api Call");
+      log("CategoryWiseLiveDataController Stop Api Call");
     }
   }
 
@@ -114,75 +117,70 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
       // If the controller is already registered, just restart the periodic API calls
       final controller = Get.find<PieChartWaterLoadController>();
       controller._startPeriodicApiCall();
-      log("PieChartWaterSourceController Start Api Call");
+      log("CategoryWiseLiveDataController Start Api Call");
     }
     _isStopApiCall = false;
     update();
-
   }
 
 
-  Future<void> fetchPieChartData() async {
-    isConnected = true;
+  Future<bool> fetchWaterCategoryWiseLiveData() async {
+
+    _isConnected = true;
+    _hasError = false;
+    _errorMessage = '';
     update();
 
-
     if (isFirstTimeLoading) {
-      isLoading = true;
+      _isLoading = true;
       update();
     }
+
 
 
     try {
-
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.pieChartWaterLoadUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLoadMachineWiseLiveDataUrl);
 
-      isLoading = false;
+      //log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
+      // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.body}");
 
 
-      log("pieChartWaterLoadUrl status: ${response.statusCode}");
-      // log("pieChartWaterLoadUrl body: ${response.body}");
+      if(response.isSuccess){
+        // _waterSourceCategoryWiseLiveData = ((response.body )['data'] as List<dynamic>).map((json)=> WaterSourceCategoryWiseLiveDataModel.fromJson(json)).toList();
+        _waterLoadCategoryWiseLiveData =  WaterLoadCategoryWiseLiveDataModel.fromJson(response.body);
+        pieChartDataList = _waterLoadCategoryWiseLiveData.data ?? [];
+        _hasError = false;
+        update();
+        return true;
+      }else{
+        _errorMessage = "Can't fetch load water category wise live data";
 
-      if (response.statusCode == 200) {
-        final jsonData = response.body;
-        // log('Pie Chart Load Water Data : $jsonData');
-        if (jsonData is Map<String, dynamic>) {
-          waterPieChartDataModelList = jsonData.entries
-              .where((entry) =>
-          (entry.value is double || entry.value is int) &&
-              entry.key != 'total' &&
-              entry.key != 'total_cost')
-              .map((entry) =>
-              WaterPieChartDataModel(entry.key, (entry.value as num).toDouble()))
-              .toList();
-
-          waterPieChartTotalDataList = WaterPieChartTotalDataModel.fromJson(jsonData);
-        } else {
-          hasError = true;
-          throw Exception('Unexpected data format');
-        }
-
-      } else {
-        hasError = true;
-        throw Exception('Failed to load data: ${response.statusCode}');
+        _hasError = true;
+        update();
+        return false;
       }
+
     } catch (e) {
-      hasError = true;
-      isLoading = false;
       if (e is AppException) {
-        isConnected = false;
-        hasError = false;
+        _isConnected = false;
+        _errorMessage = e.error.toString();
+        _hasError = false;
+        update();
+      } else {
+        _errorMessage = e.toString();
+        log('Error water load category wise live data: $_errorMessage');
+        _hasError = true;
+        update();
       }
-      update();
-      log('Water Pie Chart load fetching error data: $e');
+      return false;
+
     } finally {
-      isLoading = false;
+      _isLoading = false;
       isFirstTimeLoading = false;
       update();
+
     }
   }
 }
-
-

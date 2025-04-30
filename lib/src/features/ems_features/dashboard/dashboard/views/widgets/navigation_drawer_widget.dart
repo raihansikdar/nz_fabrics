@@ -66,17 +66,17 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       });
 
 
-      Get.find<SourceWaterController>().fetchSourceWaterData().then((_){
-        Get.find<FindWaterValueController>().fetchFindWaterData(
-          nodeNameList: Get.find<SourceWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
-        );
-      });
-
-      Get.find<LoadWaterController>().fetchLoadWaterData().then((_){
-        Get.find<FindWaterValueController>().fetchFindWaterData(
-          nodeNameList: Get.find<LoadWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
-        );
-      });
+      // Get.find<SourceWaterController>().fetchSourceWaterData().then((_){
+      //   Get.find<FindWaterValueController>().fetchFindWaterData(
+      //     nodeNameList: Get.find<SourceWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
+      //   );
+      // });
+      //
+      // Get.find<LoadWaterController>().fetchLoadWaterData().then((_){
+      //   Get.find<FindWaterValueController>().fetchFindWaterData(
+      //     nodeNameList: Get.find<LoadWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
+      //   );
+      // });
 
 
 
@@ -553,7 +553,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                       ),*/
 
 
-                      if(Get.find<SourceWaterController>().waterList.isNotEmpty)...{
+               /*       if(Get.find<SourceWaterController>().waterList.isNotEmpty)...{
                         Theme(
                           data: Theme.of(context).copyWith(
                             dividerColor: Colors.transparent,
@@ -816,7 +816,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                         ),
                       }else...{
                         const SizedBox(),
-                      },
+                      },*/
 
 
 

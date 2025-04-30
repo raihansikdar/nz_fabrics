@@ -12,9 +12,7 @@ import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
-class PieChartWaterSourceController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
-
-  List<Data> pieChartDataList = [];
+class WaterSourceCategoryWiseDataController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
   bool _isLoading = false;
   bool _isConnected = true;
   bool _hasError = false;
@@ -100,8 +98,8 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
 
 
   void stopApiCallOnScreenChange() {
-    if (Get.isRegistered<PieChartWaterSourceController>()) {
-      final controller = Get.find<PieChartWaterSourceController>();
+    if (Get.isRegistered<WaterSourceCategoryWiseDataController>()) {
+      final controller = Get.find<WaterSourceCategoryWiseDataController>();
       controller._stopPeriodicApiCall();
       // Optionally, you can delete the controller if it's no longer needed
       // Get.delete<PieChartPowerSourceController>();
@@ -110,12 +108,12 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
   }
 
   void startApiCallOnScreenChange() {
-    if (!Get.isRegistered<PieChartWaterSourceController>()) {
-      final controller = Get.put(PieChartWaterSourceController());
+    if (!Get.isRegistered<WaterSourceCategoryWiseDataController>()) {
+      final controller = Get.put(WaterSourceCategoryWiseDataController());
       controller._startPeriodicApiCall();
     } else {
       // If the controller is already registered, just restart the periodic API calls
-      final controller = Get.find<PieChartWaterSourceController>();
+      final controller = Get.find<WaterSourceCategoryWiseDataController>();
       controller._startPeriodicApiCall();
       log("CategoryWiseLiveDataController Start Api Call");
     }
@@ -143,14 +141,14 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterSourceCategoryWiseLiveDataUrl);
 
-      //log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
-      // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.body}");
+       //log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
+       // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.body}");
 
 
       if(response.isSuccess){
-        // _waterSourceCategoryWiseLiveData = ((response.body )['data'] as List<dynamic>).map((json)=> WaterSourceCategoryWiseLiveDataModel.fromJson(json)).toList();
+       // _waterSourceCategoryWiseLiveData = ((response.body )['data'] as List<dynamic>).map((json)=> WaterSourceCategoryWiseLiveDataModel.fromJson(json)).toList();
         _waterSourceCategoryWiseLiveData =  WaterSourceCategoryWiseLiveDataModel.fromJson(response.body);
-        pieChartDataList = _waterSourceCategoryWiseLiveData.data ?? [];
+
         _hasError = false;
         update();
         return true;

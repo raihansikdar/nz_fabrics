@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_source_category_wise_live_data_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_load_category_wise_live_data_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -12,21 +12,19 @@ import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
-class PieChartWaterSourceController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
-
-  List<Data> pieChartDataList = [];
+class WaterLoadCategoryWiseDataController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
   bool _isLoading = false;
   bool _isConnected = true;
   bool _hasError = false;
   bool isFirstTimeLoading = true;
   String _errorMessage = '';
-  WaterSourceCategoryWiseLiveDataModel _waterSourceCategoryWiseLiveData = WaterSourceCategoryWiseLiveDataModel();
+  WaterLoadCategoryWiseLiveDataModel _waterLoadCategoryWiseLiveData = WaterLoadCategoryWiseLiveDataModel();
 
   bool get isLoading => _isLoading;
   bool get isConnected => _isConnected;
   bool get hasError => _hasError;
   String get errorMessage => _errorMessage;
-  WaterSourceCategoryWiseLiveDataModel get waterSourceCategoryWiseLiveData => _waterSourceCategoryWiseLiveData;
+  WaterLoadCategoryWiseLiveDataModel get waterLoadCategoryWiseLiveData => _waterLoadCategoryWiseLiveData;
 
   Timer? _timer;
 
@@ -100,8 +98,8 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
 
 
   void stopApiCallOnScreenChange() {
-    if (Get.isRegistered<PieChartWaterSourceController>()) {
-      final controller = Get.find<PieChartWaterSourceController>();
+    if (Get.isRegistered<WaterLoadCategoryWiseDataController>()) {
+      final controller = Get.find<WaterLoadCategoryWiseDataController>();
       controller._stopPeriodicApiCall();
       // Optionally, you can delete the controller if it's no longer needed
       // Get.delete<PieChartPowerSourceController>();
@@ -110,12 +108,12 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
   }
 
   void startApiCallOnScreenChange() {
-    if (!Get.isRegistered<PieChartWaterSourceController>()) {
-      final controller = Get.put(PieChartWaterSourceController());
+    if (!Get.isRegistered<WaterLoadCategoryWiseDataController>()) {
+      final controller = Get.put(WaterLoadCategoryWiseDataController());
       controller._startPeriodicApiCall();
     } else {
       // If the controller is already registered, just restart the periodic API calls
-      final controller = Get.find<PieChartWaterSourceController>();
+      final controller = Get.find<WaterLoadCategoryWiseDataController>();
       controller._startPeriodicApiCall();
       log("CategoryWiseLiveDataController Start Api Call");
     }
@@ -141,21 +139,21 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterSourceCategoryWiseLiveDataUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLoadMachineWiseLiveDataUrl);
 
-      //log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
-      // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.body}");
+      log("getWaterLoadMachineWiseLiveDataUrl: ${response.statusCode}");
+      log("getWaterLoadMachineWiseLiveDataUrl: ${response.body}");
 
 
       if(response.isSuccess){
         // _waterSourceCategoryWiseLiveData = ((response.body )['data'] as List<dynamic>).map((json)=> WaterSourceCategoryWiseLiveDataModel.fromJson(json)).toList();
-        _waterSourceCategoryWiseLiveData =  WaterSourceCategoryWiseLiveDataModel.fromJson(response.body);
-        pieChartDataList = _waterSourceCategoryWiseLiveData.data ?? [];
+        _waterLoadCategoryWiseLiveData =  WaterLoadCategoryWiseLiveDataModel.fromJson(response.body);
+
         _hasError = false;
         update();
         return true;
       }else{
-        _errorMessage = "Can't fetch water category wise live data";
+        _errorMessage = "Can't fetch water load category wise live data";
 
         _hasError = true;
         update();
@@ -170,7 +168,7 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
         update();
       } else {
         _errorMessage = e.toString();
-        log('Error water category wise live data: $_errorMessage');
+        log('Error water load category wise live data: $_errorMessage');
         _hasError = true;
         update();
       }

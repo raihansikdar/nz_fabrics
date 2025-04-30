@@ -3,8 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/static_pie_chart.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_pie_chart_data_model.dart';
-import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_load_category_wise_live_data_model.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<PieChartWaterLoadController>().fetchPieChartData();
+      Get.find<PieChartWaterLoadController>().fetchWaterCategoryWiseLiveData();
     });
     _tooltipBehavior = TooltipBehavior(enable: true, format: 'point.x: point.y m³/s');
   }
@@ -74,7 +73,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
             return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M');
           }
 
-          if (controller.waterPieChartDataModelList.isEmpty) {
+          if ((controller.waterLoadCategoryWiseLiveData.data ?? []).isEmpty) {
             return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M');
           }
 
@@ -87,11 +86,11 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
                 child: SfCircularChart(
                   tooltipBehavior: _tooltipBehavior,
                   series: <CircularSeries>[
-                    DoughnutSeries<WaterPieChartDataModel, String>(
-                      dataSource: controller.waterPieChartDataModelList,
-                      xValueMapper: (WaterPieChartDataModel data, _) => data.category,
-                      yValueMapper: (WaterPieChartDataModel data, _) => data.value,
-                      pointColorMapper: (WaterPieChartDataModel data, int index) =>
+                    DoughnutSeries<Data, String>(
+                      dataSource: controller.pieChartDataList,
+                      xValueMapper: (Data data, _) => data.category,
+                      yValueMapper: (Data data, _) => data.totalInstantFlow,
+                      pointColorMapper: (Data data, int index) =>
                       colorPalette[index % colorPalette.length],
                       innerRadius: '80%',
 
@@ -118,7 +117,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
                     ),
 
                     TextSpan(
-                      text: "${controller.waterPieChartTotalDataList.total?.toStringAsFixed(2)}\n",
+                      text: "${controller.waterLoadCategoryWiseLiveData.netTotalInstantFlow?.toStringAsFixed(2)}\n",
                       style:  TextStyle(
                         fontSize: size.height * k18TextSize,
                         color: AppColors.primaryTextColor,
@@ -126,7 +125,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
                       ),
                     ),
                     TextSpan(
-                      text: 'L/M',
+                      text: 'm³/s',
                       style: TextStyle(
                         fontSize: size.height * k14TextSize,
                         color:  Colors.grey ,
