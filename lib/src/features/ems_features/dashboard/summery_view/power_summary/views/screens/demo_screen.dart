@@ -206,22 +206,50 @@ class _DemoScreenState extends State<DemoScreen> {
                                                         // ),
 
 
+                                                        // RebValueDataWidget(
+                                                        //   size: size,
+                                                        //   powerText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
+                                                        //       ? "${mainBusBarController.getLiveDataModel[index].power.toStringAsFixed(2)} kW"
+                                                        //       : "0.00 kW",
+                                                        //
+                                                        //   energyText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
+                                                        //       ? "${mainBusBarController.getLiveDataModel[index].todayEnergy.toStringAsFixed(2)} kWh"
+                                                        //       : "0.00 kWh",
+                                                        //
+                                                        //   costText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
+                                                        //       ? "${mainBusBarController.getLiveDataModel[index].cost.toStringAsFixed(2)} ৳"
+                                                        //       : "0.00 ৳",
+                                                        //
+                                                        //   pfText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
+                                                        //       ? "${mainBusBarController.getLiveDataModel[index].powerFactor.toStringAsFixed(4)} %"
+                                                        //       : "0.00 %",
+                                                        // ),
+
+
                                                         RebValueDataWidget(
                                                           size: size,
-                                                          powerText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
-                                                              ? "${mainBusBarController.getLiveDataModel[index].power.toStringAsFixed(2)} kW"
+                                                          powerText: (mainBusBarController.getLiveDataModel.isNotEmpty &&
+                                                              index < mainBusBarController.getLiveDataModel.length &&
+                                                              mainBusBarController.getLiveDataModel[index].power != null)
+                                                              ? "${mainBusBarController.getLiveDataModel[index].power!.toStringAsFixed(2)} kW"
                                                               : "0.00 kW",
 
-                                                          energyText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
-                                                              ? "${mainBusBarController.getLiveDataModel[index].todayEnergy.toStringAsFixed(2)} kWh"
+                                                          energyText: (mainBusBarController.getLiveDataModel.isNotEmpty &&
+                                                              index < mainBusBarController.getLiveDataModel.length &&
+                                                              mainBusBarController.getLiveDataModel[index].todayEnergy != null)
+                                                              ? "${mainBusBarController.getLiveDataModel[index].todayEnergy!.toStringAsFixed(2)} kWh"
                                                               : "0.00 kWh",
 
-                                                          costText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
-                                                              ? "${mainBusBarController.getLiveDataModel[index].cost.toStringAsFixed(2)} ৳"
+                                                          costText: (mainBusBarController.getLiveDataModel.isNotEmpty &&
+                                                              index < mainBusBarController.getLiveDataModel.length &&
+                                                              mainBusBarController.getLiveDataModel[index].cost != null)
+                                                              ? "${mainBusBarController.getLiveDataModel[index].cost!.toStringAsFixed(2)} ৳"
                                                               : "0.00 ৳",
 
-                                                          pfText: (mainBusBarController.getLiveDataModel.isNotEmpty && index < mainBusBarController.getLiveDataModel.length)
-                                                              ? "${mainBusBarController.getLiveDataModel[index].powerFactor.toStringAsFixed(4)} %"
+                                                          pfText: (mainBusBarController.getLiveDataModel.isNotEmpty &&
+                                                              index < mainBusBarController.getLiveDataModel.length &&
+                                                              mainBusBarController.getLiveDataModel[index].powerFactor != null)
+                                                              ? "${mainBusBarController.getLiveDataModel[index].powerFactor!.toStringAsFixed(4)} %"
                                                               : "0.00 %",
                                                         ),
 
