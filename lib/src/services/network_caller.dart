@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:nz_fabrics/src/application/app.dart';
+import 'package:nz_fabrics/src/features/authentication/login/controller/refresh_token_api_controller.dart';
 import 'package:nz_fabrics/src/features/authentication/login/views/screen/login_screen.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:http/http.dart';
+import 'package:get/get.dart' as getx;
+
 
 class NetworkCaller{
   //static var myError;
@@ -96,7 +99,7 @@ class NetworkCaller{
   static Future<NetworkResponse> refreshTokenRequest({required String url,required Map<String, dynamic> body}) async{
     try{
 
-      Response response = await post(Uri.parse(url),headers: {'Content-Type': 'application/json'}, body: jsonEncode(body)).timeout(const Duration(seconds: 10));
+      Response response = await post(Uri.parse(url),headers: {'Content-Type': 'application/json'}, body: jsonEncode(body));
 
       // log("postRequest statusCode ==> ${response.statusCode}");
       // log("postRequest body ==> ${response.body}");
@@ -265,49 +268,49 @@ class NetworkCaller{
   //       MaterialPageRoute(builder: (context) =>  LoginScreen()), (route) => false);
   // }
 
+  // static Future<void> gotoLogin() async {
+  //     await AuthUtilityController.clearInfo();
+  //     AuthUtilityController.accessTokenForApiCall.value = null;
+  //
+  //     Navigator.pushAndRemoveUntil(
+  //       EnergyManagementSystem.globalKey.currentContext!,
+  //       PageRouteBuilder(
+  //         pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+  //         transitionsBuilder: (context, animation, secondaryAnimation, child) {
+  //
+  //           var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+  //           return FadeTransition(opacity: fadeAnimation, child: child);
+  //         },
+  //         transitionDuration: const Duration(milliseconds: 300)
+  //       ),
+  //           (route) => false,
+  //     );
+  //
+  //   }
+
   static Future<void> gotoLogin() async {
-      await AuthUtilityController.clearInfo();
-      AuthUtilityController.accessTokenForApiCall.value = null;
+    final result  = await getx.Get.find<RefreshTokenApiController>().getRefreshToken(refreshToken: AuthUtilityController.refreshToken ?? '');
 
-      Navigator.pushAndRemoveUntil(
-        EnergyManagementSystem.globalKey.currentContext!,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+    if(!result){
+        await AuthUtilityController.clearInfo();
+        AuthUtilityController.accessTokenForApiCall.value = null;
 
-            var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(animation);
-            return FadeTransition(opacity: fadeAnimation, child: child);
-          },
-          transitionDuration: const Duration(milliseconds: 300)
-        ),
-            (route) => false,
-      );
+        Navigator.pushAndRemoveUntil(
+          EnergyManagementSystem.globalKey.currentContext!,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
 
+              var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(animation);
+              return FadeTransition(opacity: fadeAnimation, child: child);
+            },
+            transitionDuration: const Duration(milliseconds: 300)
+          ),
+              (route) => false,
+        );
+
+      }
     }
-
-
-    // final result  = await getx.Get.find<RefreshTokenApiController>().getRefreshToken(refreshToken: AuthUtilityController.refreshToken ?? '');
-    //
-    // if(!result){
-    //     await AuthUtilityController.clearInfo();
-    //     AuthUtilityController.accessTokenForApiCall.value = null;
-    //
-    //     Navigator.pushAndRemoveUntil(
-    //       EnergyManagementSystem.globalKey.currentContext!,
-    //       PageRouteBuilder(
-    //         pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
-    //         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-    //
-    //           var fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(animation);
-    //           return FadeTransition(opacity: fadeAnimation, child: child);
-    //         },
-    //         transitionDuration: const Duration(milliseconds: 300)
-    //       ),
-    //           (route) => false,
-    //     );
-    //
-    //   }
-    // }
 
 
 }
