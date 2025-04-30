@@ -143,7 +143,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
             .map((id, data) => MapEntry(id.toString(), data.toJson()))));
   }
 
-  Future<void> _fetchLiveData() async {
+/*  Future<void> _fetchLiveData() async {
     if (!mounted) return;
 
     final response = await http.get(
@@ -200,8 +200,65 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
         _isLoading = false;
       });
     }
-  }
+  }*/
+  Future<void> _fetchLiveData() async {
+    if (!mounted) return;
 
+    final response = await http.get(
+      Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=water'),
+      headers: {
+        'Authorization': AuthUtilityController.accessToken ?? '',
+      },
+    );
+
+    //  debugPrint("live-all-node-power -----> ${response.body}");
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      var fetchRequests = _viewPageData
+          .where((item) => item.nodeName.isNotEmpty)
+          .map((item) async {
+        final nodeData = data.firstWhere(
+              (node) => node['node'] == item.nodeName,
+          orElse: () => null,
+        );
+
+        if (nodeData != null) {
+          LiveDataModel liveDataModel = LiveDataModel(
+            power: nodeData['instant_flow']?.toDouble() ?? 0.0,
+            sensorStatus: nodeData['sensor_status'] ?? false,
+            sourceType: nodeData['source_type'] ?? '',
+            timedate: nodeData['timedate'] != null
+                ? DateTime.tryParse(
+                nodeData['timedate']) // Parse the string to DateTime
+                : null,
+          );
+
+          return {item.id: liveDataModel};
+        }
+        return null;
+      }).toList();
+
+      final results = await Future.wait(fetchRequests);
+
+      if(mounted){
+        setState(() {
+          for (var result in results) {
+            if (result != null) {
+              _liveData.addAll(result);
+            }
+          }
+          _isLoading = false;
+        });
+      }
+    } else {
+      // Handle the error case when the API call fails
+      debugPrint('-------Failed to fetch live data------------');
+      setState(() {
+        _isLoading = false;
+        });
+    }
+    }
   Future<void> _fetchViewPageData() async {
     if (!mounted) return;
     try {
