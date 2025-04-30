@@ -40,12 +40,12 @@ class LoginController extends GetxController with InternetConnectivityCheckMixin
 
       if(response.isSuccess){
         var responseBody = response.body;
-        AuthUtilityController.setAccessToken(token: "Token ${responseBody['token']}");
-       // AuthUtilityController.setRefreshToken(refreshToken: responseBody['refresh_token']);
+        AuthUtilityController.setAccessToken(token: "Bearer ${responseBody['access_token']}");
+        AuthUtilityController.setRefreshToken(refreshToken: responseBody['refresh_token']);
         AuthUtilityController.setUserRole(userRole: responseBody['role']);
 
-        log("==========Token======= Bearer ${responseBody['token']}");
-       // log("==========refresh token======= ${response.body['refresh_token']}");
+        log("==========Token======= Bearer ${responseBody['access_token']}");
+        log("==========refresh token======= ${response.body['refresh_token']}");
         log("==========Token======= ${response.body['role']}");
 
 

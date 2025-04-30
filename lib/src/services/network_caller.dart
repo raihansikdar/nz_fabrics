@@ -93,7 +93,7 @@ class NetworkCaller{
 
 
 
- /* static Future<NetworkResponse> refreshTokenRequest({required String url,required Map<String, dynamic> body}) async{
+  static Future<NetworkResponse> refreshTokenRequest({required String url,required Map<String, dynamic> body}) async{
     try{
 
       Response response = await post(Uri.parse(url),headers: {'Content-Type': 'application/json'}, body: jsonEncode(body)).timeout(const Duration(seconds: 10));
@@ -110,7 +110,7 @@ class NetworkCaller{
       log(e.toString());
     }
     return NetworkResponse(isSuccess: false, statusCode: -1, body: null);
-  }*/
+  }
 
 
 

@@ -1,8 +1,8 @@
 class Urls{
   Urls._();
 
-  //static const String _baseUrl = "http://192.168.15.61:8086/react";
-  static const String _baseUrl = "http://192.168.15.60:8081/react";
+  static const String _baseUrl = "http://192.168.15.61:8086/react";
+  //static const String _baseUrl = "http://192.168.15.60:8081/react";
  // static const String _baseUrl = "http://175.29.189.138/react";
 
 
@@ -10,9 +10,9 @@ class Urls{
 
   /*----------------- post api call --------------------*/
   static String createAccountUrl = "$_baseUrl/register/";
-  static String loginUrl = "$_baseUrl/login/";
-  //static String loginUrl = "$_baseUrl/api-login-V2/";
- // static String refreshTokenUrl = "$_baseUrl/api/token/refresh/";
+ // static String loginUrl = "$_baseUrl/login/";
+  static String loginUrl = "$_baseUrl/api-login-V2/";
+  static String refreshTokenUrl = "$_baseUrl/api/token/refresh/";
   static String emailVerifyUrl = "$_baseUrl/forget-password/";
 
 
