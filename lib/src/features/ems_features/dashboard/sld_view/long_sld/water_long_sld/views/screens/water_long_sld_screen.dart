@@ -98,6 +98,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
         _viewPageData = (json.decode(cachedViewPageData) as List)
             .map((data) => WaterViewPageModel.fromJson(data))
             .toList();
+
         _isLoading = false;
       });
     }

@@ -1,7 +1,8 @@
 class Urls{
   Urls._();
 
-  static const String _baseUrl = "http://192.168.15.61:8086/react";
+  //static const String _baseUrl = "http://192.168.15.61:8086/react";
+  static const String _baseUrl = "http://192.168.15.60:8081/react";
  // static const String _baseUrl = "http://175.29.189.138/react";
 
 
@@ -190,7 +191,8 @@ class Urls{
 
  /*----------------- SLD --------------------*/
  static String getLTProductionVsCapacityUrl = "$_baseUrl/api/get-lt-production-vs-capacity/";
- static String getLiveAllNodePowerUrl = "$_baseUrl/live-all-node-power/";
+ static String getElectricityLiveAllNodePowerUrl = "$_baseUrl/live-all-node-power/?type=electricity";
+ static String getWaterLiveAllNodePowerUrl = "$_baseUrl/live-all-node-power/?type=water";
  static String getLivePFDataUrl(String nodeName) => "$_baseUrl/api/get-live-pf-data/$nodeName/";
  static String filterBusBarEnergyCostUrl(String busBarName) => "$_baseUrl/api/filter-busbar-energy-cost/$busBarName/";
 

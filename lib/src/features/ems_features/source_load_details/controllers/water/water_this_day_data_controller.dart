@@ -29,8 +29,8 @@ class WaterThisDayDataController extends GetxController with InternetConnectivit
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.thisDayDataUrl(sourceName));
 
-       log("thisDayDataUrl statusCode ==> ${response.statusCode}");
-       log("thisDayDataUrl body ==> ${response.body}");
+      // log("thisDayDataUrl statusCode ==> ${response.statusCode}");
+      // log("thisDayDataUrl body ==> ${response.body}");
 
       _isLoading = false;
 

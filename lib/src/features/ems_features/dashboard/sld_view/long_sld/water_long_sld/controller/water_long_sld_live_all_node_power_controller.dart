@@ -136,7 +136,7 @@ class WaterLongSLDLiveAllNodePowerController extends GetxController with Interne
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getLiveAllNodePowerUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLiveAllNodePowerUrl);
 
      // log("getLiveAllNodePowerUrl statusCode ==> ${response.statusCode}");
      // log("getLiveAllNodePowerUrl body ==> ${response.body}");
