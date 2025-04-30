@@ -1,6 +1,7 @@
 import 'package:nz_fabrics/src/features/authentication/forget_password/email_verify/controller/email_verify_controller.dart';
 import 'package:nz_fabrics/src/features/authentication/forget_password/set_password/controller/set_password_controller.dart';
 import 'package:nz_fabrics/src/features/authentication/login/controller/login_controller.dart';
+import 'package:nz_fabrics/src/features/authentication/login/controller/refresh_token_api_controller.dart';
 import 'package:nz_fabrics/src/features/authentication/logout/controller/logout_controller.dart';
 import 'package:nz_fabrics/src/features/authentication/register/controller/create_account_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/all_live_data/controllers/all_live_info_controller.dart';
@@ -147,7 +148,7 @@ class StateHolderBinders extends Bindings{
      Get.put(EmailVerifyController());
      Get.put(SetPasswordController());
      Get.put(CreateAccountInfoController());
-   /*  Get.put(RefreshTokenApiController());*/
+    Get.put(RefreshTokenApiController());
 
 
 

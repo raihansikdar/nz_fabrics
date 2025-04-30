@@ -48,8 +48,8 @@ class RefreshTokenApiController extends GetxController with InternetConnectivity
 
       NetworkResponse response = await NetworkCaller.refreshTokenRequest(url: Urls.refreshTokenUrl, body: requestBody);
 
-       log("refreshTokenUrl statusCode ==> ${response.statusCode}");
-       log("refreshTokenUrl body ==> ${response.body}");
+       log("---------------->refreshTokenUrl statusCode ==> ${response.statusCode}");
+       log("---------------->refreshTokenUrl body ==> ${response.body}");
 
       _isRefreshInProgress = false;
 
