@@ -10,14 +10,12 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/find_water_value_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/load_water_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/source_water_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/views/screens/total_water_load_element_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/views/screens/total_water_source_element_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/views/widgets/pie_chart_water_load_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/views/widgets/pie_chart_water_source_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/water_element_details_screen.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -277,9 +275,12 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                     ),
                                                   );
                                                 }, openBuilder: (BuildContext _, VoidCallback __){
-                                              return  WaterElementDetailsScreen(elementName: waterData.category ?? '',
-                                                  gaugeValue: waterData.totalInstantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
-                                              );
+
+                                              return TotalWaterSourceElementScreen(categoryName: waterData.category,);
+
+                                              // return  WaterElementDetailsScreen(elementName: waterData.category ?? '',
+                                              //     gaugeValue: waterData.totalInstantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
+                                              // );
                                             });
                                           }
                                         }, separatorBuilder: (context,index) => const SizedBox(height: 0,),);
@@ -393,9 +394,10 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                     ),
                                                   );
                                                 }, openBuilder: (BuildContext _, VoidCallback __){
-                                              return  WaterElementDetailsScreen(elementName: waterLoadData.nodeName ?? '',
-                                                  gaugeValue:   waterLoadData.totalInstantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
-                                              );
+                                                  return TotalWaterLoadElementScreen(categoryName: waterLoadData.category,);
+                                              // return  WaterElementDetailsScreen(elementName: waterLoadData.nodeName ?? '',
+                                              //     gaugeValue:   waterLoadData.totalInstantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
+                                              // );
                                             });
                                           }
                                         }, separatorBuilder: (context,index) => const SizedBox(height: 0,),);

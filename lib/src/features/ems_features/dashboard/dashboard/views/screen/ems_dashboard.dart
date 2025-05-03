@@ -77,7 +77,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
 
 
-      notificationService.initNotification();
+      //notificationService.initNotification(); // off notification
       WidgetsBinding.instance.addPostFrameCallback((_){
         Get.find<DashBoardButtonController>().fetchButton();
       Get.find<AnalysisProDayButtonController>().fetchDayModelDGRData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);

@@ -1,7 +1,7 @@
 class WaterThisDayDataModel {
-  double? thisDay;
+  dynamic thisDay;
   String? waterRuntimeToday;
-  double? thisDayCostWater;
+  dynamic thisDayCostWater;
 
   WaterThisDayDataModel(
       {this.thisDay, this.waterRuntimeToday, this.thisDayCostWater});

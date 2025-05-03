@@ -59,7 +59,7 @@ class ThisDayDataController extends GetxController with InternetConnectivityChec
         _isConnected = false;
         _hasError = false;
       }
-      log('Error in thisDayDataUrl: $_errorMessage');
+      log('Error in  power thisDayDataUrl: $_errorMessage');
       update();
       return false;
     }

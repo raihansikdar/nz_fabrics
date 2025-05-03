@@ -24,6 +24,12 @@ class DailyDataController extends GetxController with InternetConnectivityCheckM
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.dailyDataUrl(elementName));
       isLoading = false;
 
+
+      log(" dailyDataUrl url ==> ${Urls.dailyDataUrl(elementName)}");
+      log(" dailyDataUrl statusCode ==> ${response.statusCode}");
+      log(" dailyDataUrl body ==> ${response.body}");
+
+
       if (response.isSuccess) {
          List<dynamic> dataList = response.body;
           dailyDataList = dataList.map((data) => DailyDataModel.fromJson(data as Map<String, dynamic>)).toList();

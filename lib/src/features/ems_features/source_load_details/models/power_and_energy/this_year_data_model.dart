@@ -1,6 +1,6 @@
 class ThisYearDataModel {
-  double? energySum;
-  double? costSum;
+  dynamic energySum;
+  dynamic costSum;
 
   ThisYearDataModel({this.energySum, this.costSum});
 

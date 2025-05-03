@@ -21,15 +21,18 @@ class WaterDailyDataController extends GetxController with InternetConnectivityC
     try {
       await internetConnectivityCheck();
 
+      log("---------> ${elementName}");
+
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.dailyDataUrl(elementName));
       isLoading = false;
 
+     log("water dailyDataUrl url ==> ${Urls.dailyDataUrl(elementName)}");
      log("water dailyDataUrl statusCode ==> ${response.statusCode}");
       log("water dailyDataUrl body ==> ${response.body}");
 
       if (response.isSuccess) {
         List<dynamic> dataList = response.body;
-        dailyDataList = dataList.map((data) => WaterDailyDataModel.fromJson(data as Map<String, dynamic>)).toList();
+        dailyDataList = dataList.map((data) => WaterDailyDataModel.fromJson(data)).toList();
         update();
         return true;
 

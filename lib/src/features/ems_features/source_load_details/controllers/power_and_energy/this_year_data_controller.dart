@@ -56,7 +56,7 @@ class ThisYearDataController extends GetxController with InternetConnectivityChe
         _hasError = false;
       }
 
-      log('Error in thisDayDataUrl: $_errorMessage');
+      log('Error in power thisYearDataUrl: $_errorMessage');
 
       update();
       return false;

@@ -43,9 +43,9 @@ class _WaterElementDetailsScreenState extends State<WaterElementDetailsScreen> w
     Get.find<WaterThisMonthDataController>().fetchThisMonthData(sourceName: widget.elementName);
     Get.find<WaterThisYearDataController>().fetchThisYearData(sourceName: widget.elementName);
 
-    Get.find<WaterDailyDataController>().fetchDailyData(elementName: widget.elementName);
-    Get.find<WaterMonthlyDataController>().fetchWaterMonthlyData(elementName: widget.elementName);
-    Get.find<WaterYearlyDataController>().fetchWaterYearlyData(elementName: widget.elementName);
+   // Get.find<WaterDailyDataController>().fetchDailyData(elementName: widget.elementName);
+   // Get.find<WaterMonthlyDataController>().fetchWaterMonthlyData(elementName: widget.elementName);
+   // Get.find<WaterYearlyDataController>().fetchWaterYearlyData(elementName: widget.elementName);
 
   }
 

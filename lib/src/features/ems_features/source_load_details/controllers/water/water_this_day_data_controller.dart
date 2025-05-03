@@ -40,7 +40,7 @@ class WaterThisDayDataController extends GetxController with InternetConnectivit
         update();
         return true;
       } else {
-        _errorMessage = "Can't load data";
+        _errorMessage = "Can't load water this day data";
         _hasError = true;
         update();
         return false;
@@ -56,7 +56,7 @@ class WaterThisDayDataController extends GetxController with InternetConnectivit
         _hasError = false;
       }
 
-      log('Error in thisDayDataUrl: $_errorMessage');
+      log('Error in water thisDayDataUrl: $_errorMessage');
 
       update();
       return false;

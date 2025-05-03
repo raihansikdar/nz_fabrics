@@ -5,11 +5,18 @@ class ThisDayDataModel {
 
   ThisDayDataModel({this.totalPowerSum, this.energy, this.cost});
 
+  // ThisDayDataModel.fromJson(Map<String, dynamic> json) {
+  //   totalPowerSum = json['total_power_sum'];
+  //   energy = json['energy'];
+  //   cost = json['cost'];
+  // }
+
   ThisDayDataModel.fromJson(Map<String, dynamic> json) {
-    totalPowerSum = json['total_power_sum'];
-    energy = json['energy'];
-    cost = json['cost'];
+    totalPowerSum = (json['total_power_sum'] ?? 0).toDouble();
+    energy = (json['energy'] ?? 0).toDouble();
+    cost = (json['cost'] ?? 0).toDouble();
   }
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

@@ -25,7 +25,7 @@ class RefreshTokenApiController extends GetxController with InternetConnectivity
 
   @override
   void onInit() {
-   _timer = Timer.periodic(const Duration(minutes: 5), (_){
+   _timer = Timer.periodic(const Duration(minutes: 4), (_){
      getRefreshToken(refreshToken: AuthUtilityController.refreshToken ?? '');
    });
     super.onInit();

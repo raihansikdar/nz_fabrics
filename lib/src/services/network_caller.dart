@@ -15,7 +15,7 @@ class NetworkCaller{
   /* ->>------------------------------------> get request method <----------------------------------<<- */
   static Future<NetworkResponse> getRequest({required String url}) async{
     try{
-      Response response = await get(Uri.parse(url),headers: {'Authorization': AuthUtilityController.accessToken ?? ''}).timeout( const Duration(seconds: 45));
+      Response response = await get(Uri.parse(url),headers: {'Authorization': AuthUtilityController.accessToken ?? ''});
 
       // log("getRequest URL ==> ${url}");
       // log("getRequest statusCode ==> ${response.statusCode}");
