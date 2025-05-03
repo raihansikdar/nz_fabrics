@@ -35,8 +35,8 @@ class _WaterSourceScreenState extends State<WaterSourceScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_){
    //   Get.find<TimeUsagePercentageController>().fetchTimeUsagesPercentageData();
-     // Get.find<WaterSourceCategoryWiseLiveDataController>().fetchSourceCategoryWiseData();
-    //  Get.find<OverAllWaterSourceDataController>().fetchOverAllSourceData( fromDate: Get.find<OverAllWaterSourceDataController>().fromDateTEController.text, toDate: Get.find<OverAllWaterSourceDataController>().toDateTEController.text);
+      Get.find<WaterSourceCategoryWiseLiveDataController>().fetchSourceCategoryWiseData();
+      Get.find<OverAllWaterSourceDataController>().fetchOverAllSourceData( fromDate: Get.find<OverAllWaterSourceDataController>().fromDateTEController.text, toDate: Get.find<OverAllWaterSourceDataController>().toDateTEController.text);
     });
     super.initState();
   }
@@ -48,8 +48,8 @@ class _WaterSourceScreenState extends State<WaterSourceScreen> {
       appBar: CustomAppBarWidget(text: "Water Source", backPreviousScreen: true,
       onBackButtonPressed: (){
         Future.delayed(const Duration(milliseconds:1500 )).then((_){
-        //  Get.find<OverAllWaterSourceDataController>().selectButtonValue = 1;
-        //  Get.find<OverAllWaterSourceDataController>().clearFilterIngDate();
+          Get.find<OverAllWaterSourceDataController>().selectButtonValue = 1;
+          Get.find<OverAllWaterSourceDataController>().clearFilterIngDate();
         });
       },
       ),
