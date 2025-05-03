@@ -123,6 +123,8 @@ import 'package:nz_fabrics/src/features/solar_feature/solar_summery/dgr/controll
 import 'package:nz_fabrics/src/features/source/electricity/controller/over_all_source_data_controller.dart';
 import 'package:nz_fabrics/src/features/source/electricity/controller/source_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/source_table_widget.dart';
+import 'package:nz_fabrics/src/features/source/water_source/controller/over_all_source_water_data_controller.dart';
+import 'package:nz_fabrics/src/features/source/water_source/controller/water_source_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/summary_feature/controller/carbon_emission_controller.dart';
 import 'package:nz_fabrics/src/features/summary_feature/controller/expense_per_person_controller.dart';
 import 'package:nz_fabrics/src/features/summary_feature/controller/today_total_energy_controller.dart';
@@ -344,8 +346,8 @@ class StateHolderBinders extends Bindings{
      Get.put(OverAllSourceDataController());
      Get.put(SourceCategoryWiseLiveDataController());
 
-    Get.put(WaterSourceCategoryWiseDataController());
-    Get.put(WaterLoadCategoryWiseDataController());
+    Get.put(WaterSourceCategoryWiseLiveDataController());
+    Get.put(OverAllWaterSourceDataController());
 
 //--------------------------- PF History ---------------------------
      Get.put(PFHistoryController());
