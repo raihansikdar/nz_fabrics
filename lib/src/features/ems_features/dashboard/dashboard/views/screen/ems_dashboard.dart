@@ -31,6 +31,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/wate
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/source_water_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/views/screens/water_summary_chart_screen.dart';
 import 'package:nz_fabrics/src/features/error_page/error_page.dart';
 import 'package:nz_fabrics/src/features/error_page/no_internet_page.dart';
@@ -325,8 +327,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                   
                   
                             /*------------- Stop Api in Electricity ---------------*/
-                         //   Get.find<SourceWaterController>().stopApiCallOnScreenChange();
-                           // Get.find<LoadWaterController>().stopApiCallOnScreenChange();
+                           Get.find<WaterSourceCategoryWiseDataController>().stopApiCallOnScreenChange();
+                            Get.find<WaterLoadCategoryWiseDataController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
                             Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
                             Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();

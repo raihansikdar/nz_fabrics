@@ -105,7 +105,7 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
       controller._stopPeriodicApiCall();
       // Optionally, you can delete the controller if it's no longer needed
       // Get.delete<PieChartPowerSourceController>();
-      log("CategoryWiseLiveDataController Stop Api Call");
+      log("PieChartWaterLoadController Stop Api Call");
     }
   }
 
@@ -117,7 +117,7 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
       // If the controller is already registered, just restart the periodic API calls
       final controller = Get.find<PieChartWaterLoadController>();
       controller._startPeriodicApiCall();
-      log("CategoryWiseLiveDataController Start Api Call");
+      log("PieChartWaterLoadController Start Api Call");
     }
     _isStopApiCall = false;
     update();
@@ -143,8 +143,8 @@ class PieChartWaterLoadController extends GetxController with InternetConnectivi
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLoadMachineWiseLiveDataUrl);
 
-      //log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
-      // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.body}");
+      //log("getWaterLoadMachineWiseLiveDataUrl: ${response.statusCode}");
+      // log("getWaterLoadMachineWiseLiveDataUrl: ${response.body}");
 
 
       if(response.isSuccess){

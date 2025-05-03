@@ -48,6 +48,9 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
 
       //Get.find<SourceWaterController>().startApiCallOnScreenChange();
      // Get.find<LoadWaterController>().startApiCallOnScreenChange();
+
+      Get.find<WaterSourceCategoryWiseDataController>().startApiCallOnScreenChange();
+      Get.find<WaterLoadCategoryWiseDataController>().startApiCallOnScreenChange();
       Get.find<PieChartWaterSourceController>().startApiCallOnScreenChange();
       Get.find<PieChartWaterLoadController>().startApiCallOnScreenChange();
       /*------------- Stop Api in Water ---------------*/

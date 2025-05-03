@@ -101,9 +101,7 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
     if (Get.isRegistered<WaterLoadCategoryWiseDataController>()) {
       final controller = Get.find<WaterLoadCategoryWiseDataController>();
       controller._stopPeriodicApiCall();
-      // Optionally, you can delete the controller if it's no longer needed
-      // Get.delete<PieChartPowerSourceController>();
-      log("CategoryWiseLiveDataController Stop Api Call");
+      log("WaterLoadCategoryWiseDataController Stop Api Call");
     }
   }
 
@@ -112,10 +110,9 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
       final controller = Get.put(WaterLoadCategoryWiseDataController());
       controller._startPeriodicApiCall();
     } else {
-      // If the controller is already registered, just restart the periodic API calls
       final controller = Get.find<WaterLoadCategoryWiseDataController>();
       controller._startPeriodicApiCall();
-      log("CategoryWiseLiveDataController Start Api Call");
+      log("WaterLoadCategoryWiseDataController Start Api Call");
     }
     _isStopApiCall = false;
     update();
@@ -141,8 +138,8 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLoadMachineWiseLiveDataUrl);
 
-      log("getWaterLoadMachineWiseLiveDataUrl: ${response.statusCode}");
-      log("getWaterLoadMachineWiseLiveDataUrl: ${response.body}");
+     // log("getWaterLoadMachineWiseLiveDataUrl: ${response.statusCode}");
+     // log("getWaterLoadMachineWiseLiveDataUrl: ${response.body}");
 
 
       if(response.isSuccess){

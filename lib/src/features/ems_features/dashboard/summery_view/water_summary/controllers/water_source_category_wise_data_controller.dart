@@ -101,9 +101,7 @@ class WaterSourceCategoryWiseDataController extends GetxController with Internet
     if (Get.isRegistered<WaterSourceCategoryWiseDataController>()) {
       final controller = Get.find<WaterSourceCategoryWiseDataController>();
       controller._stopPeriodicApiCall();
-      // Optionally, you can delete the controller if it's no longer needed
-      // Get.delete<PieChartPowerSourceController>();
-      log("CategoryWiseLiveDataController Stop Api Call");
+      log("WaterSourceCategoryWiseDataController Stop Api Call");
     }
   }
 
@@ -112,10 +110,9 @@ class WaterSourceCategoryWiseDataController extends GetxController with Internet
       final controller = Get.put(WaterSourceCategoryWiseDataController());
       controller._startPeriodicApiCall();
     } else {
-      // If the controller is already registered, just restart the periodic API calls
       final controller = Get.find<WaterSourceCategoryWiseDataController>();
       controller._startPeriodicApiCall();
-      log("CategoryWiseLiveDataController Start Api Call");
+      log("WaterSourceCategoryWiseDataController Start Api Call");
     }
     _isStopApiCall = false;
     update();
@@ -141,7 +138,7 @@ class WaterSourceCategoryWiseDataController extends GetxController with Internet
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterSourceCategoryWiseLiveDataUrl);
 
-       //log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
+       // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
        // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.body}");
 
 
