@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/small_button_circular_progress_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/source/controller/over_all_source_data_controller.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/source_table_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/controller/over_all_source_data_controller.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/source_table_widget.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 

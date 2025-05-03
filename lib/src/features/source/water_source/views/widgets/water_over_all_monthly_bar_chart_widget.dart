@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
-// import 'package:nz_ums/src/features/source/controller/over_all_source_data_controller.dart';
-// import 'package:nz_ums/src/features/source/model/filter_over_all_monthly_bar_chart_Model.dart';
+// import 'package:nz_ums/src/features/water_source/controller/over_all_source_water_data_controller.dart';
+// import 'package:nz_ums/src/features/water_source/model/filter_over_water_all_monthly_bar_chart_Model.dart';
 // import 'package:syncfusion_flutter_charts/charts.dart';
 // import 'package:intl/intl.dart';
 //
@@ -104,18 +104,17 @@
 //   ChartData({required this.x, required this.y});
 // }
 
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nz_fabrics/src/features/source/controller/over_all_source_data_controller.dart';
-import 'package:nz_fabrics/src/features/source/model/filter_over_all_monthly_bar_chart_Model.dart';
+import 'package:nz_fabrics/src/features/source/water_source/controller/over_all_source_water_data_controller.dart';
+import 'package:nz_fabrics/src/features/source/water_source/model/filter_over_water_all_monthly_bar_chart_Model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class OverAllMonthlyBarChartWidget extends StatelessWidget {
-  final FilterOverAllMonthlyBarChartDataModel barChartModel;
-  final OverAllSourceDataController controller;
+class WaterOverAllMonthlyBarChartWidget extends StatelessWidget {
+  final FilterOverAllWaterMonthlyBarChartDataModel barChartModel;
+  final OverAllWaterSourceDataController controller;
 
-  const OverAllMonthlyBarChartWidget({
+  const WaterOverAllMonthlyBarChartWidget({
     super.key,
     required this.barChartModel,
     required this.controller,
@@ -123,16 +122,14 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gridData = getNodeData('Grid', barChartModel);
-    final dieselData = getNodeData('Diesel_Generator', barChartModel);
-    final solarData = getNodeData('Solar', barChartModel);
-    final totalData = getNodeData('Total_Source', barChartModel);
+    final totalSourceData = getNodeData('Total_Source', barChartModel);
+    final subMersibleData = getNodeData('Sub_Mersible', barChartModel);
+    final wtpData = getNodeData('WTP', barChartModel);
 
     final allYValues = [
-      ...gridData,
-      ...dieselData,
-      ...solarData,
-      ...totalData,
+      ...totalSourceData,
+      ...subMersibleData,
+      ...wtpData,
     ].map((e) => e.y);
 
     final minY = (allYValues.isNotEmpty ? allYValues.reduce((a, b) => a < b ? a : b) : 0).floorToDouble();
@@ -142,7 +139,7 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
     final yLabels = List.generate(6, (index) => maxY - index * step);
 
     final screenWidth = MediaQuery.of(context).size.width;
-    final calculatedWidth = (gridData.length * 60).toDouble();
+    final calculatedWidth = (totalSourceData.length * 60).toDouble();
     final chartWidth = calculatedWidth < screenWidth - 60
         ? screenWidth - 60
         : calculatedWidth.clamp(300.0, 2000.0);
@@ -168,7 +165,7 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: yLabels
                       .map((y) => Text(
-                    '${y.toStringAsFixed(0)} kWh',
+                    '${y.toStringAsFixed(0)} m³',
                     style: const TextStyle(fontSize: 11),
                   ))
                       .toList(),
@@ -193,7 +190,6 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
                     activationMode: ActivationMode.longPress,
                   ),
                   primaryXAxis: CategoryAxis(
-                    // labelRotation: -45,
                     majorGridLines: const MajorGridLines(width: 0),
                   ),
                   primaryYAxis: NumericAxis(
@@ -203,32 +199,25 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
                   ),
                   series: <CartesianSeries>[
                     ColumnSeries<ChartData, String>(
-                      dataSource: gridData,
+                      dataSource: totalSourceData,
                       xValueMapper: (ChartData data, _) => DateFormat('dd MMM').format(data.x),
                       yValueMapper: (ChartData data, _) => data.y,
-                      name: 'Grid (kWh)',
+                      name: 'Total Source (m³)',
+                      color: Colors.deepPurple,
+                    ),
+                    ColumnSeries<ChartData, String>(
+                      dataSource: subMersibleData,
+                      xValueMapper: (ChartData data, _) => DateFormat('dd MMM').format(data.x),
+                      yValueMapper: (ChartData data, _) => data.y,
+                      name: 'Sub Mersible (m³)',
                       color: const Color(0xFF66D6FF),
                     ),
                     ColumnSeries<ChartData, String>(
-                      dataSource: solarData,
+                      dataSource: wtpData,
                       xValueMapper: (ChartData data, _) => DateFormat('dd MMM').format(data.x),
                       yValueMapper: (ChartData data, _) => data.y,
-                      name: 'Solar (kWh)',
+                      name: 'WTP (m³)',
                       color: const Color(0xFFC5A4FF),
-                    ),
-                    ColumnSeries<ChartData, String>(
-                      dataSource: dieselData,
-                      xValueMapper: (ChartData data, _) => DateFormat('dd MMM').format(data.x),
-                      yValueMapper: (ChartData data, _) => data.y,
-                      name: 'Diesel Generator (kWh)',
-                      color: const Color(0xFFFFA500),
-                    ),
-                    ColumnSeries<ChartData, String>(
-                      dataSource: totalData,
-                      xValueMapper: (ChartData data, _) => DateFormat('dd MMM').format(data.x),
-                      yValueMapper: (ChartData data, _) => data.y,
-                      name: 'Total Source (kWh)',
-                      color: Colors.deepPurple,
                     ),
                   ],
                 ),
@@ -240,7 +229,7 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
     );
   }
 
-  List<ChartData> getNodeData(String nodeName, FilterOverAllMonthlyBarChartDataModel model) {
+  List<ChartData> getNodeData(String nodeName, FilterOverAllWaterMonthlyBarChartDataModel model) {
     return model.data
         ?.where((entry) => entry.node == nodeName)
         .map((entry) {
@@ -251,7 +240,7 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
         debugPrint('Invalid date format: ${entry.date}, defaulting to now');
         date = DateTime.now();
       }
-      return ChartData(x: date, y: entry.energy?.toDouble() ?? 0);
+      return ChartData(x: date, y: entry.instantFlow?.toDouble() ?? 0);
     })
         .toList()
         ?.reversed

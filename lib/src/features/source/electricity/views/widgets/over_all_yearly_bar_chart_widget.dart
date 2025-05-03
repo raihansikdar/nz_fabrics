@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nz_fabrics/src/features/source/model/filter_over_all_yearly_bar_chart_data_model.dart';
+import 'package:nz_fabrics/src/features/source/electricity/model/filter_over_all_yearly_bar_chart_data_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 

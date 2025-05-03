@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nz_fabrics/src/features/source/controller/source_category_wise_live_data_controller.dart';
-import 'package:nz_fabrics/src/features/source/model/source_category_wise_live_data_model.dart';
+import 'package:nz_fabrics/src/features/source/water_source/controller/water_source_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:get/get.dart';
 
-class SourceCategoryWisePieChart extends StatelessWidget {
+import '../../model/source_category_wise_live_data_model.dart';
+
+class WaterSourceCategoryWisePieChart extends StatelessWidget {
   final Size size;
 
-  const SourceCategoryWisePieChart({super.key, required this.size});
+  const WaterSourceCategoryWisePieChart({super.key, required this.size});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<SourceCategoryWiseLiveDataController>(
+    return GetBuilder<WaterSourceCategoryWiseLiveDataController>(
       builder: (controller) {
         if (controller.isSourceCategoryInProgress) {
           return Center(
@@ -32,23 +33,25 @@ class SourceCategoryWisePieChart extends StatelessWidget {
             controller.sourceCategoryWiseLiveDataModel.data ?? [];
 
 
-        final List<ChartData> chartData = timeUsage.where((item) =>
-        item.category == "Grid" || item.category == "Diesel_Generator" || item.category == "Solar").map((item) {
+        final List<ChartData> chartData = timeUsage
+            .where((item) => item.category == "Sub_Mersible" || item.category == "WTP")
+            .map((item) {
           Color color;
           switch (item.category) {
-            case "Grid":
-              color =Color.lerp(const Color(0xFF66D6FF), const Color(0xFF4FA3CC),0.5)!;
+            case "Sub_Mersible":
+              color = Color.lerp(const Color(0xFF66D6FF), const Color(0xFF4FA3CC), 0.5)!;
               break;
-            case "Solar":
+            case "WTP":
               color = Color.lerp(const Color(0xFFC5A4FF), const Color(0xFF9F77CC), 0.5)!;
-              break;
-            case "Diesel_Generator":
-              color = Color.lerp(const Color(0xFFFFA500), const Color(0xFFFF7F00), 0.5)!;
               break;
             default:
               color = Colors.grey;
           }
-          return ChartData(item.category ?? "", item.totalPower ?? 0.0, color);
+          return ChartData(
+            item.category, // Non-nullable, so no need for ?? ""
+            item.totalInstantFlow ?? 0.0, // Use total_instant_flow for chart value
+            color,
+          );
         }).toList();
 
         return SfCircularChart(

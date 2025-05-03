@@ -1,15 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nz_fabrics/src/common_widgets/flutter_smart_download_widget/flutter_smart_download_widget.dart';
-import 'package:nz_fabrics/src/features/source/model/filter_over_all_line_chart_model.dart';
-import 'package:nz_fabrics/src/features/source/model/filter_over_all_monthly_bar_chart_Model.dart';
-import 'package:nz_fabrics/src/features/source/model/filter_over_all_yearly_bar_chart_data_model.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/source_table_widget.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -20,7 +15,12 @@ import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 
-class OverAllSourceDataController extends GetxController with InternetConnectivityCheckMixin{
+import '../model/filter_over_all_water_line_chart_model.dart';
+import '../model/filter_over_all_yearly_bar_chart_data_model.dart';
+import '../model/filter_over_water_all_monthly_bar_chart_Model.dart';
+import '../views/widgets/sub_part/water_source_table_widget.dart';
+
+class OverAllWaterSourceDataController extends GetxController with InternetConnectivityCheckMixin{
 
   bool _isConnected = true;
   bool _isFilterSpecificNodeInProgress = false;
@@ -28,8 +28,8 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
   String _errorMessage = '';
 
   FilterOverAllLineChartModel _lineChartModel = FilterOverAllLineChartModel();
-  FilterOverAllMonthlyBarChartDataModel _monthlyBarchartModel = FilterOverAllMonthlyBarChartDataModel();
-  FilterOverAllYearlyBarChartDataModel _yearlyBarChartModel = FilterOverAllYearlyBarChartDataModel();
+  FilterOverAllWaterMonthlyBarChartDataModel _monthlyBarchartModel = FilterOverAllWaterMonthlyBarChartDataModel();
+  FilterOverAllWaterYearlyBarChartDataModel _yearlyBarChartModel = FilterOverAllWaterYearlyBarChartDataModel();
 
 
   bool get isConnected => _isConnected;
@@ -38,8 +38,8 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
   String get errorMessage => _errorMessage;
 
   FilterOverAllLineChartModel get  lineChartModel => _lineChartModel;
-  FilterOverAllMonthlyBarChartDataModel get  monthlyBarchartModel => _monthlyBarchartModel;
-  FilterOverAllYearlyBarChartDataModel get  yearlyBarChartModel => _yearlyBarChartModel;
+  FilterOverAllWaterMonthlyBarChartDataModel get  monthlyBarchartModel => _monthlyBarchartModel;
+  FilterOverAllWaterYearlyBarChartDataModel get  yearlyBarChartModel => _yearlyBarChartModel;
 
 
   String _graphType = '';
@@ -56,7 +56,7 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
     _fromDateTEController.text = todayDate;
     _toDateTEController.text = todayDate;
     dateDifference = 0;
-    Get.find<SourceDataController>().fetchData(_fromDateTEController.text, _toDateTEController.text);
+    Get.find<WaterSourceDataController>().fetchData(_fromDateTEController.text, _toDateTEController.text);
     update();
   }
   @override
@@ -98,9 +98,8 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
 
     try {
       await internetConnectivityCheck();
-
       NetworkResponse response = await NetworkCaller.postRequest(
-        url: Urls.getFilterOverallSourceDataUrl,
+        url: Urls.getFilterOverallWaterSourceDataUrl,
         body: requestBody,
       );
 
@@ -121,9 +120,9 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
           _lineChartModel = FilterOverAllLineChartModel.fromJson(response.body);
 
         }  else if (_graphType == "Monthly-Bar-Chart"){
-          _monthlyBarchartModel = FilterOverAllMonthlyBarChartDataModel.fromJson(response.body);
+          _monthlyBarchartModel = FilterOverAllWaterMonthlyBarChartDataModel.fromJson(response.body);
         }else{
-          _yearlyBarChartModel = FilterOverAllYearlyBarChartDataModel.fromJson(response.body);
+          _yearlyBarChartModel = FilterOverAllWaterYearlyBarChartDataModel.fromJson(response.body);
         }
 
 
@@ -198,14 +197,14 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
           headers = [
             'Date',
             'Node Name',
-            'Power',
+            'Instant Flow',
             'Cost',
           ];
         } else if (_graphType == "Monthly-Bar-Chart" || _graphType == "Yearly-Bar-Chart") {
           headers = [
             'Date',
             'Node Name',
-            'Energy',
+            'Volume',
             'Cost',
           ];
         }
@@ -224,7 +223,7 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
             String formattedDate = DateFormat('dd/MMM/yyyy HH:mm:ss').format(DateTime.parse(data.timedate!));
             sheet.getRangeByIndex(rowIndex, 1).setText(formattedDate);
             sheet.getRangeByIndex(rowIndex, 2).setText(data.node ?? 'N/A');
-            sheet.getRangeByIndex(rowIndex, 3).setNumber(data.power?.toDouble() ?? 0);
+            sheet.getRangeByIndex(rowIndex, 3).setNumber(data.instantFlow?.toDouble() ?? 0);
             sheet.getRangeByIndex(rowIndex, 4).setNumber(data.cost?.toDouble() ?? 0);
 
           }
@@ -235,7 +234,7 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
             String formattedDate = DateFormat('dd/MMM/yyyy').format(DateTime.parse(data.date!));
             sheet.getRangeByIndex(rowIndex, 1).setText(formattedDate);
             sheet.getRangeByIndex(rowIndex, 2).setText(data.node ?? 'N/A');
-            sheet.getRangeByIndex(rowIndex, 3).setNumber(data.energy?.toDouble() ?? 0);
+            sheet.getRangeByIndex(rowIndex, 3).setNumber(data.volume?.toDouble() ?? 0);
             sheet.getRangeByIndex(rowIndex, 4).setNumber(data.cost?.toDouble() ?? 0);
           }
         } else if (_graphType == "Yearly-Bar-Chart" && yearlyBarChartModel.data?.isNotEmpty == true) {
@@ -245,7 +244,7 @@ class OverAllSourceDataController extends GetxController with InternetConnectivi
             String formattedDate = DateFormat('dd/MMM/yyyy').format(DateTime.parse(data.date!));
             sheet.getRangeByIndex(rowIndex, 1).setText(formattedDate);
             sheet.getRangeByIndex(rowIndex, 2).setText(data.node ?? 'N/A');
-            sheet.getRangeByIndex(rowIndex, 3).setNumber(data.energy?.toDouble() ?? 0);
+            sheet.getRangeByIndex(rowIndex, 3).setNumber(data.volume?.toDouble() ?? 0);
             sheet.getRangeByIndex(rowIndex, 4).setNumber(data.cost?.toDouble() ?? 0);
           }
         }

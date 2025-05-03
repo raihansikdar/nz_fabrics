@@ -745,7 +745,7 @@
 //           child: TextComponent(
 //             fontSize: 12,
 //             text: cell.columnName.contains('Energy')
-//                 ? '${cell.value} kWh'
+//                 ? '${cell.value}
 //                 : cell.columnName.contains('CostUnitCost')
 //                 ? '${cell.value} ৳'
 //                 : cell.value.toString(),
@@ -774,7 +774,12 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
+import 'package:nz_fabrics/src/common_widgets/flutter_smart_download_widget/flutter_smart_download_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
+import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
+import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
+import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -783,12 +788,8 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' hide Column,Row;
 
-import '../../../../../common_widgets/custom_container_widget.dart';
-import '../../../../../common_widgets/flutter_smart_download_widget/flutter_smart_download_widget.dart';
-import '../../../../../shared_preferences/auth_utility_controller.dart' show AuthUtilityController;
-import '../../../../../utility/app_urls/app_urls.dart';
-import '../../../../../utility/style/app_colors.dart';
-import '../../../../../utility/style/constant.dart';
+
+import '../../../../../../utility/style/constant.dart' show boldFontFamily, k14TextSize, k8TextSize;
 import '../../../controller/over_all_source_data_controller.dart';
 
 

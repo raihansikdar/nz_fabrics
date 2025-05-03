@@ -3,18 +3,20 @@ import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/small_button_circular_progress_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/solar_feature/solar_summery/dgr/controllers/dgr_controller.dart';
+import 'package:nz_fabrics/src/features/source/water_source/controller/over_all_source_water_data_controller.dart';
+import 'package:nz_fabrics/src/features/source/water_source/views/widgets/sub_part/water_source_table_widget.dart';
+
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
-class DGRDateWidget extends StatefulWidget {
-  const DGRDateWidget({super.key});
+class OverAllDateWidget extends StatefulWidget {
+  const OverAllDateWidget({super.key});
 
   @override
-  State<DGRDateWidget> createState() => _DateWidgetState();
+  State<OverAllDateWidget> createState() => _DateWidgetState();
 }
 
-class _DateWidgetState extends State<DGRDateWidget> {
+class _DateWidgetState extends State<OverAllDateWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class _DateWidgetState extends State<DGRDateWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        GetBuilder<DgrController>(
-            builder: (dgrController) {
+        GetBuilder<OverAllWaterSourceDataController>(
+            builder: (filterSpecificNodeDataController) {
               return CustomContainer(
                   height: size.height * 0.14,
                   width: double.infinity,
@@ -40,7 +42,7 @@ class _DateWidgetState extends State<DGRDateWidget> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  GetBuilder<DgrController>(
+                                  GetBuilder<OverAllWaterSourceDataController>(
                                       builder: (controller) {
                                         return SizedBox(
                                           width: size.width * 0.42,
@@ -70,7 +72,7 @@ class _DateWidgetState extends State<DGRDateWidget> {
                                   SizedBox(
                                     width: size.width * 0.04,
                                   ),
-                                  GetBuilder<DgrController>(
+                                  GetBuilder<OverAllWaterSourceDataController>(
                                       builder: (controller) {
                                         return SizedBox(
                                           width: size.width * 0.43,
@@ -95,17 +97,19 @@ class _DateWidgetState extends State<DGRDateWidget> {
                                       }),
                                 ],
                               ),
-                              SizedBox(height: size.width > 600 ? size.height * k16TextSize : size.height * k10TextSize,),
+                              SizedBox(height: size.width > 600 ? size.height * k16TextSize : size.height * k8TextSize,),
                               SizedBox(
                                 height: size.width > 600 ? size.height * 0.05 :  size.width * 0.1,
                                 width: size.width * 0.4,
-                                child: GetBuilder<DgrController>(
+                                child: GetBuilder<OverAllWaterSourceDataController>(
                                     builder: (controller) {
                                       return ElevatedButton(
+
                                           onPressed: () async {
                                             controller.dateDifferenceDates(context);
-                                            await controller.fetchDgrData(fromDate:  controller.fromDateTEController.text, toDate:  controller.toDateTEController.text,fromButton: true);
-                                          }, child: controller.isDgrPantButtonProgress ? SmallButtonCircularProgressBarWidget(size: size) : const TextComponent(text: "Submit",color: AppColors.whiteTextColor,));
+                                            await controller.fetchOverAllSourceData(fromDate:  controller.fromDateTEController.text, toDate:  controller.toDateTEController.text,fromButton: true);
+                                            Get.find<WaterSourceDataController>().fetchData(controller.fromDateTEController.text,controller.toDateTEController.text);
+                                          }, child: controller.isFilterButtonProgress ? SmallButtonCircularProgressBarWidget(size: size)  : const TextComponent(text: "Submit",color: AppColors.whiteTextColor,));
                                     }
                                 ),
                               )
@@ -126,4 +130,3 @@ class _DateWidgetState extends State<DGRDateWidget> {
     debugPrint('Fetching data from $fromDate to $toDate');
   }
 }
-

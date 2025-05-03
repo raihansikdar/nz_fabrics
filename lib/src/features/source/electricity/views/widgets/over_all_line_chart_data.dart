@@ -543,8 +543,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:nz_fabrics/src/features/source/electricity/model/filter_over_all_line_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:nz_fabrics/src/features/source/model/filter_over_all_line_chart_model.dart';
 
 class OverAllLineChartDataWidget extends StatelessWidget {
   final FilterOverAllLineChartModel lineChartModel;

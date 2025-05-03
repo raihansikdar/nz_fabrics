@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nz_fabrics/src/features/source/controller/over_all_source_data_controller.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/energy_line_pie_chart_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/energyChartContainerWidget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/controller/over_all_source_data_controller.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/energy_line_pie_chart_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/energyChartContainerWidget.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
 class LineEnergyChartWidget extends StatelessWidget {

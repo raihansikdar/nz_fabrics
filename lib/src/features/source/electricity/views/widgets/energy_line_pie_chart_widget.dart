@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
-import 'package:nz_fabrics/src/features/source/controller/over_all_source_data_controller.dart';
 import 'dart:ui' as ui;
+
+import '../../controller/over_all_source_data_controller.dart' show OverAllSourceDataController;
 class EnergyLinePieChartWidget extends StatelessWidget {
   final Size size;
 

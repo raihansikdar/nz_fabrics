@@ -5,19 +5,20 @@ import 'package:nz_fabrics/src/common_widgets/custom_box_shadow_container_widget
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_radio_button/custom_radio_button.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/source/controller/over_all_source_data_controller.dart';
-import 'package:nz_fabrics/src/features/source/controller/source_category_wise_live_data_controller.dart';
-import 'package:nz_fabrics/src/features/source/model/source_category_wise_live_data_model.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/over_all_line_chart_data.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/over_all_date_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/over_all_monthly_bar_chart_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/over_all_yearly_bar_chart_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/source_category_wise_pie_chart.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/line_energy_chart_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/live_data_container_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/monthly_energy_chart_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/source_table_widget.dart';
-import 'package:nz_fabrics/src/features/source/views/widgets/sub_part/yearly_energy_chart_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/controller/over_all_source_data_controller.dart';
+import 'package:nz_fabrics/src/features/source/electricity/controller/source_category_wise_live_data_controller.dart';
+import 'package:nz_fabrics/src/features/source/electricity/model/source_category_wise_live_data_model.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/over_all_date_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/over_all_line_chart_data.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/over_all_monthly_bar_chart_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/over_all_yearly_bar_chart_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/source_category_wise_pie_chart.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/line_energy_chart_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/live_data_container_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/monthly_energy_chart_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/source_table_widget.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/widgets/sub_part/yearly_energy_chart_widget.dart';
+
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 

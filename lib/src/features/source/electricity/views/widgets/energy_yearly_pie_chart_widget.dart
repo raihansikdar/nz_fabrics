@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
+import 'package:nz_fabrics/src/features/source/electricity/controller/over_all_source_data_controller.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
-import 'package:nz_fabrics/src/features/source/controller/over_all_source_data_controller.dart';
 
 class EnergyYearlyPieChartWidget extends StatelessWidget {
   final Size size;

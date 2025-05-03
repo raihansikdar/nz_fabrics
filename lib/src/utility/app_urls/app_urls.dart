@@ -178,6 +178,9 @@ class Urls{
  static String postFilterSpecificNodeDataUrl(String nodeName) => "$_baseUrl/api/filter-specific-node-data/$nodeName/";
 
  //static String getTimeUsageInPercentageUrl = "$_baseUrl/time-usage-in-percentage/";
+
+
+ /*----------------- Source Data --------------------*/
  static String getFilterOverallSourceDataUrl = "$_baseUrl/api/filter-overall-source-data/";
 
 
@@ -186,6 +189,12 @@ class Urls{
 
 
  static String getAcKnowledgeHistoryUrl(String nodeName) => "$_baseUrl/api/get-acknowledge-data/$nodeName/";
+
+
+
+ static String getFilterOverallWaterSourceDataUrl = "$_baseUrl/api/filter-overall-water-source-data/";
+
+ static String getWaterSourceCategoryWiseLiveDataDaUrl = "$_baseUrl/api/get-source-categorywise-live-data-water/";
 
 
 

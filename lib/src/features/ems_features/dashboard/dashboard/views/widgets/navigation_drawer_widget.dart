@@ -20,7 +20,8 @@ import 'package:nz_fabrics/src/features/profile/views/screens/profile_screen.dar
 import 'package:nz_fabrics/src/features/solar_feature/inverter_data/views/screens/inverter_data_screen.dart';
 import 'package:nz_fabrics/src/features/solar_feature/module_cleaning/views/screen/module_cleaning_screen.dart';
 import 'package:nz_fabrics/src/features/solar_feature/solar_summery/solar_summary_screen.dart';
-import 'package:nz_fabrics/src/features/source/views/screen/source_screen.dart';
+import 'package:nz_fabrics/src/features/source/electricity/views/screen/source_screen.dart';
+import 'package:nz_fabrics/src/features/source/water_source/views/screen/water_source_screen.dart';
 import 'package:nz_fabrics/src/features/summary_feature/views/screen/summary_screen.dart';
 import 'package:nz_fabrics/src/features/user_management/views/screens/user_management_screen.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
@@ -94,6 +95,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     SolarAnalysisListModel(AssetsPath.moduleCleaningItemIconSVG,"Module Cleaning"),
 
   ];
+
+  List<SourceListModel>sourceList = [
+    SourceListModel(AssetsPath.solarAnalysisIconSVG,"Electricity"),
+    SourceListModel(AssetsPath.inverterItemIconSVG,"Water"),
+  ];
+
 
   List<Button>buttonList = [
     Button(AssetsPath.analysisProIconSVG,"Analysis Pro"),
@@ -266,14 +273,14 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                                 controller: sourceElectricityScrollController,
                                 radius: Radius.circular(size.height * k20TextSize),
                                 child: SizedBox(
-                                  height: size.height * 0.05,
+                                  height: size.height * 0.08,
 
                                   child: Padding(
                                     padding: EdgeInsets.only(top: size.height * k16TextSize),
                                     child: ListView.separated(
                                       padding: EdgeInsets.only(left: size.height * k30TextSize),
                                       shrinkWrap: true,
-                                      itemCount: 1,
+                                      itemCount: sourceList.length,
                                       controller: sourceElectricityScrollController,
                                       itemBuilder: (context,index){
                                         return GestureDetector(
@@ -281,20 +288,30 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                                             if(index == 0){
                                               Get.to(()=> const SourceScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
                                             }
-                                            // else if(index == 2){
-                                            //   Get.to(()=> const ModuleCleaningScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
-                                            //
-                                            //
-                                            // }else{
-                                            //   Get.to(()=>  const InverterDataScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
+                                            else if(index == 1){
+                                              Get.to(()=> const WaterSourceScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
+
+
+                                            }
+                                            // else{
+                                            //   Get.to(()=> const WaterSourceScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
+                                            //  // Get.to(()=>  const InverterDataScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
                                             // }
 
                                           },
-                                          child: Row(
+                                          child: Column(
                                             children: [
-                                              SvgPicture.asset(AssetsPath.sourceEnergyCostItemIconSVG,height: size.height * k25TextSize,),
-                                              SizedBox(width:  size.width * k40TextSize),
-                                              const TextComponent(text: "Electricity", textScalar:  TextScaler.linear(0.9),)
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(AssetsPath.sourceEnergyCostItemIconSVG,height: size.height * k25TextSize,),
+                                                  SizedBox(width:  size.width * k40TextSize),
+                                                   TextComponent(text: sourceList[index].name, textScalar:  TextScaler.linear(0.9),)
+                                                ],
+                                              ),
+
+
+
+
                                             ],
                                           ),
                                         );
@@ -1349,6 +1366,13 @@ class SolarAnalysisListModel {
    final String name;
 
   SolarAnalysisListModel(this.image, this.name);
+}
+
+class SourceListModel {
+  final String image;
+  final String name;
+
+  SourceListModel(this.image, this.name);
 }
 
 class Button {

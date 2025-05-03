@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:nz_fabrics/src/features/source/model/source_category_wise_live_data_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
@@ -8,7 +6,9 @@ import 'package:nz_fabrics/src/services/network_response.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 
-class SourceCategoryWiseLiveDataController extends GetxController with InternetConnectivityCheckMixin {
+import '../model/source_category_wise_live_data_model.dart';
+
+class WaterSourceCategoryWiseLiveDataController extends GetxController with InternetConnectivityCheckMixin {
 
   bool _isConnected = true;
   bool _isSourceCategoryInProgress = false;
@@ -29,7 +29,7 @@ class SourceCategoryWiseLiveDataController extends GetxController with InternetC
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getSourceCategoryWiseLiveDataDaUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterSourceCategoryWiseLiveDataDaUrl);
 
       log("getSourceCategoryWiseLiveDataDataUrl statusCode ==> ${response.statusCode}");
       log("getSourceCategoryWiseLiveDataDataUrl body ==> ${response.body}");
