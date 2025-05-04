@@ -40,10 +40,10 @@ class PieChartPowerSourceController extends GetxController with InternetConnecti
     ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
       if (token != null) {
         fetchPieChartData();
-        _startPeriodicApiCall();
-      } else {
+       // _startPeriodicApiCall();
+      } /*else {
         _stopPeriodicApiCall();
-      }
+      }*/
     });
   }
 
@@ -147,7 +147,7 @@ class PieChartPowerSourceController extends GetxController with InternetConnecti
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getSourceCategoryWiseLiveDataUrl);
 
-     log('PieChartPowerSourceController getSourceCategoryWiseLiveDataUrl Status: ${response.statusCode}');
+     log('PieChartPowerSourceController Status: ${response.statusCode}');
     // log('getSourceCategoryWiseLiveDataUrl Data Body: ${response.body}');
 
       if (response.statusCode == 200) {

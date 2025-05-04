@@ -35,10 +35,10 @@ class PieChartPowerLoadController extends GetxController with InternetConnectivi
     ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
       if (token != null) {
         fetchPieChartLoadData();
-        _startPeriodicApiCall();
-      } else {
+      //  _startPeriodicApiCall();
+      } /*else {
         _stopPeriodicApiCall();
-      }
+      }*/
     });
   }
 

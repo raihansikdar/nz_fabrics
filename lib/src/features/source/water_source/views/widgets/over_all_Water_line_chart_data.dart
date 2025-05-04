@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-import '../../model/filter_over_all_water_line_chart_model.dart';
+import '../../model/filter_over_all_water_line_chart_model.dart' show FilterOverAllLineChartModel;
 
 class OverAllLineWaterChartDataWidget extends StatelessWidget {
   final FilterOverAllLineChartModel lineChartModel;
@@ -54,7 +54,7 @@ class OverAllLineWaterChartDataWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: yLabels
                       .map((y) => Text(
-                    '${y.toStringAsFixed(0)} kW',
+                    '${y.toStringAsFixed(0)} m³/s',
                     style: const TextStyle(fontSize: 11),
                   ))
                       .toList(),

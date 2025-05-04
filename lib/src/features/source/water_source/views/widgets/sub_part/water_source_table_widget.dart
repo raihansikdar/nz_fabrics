@@ -18,7 +18,6 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' hide Column, Row;
-
 import '../../../controller/over_all_source_water_data_controller.dart';
 
 class WaterSourceDataController extends GetxController {
@@ -308,8 +307,8 @@ class FormattedData {
 // Initialize controller globally
 final WaterSourceDataController sourceDataController = Get.put(WaterSourceDataController());
 
-class SourceTableWidget extends StatelessWidget {
-  SourceTableWidget({super.key});
+class WaterSourceTableWidget extends StatelessWidget {
+  WaterSourceTableWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
