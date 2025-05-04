@@ -1,122 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
-// import 'package:nz_ums/src/features/ems_features/dashboard/sld_view/nz_power_sld/model/main_bus_bar_true_model/filter_bus_bar_const_model.dart';
-// import 'package:syncfusion_flutter_charts/charts.dart';
-// import 'package:nz_ums/src/utility/style/app_colors.dart';
-//
-// class FilterBusBarWidget extends StatelessWidget {
-//   final List<FilterBusBarEnergyCostModel> monthlyDataList;
-//   final Size size;
-//   final int dateDifference;
-//
-//   const FilterBusBarWidget({super.key, required this.size, required this.dateDifference, required this.monthlyDataList});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     if (monthlyDataList.isEmpty) {
-//       return const Center(child: Text("No data available"));
-//     }
-//
-//     final List<MonthlyChartData> monthlyChartData = monthlyDataList
-//         .map((monthlyData) => MonthlyChartData(
-//       date: parseDate(monthlyData.date!),
-//       energy: (monthlyData.energy ?? 0).toDouble(),
-//       cost: (monthlyData.cost ?? 0).toDouble(),
-//     ))
-//         .toList();
-//
-//     return Card(
-//       color: AppColors.whiteTextColor,
-//       child: SingleChildScrollView(
-//         scrollDirection: Axis.horizontal,
-//         child: SizedBox(
-//           width: (dateDifference > 3 && dateDifference< 90) ? 1200 : size.width,
-//           child: SfCartesianChart(
-//             legend: const Legend(
-//               isVisible: true,
-//               overflowMode: LegendItemOverflowMode.wrap,
-//               position: LegendPosition.top,
-//             ),
-//             trackballBehavior: TrackballBehavior(
-//               enable: true,
-//               tooltipAlignment: ChartAlignment.near,
-//               tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-//               activationMode: ActivationMode.longPress,
-//             ),
-//             primaryXAxis: DateTimeAxis(
-//               dateFormat: getDateFormat(monthlyDataList.isNotEmpty ? monthlyDataList.first.date! : '2022-01-01'),
-//               intervalType: dateDifference > 90 ? DateTimeIntervalType.months : DateTimeIntervalType.days,
-//
-//               majorGridLines: const MajorGridLines(width: 1),
-//             ),
-//             primaryYAxis: NumericAxis(
-//               majorGridLines: const MajorGridLines(width: 1),
-//               numberFormat: NumberFormat.compact(),
-//               labelFormat: '{value}',
-//             ),
-//             series: <CartesianSeries>[
-//               ColumnSeries<MonthlyChartData, DateTime>(
-//                 dataSource: monthlyChartData,
-//                 xValueMapper: (MonthlyChartData data, _) => data.date,
-//                 yValueMapper: (MonthlyChartData data, _) => data.energy,
-//                 name: 'Energy(kWh)',
-//               ),
-//               ColumnSeries<MonthlyChartData, DateTime>(
-//                 dataSource: monthlyChartData,
-//                 xValueMapper: (MonthlyChartData data, _) => data.date,
-//                 yValueMapper: (MonthlyChartData data, _) => data.cost,
-//                 name: 'Cost(BDT)',
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   DateFormat getDateFormat(String dateString) {
-//     final monthYearFormat = DateFormat("yyyy-MM");
-//     DateTime parsedDate;
-//     try {
-//       parsedDate = monthYearFormat.parseStrict(dateString);
-//       return DateFormat('MMM/yyyy');
-//     } catch (e) {
-//       return DateFormat('dd/MMM');
-//     }
-//   }
-//
-// }
-//
-// class MonthlyChartData {
-//   final DateTime date;
-//   final dynamic energy;
-//   final dynamic cost;
-//
-//   MonthlyChartData({required this.date, required this.energy, required this.cost});
-// }
-//
-// DateTime parseDate(String dateString) {
-//   final monthYearFormat = DateFormat("yyyy-MM");
-//   final fullDateFormat = DateFormat("yyyy-MM-dd");
-//   DateTime? parsedDate;
-//
-//   try {
-//     parsedDate = monthYearFormat.parseStrict(dateString);
-//   } catch (e) {
-//     try {
-//       parsedDate = fullDateFormat.parseStrict(dateString);
-//     } catch (e) {
-//       return DateTime.now();
-//     }
-//   }
-//
-//   return parsedDate;
-// }
-//
-//
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/main_bus_bar_true_model/filter_bus_bar_const_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_short_sld_main_bus_bar_true_model/water_long_sld_filter_bus_bar_const_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -125,7 +10,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 
 class WaterLongSLDFilterBusBarWidget extends StatelessWidget {
 
-  final List<FilterBusBarEnergyCostModel> monthlyDataList;
+  final List<WaterLongSLDFilterBusBarEnergyCostModel> monthlyDataList;
   final Size size;
   final int dateDifference;
 
@@ -237,7 +122,7 @@ DateTime parseDate(String dateString) {
 
 
 class FilterBusBarTableWidget extends StatelessWidget {
-  final List<FilterBusBarEnergyCostModel> monthlyDataList;
+  final List<WaterLongSLDFilterBusBarEnergyCostModel> monthlyDataList;
   final Size size;
 
   const FilterBusBarTableWidget({
@@ -302,7 +187,7 @@ class FilterBusBarTableWidget extends StatelessWidget {
   }
 }
 class MonthlyDataSource extends DataGridSource {
-  final List<FilterBusBarEnergyCostModel> monthlyDataList;
+  final List<WaterLongSLDFilterBusBarEnergyCostModel> monthlyDataList;
   final DateFormat monthYearFormat = DateFormat("MMM/yyyy");
   final DateFormat dayFormat = DateFormat("dd/MMM/yyyy");
 

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:nz_fabrics/src/common_widgets/flutter_smart_download_widget/flutter_smart_download_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/main_bus_bar_true_model/filter_bus_bar_const_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/model/electricity_short_main_bus_bar_true_model/electricity_short_filter_bus_bar_const_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -26,7 +26,7 @@ class ElectricityShortSLDFilterBusBarEnergyCostController extends GetxController
   bool _isFilterBusBarButtonInProgress = false;
   String _errorMessage = '';
 
-  List<FilterBusBarEnergyCostModel> _filterBusBarEnergyBusBarList = <FilterBusBarEnergyCostModel>[];
+  List<ElectricityShortFilterBusBarEnergyCostModel> _filterBusBarEnergyBusBarList = <ElectricityShortFilterBusBarEnergyCostModel>[];
 
   bool get isConnected => _isConnected;
   bool get isFilterBusBarEnergyCostInProgress => _isFilterBusBarEnergyCostInProgress;
@@ -34,7 +34,7 @@ class ElectricityShortSLDFilterBusBarEnergyCostController extends GetxController
   String get errorMessage => _errorMessage;
 
 
-  List<FilterBusBarEnergyCostModel> get filterBusBarEnergyBusBarList => _filterBusBarEnergyBusBarList;
+  List<ElectricityShortFilterBusBarEnergyCostModel> get filterBusBarEnergyBusBarList => _filterBusBarEnergyBusBarList;
   int dateDifference = 0;
 
   @override
@@ -90,7 +90,7 @@ class ElectricityShortSLDFilterBusBarEnergyCostController extends GetxController
       if (response.isSuccess) {
 
           final jsonData = (response.body as List<dynamic>);
-          _filterBusBarEnergyBusBarList = jsonData.map((json) => FilterBusBarEnergyCostModel.fromJson(json as Map<String, dynamic>)).toList();
+          _filterBusBarEnergyBusBarList = jsonData.map((json) => ElectricityShortFilterBusBarEnergyCostModel.fromJson(json as Map<String, dynamic>)).toList();
 
         update();
         return true;

@@ -7,9 +7,9 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_long_sld_live_all_node_power_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/loop_and_bus_cupler_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_view_page_model.dart'
-    show LiveDataModel, WaterViewPageModel;
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_long_sld_loop_and_bus_cupler_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_long_sld_view_page_model.dart'
+    show LiveDataModel, WaterLongSLDViewPageModel;
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/views/screens/water_long_sld_main_bus_bar_true/screen/water_long_sld_main_bus_bar_true_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/views/widgets/water_long_sld_bus_couplar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/views/widgets/water_long_sld_meter_bus_bar_widget.dart';
@@ -55,9 +55,9 @@ class WaterLongSldScreen extends StatefulWidget {
 
 class _WaterLongSldScreenState extends State<WaterLongSldScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  List<WaterViewPageModel> _viewPageData = [];
+  List<WaterLongSLDViewPageModel> _viewPageData = [];
   Map<dynamic, LiveDataModel> _liveData = {};
-  WaterLoopAndBusCouplerModel loopAndBusCouplerModel = WaterLoopAndBusCouplerModel();
+  WaterLongSLDLoopAndBusCouplerModel loopAndBusCouplerModel = WaterLongSLDLoopAndBusCouplerModel();
   bool _isLoading = true;
   late AnimationController _controller;
   late ui.Image _mouseIcon;
@@ -96,7 +96,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
     if (cachedViewPageData != null) {
       setState(() {
         _viewPageData = (json.decode(cachedViewPageData) as List)
-            .map((data) => WaterViewPageModel.fromJson(data))
+            .map((data) => WaterLongSLDViewPageModel.fromJson(data))
             .toList();
 
         _isLoading = false;
@@ -271,7 +271,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
         final List<dynamic> data = json.decode(response.body);
 
         setState(() {
-          _viewPageData = data.map((e) => WaterViewPageModel.fromJson(e)).toList();
+          _viewPageData = data.map((e) => WaterLongSLDViewPageModel.fromJson(e)).toList();
         });
 
         GetAllInfoControllersForWater controller = Get.find(); // Get controller instance
@@ -696,7 +696,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
           widget = GetBuilder<WaterLongSLDLiveAllNodePowerController>(builder: (controller) {
             final nodeData = controller.liveAllNodePowerModel.firstWhere(
                   (element) => element.node == item.nodeName,
-              orElse: () => WaterLiveAllNodePowerModel(),
+              orElse: () => WaterLongSLDLiveAllNodePowerModel(),
             );
             return WaterLongSLDBoxWithIconWidget(
               sensorStatus: sensorStatus,
@@ -724,7 +724,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
           widget = GetBuilder<WaterLongSLDLiveAllNodePowerController>(builder: (controller) {
             final nodeData = controller.liveAllNodePowerModel.firstWhere(
                   (element) => element.node == item.nodeName,
-              orElse: () => WaterLiveAllNodePowerModel(),
+              orElse: () => WaterLongSLDLiveAllNodePowerModel(),
             );
             return WaterLongSLDTrBoxWithIconWidget(
               sensorStatus: liveData?.sensorStatus ?? true,
@@ -863,7 +863,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
               widget = GetBuilder<WaterLongSLDLiveAllNodePowerController>(builder: (controller) {
                 final nodeData = controller.liveAllNodePowerModel.firstWhere(
                       (element) => element.node == item.nodeName,
-                  orElse: () => WaterLiveAllNodePowerModel(),
+                  orElse: () => WaterLongSLDLiveAllNodePowerModel(),
                 );
                 return WaterLongSLDMainBusBarTrue(
                   sensorStatus: liveData?.sensorStatus ?? true,

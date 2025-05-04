@@ -17,11 +17,11 @@ class NotificationController extends GetxController {
   late IOWebSocketChannel channel;
   final NotificationService notificationService = NotificationService(); // Inject NotificationService
 
-  @override
-  void onInit() {
-    super.onInit();
-    connectWebSocket();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   connectWebSocket();
+  // }
 
   void connectWebSocket() {
     channel = IOWebSocketChannel.connect(

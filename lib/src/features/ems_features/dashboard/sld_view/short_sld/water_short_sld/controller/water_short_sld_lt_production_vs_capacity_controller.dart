@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/lt_production_vs_capacity_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/model/water_short_lt_production_vs_capacity_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -19,12 +19,12 @@ class WaterShortSLDLtProductionVsCapacityController extends GetxController with 
   bool _isConnected = true;
   bool _isLtProductionVsCapacityInProgress = false;
   String _errorMessage = '';
-  LTProductionVsCapacityModel  _ltProductionVsCapacityModel = LTProductionVsCapacityModel ();
+  WaterShortLTProductionVsCapacityModel  _ltProductionVsCapacityModel = WaterShortLTProductionVsCapacityModel ();
 
   bool get isConnected => _isConnected;
   bool get isLtProductionVsCapacityInProgress => _isLtProductionVsCapacityInProgress;
   String get errorMessage => _errorMessage;
-  LTProductionVsCapacityModel  get ltProductionVsCapacityModel => _ltProductionVsCapacityModel;
+  WaterShortLTProductionVsCapacityModel  get ltProductionVsCapacityModel => _ltProductionVsCapacityModel;
 
 
 
@@ -147,7 +147,7 @@ class WaterShortSLDLtProductionVsCapacityController extends GetxController with 
 
       if (response.isSuccess) {
         final jsonData = (response.body);
-        _ltProductionVsCapacityModel = LTProductionVsCapacityModel.fromJson(jsonData);
+        _ltProductionVsCapacityModel = WaterShortLTProductionVsCapacityModel.fromJson(jsonData);
 
         update();
         return true;

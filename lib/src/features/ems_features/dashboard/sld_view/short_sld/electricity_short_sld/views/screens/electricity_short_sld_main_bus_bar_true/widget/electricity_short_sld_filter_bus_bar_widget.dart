@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/main_bus_bar_true_model/filter_bus_bar_const_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/model/electricity_short_main_bus_bar_true_model/electricity_short_filter_bus_bar_const_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -9,7 +9,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 
 class ElectricityShortSLDFilterBusBarWidget extends StatelessWidget {
 
-  final List<FilterBusBarEnergyCostModel> monthlyDataList;
+  final List<ElectricityShortFilterBusBarEnergyCostModel> monthlyDataList;
   final Size size;
   final int dateDifference;
 
@@ -121,7 +121,7 @@ DateTime parseDate(String dateString) {
 
 
 class FilterBusBarTableWidget extends StatelessWidget {
-  final List<FilterBusBarEnergyCostModel> monthlyDataList;
+  final List<ElectricityShortFilterBusBarEnergyCostModel> monthlyDataList;
   final Size size;
 
   const FilterBusBarTableWidget({
@@ -186,7 +186,7 @@ class FilterBusBarTableWidget extends StatelessWidget {
   }
 }
 class MonthlyDataSource extends DataGridSource {
-  final List<FilterBusBarEnergyCostModel> monthlyDataList;
+  final List<ElectricityShortFilterBusBarEnergyCostModel> monthlyDataList;
   final DateFormat monthYearFormat = DateFormat("MMM/yyyy");
   final DateFormat dayFormat = DateFormat("dd/MMM/yyyy");
 

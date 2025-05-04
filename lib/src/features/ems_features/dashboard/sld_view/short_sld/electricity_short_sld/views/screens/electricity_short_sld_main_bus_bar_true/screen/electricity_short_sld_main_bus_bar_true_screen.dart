@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_main_bus_bar_true_controller/electricity_long_sld_filter_bus_bar_energy_cost_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/screens/electricity_long_sld_main_bus_bar_true/widget/electricity_long_sld_filter_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_main_bus_bar_true_controller/electricity_short_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/screens/electricity_short_sld_main_bus_bar_true/widget/electricity_short_sld_filter_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
@@ -23,7 +23,7 @@ class _ElectricityShortSLDMainBusBarTrueScreenState extends State<ElectricitySho
 
   @override
   void initState() {
-    Get.find<ElectricityLongSLDFilterBusBarEnergyCostController>().fetchFilterSpecificData(busBarName: widget.busBarName, fromDate: Get.find<ElectricityLongSLDFilterBusBarEnergyCostController>().fromDateTEController.text, toDate: Get.find<ElectricityLongSLDFilterBusBarEnergyCostController>().toDateTEController.text);
+    Get.find<ElectricityShortSLDFilterBusBarEnergyCostController>().fetchFilterSpecificData(busBarName: widget.busBarName, fromDate: Get.find<ElectricityShortSLDFilterBusBarEnergyCostController>().fromDateTEController.text, toDate: Get.find<ElectricityShortSLDFilterBusBarEnergyCostController>().toDateTEController.text);
     super.initState();
   }
 
@@ -46,9 +46,9 @@ class _ElectricityShortSLDMainBusBarTrueScreenState extends State<ElectricitySho
             ElectricityShortSLDDateWidget(nodeName: 'REB 01'),
             SizedBox(
               height: 400,
-              child: GetBuilder<ElectricityLongSLDFilterBusBarEnergyCostController>(
+              child: GetBuilder<ElectricityShortSLDFilterBusBarEnergyCostController>(
                 builder: (filterBusBarEnergyCostController) {
-                  return ElectricityLongSLDFilterBusBarWidget(
+                  return ElectricityShortSLDFilterBusBarWidget(
                     size: size,
                     dateDifference: filterBusBarEnergyCostController.dateDifference,
                     monthlyDataList: filterBusBarEnergyCostController.filterBusBarEnergyBusBarList,
@@ -56,7 +56,7 @@ class _ElectricityShortSLDMainBusBarTrueScreenState extends State<ElectricitySho
                 },
               ),
             ),
-            GetBuilder<ElectricityLongSLDFilterBusBarEnergyCostController>(
+            GetBuilder<ElectricityShortSLDFilterBusBarEnergyCostController>(
               builder: (filterBusBarEnergyCostController) {
                 return Align(
                   alignment: Alignment.centerRight,
@@ -87,7 +87,7 @@ class _ElectricityShortSLDMainBusBarTrueScreenState extends State<ElectricitySho
             ),
             SizedBox(
               height: 400,
-              child: GetBuilder<ElectricityLongSLDFilterBusBarEnergyCostController>(
+              child: GetBuilder<ElectricityShortSLDFilterBusBarEnergyCostController>(
                 builder: (filterBusBarEnergyCostController) {
                   return FilterBusBarTableWidget(
                     size: size,

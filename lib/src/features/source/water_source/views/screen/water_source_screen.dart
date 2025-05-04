@@ -76,7 +76,7 @@ class _WaterSourceScreenState extends State<WaterSourceScreen> {
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: CustomAppBarWidget(
-        text: "Source",
+        text: "Water Source",
         backPreviousScreen: true,
         onBackButtonPressed: () {
           Future.delayed(const Duration(milliseconds: 1500)).then((_) {

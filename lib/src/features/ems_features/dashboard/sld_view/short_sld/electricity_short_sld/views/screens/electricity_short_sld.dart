@@ -2,22 +2,21 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_pf_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/live_all_node_power_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/loop_and_bus_cupler_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/view_page_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/screens/electricity_long_sld_main_bus_bar_true/screen/electricity_long_sld_main_bus_bar_true_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/bus_couplar_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/line_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/main_bus_bar_2.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/meter_bus_bar_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/nz_box_with_icon_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/nz_circle_with_icon_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/nz_source_and_load_box_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/nz_tr_box_with_icon_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/views/widgets/super_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_pf_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/model/electricity_short_loop_and_bus_cupler_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/model/electricity_short_view_page_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/screens/electricity_short_sld_main_bus_bar_true/screen/electricity_short_sld_main_bus_bar_true_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_bus_couplar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_line_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_main_bus_bar_2.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_meter_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_nz_box_with_icon_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_nz_circle_with_icon_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_nz_source_and_load_box_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_nz_tr_box_with_icon_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_super_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
@@ -40,6 +39,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import '../../model/electricity_short_live_all_node_power_model.dart';
+
 class ElectricityShortSld extends StatefulWidget {
   const ElectricityShortSld({super.key});
 
@@ -49,9 +50,9 @@ class ElectricityShortSld extends StatefulWidget {
 
 class _ElectricityShortSldState extends State<ElectricityShortSld>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  List<ViewPageModel> _viewPageData = [];
+  List<ElectricityShortViewPageModel> _viewPageData = [];
   Map<dynamic, LiveDataModel> _liveData = {};
-  LoopAndBusCouplerModel loopAndBusCouplerModel = LoopAndBusCouplerModel();
+  ElectricityShortLoopAndBusCouplerModel loopAndBusCouplerModel = ElectricityShortLoopAndBusCouplerModel();
   bool _isLoading = true;
   late AnimationController _controller;
   late ui.Image _mouseIcon;
@@ -71,10 +72,10 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     _fetchPFData();
     _initializeData();
 
-    Get.find<ElectricityLongSLDLtProductionVsCapacityController>().fetchProductVsCapacityData();
-    Get.find<ElectricityLongSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
-    Get.find<ElectricityLongSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
-    Get.find<ElectricityLongSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLtProductionVsCapacityController>().fetchProductVsCapacityData();
+    Get.find<ElectricityShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
+    Get.find<ElectricityShortSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
@@ -90,7 +91,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     if (cachedViewPageData != null) {
       setState(() {
         _viewPageData = (json.decode(cachedViewPageData) as List)
-            .map((data) => ViewPageModel.fromJson(data))
+            .map((data) => ElectricityShortViewPageModel.fromJson(data))
             .toList();
         _isLoading = false;
       });
@@ -140,16 +141,16 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     if (!mounted) return;
 
     final response = await http.get(
-      Uri.parse('${Urls.baseUrl}/live-all-node-power/'),
+      Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=electricity'),
       headers: {
         'Authorization': AuthUtilityController.accessToken ?? '',
       },
     );
 
-    //  debugPrint("live-all-node-power -----> ${response.body}");
+    // debugPrint("live-all-node-power -----> ${response.body}");
 
     if (response.statusCode == 200) {
-      final data = json.decode(response.body);
+      final data = json.decode(response.body) as List<dynamic>;
       var fetchRequests = _viewPageData
           .where((item) => item.nodeName.isNotEmpty)
           .map((item) async {
@@ -164,9 +165,9 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
             sensorStatus: nodeData['sensor_status'] ?? false,
             sourceType: nodeData['source_type'] ?? '',
             timedate: nodeData['timedate'] != null
-                ? DateTime.tryParse(
-                nodeData['timedate']) // Parse the string to DateTime
+                ? DateTime.tryParse(nodeData['timedate'])
                 : null,
+            //  color: nodeData['color']?.toString(),
           );
 
           return {item.id: liveDataModel};
@@ -176,22 +177,24 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
       final results = await Future.wait(fetchRequests);
 
-    if(mounted){
-      setState(() {
-        for (var result in results) {
-          if (result != null) {
-            _liveData.addAll(result);
+      if (mounted) {
+        setState(() {
+          for (var result in results) {
+            if (result != null) {
+              _liveData.addAll(result);
+            }
           }
-        }
-        _isLoading = false;
-      });
-    }
+          _isLoading = false;
+        });
+      }
     } else {
       // Handle the error case when the API call fails
       debugPrint('-------Failed to fetch live data------------');
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -207,7 +210,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
         final List<dynamic> data = json.decode(response.body);
 
         setState(() {
-          _viewPageData = data.map((e) => ViewPageModel.fromJson(e)).toList();
+          _viewPageData = data.map((e) => ElectricityShortViewPageModel.fromJson(e)).toList();
         });
 
         GetAllInfoControllers controller = Get.find(); // Get controller instance
@@ -388,7 +391,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
                             children: [
                               CustomPaint(
                                 size: Size(contentWidth, contentHeight),
-                                painter: AnimatedLinePainter(
+                                painter: ElectricityShortSLDAnimatedLinePainter(
                                   viewPageData: _viewPageData,
                                   liveData: _liveData,
                                   minX: minX,
@@ -452,10 +455,10 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
   /*--------------Pf here----------*/
   List<Widget> _buildPFWidgets(double minX, double minY) {
     return _pfData.map((item) {
-      var controller = Get.put(ElectricityLongSldLivePfDataController(), tag: item['node_name']);
+      var controller = Get.put(ElectricityShortSldLivePfDataController(), tag: item['node_name']);
       controller.fetchLivePFData(nodeName: item['node_name']);
 
-      return GetBuilder<ElectricityLongSldLivePfDataController>(
+      return GetBuilder<ElectricityShortSldLivePfDataController>(
         tag: item['node_name'],
         builder: (controller) {
           return Positioned(
@@ -577,7 +580,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
       switch (item.shape) {
         case 'circle':
-          widget = CircleWithIcon(
+          widget = ShortElectricityCircleWithIcon(
             sensorStatus: liveData?.sensorStatus ?? true,
             value: power,
             // textColor: item.textColor,
@@ -618,12 +621,12 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           );
           break;
         case 'LB_Meter':
-          widget = GetBuilder<ElectricityLongSLDLiveAllNodePowerController>(builder: (controller) {
+          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(builder: (controller) {
             final nodeData = controller.liveAllNodePowerModel.firstWhere(
                   (element) => element.node == item.nodeName,
-              orElse: () => LiveAllNodePowerModel(),
+              orElse: () => ElectricityShortLiveAllNodePowerModel(),
             );
-            return BoxWithIconWidget(
+            return ShortElectricityBoxWithIconWidget(
               sensorStatus: sensorStatus,
               value: power,
               icon: FontAwesomeIcons.solarPanel,
@@ -645,13 +648,14 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
             );
           });
           break;
+         // ElectricityLongSLDLiveAllNodePowerController
         case 'box':
-          widget = GetBuilder<ElectricityLongSLDLiveAllNodePowerController>(builder: (controller) {
+          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(builder: (controller) {
             final nodeData = controller.liveAllNodePowerModel.firstWhere(
                   (element) => element.node == item.nodeName,
-              orElse: () => LiveAllNodePowerModel(),
+              orElse: () => ElectricityShortLiveAllNodePowerModel(),
             );
-            return TrBoxWithIconWidget(
+            return ShortElectrcityTrBoxWithIconWidget(
               sensorStatus: liveData?.sensorStatus ?? true,
               value: power,
               icon: FontAwesomeIcons.solarPanel,
@@ -698,8 +702,8 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           break;
         case 'Bus_Bar':
           if (item.sourceType == 'Super_Bus_Bar') {
-            widget = GetBuilder<ElectricityLongSLDLtProductionVsCapacityController>(builder: (controller) {
-              return SuperBusBarWidget(
+            widget = GetBuilder<ElectricityShortSLDLtProductionVsCapacityController>(builder: (controller) {
+              return ShortElectricitySuperBusBarWidget(
                 sensorStatus: liveData?.sensorStatus ?? true,
                 value: power,
                 nodeName: item.nodeName,
@@ -771,14 +775,17 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
                 orientation: item.orientation,
               );
             });
-          } else if (item.sourceType == 'Load_Bus_Bar' || item.sourceType == 'Bus_Bar') {
+          }
+     // ElectricityLongSLDLiveAllNodePowerController
+
+          else if (item.sourceType == 'Load_Bus_Bar' || item.sourceType == 'Bus_Bar') {
             if (item.mainBusbar ?? false) {
-              widget = GetBuilder<ElectricityLongSLDLiveAllNodePowerController>(builder: (controller) {
+              widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(builder: (controller) {
                 final nodeData = controller.liveAllNodePowerModel.firstWhere(
                       (element) => element.node == item.nodeName,
-                  orElse: () => LiveAllNodePowerModel(),
+                  orElse: () => ElectricityShortLiveAllNodePowerModel(),
                 );
-                return MainBusBarTrue(
+                return ShortElectricityMainBusBarTrue(
                   sensorStatus: liveData?.sensorStatus ?? true,
                   value: power,
                   nodeName: item.nodeName,
@@ -790,7 +797,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
                   loadBoxWidth: item.width.toDouble(),
                   onTap: () {
                     Get.to(
-                          () => ElectricityLongSLDMainBusBarTrueScreen(busBarName: item.nodeName),
+                          () => ElectricityShortSLDMainBusBarTrueScreen(busBarName: item.nodeName),
                       transition: Transition.rightToLeft,
                       duration: const Duration(seconds: 1),
                     );
@@ -806,7 +813,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
                 );
               });
             } else {
-              widget = SourceAndLoadBoxWidget(
+              widget = ShortElectricitySourceAndLoadBoxWidget(
                 sensorStatus: liveData?.sensorStatus ?? true,
                 value: power,
                 nodeName: item.nodeName,
@@ -819,7 +826,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
                 onTap: () {
                   Get.to(
-                        () => ElectricityLongSLDMainBusBarTrueScreen(busBarName: item.nodeName),
+                        () => ElectricityShortSLDMainBusBarTrueScreen(busBarName: item.nodeName),
                     transition: Transition.rightToLeft,
                     duration: const Duration(seconds: 1),
                   );
@@ -829,7 +836,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
               );
             }
           } else if (item.sourceType == 'Meter_Bus_Bar') {
-            widget = MeterBusBarWidget(
+            widget = ShortElectricityMeterBusBarWidget(
               sensorStatus: liveData?.sensorStatus ?? true,
               value: power,
               nodeName: item.nodeName,
@@ -852,7 +859,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
-              return BusCouplerWidget(
+              return ShortElectricityBusCouplerWidget(
                 key: ValueKey('${item.id}-${liveData?.sensorStatus}'),
                 label: item.nodeName,
                 width: item.width.toDouble(),
@@ -870,7 +877,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
               debugPrint("Loop ${item.nodeName}: Power = $powerMeter, Status = $isActive");
-              return BusCouplerWidget(
+              return ShortElectricityBusCouplerWidget(
                 key: ValueKey('${item.id}-${liveData?.sensorStatus}'),
                 label: item.nodeName,
                 width: item.width.toDouble(),

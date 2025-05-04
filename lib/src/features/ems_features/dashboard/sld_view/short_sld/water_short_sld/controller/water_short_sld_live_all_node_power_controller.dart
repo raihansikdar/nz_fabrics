@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/live_all_node_power_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/model/water_short_live_all_node_power_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -18,12 +18,12 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
   bool _isConnected = true;
   bool _isLiveAllNodePowerInProgress = false;
   String _errorMessage = '';
-  List<LiveAllNodePowerModel>  _liveAllNodePowerModel = [];
+  List<WaterShortLiveAllNodePowerModel>  _liveAllNodePowerModel = [];
 
   bool get isConnected => _isConnected;
   bool get isLiveAllNodePowerInProgress => _isLiveAllNodePowerInProgress;
   String get errorMessage => _errorMessage;
-  List<LiveAllNodePowerModel>  get liveAllNodePowerModel => _liveAllNodePowerModel;
+  List<WaterShortLiveAllNodePowerModel>  get liveAllNodePowerModel => _liveAllNodePowerModel;
 
 
 
@@ -146,7 +146,7 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
 
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);
-        _liveAllNodePowerModel = jsonData.map((json)=> LiveAllNodePowerModel.fromJson(json)).toList();
+        _liveAllNodePowerModel = jsonData.map((json)=> WaterShortLiveAllNodePowerModel.fromJson(json)).toList();
 
         update();
         return true;

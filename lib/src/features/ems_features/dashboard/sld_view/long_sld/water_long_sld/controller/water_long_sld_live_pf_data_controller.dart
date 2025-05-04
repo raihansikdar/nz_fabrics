@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/live_pf_data_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_long_sld_live_pf_data_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -15,12 +15,12 @@ class WaterLongSldLivePfDataController extends GetxController with InternetConne
   bool _isPFHistoryInProgress = false;
   String _errorMessage = '';
   bool _firstPFHistoryInProgress = true;
-  LivePFDataModel _livePFDataModel = LivePFDataModel();
+  WaterLongSLDLivePFDataModel _livePFDataModel = WaterLongSLDLivePFDataModel();
 
   bool get isConnected => _isConnected;
   bool get isPFHistoryInProgress => _isPFHistoryInProgress;
   String get errorMessage => _errorMessage;
-  LivePFDataModel get livePFDataModel => _livePFDataModel;
+  WaterLongSLDLivePFDataModel get livePFDataModel => _livePFDataModel;
 
 
 
@@ -45,7 +45,7 @@ class WaterLongSldLivePfDataController extends GetxController with InternetConne
 
       if (response.isSuccess) {
         final jsonData = (response.body);
-        _livePFDataModel = LivePFDataModel.fromJson(jsonData);
+        _livePFDataModel = WaterLongSLDLivePFDataModel.fromJson(jsonData);
 
         update();
         return true;

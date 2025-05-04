@@ -17,9 +17,9 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/control
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/tab_bar_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/data_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/views/widgets/navigation_drawer_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/sld_tab_view/sld_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/load_power_controller.dart';
@@ -82,7 +82,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
         Get.find<DashBoardButtonController>().fetchButton();
       Get.find<AnalysisProDayButtonController>().fetchDayModelDGRData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);
       Get.find<AnalysisProDayButtonController>().fetchSelectedNodeData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);
-      Get.find<AllNotificationController>().fetchNotificationData();
+      //Get.find<AllNotificationController>().fetchNotificationData();
       Get.find<LoadPowerController>().fetchLoadPowerData();
 
       Get.find<ElectricityLongSLDAllInfoController>().fetchSourcePowerData();

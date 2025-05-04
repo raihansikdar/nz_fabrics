@@ -2,7 +2,7 @@
 // import 'dart:ui' as ui;
 // import 'dart:ui';
 // import 'package:flutter/material.dart';
-// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/water_view_page_model.dart';
+// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/water_long_sld_view_page_model.dart';
 //
 // import '../screens/water_long_sld_screen.dart';
 //
@@ -236,7 +236,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/water_view_page_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/water_long_sld_view_page_model.dart';
 
 class WaterLongSLDAnimatedLinePainter extends CustomPainter {
   final List<ViewPageModel> viewPageData;
@@ -497,7 +497,7 @@ T? firstWhereOrNull<T>(List<T> list, bool Function(T) test) {
 // import 'dart:ui' as ui;
 // import 'dart:ui';
 // import 'package:flutter/material.dart';
-// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_view_page_model.dart';
+// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_long_sld_view_page_model.dart';
 //
 // class WaterLongSLDAnimatedLinePainter extends CustomPainter {
 //   final List<WaterViewPageModel> viewPageData;
@@ -775,10 +775,10 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_view_page_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_long_sld_view_page_model.dart';
 
 class WaterLongSLDAnimatedLinePainter extends CustomPainter {
-  final List<WaterViewPageModel> viewPageData;
+  final List<WaterLongSLDViewPageModel> viewPageData;
   final Map<dynamic, LiveDataModel> liveData;
   final double minX;
   final double minY;
@@ -908,8 +908,8 @@ class WaterLongSLDAnimatedLinePainter extends CustomPainter {
       String? lineColor,
       bool reverseDirection,
       List<Point> points,
-      WaterViewPageModel startItem,
-      WaterViewPageModel endItem,
+      WaterLongSLDViewPageModel startItem,
+      WaterLongSLDViewPageModel endItem,
       ) {
     ui.PathMetrics pathMetrics = path.computeMetrics();
     PathMetric pathMetric = pathMetrics.first;
@@ -961,7 +961,7 @@ class WaterLongSLDAnimatedLinePainter extends CustomPainter {
     }
   }
 
-  bool checkIfShouldSkipAnimation(WaterViewPageModel startItem, WaterViewPageModel endItem, Line line) {
+  bool checkIfShouldSkipAnimation(WaterLongSLDViewPageModel startItem, WaterLongSLDViewPageModel endItem, Line line) {
     return (startItem.sourceType == "BusCoupler" &&
         (line.startEdgeIndex == 2 || line.endEdgeIndex == 2)) ||
         (endItem.sourceType == "BusCoupler" &&
@@ -979,7 +979,7 @@ class WaterLongSLDAnimatedLinePainter extends CustomPainter {
   }
 
   bool checkReverseDirection(
-      WaterViewPageModel startItem, WaterViewPageModel endItem, Line line, Map<dynamic, LiveDataModel> liveData) {
+      WaterLongSLDViewPageModel startItem, WaterLongSLDViewPageModel endItem, Line line, Map<dynamic, LiveDataModel> liveData) {
     if (startItem.sourceType == "BusCoupler" ||
         endItem.sourceType == "BusCoupler" ||
         startItem.sourceType == "Loop" ||

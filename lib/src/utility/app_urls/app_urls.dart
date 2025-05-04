@@ -2,7 +2,7 @@ class Urls{
   Urls._();
 
   static const String _baseUrl = "http://192.168.15.61:8086/react";
-  //static const String _baseUrl = "http://192.168.15.60:8081/react";
+ // static const String _baseUrl = "http://192.168.15.60:8081/react";
  // static const String _baseUrl = "http://175.29.189.138/react";
 
 
@@ -223,8 +223,8 @@ class Urls{
  static String longWateryUrl = "$_baseUrl/get-all-info?sld_type=water";
 
 
- static String logoutUrl = "$_baseUrl/logout/";
- //static String logoutUrl = "$_baseUrl/api-logout-V2/";
+ //static String logoutUrl = "$_baseUrl/logout/";
+ static String logoutUrl = "$_baseUrl/api-logout-V2/";
  static String postDgrFilterPlantDataUrl = "$_baseUrl/filter-plant-dynamic-data/";
 
 }

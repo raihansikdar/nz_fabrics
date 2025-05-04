@@ -115,6 +115,25 @@ class NetworkCaller{
     return NetworkResponse(isSuccess: false, statusCode: -1, body: null);
   }
 
+  static Future<NetworkResponse> jwtLogoutRequest({required String url,required Map<String, dynamic> body}) async{
+    try{
+
+      // Response response = await post(Uri.parse(url),headers: {'Content-Type': 'application/json'}, body: jsonEncode(body));
+      Response response = await post(Uri.parse(url),headers: {'Content-Type': 'application/json','Authorization': "${AuthUtilityController.accessToken}"},body: jsonEncode(body));
+
+      // log("postRequest statusCode ==> ${response.statusCode}");
+      // log("postRequest body ==> ${response.body}");
+
+      if(response.statusCode == 201 || response.statusCode == 200){
+        return NetworkResponse(isSuccess: true, statusCode: response.statusCode, body: jsonDecode(response.body));
+      }else{
+        return NetworkResponse(isSuccess: false, statusCode: response.statusCode, body:  jsonDecode(response.body));
+      }
+    }catch(e){
+      log(e.toString());
+    }
+    return NetworkResponse(isSuccess: false, statusCode: -1, body: null);
+  }
 
 
 

@@ -1,7 +1,7 @@
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/small_button_circular_progress_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/controller/electricity_long_sld_main_bus_bar_true_controller/electricity_long_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_main_bus_bar_true_controller/electricity_short_sld_filter_bus_bar_energy_cost_controller.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _ElectricityShortSLDDateWidgetState extends State<ElectricityShortSLDDateW
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  GetBuilder<ElectricityLongSLDFilterBusBarEnergyCostController>(
+                                  GetBuilder<ElectricityShortSLDFilterBusBarEnergyCostController>(
                                       builder: (filterSpecificNodeDataController) {
                                         return SizedBox(
                                           width: size.width * 0.370,
@@ -71,7 +71,7 @@ class _ElectricityShortSLDDateWidgetState extends State<ElectricityShortSLDDateW
                                   SizedBox(
                                     width: size.width * 0.050,
                                   ),
-                                  GetBuilder<ElectricityLongSLDFilterBusBarEnergyCostController>(
+                                  GetBuilder<ElectricityShortSLDFilterBusBarEnergyCostController>(
                                       builder: (filterBusBarEnergyCostController) {
                                         return SizedBox(
                                           width: size.width * 0.385,
@@ -100,7 +100,7 @@ class _ElectricityShortSLDDateWidgetState extends State<ElectricityShortSLDDateW
                               SizedBox(
                                 height:  size.width > 600 ? size.width * 0.07 : size.width * 0.1,
                                 width: size.width * 0.4,
-                                child: GetBuilder<ElectricityLongSLDFilterBusBarEnergyCostController>(
+                                child: GetBuilder<ElectricityShortSLDFilterBusBarEnergyCostController>(
                                     builder: (filterBusBarEnergyCostController) {
                                       return ElevatedButton(
 

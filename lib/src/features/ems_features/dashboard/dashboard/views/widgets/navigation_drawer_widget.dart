@@ -1255,8 +1255,8 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                       ),
                       onPressed: () async{
                     
-                        // final response = await logoutController.logout(refreshToken: AuthUtilityController.refreshToken ?? '');
-                         final response = await logoutController.logout();
+                        final response = await logoutController.logout(refreshToken: AuthUtilityController.refreshToken ?? '');
+                        // final response = await logoutController.logout();
                          if(response){
                     
                            Get.offAll(()=> LoginScreen(),transition: Transition.fadeIn,duration: const Duration(milliseconds: 100));

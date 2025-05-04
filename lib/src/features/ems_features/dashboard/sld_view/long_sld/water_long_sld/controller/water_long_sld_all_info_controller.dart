@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/model/loop_and_bus_cupler_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/model/water_long_sld_loop_and_bus_cupler_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/power_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
@@ -11,7 +11,7 @@ import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 class WaterLongSLDAllInfoController extends GetxController with InternetConnectivityCheckMixin {
 
   List<PowerModel> powerList = [];
-  LoopAndBusCouplerModel loopAndBusCouplerModel = LoopAndBusCouplerModel();
+  WaterLongSLDLoopAndBusCouplerModel loopAndBusCouplerModel = WaterLongSLDLoopAndBusCouplerModel();
   bool isLoading = false;
   bool hasError = false;
   bool isConnected = true;
@@ -76,7 +76,7 @@ class WaterLongSLDAllInfoController extends GetxController with InternetConnecti
 
 
       if (response.statusCode == 200) {
-        loopAndBusCouplerModel =  LoopAndBusCouplerModel.fromJson(response.body);
+        loopAndBusCouplerModel =  WaterLongSLDLoopAndBusCouplerModel.fromJson(response.body);
 
 
         // log(loopAndBusCouplerModel.node!);

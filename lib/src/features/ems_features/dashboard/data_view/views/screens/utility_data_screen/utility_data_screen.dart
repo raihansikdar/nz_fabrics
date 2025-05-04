@@ -50,16 +50,20 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
   }
 
   Future<void> fetchData(DateTime start, DateTime end) async {
-    setState(() {
-      isLoading = true;
-    });
+    if(mounted){
+      setState(() {
+        isLoading = true;
+      });
+    }
 
     await fetchChartData(start, end);
     await fetchTableData(start, end);
 
-    setState(() {
-      isLoading = false;
-    });
+    if(mounted){
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   Future<void> fetchChartData(DateTime start, DateTime end) async {
@@ -219,16 +223,6 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
       );
     }
   }
-
-
-
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {

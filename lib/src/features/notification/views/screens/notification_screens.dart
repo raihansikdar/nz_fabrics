@@ -24,12 +24,12 @@ class _NotificationScreensState extends State<NotificationScreens> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      AllNotificationController notificationController = Get.find<AllNotificationController>();
-      notificationController.fetchNotificationData().then((_) {
-        notificationController.groupNotificationsByDate();
-      });
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_){
+    //   AllNotificationController notificationController = Get.find<AllNotificationController>();
+    //   notificationController.fetchNotificationData().then((_) {
+    //     notificationController.groupNotificationsByDate();
+    //   });
+    // });
   }
 
   @override
@@ -88,7 +88,7 @@ class _NotificationScreensState extends State<NotificationScreens> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: GetBuilder<AllNotificationController>(
+       /* child: GetBuilder<AllNotificationController>(
           builder: (allNotificationController) {
             final groupedData = allNotificationController.groupedNotifications;
 
@@ -170,7 +170,7 @@ class _NotificationScreensState extends State<NotificationScreens> {
               },
             );
           },
-        ),
+        ),*/
       ),
     );
   }

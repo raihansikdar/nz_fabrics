@@ -18,12 +18,12 @@ class WaterLongSLDLiveAllNodePowerController extends GetxController with Interne
   bool _isConnected = true;
   bool _isLiveAllNodePowerInProgress = false;
   String _errorMessage = '';
-  List<WaterLiveAllNodePowerModel>  _liveAllNodePowerModel = [];
+  List<WaterLongSLDLiveAllNodePowerModel>  _liveAllNodePowerModel = [];
 
   bool get isConnected => _isConnected;
   bool get isLiveAllNodePowerInProgress => _isLiveAllNodePowerInProgress;
   String get errorMessage => _errorMessage;
-  List<WaterLiveAllNodePowerModel>  get liveAllNodePowerModel => _liveAllNodePowerModel;
+  List<WaterLongSLDLiveAllNodePowerModel>  get liveAllNodePowerModel => _liveAllNodePowerModel;
 
 
 
@@ -146,7 +146,7 @@ class WaterLongSLDLiveAllNodePowerController extends GetxController with Interne
 
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);
-        _liveAllNodePowerModel = jsonData.map((json)=> WaterLiveAllNodePowerModel.fromJson(json)).toList();
+        _liveAllNodePowerModel = jsonData.map((json)=> WaterLongSLDLiveAllNodePowerModel.fromJson(json)).toList();
 
         update();
         return true;
