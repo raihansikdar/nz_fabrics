@@ -140,7 +140,7 @@ class _WaterShortSldState extends State<WaterShortSld>
     if (!mounted) return;
 
     final response = await http.get(
-      Uri.parse('${Urls.baseUrl}/live-all-node-power/'),
+      Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=water'),
       headers: {
         'Authorization': AuthUtilityController.accessToken ?? '',
       },
@@ -160,7 +160,7 @@ class _WaterShortSldState extends State<WaterShortSld>
 
         if (nodeData != null) {
           WaterLiveDataModel liveDataModel = WaterLiveDataModel(
-            power: nodeData['power']?.toDouble() ?? 0.0,
+            power: nodeData['instant_flow']?.toDouble() ?? 0.0,
             sensorStatus: nodeData['sensor_status'] ?? false,
             sourceType: nodeData['source_type'] ?? '',
             timedate: nodeData['timedate'] != null
@@ -199,7 +199,7 @@ class _WaterShortSldState extends State<WaterShortSld>
     if (!mounted) return;
     try {
       final response = await http.get(
-        Uri.parse(Urls.shortElectricityUrl),
+        Uri.parse(Urls.shortWaterUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
 
@@ -210,7 +210,7 @@ class _WaterShortSldState extends State<WaterShortSld>
           _viewPageData = data.map((e) => WaterShortViewPageModel.fromJson(e)).toList();
         });
 
-        GetAllInfoControllers controller = Get.find(); // Get controller instance
+        WaterShortSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
 
         for (var item in _viewPageData) {
           if (item.sourceType == 'BusCoupler' || item.sourceType == 'Loop') {
@@ -225,7 +225,7 @@ class _WaterShortSldState extends State<WaterShortSld>
     }
   }
 
-  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, GetAllInfoControllers controller) async {
+  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, WaterShortSLDGetAllInfoControllers controller) async {
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
@@ -614,7 +614,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                 );
               }
             },
-            unit: 'kW',
+            unit: 'm³/s',
           );
           break;
         case 'LB_Meter':
@@ -687,7 +687,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                   );
                 }
               },
-              unit: 'kW',
+              unit: 'm³/s',
               borderColor: item.borderColor ?? '#FF0000',
               percentage: nodeData.percentage != null
                   ? nodeData.percentage.toStringAsFixed(2)
@@ -797,7 +797,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                       duration: const Duration(seconds: 1),
                     );
                   },
-                  unit: 'kW',
+                  unit: 'm³/s',
                   percentage: nodeData.percentage != null
                       ? nodeData.percentage.toStringAsFixed(2)
                       : "0.00",
@@ -826,7 +826,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                     duration: const Duration(seconds: 1),
                   );
                 },
-                unit: 'kW',
+                unit: 'm³/s',
                 orientation: item.orientation,
               );
             }
@@ -842,7 +842,7 @@ class _WaterShortSldState extends State<WaterShortSld>
               loadBoxHeight: item.height.toDouble(),
               loadBoxWidth: item.width.toDouble(),
               onTap: () {},
-              unit: 'kW',
+              unit: 'm³/s',
               orientation: item.orientation,
             );
           } else {
@@ -850,7 +850,7 @@ class _WaterShortSldState extends State<WaterShortSld>
           }
           break;
         case 'BusCoupler':
-          widget = GetBuilder<GetAllInfoControllers>(
+          widget = GetBuilder<WaterShortSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -867,7 +867,7 @@ class _WaterShortSldState extends State<WaterShortSld>
           );
           break;
         case 'Loop':
-          widget = GetBuilder<GetAllInfoControllers>(
+          widget = GetBuilder<WaterShortSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -909,7 +909,7 @@ T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
   return null;
 }
 
-class GetAllInfoControllers extends GetxController {
+class WaterShortSLDGetAllInfoControllers extends GetxController {
   var powerMeterMap = <String, double>{}.obs;
 
   void updatePowerMeter(double powerMeter, String nodeName) {

@@ -45,6 +45,7 @@ dependencies:
   zoom_pinch_overlay: ^1.4.3
   in_app_update: ^4.2.2
   flutter_screenutil: ^5.9.3
+  auto_size_text: ^3.0.0
 
   #----------------- download package --------------------
   permission_handler: ^12.0.0+1

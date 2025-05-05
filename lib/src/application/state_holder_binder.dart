@@ -58,6 +58,12 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sl
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_main_bus_bar_true_controller/electricity_short_sld_filter_bus_bar_energy_cost_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/screens/electricity_short_sld.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_all_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_pf_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_main_bus_bar_true_controller/water_short_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/views/screens/water_short_sld.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/load_natural_gas_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/pie_chart_natural_gas_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/pie_chart_natural_gas_source_controller.dart';
@@ -395,6 +401,17 @@ class StateHolderBinders extends Bindings{
      Get.put(WaterLongSLDAllInfoController());
      // Get.put(GetAllInfoControllers());
      Get.put(WaterLongSLDFilterBusBarEnergyCostController());
+
+
+     /* ->>--------> Short SLD <--------<<- */
+     Get.put(WaterShortSLDFilterBusBarEnergyCostController());
+     Get.put(WaterShortSLDAllInfoController());
+     Get.put(WaterShortSLDLiveAllNodePowerController());
+     Get.put(WaterShortSldLivePfDataController());
+     Get.put(WaterShortSLDLtProductionVsCapacityController());
+     Get.put(WaterShortSLDGetAllInfoControllers());
+
+
 
 
      Get.put(LayoutPositionController());
