@@ -2,10 +2,10 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/model/steam_short_view_page_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/model/steam_long_view_page_model.dart';
 
 class SteamLongAnimatedLinePainter extends CustomPainter {
-  final List<SteamShortViewPageModel> viewPageData;
+  final List<SteamLongViewPageModel> viewPageData;
   final Map<dynamic, SteamLiveDataModel> liveData;
   final double minX;
   final double minY;
@@ -65,7 +65,7 @@ class SteamLongAnimatedLinePainter extends CustomPainter {
     canvas.drawPath(path, linePaint);
   }
 
-  bool checkIfShouldSkipAnimation(SteamShortViewPageModel startItem, SteamShortViewPageModel endItem, Line line) {
+  bool checkIfShouldSkipAnimation(SteamLongViewPageModel startItem, SteamLongViewPageModel endItem, Line line) {
     return (startItem.sourceType == "BusCoupler" &&
         (line.startEdgeIndex == 2 || line.endEdgeIndex == 2)) ||
         (endItem.sourceType == "BusCoupler" &&
@@ -83,8 +83,8 @@ class SteamLongAnimatedLinePainter extends CustomPainter {
   }
 
   bool checkReverseDirection(
-      SteamShortViewPageModel startItem,
-      SteamShortViewPageModel endItem,
+      SteamLongViewPageModel startItem,
+      SteamLongViewPageModel endItem,
       Line line,
       Map<dynamic, SteamLiveDataModel> liveData,
       ) {

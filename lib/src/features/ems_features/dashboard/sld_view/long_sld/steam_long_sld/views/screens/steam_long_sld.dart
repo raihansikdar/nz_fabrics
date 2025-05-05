@@ -2,22 +2,23 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_live_all_node_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_live_pf_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_lt_production_vs_capacity_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/model/steam_short_live_all_node_power_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/model/steam_short_loop_and_bus_cupler_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/model/steam_short_view_page_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/screens/steam_short_sld_main_bus_bar_true/screen/steam_short_sld_main_bus_bar_true_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_couplar_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_line_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_main_bus_bar_2.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_meter_bus_bar_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_nz_box_with_icon_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_nz_circle_with_icon_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_nz_source_and_load_box_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_nz_tr_box_with_icon_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/widgets/steam_short_bus_super_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_live_pf_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/model/steam_long_live_all_node_power_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/model/steam_long_loop_and_bus_cupler_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/model/steam_long_view_page_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/screens/steam_long_sld_main_bus_bar_true/screen/steam_short_sld_main_bus_bar_true_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_couplar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_line_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_main_bus_bar_2.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_meter_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_nz_box_with_icon_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_nz_circle_with_icon_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_nz_source_and_load_box_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_nz_tr_box_with_icon_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_super_bus_bar_widget.dart';
+
 
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
@@ -39,18 +40,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
-class SteamShortSld extends StatefulWidget {
-  const SteamShortSld({super.key});
+class SteamLongSldScreen extends StatefulWidget {
+  const SteamLongSldScreen({super.key});
 
   @override
-  State<SteamShortSld> createState() => _SteamShortSldState();
+  State<SteamLongSldScreen> createState() => _SteamLongSldScreenState();
 }
 
-class _SteamShortSldState extends State<SteamShortSld>
+class _SteamLongSldScreenState extends State<SteamLongSldScreen>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  List<SteamShortViewPageModel> _viewPageData = [];
+  List<SteamLongViewPageModel> _viewPageData = [];
   Map<dynamic, SteamLiveDataModel> _liveData = {};
-  SteamShortLoopAndBusCouplerModel loopAndBusCouplerModel = SteamShortLoopAndBusCouplerModel();
+  SteamLongLoopAndBusCouplerModel loopAndBusCouplerModel = SteamLongLoopAndBusCouplerModel();
   bool _isLoading = true;
   late AnimationController _controller;
   late ui.Image _mouseIcon;
@@ -70,10 +71,10 @@ class _SteamShortSldState extends State<SteamShortSld>
     _fetchPFData();
     _initializeData();
 
-    Get.find<SteamShortSLDLtProductionVsCapacityController>().fetchProductVsCapacityData();
-    Get.find<SteamShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
-    Get.find<SteamShortSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
-    Get.find<SteamShortSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
+    Get.find<SteamLongSLDLtProductionVsCapacityController>().fetchProductVsCapacityData();
+    Get.find<SteamLongSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
+    Get.find<SteamLongSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
+    Get.find<SteamLongSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
@@ -89,7 +90,7 @@ class _SteamShortSldState extends State<SteamShortSld>
     if (cachedViewPageData != null) {
       setState(() {
         _viewPageData = (json.decode(cachedViewPageData) as List)
-            .map((data) => SteamShortViewPageModel.fromJson(data))
+            .map((data) => SteamLongViewPageModel.fromJson(data))
             .toList();
         _isLoading = false;
       });
@@ -206,7 +207,7 @@ class _SteamShortSldState extends State<SteamShortSld>
         final List<dynamic> data = json.decode(response.body);
 
         setState(() {
-          _viewPageData = data.map((e) => SteamShortViewPageModel.fromJson(e)).toList();
+          _viewPageData = data.map((e) => SteamLongViewPageModel.fromJson(e)).toList();
         });
 
         SteamShortSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
@@ -387,7 +388,7 @@ class _SteamShortSldState extends State<SteamShortSld>
                             children: [
                               CustomPaint(
                                 size: Size(contentWidth, contentHeight),
-                                painter: SteamShortAnimatedLinePainter(
+                                painter: SteamLongAnimatedLinePainter(
                                   viewPageData: _viewPageData,
                                   liveData: _liveData,
                                   minX: minX,
@@ -451,10 +452,10 @@ class _SteamShortSldState extends State<SteamShortSld>
   /*--------------Pf here----------*/
   List<Widget> _buildPFWidgets(double minX, double minY) {
     return _pfData.map((item) {
-      var controller = Get.put(SteamShortSldLivePfDataController(), tag: item['node_name']);
+      var controller = Get.put(SteamLongSldLivePfDataController(), tag: item['node_name']);
       controller.fetchLivePFData(nodeName: item['node_name']);
 
-      return GetBuilder<SteamShortSldLivePfDataController>(
+      return GetBuilder<SteamLongSldLivePfDataController>(
         tag: item['node_name'],
         builder: (controller) {
           return Positioned(
@@ -576,7 +577,7 @@ class _SteamShortSldState extends State<SteamShortSld>
 
       switch (item.shape) {
         case 'circle':
-          widget = SteamShortCircleWithIcon(
+          widget = SteamLongCircleWithIcon(
             sensorStatus: liveData?.sensorStatus ?? true,
             value: power,
             // textColor: item.textColor,
@@ -605,12 +606,12 @@ class _SteamShortSldState extends State<SteamShortSld>
           break;
         case 'LB_Meter':
         //  ElectricityLongSLDLiveAllNodePowerController
-          widget = GetBuilder<SteamShortSLDLiveAllNodePowerController>(builder: (controller) {
+          widget = GetBuilder<SteamLongSLDLiveAllNodePowerController>(builder: (controller) {
             final nodeData = controller.liveAllNodePowerModel.firstWhere(
                   (element) => element.node == item.nodeName,
-              orElse: () => SteamShortLiveAllNodePowerModel(),
+              orElse: () => SteamLongLiveAllNodePowerModel(),
             );
-            return SteamShortBoxWithIconWidget(
+            return SteamLongBoxWithIconWidget(
               sensorStatus: sensorStatus,
               value: power,
               icon: FontAwesomeIcons.solarPanel,
@@ -634,12 +635,12 @@ class _SteamShortSldState extends State<SteamShortSld>
           break;
         case 'box':
          // ElectricityLongSLDLiveAllNodePowerController
-          widget = GetBuilder<SteamShortSLDLiveAllNodePowerController>(builder: (controller) {
+          widget = GetBuilder<SteamLongSLDLiveAllNodePowerController>(builder: (controller) {
             final nodeData = controller.liveAllNodePowerModel.firstWhere(
                   (element) => element.node == item.nodeName,
-              orElse: () => SteamShortLiveAllNodePowerModel(),
+              orElse: () => SteamLongLiveAllNodePowerModel(),
             );
-            return SteamShortTrBoxWithIconWidget(
+            return SteamLongTrBoxWithIconWidget(
               sensorStatus: liveData?.sensorStatus ?? true,
               value: power,
               icon: FontAwesomeIcons.solarPanel,
@@ -671,8 +672,8 @@ class _SteamShortSldState extends State<SteamShortSld>
           break;
         case 'Bus_Bar':
           if (item.sourceType == 'Super_Bus_Bar') {
-            widget = GetBuilder<SteamShortSLDLtProductionVsCapacityController>(builder: (controller) {
-              return SteamShortSuperBusBarWidget(
+            widget = GetBuilder<SteamLongSLDLtProductionVsCapacityController>(builder: (controller) {
+              return SteamLongSuperBusBarWidget(
                 sensorStatus: liveData?.sensorStatus ?? true,
                 value: power,
                 nodeName: item.nodeName,
@@ -746,12 +747,12 @@ class _SteamShortSldState extends State<SteamShortSld>
             });
           } else if (item.sourceType == 'Load_Bus_Bar' || item.sourceType == 'Bus_Bar') {
             if (item.mainBusbar ?? false) {
-              widget = GetBuilder<SteamShortSLDLiveAllNodePowerController>(builder: (controller) {
+              widget = GetBuilder<SteamLongSLDLiveAllNodePowerController>(builder: (controller) {
                 final nodeData = controller.liveAllNodePowerModel.firstWhere(
                       (element) => element.node == item.nodeName,
-                  orElse: () => SteamShortLiveAllNodePowerModel(),
+                  orElse: () => SteamLongLiveAllNodePowerModel(),
                 );
-                return SteamShortMainBusBarTrue(
+                return SteamLongMainBusBarTrue(
                   sensorStatus: liveData?.sensorStatus ?? true,
                   value: power,
                   nodeName: item.nodeName,
@@ -762,7 +763,7 @@ class _SteamShortSldState extends State<SteamShortSld>
                   loadBoxHeight: item.height.toDouble(),
                   loadBoxWidth: item.width.toDouble(),
                   onTap: () {
-                    Get.to(() => SteamShortSLDMainBusBarTrueScreen(busBarName: item.nodeName),
+                    Get.to(() => SteamLongSLDMainBusBarTrueScreen(busBarName: item.nodeName),
                       transition: Transition.rightToLeft,
                       duration: const Duration(seconds: 1),
                     );
@@ -778,7 +779,7 @@ class _SteamShortSldState extends State<SteamShortSld>
                 );
               });
             } else {
-              widget = SteamShortSourceAndLoadBoxWidget(
+              widget = SteamLongSourceAndLoadBoxWidget(
                 sensorStatus: liveData?.sensorStatus ?? true,
                 value: power,
                 nodeName: item.nodeName,
@@ -791,7 +792,7 @@ class _SteamShortSldState extends State<SteamShortSld>
 
                 onTap: () {
                   Get.to(
-                        () => SteamShortSLDMainBusBarTrueScreen(busBarName: item.nodeName),
+                        () => SteamLongSLDMainBusBarTrueScreen(busBarName: item.nodeName),
                     transition: Transition.rightToLeft,
                     duration: const Duration(seconds: 1),
                   );
@@ -801,7 +802,7 @@ class _SteamShortSldState extends State<SteamShortSld>
               );
             }
           } else if (item.sourceType == 'Meter_Bus_Bar') {
-            widget = SteamShortMeterBusBarWidget(
+            widget = SteamLongMeterBusBarWidget(
               sensorStatus: liveData?.sensorStatus ?? true,
               value: power,
               nodeName: item.nodeName,
@@ -824,7 +825,7 @@ class _SteamShortSldState extends State<SteamShortSld>
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
-              return SteamShortBusCouplerWidget(
+              return SteamLongBusCouplerWidget(
                 key: ValueKey('${item.id}-${liveData?.sensorStatus}'),
                 label: item.nodeName,
                 width: item.width.toDouble(),
@@ -842,7 +843,7 @@ class _SteamShortSldState extends State<SteamShortSld>
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
               debugPrint("Loop ${item.nodeName}: Power = $powerMeter, Status = $isActive");
-              return SteamShortBusCouplerWidget(
+              return SteamLongBusCouplerWidget(
                 key: ValueKey('${item.id}-${liveData?.sensorStatus}'),
                 label: item.nodeName,
                 width: item.width.toDouble(),
