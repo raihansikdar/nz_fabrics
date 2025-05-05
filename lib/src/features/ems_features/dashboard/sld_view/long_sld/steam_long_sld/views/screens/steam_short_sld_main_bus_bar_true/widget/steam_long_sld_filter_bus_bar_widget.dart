@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/model/steam_short_main_bus_bar_true_model/steam_short_filter_bus_bar_const_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/model/main_bus_bar_true_model/water_short_filter_bus_bar_const_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 
 
-class SteamShortSLDFilterBusBarWidget extends StatelessWidget {
+class SteamLongSLDFilterBusBarWidget extends StatelessWidget {
 
-  final List<SteamShortFilterBusBarEnergyCostModel> monthlyDataList;
+  final List<WaterShortFilterBusBarEnergyCostModel> monthlyDataList;
   final Size size;
   final int dateDifference;
 
-  const SteamShortSLDFilterBusBarWidget({super.key, required this.size, required this.dateDifference, required this.monthlyDataList});
+  const SteamLongSLDFilterBusBarWidget({super.key, required this.size, required this.dateDifference, required this.monthlyDataList});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +121,7 @@ DateTime parseDate(String dateString) {
 
 
 class FilterBusBarTableWidget extends StatelessWidget {
-  final List<SteamShortFilterBusBarEnergyCostModel> monthlyDataList;
+  final List<WaterShortFilterBusBarEnergyCostModel> monthlyDataList;
   final Size size;
 
   const FilterBusBarTableWidget({
@@ -186,7 +186,7 @@ class FilterBusBarTableWidget extends StatelessWidget {
   }
 }
 class MonthlyDataSource extends DataGridSource {
-  final List<SteamShortFilterBusBarEnergyCostModel> monthlyDataList;
+  final List<WaterShortFilterBusBarEnergyCostModel> monthlyDataList;
   final DateFormat monthYearFormat = DateFormat("MMM/yyyy");
   final DateFormat dayFormat = DateFormat("dd/MMM/yyyy");
 

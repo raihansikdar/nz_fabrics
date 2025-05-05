@@ -58,6 +58,12 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sl
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_main_bus_bar_true_controller/electricity_short_sld_filter_bus_bar_energy_cost_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/screens/electricity_short_sld.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_all_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_live_pf_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_main_bus_bar_true_controller/steam_short_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/screens/steam_short_sld.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_all_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_pf_data_controller.dart';
@@ -412,6 +418,13 @@ class StateHolderBinders extends Bindings{
      Get.put(WaterShortSLDGetAllInfoControllers());
 
 
+   /* ->>--------> Steam Short SLD <--------<<- */
+   Get.put(SteamShortSLDFilterBusBarEnergyCostController());
+   Get.put(SteamShortSLDAllInfoController());
+   Get.put(SteamShortSLDLiveAllNodePowerController());
+   Get.put(SteamShortSldLivePfDataController());
+   Get.put(SteamShortSLDLtProductionVsCapacityController());
+   Get.put(SteamShortSLDGetAllInfoControllers());
 
 
      Get.put(LayoutPositionController());

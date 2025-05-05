@@ -1,21 +1,21 @@
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/small_button_circular_progress_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/controller/steam_short_sld_main_bus_bar_true_controller/steam_short_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_main_bus_bar_true_controller/steam_long_sld_filter_bus_bar_energy_cost_controller.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SteamShortSLDDateWidget extends StatefulWidget {
+class SteamLongSLDDateWidget extends StatefulWidget {
   final String nodeName;
-  const SteamShortSLDDateWidget({super.key, required this.nodeName});
+  const SteamLongSLDDateWidget({super.key, required this.nodeName});
 
   @override
-  State<SteamShortSLDDateWidget> createState() => _SteamShortSLDDateWidgetState();
+  State<SteamLongSLDDateWidget> createState() => _SteamLongSLDDateWidgetState();
 }
 
-class _SteamShortSLDDateWidgetState extends State<SteamShortSLDDateWidget> {
+class _SteamLongSLDDateWidgetState extends State<SteamLongSLDDateWidget> {
 
 
   @override
@@ -41,7 +41,7 @@ class _SteamShortSLDDateWidgetState extends State<SteamShortSLDDateWidget> {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  GetBuilder<SteamShortSLDFilterBusBarEnergyCostController>(
+                                  GetBuilder<SteamLongSLDFilterBusBarEnergyCostController>(
                                       builder: (filterSpecificNodeDataController) {
                                         return SizedBox(
                                           width: size.width * 0.370,
@@ -71,7 +71,7 @@ class _SteamShortSLDDateWidgetState extends State<SteamShortSLDDateWidget> {
                                   SizedBox(
                                     width: size.width * 0.050,
                                   ),
-                                  GetBuilder<SteamShortSLDFilterBusBarEnergyCostController>(
+                                  GetBuilder<SteamLongSLDFilterBusBarEnergyCostController>(
                                       builder: (filterBusBarEnergyCostController) {
                                         return SizedBox(
                                           width: size.width * 0.385,
@@ -100,7 +100,7 @@ class _SteamShortSLDDateWidgetState extends State<SteamShortSLDDateWidget> {
                               SizedBox(
                                 height:  size.width > 600 ? size.width * 0.07 : size.width * 0.1,
                                 width: size.width * 0.4,
-                                child: GetBuilder<SteamShortSLDFilterBusBarEnergyCostController>(
+                                child: GetBuilder<SteamLongSLDFilterBusBarEnergyCostController>(
                                     builder: (filterBusBarEnergyCostController) {
                                       return ElevatedButton(
 

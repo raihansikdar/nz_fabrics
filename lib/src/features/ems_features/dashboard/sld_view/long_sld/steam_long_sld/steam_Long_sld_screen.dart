@@ -5,8 +5,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/views/screens/steam_short_sld.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 
-class SteamShortSldScreen extends StatelessWidget {
-  const SteamShortSldScreen({super.key});
+class SteamLongSldScreen extends StatelessWidget {
+  const SteamLongSldScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
