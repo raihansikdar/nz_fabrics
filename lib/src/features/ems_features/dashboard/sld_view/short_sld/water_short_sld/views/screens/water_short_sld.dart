@@ -25,6 +25,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/pf_history_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/generators/generator_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/power_and_energy_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/water_element_details_screen.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:flutter/material.dart';
@@ -589,30 +590,17 @@ class _WaterShortSldState extends State<WaterShortSld>
             height: item.height.toDouble(),
             onTap: () {
               debugPrint("----->CircleWithIcon<-----");
-              if (item.category == 'Diesel_Generator') {
-                Get.to(
-                      () => GeneratorElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                    gaugeUnit: 'kW',
-                    elementCategory: 'Power',
-                  ),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(seconds: 1),
-                );
-              } else {
-                Get.to(
-                      () => PowerAndEnergyElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                    gaugeUnit: 'kW',
-                    elementCategory: 'Power',
-                    solarCategory: item.category,
-                  ),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(seconds: 1),
-                );
-              }
+
+
+              Get.to(() => WaterElementDetailsScreen(
+                elementName: item.nodeName,
+                gaugeValue: power,
+                  gaugeUnit: 'm³/s',
+                  elementCategory: 'Water',
+              ),
+                transition: Transition.rightToLeft,
+                duration: const Duration(seconds: 1),
+              );
             },
             unit: 'm³/s',
           );
@@ -662,30 +650,15 @@ class _WaterShortSldState extends State<WaterShortSld>
               height: item.height.toDouble(),
               onTap: () {
                 debugPrint("----->TrBoxWithIconWidget<-----");
-                if (item.category == 'Diesel_Generator') {
-                  Get.to(
-                        () => GeneratorElementDetailsScreen(
-                      elementName: item.nodeName,
-                      gaugeValue: power,
-                      gaugeUnit: 'kW',
-                      elementCategory: 'Power',
-                    ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
-                } else {
-                  Get.to(
-                        () => PowerAndEnergyElementDetailsScreen(
-                      elementName: item.nodeName,
-                      gaugeValue: power,
-                      gaugeUnit: 'kW',
-                      elementCategory: 'Power',
-                      solarCategory: item.category,
-                    ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
-                }
+                Get.to(() => WaterElementDetailsScreen(
+                  elementName: item.nodeName,
+                  gaugeValue: power,
+                  gaugeUnit: 'm³/s',
+                  elementCategory: 'Water',
+                ),
+                  transition: Transition.rightToLeft,
+                  duration: const Duration(seconds: 1),
+                );
               },
               unit: 'm³/s',
               borderColor: item.borderColor ?? '#FF0000',

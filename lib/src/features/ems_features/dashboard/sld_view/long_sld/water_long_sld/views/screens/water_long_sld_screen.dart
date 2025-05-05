@@ -654,34 +654,12 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
             height: item.height.toDouble(),
             onTap: () {
               debugPrint("----->CircleWithIcon<-----");
-             /* if (item.category == 'Diesel_Generator') {
-                Get.to(() => GeneratorElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                    gaugeUnit: 'kW',
-                    elementCategory: 'Power',
-                  ),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(seconds: 1),
-                );
-              } else {
-                Get.to(() => PowerAndEnergyElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                    gaugeUnit: 'kW',
-                    elementCategory: 'Power',
-                    solarCategory: item.category,
-                  ),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(seconds: 1),
-                );
-              }*/
 
               Get.to(
                     () => WaterElementDetailsScreen(
                   elementName: item.nodeName,
                   gaugeValue: power,
-                  gaugeUnit: 'kW',
+                  gaugeUnit: 'm³/s',
                   elementCategory: 'Water',
 
                 ),
@@ -689,7 +667,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                 duration: const Duration(seconds: 1),
               );
             },
-            unit: 'kW',
+            unit: 'm³/s',
           );
           break;
         case 'LB_Meter':
@@ -706,7 +684,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
               width: item.width.toDouble(),
               height: item.height.toDouble(),
               onTap: () {},
-              unit: 'kW',
+              unit: 'm³/s',
               // color: item.color ?? '#FF0000',
               // textColor: item.textColor,
               // textSize: item.textSize,
@@ -735,36 +713,13 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
               height: item.height.toDouble(),
               onTap: () {
                 debugPrint("----->TrBoxWithIconWidget<-----");
-          /*      if (item.category == 'Diesel_Generator') {
-                  Get.to(
-                        () => GeneratorElementDetailsScreen(
-                      elementName: item.nodeName,
-                      gaugeValue: power,
-                      gaugeUnit: 'kW',
-                      elementCategory: 'Water',
-                    ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
-                } else {
-                  Get.to(
-                        () => WaterElementDetailsScreen(
-                      elementName: item.nodeName,
-                      gaugeValue: power,
-                      gaugeUnit: 'kW',
-                      elementCategory: 'Water',
 
-                    ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
-                }*/
 
                 Get.to(
                       () => WaterElementDetailsScreen(
                     elementName: item.nodeName,
                     gaugeValue: power,
-                    gaugeUnit: 'kW',
+                    gaugeUnit: 'm³/s',
                     elementCategory: 'Water',
 
                   ),
@@ -772,7 +727,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                   duration: const Duration(seconds: 1),
                 );
               },
-              unit: 'kW',
+              unit: 'm³/s',
               borderColor: item.borderColor ?? '#FF0000',
               percentage: nodeData.percentage != null
                   ? nodeData.percentage.toStringAsFixed(2)
@@ -796,7 +751,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                 loadBoxHeight: item.height.toDouble(),
                 loadBoxWidth: item.width.toDouble(),
                 onTap: () {},
-                unit: 'kW',
+                unit: 'm³/s',
                 gridColor: controller.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
                 generatorColor: controller.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
                 solarColor: controller.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
@@ -882,7 +837,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                       duration: const Duration(seconds: 1),
                     );
                   },
-                  unit: 'kW',
+                  unit: 'm³/s',
                   percentage: nodeData.percentage != null
                       ? nodeData.percentage.toStringAsFixed(2)
                       : "0.00",
@@ -911,7 +866,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                     duration: const Duration(seconds: 1),
                   );
                 },
-                unit: 'kW',
+                unit: 'm³/s',
                 orientation: item.orientation,
               );
             }
@@ -927,7 +882,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
               loadBoxHeight: item.height.toDouble(),
               loadBoxWidth: item.width.toDouble(),
               onTap: () {},
-              unit: 'kW',
+              unit: 'm³/s',
               orientation: item.orientation,
             );
           } else {

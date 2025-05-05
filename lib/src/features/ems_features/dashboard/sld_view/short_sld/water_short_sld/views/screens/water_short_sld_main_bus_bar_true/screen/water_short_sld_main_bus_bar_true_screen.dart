@@ -44,6 +44,7 @@ class _WaterShortSLDMainBusBarTrueScreenState extends State<WaterShortSLDMainBus
         child: Column(
           children: [
             WaterShortSLDDateWidget(nodeName: 'REB 01'),
+
             SizedBox(
               height: 400,
               child: GetBuilder<WaterShortSLDFilterBusBarEnergyCostController>(

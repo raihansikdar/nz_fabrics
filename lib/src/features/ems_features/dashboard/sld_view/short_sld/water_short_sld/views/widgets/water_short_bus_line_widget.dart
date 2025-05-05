@@ -32,28 +32,11 @@ class WaterShortAnimatedLinePainter extends CustomPainter {
           var endItem = viewPageData.firstWhereOrNull((element) => element.id == line.endItemId);
           if (startItem == null || endItem == null) continue;
 
-          bool startSensorStatus = liveData[startItem.id]?.sensorStatus ?? false;
-          bool endSensorStatus = liveData[endItem.id]?.sensorStatus ?? false;
-          bool shouldSkipAnimation = checkIfShouldSkipAnimation(startItem, endItem, line);
-          bool reverseDirection = checkReverseDirection(startItem, endItem, line, liveData);
-
           if (line.points.isNotEmpty) {
             ui.Path path = createLinePath(line);
             drawAnimatedLine(canvas, path, line);
 
-            if (!shouldSkipAnimation && (startSensorStatus || endSensorStatus)) {
-              double animatedValue = reverseDirection ? 1.0 - animation.value : animation.value;
-              drawVerticalAnimatedPointer(
-                canvas,
-                path,
-                animatedValue,
-                line.lineColor,
-                reverseDirection,
-                line.points,
-                startItem,
-                endItem,
-              );
-            }
+            // Arrow drawing removed
           }
         }
       }
@@ -80,98 +63,6 @@ class WaterShortAnimatedLinePainter extends CustomPainter {
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
 
     canvas.drawPath(path, linePaint);
-  }
-
-  void drawVerticalAnimatedPointer(
-      Canvas canvas,
-      ui.Path path,
-      double animatedValue,
-      String? lineColor,
-      bool reverseDirection,
-      List<Point> points,
-      WaterShortViewPageModel startItem,
-      WaterShortViewPageModel endItem,
-      ) {
-    ui.PathMetrics pathMetrics = path.computeMetrics();
-    ui.PathMetric pathMetric = pathMetrics.first;
-    double length = pathMetric.length;
-    ui.Tangent? tangent = pathMetric.getTangentForOffset(length * animatedValue);
-    if (tangent != null) {
-      canvas.save();
-      canvas.translate(tangent.position.dx, tangent.position.dy);
-
-      double finalAngle;
-      bool isVertical = tangent.vector.dy.abs() > tangent.vector.dx.abs();
-
-      if (isVertical) {
-        if (tangent.vector.dy < 0) {
-          finalAngle = -math.pi / 2;
-        } else {
-          finalAngle = math.pi / 2;
-        }
-      } else {
-        if (tangent.vector.dx < 0) {
-          finalAngle = math.pi;
-        } else {
-          finalAngle = 0;
-        }
-      }
-
-      if (reverseDirection) {
-        finalAngle += math.pi;
-      }
-
-      canvas.rotate(finalAngle);
-
-      final arrowPath = ui.Path();
-      const arrowLength = 20.0;
-      const arrowWidth = 16.0;
-
-      arrowPath.moveTo(0, 0);
-      arrowPath.lineTo(-arrowLength, -arrowWidth / 2);
-      arrowPath.lineTo(-arrowLength, arrowWidth / 2);
-      arrowPath.close();
-
-      Color arrowColor = (lineColor != null ? hexToColor(lineColor) : Colors.purple);
-
-      final arrowPaint = Paint()
-        ..color = arrowColor
-        ..style = PaintingStyle.fill;
-
-      final arrowOutlinePaint = Paint()
-        ..color = hexToColor(lineColor ?? '#000000')
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.5;
-
-      canvas.drawPath(arrowPath, arrowPaint);
-      canvas.drawPath(arrowPath, arrowOutlinePaint);
-
-      if (isVertical) {
-        final debugPaint = Paint()
-          ..color = Colors.white.withOpacity(0.5)
-          ..strokeWidth = 1.0
-          ..style = PaintingStyle.stroke;
-
-        canvas.drawLine(const Offset(-20, 0), const Offset(-arrowLength, 0), debugPaint);
-      }
-
-      canvas.restore();
-    }
-  }
-
-  double getVerticalDirection(List<Point> points, double animatedValue) {
-    if (points.length < 2) return 0;
-
-    int currentIndex = (animatedValue * (points.length - 1)).floor();
-    currentIndex = currentIndex.clamp(0, points.length - 2);
-
-    Point current = points[currentIndex];
-    Point next = points[currentIndex + 1];
-
-    double dy = next.y - current.y;
-    double dx = next.x - current.x;
-
-    return math.atan2(dy, dx);
   }
 
   bool checkIfShouldSkipAnimation(WaterShortViewPageModel startItem, WaterShortViewPageModel endItem, Line line) {
@@ -231,5 +122,5 @@ class WaterShortAnimatedLinePainter extends CustomPainter {
   @override
   bool shouldRepaint(WaterShortAnimatedLinePainter oldDelegate) {
     return oldDelegate.animation != animation;
-  }
+    }
 }

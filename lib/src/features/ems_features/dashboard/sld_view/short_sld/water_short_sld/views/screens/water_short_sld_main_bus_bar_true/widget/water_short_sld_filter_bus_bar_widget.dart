@@ -59,7 +59,7 @@ class WaterShortSLDFilterBusBarWidget extends StatelessWidget {
                   dataSource: monthlyChartData,
                   xValueMapper: (MonthlyChartData data, _) => data.date,
                   yValueMapper: (MonthlyChartData data, _) => data.energy,
-                  name: 'Energy(kWh)',
+                  name: 'Volume(m³)',
                   color: Colors.deepPurple
 
               ),
