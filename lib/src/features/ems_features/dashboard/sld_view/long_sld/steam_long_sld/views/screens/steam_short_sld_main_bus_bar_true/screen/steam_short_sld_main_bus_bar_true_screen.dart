@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_main_bus_bar_true_controller/water_short_sld_filter_bus_bar_energy_cost_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/views/screens/water_short_sld_main_bus_bar_true/widget/water_short_sld_filter_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_main_bus_bar_true_controller/steam_long_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/screens/steam_short_sld_main_bus_bar_true/widget/steam_long_sld_filter_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
@@ -23,7 +23,7 @@ class _SteamShortSLDMainBusBarTrueScreenState extends State<SteamShortSLDMainBus
 
   @override
   void initState() {
-    Get.find<WaterShortSLDFilterBusBarEnergyCostController>().fetchFilterSpecificData(busBarName: widget.busBarName, fromDate: Get.find<WaterShortSLDFilterBusBarEnergyCostController>().fromDateTEController.text, toDate: Get.find<WaterShortSLDFilterBusBarEnergyCostController>().toDateTEController.text);
+    Get.find<SteamLongSLDFilterBusBarEnergyCostController>().fetchFilterSpecificData(busBarName: widget.busBarName, fromDate: Get.find<SteamLongSLDFilterBusBarEnergyCostController>().fromDateTEController.text, toDate: Get.find<SteamLongSLDFilterBusBarEnergyCostController>().toDateTEController.text);
     super.initState();
   }
 
@@ -47,9 +47,9 @@ class _SteamShortSLDMainBusBarTrueScreenState extends State<SteamShortSLDMainBus
 
             SizedBox(
               height: 400,
-              child: GetBuilder<WaterShortSLDFilterBusBarEnergyCostController>(
+              child: GetBuilder<SteamLongSLDFilterBusBarEnergyCostController>(
                 builder: (filterBusBarEnergyCostController) {
-                  return WaterShortSLDFilterBusBarWidget(
+                  return SteamLongSLDFilterBusBarWidget(
                     size: size,
                     dateDifference: filterBusBarEnergyCostController.dateDifference,
                     monthlyDataList: filterBusBarEnergyCostController.filterBusBarEnergyBusBarList,
@@ -57,7 +57,7 @@ class _SteamShortSLDMainBusBarTrueScreenState extends State<SteamShortSLDMainBus
                 },
               ),
             ),
-            GetBuilder<WaterShortSLDFilterBusBarEnergyCostController>(
+            GetBuilder<SteamLongSLDFilterBusBarEnergyCostController>(
               builder: (filterBusBarEnergyCostController) {
                 return Align(
                   alignment: Alignment.centerRight,
@@ -88,7 +88,7 @@ class _SteamShortSLDMainBusBarTrueScreenState extends State<SteamShortSLDMainBus
             ),
             SizedBox(
               height: 400,
-              child: GetBuilder<WaterShortSLDFilterBusBarEnergyCostController>(
+              child: GetBuilder<SteamLongSLDFilterBusBarEnergyCostController>(
                 builder: (filterBusBarEnergyCostController) {
                   return FilterBusBarTableWidget(
                     size: size,
