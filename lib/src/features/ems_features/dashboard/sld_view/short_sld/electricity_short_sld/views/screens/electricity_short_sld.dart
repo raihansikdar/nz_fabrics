@@ -213,7 +213,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           _viewPageData = data.map((e) => ElectricityShortViewPageModel.fromJson(e)).toList();
         });
 
-        GetAllInfoControllers controller = Get.find(); // Get controller instance
+        ElectricityShortSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
 
         for (var item in _viewPageData) {
           if (item.sourceType == 'BusCoupler' || item.sourceType == 'Loop') {
@@ -228,7 +228,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     }
   }
 
-  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, GetAllInfoControllers controller) async {
+  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, ElectricityShortSLDGetAllInfoControllers controller) async {
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
@@ -855,7 +855,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           }
           break;
         case 'BusCoupler':
-          widget = GetBuilder<GetAllInfoControllers>(
+          widget = GetBuilder<ElectricityShortSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -872,7 +872,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           );
           break;
         case 'Loop':
-          widget = GetBuilder<GetAllInfoControllers>(
+          widget = GetBuilder<ElectricityShortSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -914,7 +914,7 @@ T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
   return null;
 }
 
-class GetAllInfoControllers extends GetxController {
+class ElectricityShortSLDGetAllInfoControllers extends GetxController {
   var powerMeterMap = <String, double>{}.obs;
 
   void updatePowerMeter(double powerMeter, String nodeName) {

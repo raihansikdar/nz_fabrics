@@ -52,6 +52,12 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_main_bus_bar_true_controller/water_long_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_all_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_pf_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_main_bus_bar_true_controller/electricity_short_sld_filter_bus_bar_energy_cost_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/screens/electricity_short_sld.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/load_natural_gas_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/pie_chart_natural_gas_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/natural_gas_summary/controllers/pie_chart_natural_gas_source_controller.dart';
@@ -73,11 +79,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/wate
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_each_load_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/find_water_value_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/load_water_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/source_water_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/element_button_view_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/filter_specific_node_data/filter_specific_node_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/generator/generator_ui_controller.dart';
@@ -374,6 +377,14 @@ class StateHolderBinders extends Bindings{
      Get.put(ElectricityLongSLDAllInfoController());
     // Get.put(GetAllInfoControllers());
      Get.put(ElectricityLongSLDFilterBusBarEnergyCostController());
+
+   /* ->>--------> Short SLD <--------<<- */
+     Get.put(ElectricityShortSLDGetAllInfoControllers());
+     Get.put(ElectricityShortSLDFilterBusBarEnergyCostController());
+     Get.put(ElectricityShortSLDAllInfoController());
+     Get.put(ElectricityShortSLDLiveAllNodePowerController());
+     Get.put(ElectricityShortSldLivePfDataController());
+     Get.put(ElectricityShortSLDLtProductionVsCapacityController());
 
 
 
