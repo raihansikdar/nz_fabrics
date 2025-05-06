@@ -45,7 +45,7 @@ class _PieChartWaterSourceWidgetState extends State<PieChartWaterSourceWidget> {
       Get.find<PieChartWaterSourceController>().fetchWaterCategoryWiseLiveData();
     });
 
-    _tooltipBehavior = TooltipBehavior(enable: true, format: 'point.x: point.y m³/s');
+    _tooltipBehavior = TooltipBehavior(enable: true, format: 'point.x: point.y m³/h');
   }
 
   @override
@@ -57,7 +57,7 @@ class _PieChartWaterSourceWidgetState extends State<PieChartWaterSourceWidget> {
             builder: (controller) {
 
               if (!controller.isConnected) {
-                return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M',);
+                return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'm³/h',);
               }
 
 
@@ -69,11 +69,11 @@ class _PieChartWaterSourceWidgetState extends State<PieChartWaterSourceWidget> {
               }
 
               if (controller.hasError) {
-                return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M',);
+                return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'm³/h',);
               }
 
               if ((controller.waterSourceCategoryWiseLiveData.data ?? []).isEmpty) {
-                return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M',);
+                return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'm³/h',);
               }
 
 
@@ -124,7 +124,7 @@ class _PieChartWaterSourceWidgetState extends State<PieChartWaterSourceWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: 'm³/s',
+                          text: 'm³/h',
                           style: TextStyle(
                             fontSize: size.height * k14TextSize,
                             color:  Colors.grey ,

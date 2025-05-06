@@ -216,7 +216,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                     children: [
                                       SvgPicture.asset(AssetsPath.lineChartIconSVG,  height: size.height * k25TextSize,),
                                       SizedBox(width: size.width * k20TextSize,),
-                                      Expanded(child: TextComponent(text: "${widget.elementName} Water Flow (m³/s)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                      Expanded(child: TextComponent(text: "${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
                                     ],
                                   ),
                                   Positioned(
@@ -300,7 +300,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                     children: [
                                       SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
                                       SizedBox(width: size.width * k20TextSize,),
-                                      Expanded(child: TextComponent(text: "This month ${widget.elementName} Water Flow (m³/s)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                      Expanded(child: TextComponent(text: "This month ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
                                     ],
                                   ),
                                   Positioned(
@@ -387,7 +387,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                     children: [
                                       SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
                                       SizedBox(width: size.width * k20TextSize,),
-                                      Expanded(child: TextComponent(text: "This year ${widget.elementName} Water Flow (m³/s)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                      Expanded(child: TextComponent(text: "This year ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
                                     ],
                                   ),
                                   Positioned(

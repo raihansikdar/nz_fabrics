@@ -90,7 +90,7 @@ class _TotalWaterLoadElementScreenState extends State<TotalWaterLoadElementScree
                           context,
                           PageRouteBuilder(
                               pageBuilder: (context, animation, secondaryAnimation) =>  WaterElementDetailsScreen(elementName: waterCategoryData.node ?? '',
-                                  gaugeValue: waterCategoryData.instantFlow ?? 0.00 , gaugeUnit: 'm³/s',elementCategory: 'Water'
+                                  gaugeValue: waterCategoryData.instantFlow ?? 0.00 , gaugeUnit: 'm³/h',elementCategory: 'Water'
                               )
 
                               /*PowerAndEnergyElementDetailsScreen(
@@ -173,8 +173,8 @@ class _TotalWaterLoadElementScreenState extends State<TotalWaterLoadElementScree
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            TextComponent(text: " ${waterCategoryData.instantFlow?.toStringAsFixed(2) ?? '0.0'} m³/s",),
-                                            TextComponent(text: " ${waterCategoryData.volume?.toStringAsFixed(2) ?? '0.00'} L"),
+                                            TextComponent(text: " ${waterCategoryData.instantFlow?.toStringAsFixed(2) ?? '0.0'} m³/h",),
+                                            TextComponent(text: " ${waterCategoryData.volume?.toStringAsFixed(2) ?? '0.00'} m³"),
                                           ],
                                         )
 

@@ -255,11 +255,11 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                                             Column(
                                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
-                                                                                TextComponent(text: " ${waterData.totalInstantFlow?.toStringAsFixed(2) ?? '0.00'} m³/s"),
+                                                                                TextComponent(text: " ${waterData.totalInstantFlow?.toStringAsFixed(2) ?? '0.00'} m³/h"),
                                                                                 SizedBox(width: size.height * k16TextSize,),
                                                                                 TextComponent(text: " ${waterData.totalCost?.toStringAsFixed(2) ?? '0.00'} ৳"),
                                                                                 SizedBox(width: size.height * k16TextSize,),
-                                                                                TextComponent(text: " ${waterData.totalVolume?.toStringAsFixed(2) ?? '0.00'} L"),
+                                                                                TextComponent(text: " ${waterData.totalVolume?.toStringAsFixed(2) ?? '0.00'} m³"),
                                                                               ],
                                                                             ),
                                                                           ],
@@ -375,11 +375,11 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                                                         Column(
                                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                                           children: [
-                                                                            TextComponent(text: " ${waterLoadData?.totalInstantFlow?.toStringAsFixed(2) ?? '0.00'} m³/s"),
+                                                                            TextComponent(text: " ${waterLoadData?.totalInstantFlow?.toStringAsFixed(2) ?? '0.00'} m³/h"),
                                                                             SizedBox(width: size.height * k16TextSize,),
                                                                             TextComponent(text: " ${waterLoadData?.totalCost?.toStringAsFixed(2) ?? '0.00'} ৳"),
                                                                             SizedBox(width: size.height * k16TextSize,),
-                                                                            TextComponent(text: " ${waterLoadData.totalVolume?.toStringAsFixed(2) ?? '0.00'} L"),
+                                                                            TextComponent(text: " ${waterLoadData.totalVolume?.toStringAsFixed(2) ?? '0.00'} m³"),
                                                                           ],
                                                                         ),
                                                                       ],

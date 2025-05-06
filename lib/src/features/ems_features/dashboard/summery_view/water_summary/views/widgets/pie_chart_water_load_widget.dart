@@ -46,7 +46,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<PieChartWaterLoadController>().fetchWaterCategoryWiseLiveData();
     });
-    _tooltipBehavior = TooltipBehavior(enable: true, format: 'point.x: point.y m³/s');
+    _tooltipBehavior = TooltipBehavior(enable: true, format: 'point.x: point.y m³/h');
   }
 
   @override
@@ -58,7 +58,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
         builder: (controller) {
 
           if (!controller.isConnected) {
-            return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M',);
+            return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: ' m³/h',);
           }
 
 
@@ -70,11 +70,11 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
           }
 
           if (controller.hasError) {
-            return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M');
+            return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: ' m³/h');
           }
 
           if ((controller.waterLoadCategoryWiseLiveData.data ?? []).isEmpty) {
-            return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'L/M');
+            return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Water',unitText: 'm³/h');
           }
 
 
@@ -125,7 +125,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
                       ),
                     ),
                     TextSpan(
-                      text: 'm³/s',
+                      text: 'm³/h',
                       style: TextStyle(
                         fontSize: size.height * k14TextSize,
                         color:  Colors.grey ,
