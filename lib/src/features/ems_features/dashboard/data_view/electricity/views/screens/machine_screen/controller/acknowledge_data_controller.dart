@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/model/acknowledge_data_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/machine_screen/model/acknowledge_data_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';

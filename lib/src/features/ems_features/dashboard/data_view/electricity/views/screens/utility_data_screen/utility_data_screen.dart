@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/utility_data_screen/utility_all_data_table.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/utility_data_screen/utility_all_data_table.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';

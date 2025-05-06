@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nz_fabrics/src/common_widgets/flutter_smart_download_widget/flutter_smart_download_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/acknowledge_history_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/machine_screen/screen/acknowledge_history_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/each_machine_wise_load_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/each_category_live_data_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/power_and_energy_element_details_screen.dart';
@@ -24,14 +24,15 @@ import 'dart:convert';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' hide Column, Row, Border;
 
-class FormattedWaterData {
+// Define FormattedMachineData class
+class FormattedMachineData {
   final String date;
   final String machine;
   final double totalEnergy;
   final double totalCost;
   final double unitCost;
 
-  FormattedWaterData({
+  FormattedMachineData({
     required this.date,
     required this.machine,
     required this.totalEnergy,
@@ -40,14 +41,14 @@ class FormattedWaterData {
   });
 }
 
-class CombinedWaterScreen extends StatefulWidget {
-  const CombinedWaterScreen({super.key});
+class CombinedMachineScreen extends StatefulWidget {
+  const CombinedMachineScreen({super.key});
 
   @override
-  State<CombinedWaterScreen> createState() => _CombinedWaterScreenState();
+  State<CombinedMachineScreen> createState() => _CombinedMachineScreenState();
 }
 
-class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
+class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
 
   List<DataGridRow> _dataGridRows = [];
   List<DataGridRow> _filteredRows = [];
@@ -56,7 +57,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
   bool _isLoadingTable1 = true;
   DateTime? _startDate;
   DateTime? _endDate;
-  Future<List<FormattedWaterData>> dataFuture = Future.value([]);
+  Future<List<FormattedMachineData>> dataFuture = Future.value([]);
   List<String> machineNames = [];
   bool _isLoadingTable2 = false;
 
@@ -82,7 +83,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
       return;
     }
 
-    final apiUrl1 = '${Urls.baseUrl}/api/filter-machine-view-data/?type=water';
+    final apiUrl1 = '${Urls.baseUrl}/api/filter-machine-view-data/?type=electricity';
     final apiUrl2 = '${Urls.baseUrl}/api/filter-acknowledge-data/';
     final token = AuthUtilityController.accessToken ?? 'Bearer default_token';
     final body = {
@@ -176,7 +177,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
             columnName: 'Acknowledged', value: value['acknowledged'] ?? false),
         DataGridCell<double>(
             columnName: 'Energy',
-            value: (value['total_volume'] as num?)?.toDouble() ?? 0.0),
+            value: (value['total_energy'] as num?)?.toDouble() ?? 0.0),
         DataGridCell<double>(
             columnName: 'Cost',
             value: (value['total_cost'] as num?)?.toDouble() ?? 0.0),
@@ -201,7 +202,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
       }
 
       final response = await http.post(
-        Uri.parse('${Urls.baseUrl}/api/filter-perday-machine-view-data/?type=water'),
+        Uri.parse('${Urls.baseUrl}/api/filter-perday-machine-view-data/?type=electricity'),
         headers: {
           'Authorization': AuthUtilityController.accessToken ?? '',
           'Content-Type': 'application/json',
@@ -226,7 +227,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
             });
           }
           log('Table 2 Machine Names: $machineNames');
-          List<FormattedWaterData> formattedData = _formatData(jsonResponse);
+          List<FormattedMachineData> formattedData = _formatData(jsonResponse);
           log('Table 2 Formatted Data Length: ${formattedData.length}');
           if(mounted){
             setState(() {
@@ -264,15 +265,15 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
     }
   }
 
-  List<FormattedWaterData> _formatData(Map<String, dynamic> rawData) {
-    List<FormattedWaterData> formattedData = [];
+  List<FormattedMachineData> _formatData(Map<String, dynamic> rawData) {
+    List<FormattedMachineData> formattedData = [];
     rawData.forEach((machine, data) {
       List<dynamic> dailyData = data['daily'] ?? [];
       for (var day in dailyData) {
-        formattedData.add(FormattedWaterData(
+        formattedData.add(FormattedMachineData(
           date: day['date']?.toString() ?? '',
           machine: machine,
-          totalEnergy: (day['total_volume'] as num?)?.toDouble() ?? 0.0,
+          totalEnergy: (day['total_energy'] as num?)?.toDouble() ?? 0.0,
           totalCost: (day['total_cost'] as num?)?.toDouble() ?? 0.0,
           unitCost: (day['unit_cost'] as num?)?.toDouble() ?? 0.0,
         ));
@@ -337,7 +338,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
         machineSheet.getRangeByIndex(1, 1).setText('Date');
         int colIndex = 2;
         for (var machine in machineNames) {
-          machineSheet.getRangeByIndex(1, colIndex).setText('$machine Water (m³)');
+          machineSheet.getRangeByIndex(1, colIndex).setText('$machine Energy (kWh)');
           machineSheet.getRangeByIndex(1, colIndex + 1).setText('$machine Cost/Unit Cost (৳/(৳/kWh))');
           colIndex += 2;
         }
@@ -368,7 +369,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
           machineSheet.getRangeByIndex(rowIndex, 1).setText(date);
           colIndex = 2;
           for (var machine in machineNames) {
-            machineSheet.getRangeByIndex(rowIndex, colIndex).setNumber(machines[machine]?['total_volume'] ?? 0);
+            machineSheet.getRangeByIndex(rowIndex, colIndex).setNumber(machines[machine]?['energy'] ?? 0);
             machineSheet.getRangeByIndex(rowIndex, colIndex + 1).setText(
                 '${(machines[machine]?['cost'] ?? 0).toStringAsFixed(2)}/${(machines[machine]?['unit_cost'] ?? 0).toStringAsFixed(2)}');
             colIndex += 2;
@@ -392,7 +393,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
         nodeSheet.name = 'Custom Machine Report';
 
         nodeSheet.getRangeByIndex(1, 1).setText('Node');
-        nodeSheet.getRangeByIndex(1, 2).setText('Volume (m³)');
+        nodeSheet.getRangeByIndex(1, 2).setText('Energy (kWh)');
         nodeSheet.getRangeByIndex(1, 3).setText('Cost (৳)');
 
         nodeSheet.getRangeByIndex(1, 1, 1, 3).cellStyle = headerStyle;
@@ -400,7 +401,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
         rowIndex = 2;
         _apiData.forEach((key, value) {
           nodeSheet.getRangeByIndex(rowIndex, 1).setText(key);
-          nodeSheet.getRangeByIndex(rowIndex, 2).setNumber((value['total_volume'] as num?)?.toDouble() ?? 0);
+          nodeSheet.getRangeByIndex(rowIndex, 2).setNumber((value['total_energy'] as num?)?.toDouble() ?? 0);
           nodeSheet.getRangeByIndex(rowIndex, 3).setNumber((value['total_cost'] as num?)?.toDouble() ?? 0);
           rowIndex++;
 
@@ -408,7 +409,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
             final children = value['children'] as List<dynamic>;
             for (var child in children) {
               nodeSheet.getRangeByIndex(rowIndex, 1).setText('  • ${child['node']}');
-              nodeSheet.getRangeByIndex(rowIndex, 2).setNumber((child['total_volume'] as num?)?.toDouble() ?? 0);
+              nodeSheet.getRangeByIndex(rowIndex, 2).setNumber((child['total_energy'] as num?)?.toDouble() ?? 0);
               nodeSheet.getRangeByIndex(rowIndex, 3).setNumber((child['total_cost'] as num?)?.toDouble() ?? 0);
               rowIndex++;
             }
@@ -496,7 +497,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 8.0, right: 8, top: 10.0),
+            padding: const EdgeInsets.only(left: 8.0, right: 8, top: 0.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -520,7 +521,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8.0),
+                const SizedBox(width: 4.0),
                 GestureDetector(
                   onTap: () => _selectEndDate(context),
                   child: Container(
@@ -610,13 +611,13 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 70,top: 10),
+                margin: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 70),
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   color: Colors.white,
                 ),
-                child: FutureBuilder<List<FormattedWaterData>>(
+                child: FutureBuilder<List<FormattedMachineData>>(
                   future: dataFuture,
                   builder: (context, snapshot) {
                     log('Table 2 FutureBuilder State: ${snapshot.connectionState}');
@@ -707,8 +708,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
   List<GridColumn> _buildTable1Columns(Size size) {
     return [
       GridColumn(
-        // width: 130,
-        width: 157,
+        width: 120,
         columnName: 'Node',
         label: Container(
           alignment: Alignment.centerLeft,
@@ -724,7 +724,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
         ),
       ),
       GridColumn(
-        width: 32,
+        width: 40,
         columnName: 'Acknowledged',
         label: Container(
           alignment: Alignment.center,
@@ -745,7 +745,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
           alignment: Alignment.center,
           padding: const EdgeInsets.all(12),
           child: Text(
-            'Volume',
+            'Energy',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: AppColors.whiteTextColor,
@@ -797,7 +797,7 @@ class _CombinedWaterScreenState extends State<CombinedWaterScreen> {
             padding: const EdgeInsets.all(8.0),
             alignment: Alignment.center,
             child: TextComponent(
-              text: 'Volume',
+              text: 'Energy',
               color: AppColors.whiteTextColor,
               fontFamily: boldFontFamily,
               fontSize: size.width > 500 ? size.height * k12TextSize : size.height * k14TextSize,
@@ -870,7 +870,7 @@ class CustomTreeDataSource extends DataGridSource {
             columnName: 'Acknowledged', value: value['acknowledged'] ?? false),
         DataGridCell<double>(
             columnName: 'Energy',
-            value: (value['total_volume'] as num?)?.toDouble() ?? 0.0),
+            value: (value['total_energy'] as num?)?.toDouble() ?? 0.0),
         DataGridCell<double>(
             columnName: 'Cost',
             value: (value['total_cost'] as num?)?.toDouble() ?? 0.0),
@@ -887,7 +887,7 @@ class CustomTreeDataSource extends DataGridSource {
                 value: child['acknowledged'] ?? false),
             DataGridCell<double>(
                 columnName: 'Energy',
-                value: (child['total_volume'] as num?)?.toDouble() ?? 0.0),
+                value: (child['total_energy'] as num?)?.toDouble() ?? 0.0),
             DataGridCell<double>(
                 columnName: 'Cost',
                 value: (child['total_cost'] as num?)?.toDouble() ?? 0.0),
@@ -1008,7 +1008,7 @@ class CustomTreeDataSource extends DataGridSource {
         alignment: Alignment.center,
         padding: const EdgeInsets.all(4.0),
         child: Text(
-          _formatDouble(row.getCells()[2].value, unit: 'm³', unitFirst: false),
+          _formatDouble(row.getCells()[2].value, unit: 'kWh', unitFirst: false),
           style: const TextStyle(fontSize: 12),
         ),
       ),
@@ -1041,7 +1041,7 @@ class MachineDataGridSource extends DataGridSource {
   List<DataGridRow> _formattedData = [];
   final List<String> machineNames;
 
-  MachineDataGridSource(List<FormattedWaterData> data, this.machineNames) {
+  MachineDataGridSource(List<FormattedMachineData> data, this.machineNames) {
     // Initialize data structures
     Map<String, Map<String, Map<String, String>>> pivotedData = {};
     Map<String, double> totalEnergyMap = {for (var machine in machineNames) machine: 0.0};
@@ -1112,6 +1112,37 @@ class MachineDataGridSource extends DataGridSource {
 
   @override
   List<DataGridRow> get rows => _formattedData;
+
+/*  @override
+  DataGridRowAdapter buildRow(DataGridRow row) {
+    bool isTotalRow = row.getCells().first.value == 'Total';
+    return DataGridRowAdapter(
+        cells: row.getCells().map<Widget>((cell) {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(4.0),
+            color: cell.columnName.endsWith('_cost_per_unit')
+                ? const Color(0xFFE0E1FF) // Apply specified background color for cost_per_unit cells
+                : null, // Default background (transparent or inherited)
+            child: Text(
+              cell.columnName.endsWith('_energy')
+                  ? '${cell.value} kWh'
+                  : cell.columnName.endsWith('_cost_per_unit')
+                  ? '৳${cell.value}'
+                  : cell.value.toString(),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: const Color(0xFF04063E), // Apply specified text color for all cells
+                fontWeight: isTotalRow ? FontWeight.bold : FontWeight.normal,
+              ),
+              softWrap: true,
+              maxLines: 2,
+            ),
+          );
+        }).toList(),
+        );
+    }*/
+
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
     // Get the index of the current row
@@ -1131,7 +1162,7 @@ class MachineDataGridSource extends DataGridSource {
                 : const Color(0xFFE0E1FF), // Light gray background for even rows and Total row
             child: Text(
               cell.columnName.endsWith('_energy')
-                  ? '${cell.value} m³'
+                  ? '${cell.value} kWh'
                   : cell.columnName.endsWith('_cost_per_unit')
                   ? '৳${cell.value}'
                   : cell.value.toString(),
@@ -1147,4 +1178,6 @@ class MachineDataGridSource extends DataGridSource {
         }).toList(),
         );
     }
+
+
 }

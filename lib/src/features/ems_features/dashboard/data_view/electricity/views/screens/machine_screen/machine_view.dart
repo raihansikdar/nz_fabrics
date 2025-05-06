@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_radio_button/custom_radio_button.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/dash_board_button_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/controller/machine_view_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/daily_machine_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/custom_machine_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/new_machine_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/controller/machine_view_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/machine_screen/screen/custom_machine_screen.dart';
 
 class MachineView extends StatefulWidget {
   const MachineView({super.key});

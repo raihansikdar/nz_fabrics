@@ -8,7 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/empty_page_widget/empty_page_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/controller/acknowledge_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/machine_screen/controller/acknowledge_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pf_controller/acknowledge_event_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';

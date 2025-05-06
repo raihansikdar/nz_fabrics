@@ -15,8 +15,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/control
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/dash_board_radio_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/search_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/tab_bar_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/data_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/views/widgets/navigation_drawer_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/data_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
@@ -549,13 +549,10 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                         //  child: const NZPowerSldScreen(),
                                                                           child: const SldTabViewScreen(),
                                                                       ) : SizedBox(
-                                                                            height: /*size.height * 0.78*/ size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.95,
-                                                                            /*decoration: BoxDecoration(
-                                                                          color: AppColors.whiteTextColor,
-                                                                          borderRadius: BorderRadius.circular(size.height * k16TextSize),
-                                                                          border: Border.all(color: AppColors.containerBorderColor, width: 1.0)),*/
+                                                                            height: size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.95,
 
-                                                                            child: const /*DataViewScreen*/ DataTabViewScreen()) ,
+
+                                                                            child: const DataTabViewScreen()) ,
                                                                       ],
                                                                     );
                                                                   }

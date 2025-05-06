@@ -37,11 +37,11 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/control
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/dash_board_radio_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/search_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/tab_bar_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/controllers/data_view_ui_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/controller/machine_view_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/controller/acknowledge_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/machine_screen/screen/daily_machine_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/views/screens/shed_screen/controller/shed_view_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/controllers/data_view_ui_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/controller/machine_view_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/machine_screen/controller/acknowledge_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/machine_screen/screen/daily_machine_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/shed_screen/controller/shed_view_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_pf_data_controller.dart';
