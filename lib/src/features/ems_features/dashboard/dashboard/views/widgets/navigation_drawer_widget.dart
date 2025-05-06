@@ -906,8 +906,8 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                         ),
                       ),*/
 
-
-                      Theme(
+           /* ----------------------  Solar Summary  ----------------------- */
+                    /*  Theme(
                         data: Theme.of(context).copyWith(
                           dividerColor: Colors.transparent,
                           hoverColor: Colors.transparent,
@@ -988,7 +988,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                             )
                           ],
                         ),
-                      ),
+                      ),*/
 
                      // SizedBox(height: size.height * k8TextSize,),
                       Theme(

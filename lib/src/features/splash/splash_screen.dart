@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(height: size.height * 0.1,),
-          Text("NZ UMS",style: GoogleFonts.kadwa(color:AppColors.primaryColor,fontSize: size.height * 0.028,fontWeight: FontWeight.w700 )),
+          Text("NZ Fabrics",style: GoogleFonts.kadwa(color:AppColors.primaryColor,fontSize: size.height * 0.028,fontWeight: FontWeight.w700 )),
         /*  Text("Utility Management System",style: GoogleFonts.kadwa(color:AppColors.primaryColor,fontSize: size.height * 0.028,fontWeight: FontWeight.w500 ),),*/
          SizedBox(height: size.height * k16TextSize,),
           Row(

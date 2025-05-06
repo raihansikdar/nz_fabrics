@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_radio_button/custom_radio_button.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_shimmer_widget.dart';
+import 'package:nz_fabrics/src/common_widgets/empty_page_widget/empty_page_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/dash_board_radio_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
@@ -185,7 +186,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                               child: CustomShimmerWidget(height: size.height * 0.09 , width: double.infinity,),
                                             );
                                           } else if(controller.waterSourceCategoryWiseLiveData.data!.isEmpty){
-                                            return Center(child: Lottie.asset(AssetsPath.emptyJson,height: size.height * 0.250));
+                                            return EmptyPageWidget(size: size);
                                           } else if(controller.hasError){
                                             return  Lottie.asset(AssetsPath.errorJson,height: size.height * 0.250);
                                           }
@@ -303,7 +304,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                               child: CustomShimmerWidget(height: size.height * 0.09 , width: double.infinity,),
                                             );
                                           } else if(loadWaterController.waterLoadCategoryWiseLiveData.data!.isEmpty){
-                                            return Center(child: Lottie.asset(AssetsPath.emptyJson,height: size.height * 0.250));
+                                            return EmptyPageWidget(size: size);
                                           } else if(loadWaterController.hasError){
                                             return  Lottie.asset(AssetsPath.errorJson,height: size.height * 0.250);
                                           }

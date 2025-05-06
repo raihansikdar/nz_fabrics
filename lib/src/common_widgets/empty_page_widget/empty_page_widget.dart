@@ -15,7 +15,7 @@ class EmptyPageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.only(top: size.height * 0.150),
+      padding:  EdgeInsets.only(top: size.height * 0.120),
       child: Center(child: Column(
         children: [
           Lottie.asset(AssetsPath.emptyJson, height: size.height * 0.26),
