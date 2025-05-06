@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/data_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/utility_data_screen/utility_data_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/water/combine_water_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/steam_short_sld/steam_short_sld_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/steam/combine_steam_screen.dart';
 
 class DataTabViewScreen extends StatelessWidget {
   const DataTabViewScreen({super.key});
@@ -30,7 +30,7 @@ class DataTabViewScreen extends StatelessWidget {
                   UtilityDataScreen(),
                   DataViewScreen(),
                   CombinedWaterScreen(),
-                  const SteamShortSldScreen(),
+                  CombinedSteamScreen(),
                 ],
               ),
             ),
