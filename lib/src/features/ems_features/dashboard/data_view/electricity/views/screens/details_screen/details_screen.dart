@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:lottie/lottie.dart';
+import 'package:nz_fabrics/src/common_widgets/empty_page_widget/empty_page_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/find_power_value_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/generators/generator_element_details_screen.dart';
@@ -29,14 +30,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
   late NodeDataSource _nodeDataSource;
   final Set<String> _expandedRows = {};
   final String token = '${AuthUtilityController.accessToken}';
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
     _nodeDataSource = NodeDataSource(context, [], _expandedRows, token);
     _fetchMainBusbars();
   }
-  Future<void> _fetchMainBusbars() async {
+  /*Future<void> _fetchMainBusbars() async {
     try {
       final response = await http.get(
         Uri.parse(Urls.getMainBusBarNamesUrl),
@@ -64,6 +65,49 @@ class _DetailsScreenState extends State<DetailsScreen> {
       }
     } catch (e) {
       log('Error fetching main busbars: $e');
+    }
+  }*/
+
+  Future<void> _fetchMainBusbars() async {
+    try {
+      if (mounted) {
+        setState(() {
+          _isLoading = true; // Set loading to true before fetching
+        });
+      }
+
+      final response = await http.get(
+        Uri.parse(Urls.getMainBusBarNamesUrl),
+        headers: {'Authorization': token},
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        List<TableNodeModel> nodes = (data['main_busbars'] as List)
+            .map((busbar) => TableNodeModel(busbar, 'Main Busbar', true, false, []))
+            .toList();
+
+        for (var node in nodes) {
+          await _fetchNodePowerAndUpdate(node);
+          await _fetchNodeMonthlyData(node);
+        }
+
+        if (mounted) {
+          setState(() {
+            _nodeDataSource = NodeDataSource(context, nodes, _expandedRows, token);
+            _isLoading = false; // Set loading to false after successful fetch
+          });
+        }
+      } else {
+        throw Exception('Failed to fetch main busbars');
+      }
+    } catch (e) {
+      log('Error fetching main busbars: $e');
+      if (mounted) {
+        setState(() {
+          _isLoading = false; // Set loading to false on error
+        });
+      }
     }
   }
 
@@ -120,6 +164,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Size size = MediaQuery.sizeOf(context);
     double calculateTextHeight(String text, double fontSize, double maxWidth) {
       final TextPainter textPainter = TextPainter(
         text: TextSpan(
@@ -146,15 +192,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
         );
       },
 
-      child: _nodeDataSource.rows.isEmpty
-            ? const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Center(
-              child: Center(child: SpinKitFadingCircle(
-                color: AppColors.primaryColor,
-                size: 50.0,
-              ),)),
-            ) // Show a loader while fetching data
+      child: _isLoading ? const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.0),
+        child: Center(
+            child: Center(child: SpinKitFadingCircle(
+              color: AppColors.primaryColor,
+              size: 50.0,
+            ),)),
+      ) :  _nodeDataSource.rows.isEmpty
+            ?  EmptyPageWidget(size: size) // Show a loader while fetching data
             : Container(
           clipBehavior: Clip.antiAlias,
           // height: 600,
