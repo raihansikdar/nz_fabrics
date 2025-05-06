@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/controller/steam_long_sld_lt_production_vs_capacity_controller.dart';
@@ -18,8 +19,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_nz_source_and_load_box_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_nz_tr_box_with_icon_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_super_bus_bar_widget.dart';
-
-
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
@@ -199,7 +198,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
     if (!mounted) return;
     try {
       final response = await http.get(
-        Uri.parse(Urls.shortWaterUrl),
+        Uri.parse(Urls.longWateryUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
 
@@ -210,7 +209,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
           _viewPageData = data.map((e) => SteamLongViewPageModel.fromJson(e)).toList();
         });
 
-        SteamShortSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
+        SteamLongSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
 
         for (var item in _viewPageData) {
           if (item.sourceType == 'BusCoupler' || item.sourceType == 'Loop') {
@@ -225,7 +224,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
     }
   }
 
-  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, SteamShortSLDGetAllInfoControllers controller) async {
+  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, SteamLongSLDGetAllInfoControllers controller) async {
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
@@ -330,6 +329,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: CustomAppBarWidget(text: "Steam SLD", backPreviousScreen: true),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: LayoutBuilder(
@@ -821,7 +821,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
           }
           break;
         case 'BusCoupler':
-          widget = GetBuilder<SteamShortSLDGetAllInfoControllers>(
+          widget = GetBuilder<SteamLongSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -838,7 +838,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
           );
           break;
         case 'Loop':
-          widget = GetBuilder<SteamShortSLDGetAllInfoControllers>(
+          widget = GetBuilder<SteamLongSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -880,7 +880,7 @@ T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
   return null;
 }
 
-class SteamShortSLDGetAllInfoControllers extends GetxController {
+class SteamLongSLDGetAllInfoControllers extends GetxController {
   var powerMeterMap = <String, double>{}.obs;
 
   void updatePowerMeter(double powerMeter, String nodeName) {
