@@ -659,7 +659,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                     () => WaterElementDetailsScreen(
                   elementName: item.nodeName,
                   gaugeValue: power,
-                  gaugeUnit: 'm³/s',
+                  gaugeUnit: 'm³/h',
                   elementCategory: 'Water',
 
                 ),
@@ -667,7 +667,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                 duration: const Duration(seconds: 1),
               );
             },
-            unit: 'm³/s',
+            unit: 'm³/h',
           );
           break;
         case 'LB_Meter':
@@ -684,7 +684,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
               width: item.width.toDouble(),
               height: item.height.toDouble(),
               onTap: () {},
-              unit: 'm³/s',
+              unit: 'm³/h',
               // color: item.color ?? '#FF0000',
               // textColor: item.textColor,
               // textSize: item.textSize,
@@ -719,7 +719,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                       () => WaterElementDetailsScreen(
                     elementName: item.nodeName,
                     gaugeValue: power,
-                    gaugeUnit: 'm³/s',
+                    gaugeUnit: 'm³/h',
                     elementCategory: 'Water',
 
                   ),
@@ -727,7 +727,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                   duration: const Duration(seconds: 1),
                 );
               },
-              unit: 'm³/s',
+              unit: 'm³/h',
               borderColor: item.borderColor ?? '#FF0000',
               percentage: nodeData.percentage != null
                   ? nodeData.percentage.toStringAsFixed(2)
@@ -751,7 +751,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                 loadBoxHeight: item.height.toDouble(),
                 loadBoxWidth: item.width.toDouble(),
                 onTap: () {},
-                unit: 'm³/s',
+                unit: 'm³/h',
                 gridColor: controller.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
                 generatorColor: controller.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
                 solarColor: controller.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
@@ -837,7 +837,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                       duration: const Duration(seconds: 1),
                     );
                   },
-                  unit: 'm³/s',
+                  unit: 'm³/h',
                   percentage: nodeData.percentage != null
                       ? nodeData.percentage.toStringAsFixed(2)
                       : "0.00",
@@ -866,7 +866,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                     duration: const Duration(seconds: 1),
                   );
                 },
-                unit: 'm³/s',
+                unit: 'm³/h',
                 orientation: item.orientation,
               );
             }
@@ -882,7 +882,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
               loadBoxHeight: item.height.toDouble(),
               loadBoxWidth: item.width.toDouble(),
               onTap: () {},
-              unit: 'm³/s',
+              unit: 'm³/h',
               orientation: item.orientation,
             );
           } else {
