@@ -54,7 +54,7 @@ class OverAllLineWaterChartDataWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: yLabels
                       .map((y) => Text(
-                    '${y.toStringAsFixed(0)} m³/s',
+                    '${y.toStringAsFixed(0)} m³/h',
                     style: const TextStyle(fontSize: 11),
                   ))
                       .toList(),
@@ -94,21 +94,21 @@ class OverAllLineWaterChartDataWidget extends StatelessWidget {
                       dataSource: totalSourceData,
                       xValueMapper: (ChartData data, _) => data.x,
                       yValueMapper: (ChartData data, _) => data.y,
-                      name: 'Total Source (m³/s)',
+                      name: 'Total Source (m³/h)',
                       color: Colors.deepPurple,
                     ),
                     SplineSeries<ChartData, DateTime>(
                       dataSource: subMersibleData,
                       xValueMapper: (ChartData data, _) => data.x,
                       yValueMapper: (ChartData data, _) => data.y,
-                      name: 'Sub Mersible (m³/s)',
+                      name: 'Sub Mersible (m³/h)',
                       color: const Color(0xFF66D6FF),
                     ),
                     SplineSeries<ChartData, DateTime>(
                       dataSource: wtpData,
                       xValueMapper: (ChartData data, _) => data.x,
                       yValueMapper: (ChartData data, _) => data.y,
-                      name: 'WTP (m³/s)',
+                      name: 'WTP (m³/h)',
                       color: const Color(0xFFC5A4FF),
                     ),
                   ],

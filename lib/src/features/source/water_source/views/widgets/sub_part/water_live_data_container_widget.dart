@@ -30,7 +30,7 @@ class WaterLiveDataContainerWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              width: size.width > 600 ? size.width * 0.07 : 50,
+              width: size.width > 600 ? size.width * 0.07 : 100,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
 
@@ -47,7 +47,7 @@ class WaterLiveDataContainerWidget extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: size.height * k20TextSize,),
+            SizedBox(width: size.height * k10TextSize,),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -55,7 +55,7 @@ class WaterLiveDataContainerWidget extends StatelessWidget {
               ],
             ),
 
-            SizedBox(width: size.height * k20TextSize,),
+            SizedBox(width: size.height * k10TextSize,),
             Row(
               children: [
                 // const Column(

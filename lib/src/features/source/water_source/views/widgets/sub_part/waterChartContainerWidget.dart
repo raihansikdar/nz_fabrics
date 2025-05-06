@@ -33,7 +33,7 @@ class WaterChartContainerWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              width: size.width > 600 ? size.width * 0.07 : 50,
+              width: size.width > 600 ? size.width * 0.07 : 100,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
 
@@ -50,7 +50,7 @@ class WaterChartContainerWidget extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(width: size.height * k20TextSize,),
+            SizedBox(width: size.height * k10TextSize,),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -58,14 +58,14 @@ class WaterChartContainerWidget extends StatelessWidget {
               ],
             ),
 
-            SizedBox(width: size.height * k20TextSize,),
+            SizedBox(width: size.height * k10TextSize,),
             Row(
               children: [
                  Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const TextComponent(text: "Energy",color: AppColors.secondaryTextColor,),
+                    const TextComponent(text: "Volume",color: AppColors.secondaryTextColor,),
                     SizedBox(height: size.height * 0.002,),
                     const TextComponent(text: "Cost",color: AppColors.secondaryTextColor,),
                   ],

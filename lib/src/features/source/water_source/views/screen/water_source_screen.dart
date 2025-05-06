@@ -181,7 +181,7 @@ class _WaterSourceScreenState extends State<WaterSourceScreen> {
                       GetBuilder<OverAllWaterSourceDataController>(
                         builder: (controller) {
                           return Container(
-                            height: size.height * 0.57,
+                            height: size.height * 0.505,
                             width: double.infinity,
                             decoration: BoxDecoration(
                               color: AppColors.whiteTextColor,
@@ -228,7 +228,7 @@ class _WaterSourceScreenState extends State<WaterSourceScreen> {
                       ),
                       SizedBox(height: size.height * k12TextSize),
                       Container(
-                        height: size.height * 0.565,
+                        height: size.height * 0.5,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: AppColors.whiteTextColor,
@@ -299,7 +299,7 @@ class _WaterSourceScreenState extends State<WaterSourceScreen> {
                                       SizedBox(height: size.height * k8TextSize),
                                       WaterLiveDataContainerWidget(
                                         size: size,
-                                        title: "Sub_Mersible",
+                                        title: "Sub Mersible",
                                         color: Color.lerp(const Color(0xFF66D6FF), const Color(0xFF4FA3CC), 0.5)!,
                                         text: "${subMersibleData?.totalInstantFlow?.toStringAsFixed(2) ?? '0.00'} m³ (${subMersibleData?.instantFlowPercentage?.toStringAsFixed(2) ?? '0.00'}%)",
                                       ),

@@ -62,8 +62,8 @@ class _UtilityAllDataTableState extends State<UtilityAllDataTable> {
           for (var item in jsonData['water_data']) {
             tempList.add(UtilityData(
               category: 'Water',
-              liveData: '${item['instant_flow'].toStringAsFixed(2)} L/h',
-              consumption: '${item['volume'].toStringAsFixed(2)} L',
+              liveData: '${item['instant_flow'].toStringAsFixed(2)} m³/h',
+              consumption: '${item['volume'].toStringAsFixed(2)} m³',
               cost: '\৳${item['cost'].toStringAsFixed(2)}',
             ));
           }

@@ -444,7 +444,7 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                          columnName: 'water_volume',
                          label: Container(
                            alignment: Alignment.center,
-                           child: const Text('Volume (L)',style: TextStyle(color: AppColors.whiteTextColor),),
+                           child: const Text('Volume (m³)',style: TextStyle(color: AppColors.whiteTextColor),),
                          ),
                        ),
                        GridColumn(
@@ -566,7 +566,7 @@ class MachineDataGridSource extends DataGridSource {
         ),
         DataGridCell<String>(
           columnName: 'water_volume',
-          value: '${waterData['energy']} L',
+          value: '${waterData['energy']} m³',
         ),
         DataGridCell<String>(
           columnName: 'water_cost',
@@ -601,7 +601,7 @@ class MachineDataGridSource extends DataGridSource {
       ),
       DataGridCell<String>(
         columnName: 'water_volume',
-        value: '${totalWaterVolume.toStringAsFixed(2)} L',
+        value: '${totalWaterVolume.toStringAsFixed(2)} m³',
       ),
       DataGridCell<String>(
         columnName: 'water_cost',
@@ -1314,7 +1314,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                       ),
                     if (_showWater && waterChartData.isNotEmpty)
                       FastLineSeries<WaterData, DateTime>(
-                        name: 'Flow (L/min)',
+                        name: 'Flow (m³/h)',
                         dataSource: waterChartData,
                         xValueMapper: (WaterData data, _) =>
                             _parseDateTime(data.timedate),
@@ -1426,7 +1426,7 @@ class MonthlyBarChartWidget extends StatelessWidget {
               dataSource: waterData,
               xValueMapper: (WaterData data, _) => data.date!,
               yValueMapper: (WaterData data, _) => data.volume,
-              name: 'Volume (L)',
+              name: 'Volume (m³)',
               color: Colors.green,
             ),
         ],
@@ -1484,7 +1484,7 @@ class YearlyBarChartWidget extends StatelessWidget {
               dataSource: waterData,
               xValueMapper: (WaterData data, _) => data.date!,
               yValueMapper: (WaterData data, _) => data.volume,
-              name: 'Volume (L)',
+              name: 'Volume (m³)',
               color: Colors.green,
             ),
         ],
