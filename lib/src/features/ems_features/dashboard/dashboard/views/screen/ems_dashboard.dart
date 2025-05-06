@@ -27,6 +27,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/power_summary_chart_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/steam_summary/views/screen/steam_summary_chart_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/load_water_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
@@ -214,7 +215,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                         );
                       },
                     ),
-                  ) :  */ Text("NZ UMS",style: GoogleFonts.kadwa(color:AppColors.primaryColor,fontSize: size.height * 0.028,fontWeight: FontWeight.w700 )),
+                  ) :  */ Text("NZ Fabrics",style: GoogleFonts.kadwa(color:AppColors.primaryColor,fontSize: size.height * 0.028,fontWeight: FontWeight.w700 )),
                   leading: IconButton(
                     icon: const Icon(Icons.menu),
                     onPressed: () {
@@ -285,58 +286,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                     thumbVisibility: false,
                     trackVisibility: false,
                     controller: _scrollController,
-                    child: GetBuilder<PieChartPowerSourceController>(
-                      builder: (pieChartPowerSourceController) {
-                        if(pieChartPowerSourceController.pageState == PageState.error){
-                          return ErrorPage( onRetry: (){
-                            /*------------- Start Api in Electricity---------------*/
-                  
-                            Get.find<PieChartPowerSourceController>().fetchPieChartData();
-                            Get.find<PieChartPowerLoadController>().fetchPieChartLoadData();
-                            Get.find<CategoryWiseLiveDataController>().fetchCategoryWiseLiveData();
-                            Get.find<MachineViewNamesDataController>().fetchMachineViewNamesData();
-                  
-                            Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-                            Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
-                            Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
-                            Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
-                  
-                  
-                            /*------------- Stop Api in Electricity ---------------*/
-                            //Get.find<SourceWaterController>().stopApiCallOnScreenChange();
-                            //Get.find<LoadWaterController>().stopApiCallOnScreenChange();
-                            Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
-                            Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
-                            Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
-                            Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
-                          });
-                        }else if(pieChartPowerSourceController.pageState == PageState.noInternet){
-                          return NoInternetPage(onRetry: () {
-                  
-                            /*------------- Start Api in Electricity---------------*/
-                  
-                            Get.find<PieChartPowerSourceController>().fetchPieChartData();
-                            Get.find<PieChartPowerLoadController>().fetchPieChartLoadData();
-                            Get.find<CategoryWiseLiveDataController>().fetchCategoryWiseLiveData();
-                            Get.find<MachineViewNamesDataController>().fetchMachineViewNamesData();
-                  
-                            Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-                            Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
-                            Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
-                            Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
-                  
-                  
-                            /*------------- Stop Api in Electricity ---------------*/
-                           Get.find<WaterSourceCategoryWiseDataController>().stopApiCallOnScreenChange();
-                            Get.find<WaterLoadCategoryWiseDataController>().stopApiCallOnScreenChange();
-                            Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
-                            Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
-                            Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
-                            Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
-                  
-                          },);
-                        }
-                        return Padding(
+                    child:  Padding(
                           padding:  EdgeInsets.only(left: size.height * k8TextSize,right: size.height * k8TextSize),
                           child: GetBuilder<DashBoardRadioButtonController>(
                             builder: (dController) {
@@ -506,7 +456,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                         children: [
                                                                                           const PowerSummaryChartScreen(),
                                                                                            const WaterSummaryChartScreen(),
-                                                                                          const PowerSummaryChartScreen(),
+                                                                                          const SteamSummaryChartScreen(),
                                                                                         ],
                                                                                       ),
                                                                                     ),
@@ -656,9 +606,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                               );
                             }
                           ),
-                        );
-                      }
-                    ),
+                        )
+
                   ),
                 ),
 

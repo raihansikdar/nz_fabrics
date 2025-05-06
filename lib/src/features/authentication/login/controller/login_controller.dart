@@ -46,7 +46,7 @@ class LoginController extends GetxController with InternetConnectivityCheckMixin
 
         log("==========Token======= Bearer ${responseBody['access_token']}");
         log("==========refresh token======= ${response.body['refresh_token']}");
-        log("==========Token======= ${response.body['role']}");
+       // log("==========Token======= ${response.body['role']}");
 
 
         // DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

@@ -310,7 +310,7 @@ class NetworkCaller{
   static Future<void> gotoLogin() async {
     final result  = await getx.Get.find<RefreshTokenApiController>().getRefreshToken(refreshToken: AuthUtilityController.refreshToken ?? '');
 
-    if(!result){
+    if(!result ){
         await AuthUtilityController.clearInfo();
         AuthUtilityController.accessTokenForApiCall.value = null;
 

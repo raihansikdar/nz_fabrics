@@ -154,7 +154,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset(AssetsPath.drawerIconSVG),
-                    TextComponent(text: " NZ-UMS",fontSize: size.height * k30TextSize,fontFamily: boldFontFamily,),
+                    TextComponent(text: "NZ Fabrics",fontSize: size.height * k30TextSize,fontFamily: boldFontFamily,),
                   ],
                 ),
                 SizedBox(height: size.height * k20TextSize,),
