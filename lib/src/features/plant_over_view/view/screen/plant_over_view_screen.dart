@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:nz_fabrics/src/common_widgets/empty_page_widget/empty_page_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/plant_over_view/controller/layout_controller.dart';
 import 'package:nz_fabrics/src/features/plant_over_view/model/layout_summary_details_model.dart';
@@ -40,6 +41,8 @@ class _PlantOverViewScreenState extends State<PlantOverViewScreen> {
           if( layoutController.isLayoutListInProgress || layoutController.isLayoutSummaryListInProgress){
             return Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12));
 
+          } else if(layoutController.layoutSummaryDetailsList.isEmpty){
+            return EmptyPageWidget(size: size);
           }
           return ListView.separated(
             padding: EdgeInsets.zero,
