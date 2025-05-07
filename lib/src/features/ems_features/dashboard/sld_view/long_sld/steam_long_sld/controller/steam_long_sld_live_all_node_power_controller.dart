@@ -41,9 +41,9 @@ class SteamLongSLDLiveAllNodePowerController extends GetxController with Interne
       if (token != null) {
         fetchLiveAllNodePower();
        // _startPeriodicApiCall();
-      } /*else {
+      } else {
         _stopPeriodicApiCall();
-      }*/
+      }
     });
   }
 

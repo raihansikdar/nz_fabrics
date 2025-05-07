@@ -41,9 +41,9 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
       if (token != null) {
         fetchLiveAllNodePower();
        // _startPeriodicApiCall();
-      } /*else {
+      } else {
         _stopPeriodicApiCall();
-      }*/
+      }
     });
   }
 

@@ -41,9 +41,9 @@ class WaterShortSLDLtProductionVsCapacityController extends GetxController with 
         fetchProductVsCapacityData();
         //_startPeriodicApiCall();
        }
-      //else {
-      //   _stopPeriodicApiCall();
-      // }
+      else {
+        _stopPeriodicApiCall();
+      }
     });
   }
 

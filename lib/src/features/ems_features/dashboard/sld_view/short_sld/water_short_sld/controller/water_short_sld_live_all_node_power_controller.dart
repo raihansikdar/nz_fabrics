@@ -41,9 +41,9 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
       if (token != null) {
         fetchLiveAllNodePower();
        // _startPeriodicApiCall();
-      } /*else {
+      } else {
         _stopPeriodicApiCall();
-      }*/
+      }
     });
   }
 
@@ -136,7 +136,7 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getElectricityLiveAllNodePowerUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLiveAllNodePowerUrl);
 
      // log("getLiveAllNodePowerUrl statusCode ==> ${response.statusCode}");
      // log("getLiveAllNodePowerUrl body ==> ${response.body}");

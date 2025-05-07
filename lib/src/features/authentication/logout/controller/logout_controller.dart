@@ -45,6 +45,7 @@ class LogoutController extends GetxController with InternetConnectivityCheckMixi
         var responseBody = response.body['success'];
         AuthUtilityController.setAccessToken(token: null);
         AuthUtilityController.setUserRole(userRole: null);
+        AuthUtilityController.setRefreshToken(refreshToken: null);
 
 
         log("========== responseBody ======= $responseBody");

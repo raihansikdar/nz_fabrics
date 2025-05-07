@@ -41,9 +41,9 @@ class ElectricityShortSLDLtProductionVsCapacityController extends GetxController
         fetchProductVsCapacityData();
         //_startPeriodicApiCall();
        }
-      //else {
-      //   _stopPeriodicApiCall();
-      // }
+      else {
+        _stopPeriodicApiCall();
+      }
     });
   }
 

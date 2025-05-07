@@ -274,7 +274,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
           _viewPageData = data.map((e) => WaterLongSLDViewPageModel.fromJson(e)).toList();
         });
 
-        GetAllInfoControllersForWater controller = Get.find(); // Get controller instance
+        WaterLongSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
 
         for (var item in _viewPageData) {
           if (item.sourceType == 'BusCoupler' || item.sourceType == 'Loop') {
@@ -289,7 +289,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
     }
   }
 
-  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, GetAllInfoControllersForWater controller) async {
+  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, WaterLongSLDGetAllInfoControllers controller) async {
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
@@ -890,7 +890,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
           }
           break;
         case 'BusCoupler':
-          widget = GetBuilder<GetAllInfoControllersForWater>(
+          widget = GetBuilder<WaterLongSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -907,7 +907,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
           );
           break;
         case 'Loop':
-          widget = GetBuilder<GetAllInfoControllersForWater>(
+          widget = GetBuilder<WaterLongSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -949,7 +949,7 @@ T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
   return null;
 }
 
-class GetAllInfoControllersForWater extends GetxController {
+class WaterLongSLDGetAllInfoControllers extends GetxController {
   var powerMeterMap = <String, double>{}.obs;
 
   void updatePowerMeter(double powerMeter, String nodeName) {

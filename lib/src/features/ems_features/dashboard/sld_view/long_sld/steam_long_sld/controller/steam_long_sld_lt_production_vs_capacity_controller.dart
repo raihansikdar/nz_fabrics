@@ -41,9 +41,9 @@ class SteamLongSLDLtProductionVsCapacityController extends GetxController with I
         fetchProductVsCapacityData();
         //_startPeriodicApiCall();
        }
-      //else {
-      //   _stopPeriodicApiCall();
-      // }
+      else {
+        _stopPeriodicApiCall();
+      }
     });
   }
 

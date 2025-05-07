@@ -205,66 +205,6 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
   }
 
 
-  // Future<void> _fetchLiveData() async {
-  //   if (!mounted) return;
-  //
-  //   final response = await http.get(
-  //     Uri.parse('${Urls.baseUrl}live-all-node-power/?type=electricity'),
-  //     headers: {
-  //       'Authorization': AuthUtilityController.accessToken ?? '',
-  //     },
-  //   );
-  //
-  //   //  debugPrint("live-all-node-power -----> ${response.body}");
-  //
-  //   if (response.statusCode == 200) {
-  //     final data = json.decode(response.body);
-  //     var fetchRequests = _viewPageData
-  //         .where((item) => item.nodeName.isNotEmpty)
-  //         .map((item) async {
-  //       final nodeData = data.firstWhere(
-  //             (node) => node['node'] == item.nodeName,
-  //         orElse: () => null,
-  //       );
-  //
-  //       if (nodeData != null) {
-  //         LiveDataModel liveDataModel = LiveDataModel(
-  //           power: nodeData['power']?.toDouble() ?? 0.0,
-  //           sensorStatus: nodeData['sensor_status'] ?? false,
-  //           sourceType: nodeData['source_type'] ?? '',
-  //           timedate: nodeData['timedate'] != null
-  //               ? DateTime.tryParse(
-  //               nodeData['timedate']) // Parse the string to DateTime
-  //               : null,
-  //         );
-  //
-  //         return {item.id: liveDataModel};
-  //       }
-  //       return null;
-  //     }).toList();
-  //
-  //     final results = await Future.wait(fetchRequests);
-  //
-  //   if(mounted){
-  //     setState(() {
-  //       for (var result in results) {
-  //         if (result != null) {
-  //           _liveData.addAll(result);
-  //         }
-  //       }
-  //       _isLoading = false;
-  //     });
-  //   }
-  //   } else {
-  //     // Handle the error case when the API call fails
-  //     debugPrint('-------Failed to fetch live data------------');
-  //    if(mounted){
-  //      setState(() {
-  //        _isLoading = false;
-  //      });
-  //    }
-  //   }
-  // }
 
   Future<void> _fetchViewPageData() async {
     if (!mounted) return;
@@ -281,7 +221,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
           _viewPageData = data.map((e) => ElectricityLongViewPageModel.fromJson(e)).toList();
         });
 
-        GetAllInfoControllers controller = Get.find(); // Get controller instance
+        ElectricityLongSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
 
         for (var item in _viewPageData) {
           if (item.sourceType == 'BusCoupler' || item.sourceType == 'Loop') {
@@ -296,7 +236,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     }
   }
 
-  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, GetAllInfoControllers controller) async {
+  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, ElectricityLongSLDGetAllInfoControllers controller) async {
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
@@ -920,7 +860,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
           }
           break;
         case 'BusCoupler':
-          widget = GetBuilder<GetAllInfoControllers>(
+          widget = GetBuilder<ElectricityLongSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -937,7 +877,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
           );
           break;
         case 'Loop':
-          widget = GetBuilder<GetAllInfoControllers>(
+          widget = GetBuilder<ElectricityLongSLDGetAllInfoControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -979,7 +919,7 @@ T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
   return null;
 }
 
-class GetAllInfoControllers extends GetxController {
+class ElectricityLongSLDGetAllInfoControllers extends GetxController {
   var powerMeterMap = <String, double>{}.obs;
 
   void updatePowerMeter(double powerMeter, String nodeName) {

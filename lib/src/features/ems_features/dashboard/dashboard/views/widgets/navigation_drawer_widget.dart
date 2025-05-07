@@ -1176,7 +1176,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                       GestureDetector(
                         onTap: (){
                           _showLogoutDialog(context,size);
-                          // AuthUtilityController.clearInfo();
+                         // AuthUtilityController.clearInfo();
                           // Get.to(()=>LoginScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
                         },
                         child: Row(
