@@ -7,6 +7,7 @@ import 'package:nz_fabrics/src/features/authentication/logout/controller/logout_
 import 'package:nz_fabrics/src/features/ems_features/all_live_data/controllers/all_live_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/analysis_pro/views/screens/analysis_pro_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/diesel_generator/views/screens/diesel_generator_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/gas_generator/views/screens/gas_generator_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/get_button_from_all/controller/get_button_from_all_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/views/screens/water_process_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/find_power_value_controller.dart';
@@ -1061,6 +1062,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                                               case "Water":
                                                 imagePath = AssetsPath.waterIconSVG;
                                                 break;
+                                              case "Diesel_Generator":
+                                                imagePath = AssetsPath.dieselGeneratorIconSVG;
+                                                break;
+                                              case "Gas_Generator":
+                                                imagePath = AssetsPath.gasGeneratorIconSVG;
+                                                break;
                                               default:
                                                 imagePath = '';
                                             }
@@ -1071,6 +1078,11 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                                                   Get.to(() => const AnalysisProScreen(buttonName: "Analysis Pro"), transition: Transition.rightToLeft, duration: const Duration(seconds: 1));
                                                 } else if (currentItem == "Water") {
                                                   Get.to(() => const WaterGeneratorScreen(), transition: Transition.rightToLeft, duration: const Duration(seconds: 1));
+                                                }else if (currentItem == "Diesel_Generator") {
+                                                  Get.to(() => const DieselGeneratorScreen(), transition: Transition.rightToLeft, duration: const Duration(seconds: 1));
+                                                }
+                                                else if (currentItem == "Gas_Generator") {
+                                                  Get.to(() => const GasGeneratorButtonScreen(), transition: Transition.rightToLeft, duration: const Duration(seconds: 1));
                                                 }
                                               },
                                               child: Row(

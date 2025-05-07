@@ -57,10 +57,12 @@ class GetButtonFromAllController extends GetxController with InternetConnectivit
       if (response.isSuccess) {
         uniqueDataList.clear();
         final jsonData = (response.body as List<dynamic>);
-        // _getButtonFromGetAllList = jsonData.where((data)=> data['category'] == 'Grid' || data['category'] == 'Diesel_Generator' || data['category'] == "Water")
-        // .map((json)=> GetButtonFromGetAllModel.fromJson(json)).toList();
+        _getButtonFromGetAllList = jsonData.where((data)=> data['category'] == 'Grid' || data['category'] == 'Diesel_Generator' || data['category'] == "Water"
 
-        _getButtonFromGetAllList = jsonData.map((json)=> GetButtonFromGetAllModel.fromJson(json)).toList();
+            || data['category'] == "Sub_Mersible" || data['category'] == "WTP" || data['category'] == 'Gas_Generator' )
+        .map((json)=> GetButtonFromGetAllModel.fromJson(json)).toList();
+
+        //_getButtonFromGetAllList = jsonData.map((json)=> GetButtonFromGetAllModel.fromJson(json)).toList();
 
 
         for(var name in _getButtonFromGetAllList){
