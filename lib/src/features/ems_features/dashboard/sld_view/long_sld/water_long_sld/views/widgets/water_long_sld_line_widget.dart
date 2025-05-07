@@ -71,11 +71,20 @@ class WaterLongSLDAnimatedLinePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = lineWidth
       ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.round; // Added to smooth corners and ensure consistent width
+      ..strokeJoin = StrokeJoin.round;
 
+    // Always draw the base line (pipe)
     canvas.drawPath(path, pipePaint);
 
     if (debugBaseLineOnly) return;
+
+    // Check if flow is available (power is non-zero and not null)
+    var startItem = firstWhereOrNull(viewPageData, (element) => element.id == line.startItemId);
+    var endItem = firstWhereOrNull(viewPageData, (element) => element.id == line.endItemId);
+    double? power = liveData[startItem?.id]?.power ?? liveData[endItem?.id]?.power;
+
+    // Skip bubble animation if power is null or zero (no flow)
+    if (power == null || power == 0) return;
 
     ui.PathMetrics pathMetrics = path.computeMetrics();
     for (var metric in pathMetrics) {
@@ -112,7 +121,6 @@ class WaterLongSLDAnimatedLinePainter extends CustomPainter {
       }
     }
   }
-
   bool checkIfShouldSkipAnimation(WaterLongSLDViewPageModel startItem, WaterLongSLDViewPageModel endItem, Line line) {
     return (startItem.sourceType == "BusCoupler" &&
         (line.startEdgeIndex == 2 || line.endEdgeIndex == 2)) ||

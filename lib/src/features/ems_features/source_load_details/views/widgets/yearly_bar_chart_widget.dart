@@ -121,7 +121,7 @@ class YearlyBarChartWidget extends StatelessWidget {
                 dataSource: waterChartData,
                 xValueMapper: (WaterChartData data, _) => data.month,
                 yValueMapper: (WaterChartData data, _) => data.instantFlow,
-                name: 'Water Flow(m³/s)',
+                name: 'Water Flow(m³/h)',
                 width: 0.6,
                 spacing: 0.2,
               ),

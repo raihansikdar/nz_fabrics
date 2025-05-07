@@ -89,7 +89,7 @@ class DailyLineChartWidget extends StatelessWidget {
                     borderColor: AppColors.secondaryTextColor,
                     borderWidth: 2,
                    // dashArray: <double>[4, 5],
-                    text: "Max Power (${machineMaxPowerModel?.machineMaxPower ?? 0.00})",
+                    text: "Max Water (${machineMaxPowerModel?.machineMaxPower ?? 0.00})",
                     textAngle: 0,
                     horizontalTextAlignment: TextAnchor.end,
                     verticalTextAlignment: TextAnchor.start,
@@ -111,7 +111,7 @@ class DailyLineChartWidget extends StatelessWidget {
 
                   },
                   yValueMapper: (WaterDailyDataModel data, _) => data.instantFlow ?? 0.0,
-                  name: 'Water Flow(m³/s)',
+                  name: 'Water Flow(m³/h)',
                 ),
               ] : screenName == 'naturalGasScreen' ?  <CartesianSeries>[
                 SplineSeries<NaturalGasDailyDataModel, DateTime>(

@@ -399,12 +399,19 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // Handle empty or invalid viewPageData
-            if (_viewPageData.isEmpty) {
-              return const Center(
-                child: Text('No data available'),
+            if(_isLoading){
+              return Center(
+                child: SpinKitFadingCircle(
+                  color: AppColors.primaryColor,
+                  size: 50.0,
+                ),
               );
             }
+            // else if (_viewPageData.isEmpty) {
+            //   return const Center(
+            //     child: Text('No data available'),
+            //   );
+            // }
 
             // Calculate content dimensions with validation
             double minX = _getMinX();
@@ -647,7 +654,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
             value: power,
             // textColor: item.textColor,
             // textSize: item.textSize,
-            borderColor: item.borderColor ?? '#FF0000',
+            borderColor: item.color ?? '#FF0000',
             icon: FontAwesomeIcons.bolt,
             text: item.nodeName,
             width: item.width.toDouble(),

@@ -195,7 +195,7 @@ class _MonthlyBarChartWidgetState extends State<MonthlyBarChartWidget> with Auto
             dataSource: chartData,
             xValueMapper: (data, _) => data.date,
             yValueMapper: (data, _) => widget.viewName == 'powerView' ? data.instantFlow : data.instantCost,
-            name: widget.viewName == 'powerView' ? 'Water Flow(m³/s)' : 'Cost (BDT)',
+            name: widget.viewName == 'powerView' ? 'Water Flow(m³/h)' : 'Cost (BDT)',
           ),
         ];
       } else if (widget.screenName == 'naturalGasScreen') {
