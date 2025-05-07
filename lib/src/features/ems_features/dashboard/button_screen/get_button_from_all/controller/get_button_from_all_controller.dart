@@ -22,7 +22,7 @@ class GetButtonFromAllController extends GetxController with InternetConnectivit
   String get errorMessage => _errorMessage;
   List<GetButtonFromGetAllModel> get getButtonFromGetAllList => _getButtonFromGetAllList;
 
-  Set uniqueData = {};
+ // Set uniqueData = {};
   List<String> uniqueDataList = [];
 
 
@@ -46,27 +46,41 @@ class GetButtonFromAllController extends GetxController with InternetConnectivit
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getAllInfoUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getAllButtonUrl);
 
       log("fetchButtonFromAllData statusCode ==> ${response.statusCode}");
-     //  log("fetchButtonFromAllData body ==> ${response.body}");
+       log("fetchButtonFromAllData body ==> ${response.body}");
 
       _isGetButtonFromGetAll = false;
       update();
 
       if (response.isSuccess) {
+        uniqueDataList.clear();
         final jsonData = (response.body as List<dynamic>);
-        _getButtonFromGetAllList = jsonData.where((data)=> data['category'] == 'Diesel_Generator' || data['category'] == "water")
-        .map((json)=> GetButtonFromGetAllModel.fromJson(json)).toList();
+        // _getButtonFromGetAllList = jsonData.where((data)=> data['category'] == 'Grid' || data['category'] == 'Diesel_Generator' || data['category'] == "Water")
+        // .map((json)=> GetButtonFromGetAllModel.fromJson(json)).toList();
+
+        _getButtonFromGetAllList = jsonData.map((json)=> GetButtonFromGetAllModel.fromJson(json)).toList();
+
 
         for(var name in _getButtonFromGetAllList){
-         // log(name.toString());
-          uniqueData.add(name.category);
+         if(name.category == "Grid"){
+           uniqueDataList.add('Analysis Pro');
+         }else if(name.category  == "Water" || name.category  == "WTP" || name.category  == "Sub_Mersible"){
+           if(!uniqueDataList.contains("Water")){
+             uniqueDataList.add('Water');
+           }
+
+         }
+         else{
+           uniqueDataList.add(name.category ?? '');
+         }
+
         }
-        for(var name in uniqueData){
-          uniqueDataList.add(name);
-         //log(name.toString());
-        }
+        // for(var name in uniqueData){
+        //   uniqueDataList.add(name);
+        //  //log(name.toString());
+        // }
         update();
         return true;
 

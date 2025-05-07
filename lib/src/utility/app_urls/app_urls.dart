@@ -20,6 +20,7 @@ class Urls{
 
 /*----------------- get api call --------------------*/
  static String getAllInfoUrl = "$_baseUrl/get-all-info/";
+ static String getAllButtonUrl = "$_baseUrl/api/source-info-categories/";
 
  static String getSourceCategoryWiseLiveDataUrl = "$_baseUrl/api/get-source-categorywise-live-data/";
  static String getLoadMachineWiseLiveDataUrl = "$_baseUrl/api/get-load-machinewise-live-data/";

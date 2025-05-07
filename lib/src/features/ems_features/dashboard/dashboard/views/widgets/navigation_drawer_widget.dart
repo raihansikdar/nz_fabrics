@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/authentication/login/views/screen/login_screen.dart';
@@ -104,7 +106,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   List<Button>buttonList = [
     Button(AssetsPath.analysisProIconSVG,"Analysis Pro"),
-    Button(AssetsPath.dieselGeneratorIconSVG,"Diesel Generator "),
+    Button(AssetsPath.dieselGeneratorIconSVG,"Water"),
   ];
 
 
@@ -1040,44 +1042,57 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                                     padding: EdgeInsets.only(top: size.height * k16TextSize),
                                     child: GetBuilder<GetButtonFromAllController>(
                                       builder: (getButtonFromAllController) {
+
+                                        log("------> ${getButtonFromAllController.uniqueDataList.length}");
+
                                         return ListView.separated(
                                           padding: EdgeInsets.only(left: size.height * k30TextSize),
                                           shrinkWrap: true,
-                                          itemCount: 1 + getButtonFromAllController.uniqueDataList.length,
+                                          itemCount: getButtonFromAllController.uniqueDataList.length,
                                           controller: analyticsDataController,
-                                          itemBuilder: (context,index){
+                                          itemBuilder: (context, index) {
+                                            String currentItem = getButtonFromAllController.uniqueDataList[index];
+
+                                            String imagePath;
+                                            switch (currentItem) {
+                                              case "Analysis Pro":
+                                                imagePath = AssetsPath.analysisProIconSVG;
+                                                break;
+                                              case "Water":
+                                                imagePath = AssetsPath.waterIconSVG;
+                                                break;
+                                              default:
+                                                imagePath = '';
+                                            }
+
                                             return GestureDetector(
-                                              onTap: (){
-                                                if(index == 0){
-                                                  //   Get.to(()=> const SolarSummaryScreen());
-                                                  Get.to(()=> const AnalysisProScreen(buttonName: "Analysis Pro"),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
-                                                  //  Navigator.pop(context);
+                                              onTap: () {
+                                                if (currentItem == "Analysis Pro") {
+                                                  Get.to(() => const AnalysisProScreen(buttonName: "Analysis Pro"), transition: Transition.rightToLeft, duration: const Duration(seconds: 1));
+                                                } else if (currentItem == "Water") {
+                                                  Get.to(() => const WaterGeneratorScreen(), transition: Transition.rightToLeft, duration: const Duration(seconds: 1));
                                                 }
-                                                else if(getButtonFromAllController.uniqueData.contains("Diesel_Generator")){
-                                                  Get.to(()=> const DieselGeneratorScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
-
-
-                                                }else if(getButtonFromAllController.uniqueData.contains("water")){
-                                                  Get.to(()=>  const WaterGeneratorScreen(),transition: Transition.rightToLeft,duration: const Duration(seconds: 1));
-                                                }else{
-                                                  const SizedBox();
-                                                }
-
                                               },
                                               child: Row(
                                                 children: [
-                                                  SvgPicture.asset(buttonList[index].image ?? '',height: size.height * k25TextSize),
-                                                  SizedBox(width:  size.width * k40TextSize),
-                                                  Expanded(child: TextComponent(
-                                                    text: buttonList[index].buttonName,
-                                                    overflow: TextOverflow.ellipsis,maxLines: 1,
-
-                                                  ))
+                                                  SvgPicture.asset(
+                                                    imagePath,
+                                                    height: size.height * k25TextSize,
+                                                  ),
+                                                  SizedBox(width: size.width * k40TextSize),
+                                                  Expanded(
+                                                    child: TextComponent(
+                                                      text: currentItem,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                             );
-
-                                          }, separatorBuilder: (context,index) => SizedBox(height: size.height * k16TextSize,), );
+                                          },
+                                          separatorBuilder: (context, index) => SizedBox(height: size.height * k16TextSize),
+                                        );
                                       }
                                     ),
                                   ),
