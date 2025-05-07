@@ -1,8 +1,10 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_color_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/controllers/custom_water_button_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
+import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,9 +37,9 @@ class _CustomWaterListWidgetState extends State<CustomWaterListWidget> {
           return Padding(
             padding: EdgeInsets.only(top: widget.size.height * 0.20),
             child: Center(
-              child: Lottie.asset(
-                AssetsPath.loadingJson,
-                height: widget.size.height * 0.12,
+              child: SpinKitFadingCircle(
+                color: AppColors.primaryColor,
+                size: 50.0,
               ),
             ),
           );

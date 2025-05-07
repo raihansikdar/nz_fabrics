@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_color_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/controllers/daily_water_button_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
+import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
 class DailyWaterListWidget extends StatelessWidget {
@@ -18,7 +20,12 @@ class DailyWaterListWidget extends StatelessWidget {
     if(controller.isDailyWaterDataInProgress){
       return  Padding(
         padding:  EdgeInsets.only(top:size.height * 0.20),
-        child: Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12)),
+        child: Center(
+          child: SpinKitFadingCircle(
+            color: AppColors.primaryColor,
+            size: 50.0,
+          ),
+        ),
       );
 
     }

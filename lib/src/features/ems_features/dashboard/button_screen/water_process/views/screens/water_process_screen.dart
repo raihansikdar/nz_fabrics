@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/controllers/custom_water_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/controllers/daily_water_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/controllers/monthly_water_button_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/controllers/yearly_water_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/views/widgets/custom_water_list_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/views/widgets/daily_water_list_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/views/widgets/monthly_water_generator_list_widget.dart';
@@ -30,6 +32,8 @@ class _WaterGeneratorScreenState extends State<WaterGeneratorScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_){
       Get.find<DailyWaterButtonController>().fetchDailyWaterData();
       Get.find <MonthlyWaterButtonController>().fetchMonthlyWaterData(selectedMonth: selectedMonth.toString(), selectedYear: selectedYear.toString());
+      Get.find <YearlyWaterButtonController>().fetchYearlyWaterData(selectedYearDate: selectedYear);
+      Get.find  <CustomWaterButtonController>().fetchCustomWaterData(fromDate:  Get.find  <CustomWaterButtonController>().fromDateTEController.text, toDate:  Get.find  <CustomWaterButtonController>().toDateTEController.text);
 
 
       Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
