@@ -176,7 +176,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                         primary: false,
                                         itemCount: controller.isLoading
                                             ? 4
-                                            : controller.waterSourceCategoryWiseLiveData.data!.isEmpty || controller.hasError
+                                            : controller.waterSourceCategoryWiseLiveData.data!.isEmpty || controller.waterSourceCategoryWiseLiveData.data == null || controller.hasError
                                             ? 1
                                             : controller.waterSourceCategoryWiseLiveData.data!.length,
                                         itemBuilder: (context,index){
