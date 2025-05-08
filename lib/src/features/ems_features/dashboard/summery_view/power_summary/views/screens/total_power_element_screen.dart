@@ -91,7 +91,7 @@ class _TotalPowerElementScreenState extends State<TotalPowerElementScreen> {
                               PageRouteBuilder(
                                 pageBuilder: (context, animation, secondaryAnimation) => PowerAndEnergyElementDetailsScreen(
                                   elementName: categoryData.node ?? '',
-                                  gaugeValue: categoryData.instantFlow ?? 0.00,
+                                  gaugeValue: categoryData.power ?? 0.00,
                                   gaugeUnit: 'kW',
                                   elementCategory: 'Power',
                                   solarCategory: widget.categoryName,
@@ -202,7 +202,7 @@ class _TotalPowerElementScreenState extends State<TotalPowerElementScreen> {
                                                   Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      TextComponent(text: " ${categoryData.instantFlow?.toStringAsFixed(2) ?? '0.0'} kW",),
+                                                      TextComponent(text: " ${categoryData.power?.toStringAsFixed(2) ?? '0.0'} kW",),
                                                       TextComponent(text: " ${categoryData.netEnergy?.toStringAsFixed(2) ?? '0.00'} kWh"),
                                                     ],
                                                   )
