@@ -65,7 +65,7 @@ class WaterLongSLDCircleWithIcon extends StatelessWidget {
                   // ),
                   Flexible(
                     child: AutoSizeText(
-                      '${value.abs().toStringAsFixed(2)} $unit', // Use abs() to remove the minus sign
+                      value == 0 || value == -0.0 ? '0.00 $unit' : '${value.toStringAsFixed(2)} $unit',
                       style: const TextStyle(
                         color: Colors.black,
                       ),

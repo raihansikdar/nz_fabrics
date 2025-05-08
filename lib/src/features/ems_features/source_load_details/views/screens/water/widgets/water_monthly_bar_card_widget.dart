@@ -195,7 +195,7 @@ class _WaterMonthlyDetailsBarChartWidgetState extends State<WaterMonthlyDetailsB
             dataSource: chartData,
             xValueMapper: (data, _) => data.date,
             yValueMapper: (data, _) => widget.viewName == 'powerView' ? data.instantFlow : data.instantCost,
-            name: widget.viewName == 'powerView' ? 'Water Flow(m³/h)' : 'Cost (BDT)',
+            name: widget.viewName == 'powerView' ? 'Water Flow(m³)' : 'Cost (BDT)',
           ),
         ];
       } else if (widget.screenName == 'naturalGasScreen') {

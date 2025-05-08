@@ -594,7 +594,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
             value: power,
             // textColor: item.textColor,
             // textSize: item.textSize,
-            borderColor: item.borderColor ?? '#FF0000',
+            borderColor: item.color ?? '#FF0000',
             icon: FontAwesomeIcons.bolt,
             text: item.nodeName,
             width: item.width.toDouble(),
@@ -698,7 +698,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                 }
               },
               unit: 'kW',
-              borderColor: item.borderColor ?? '#FF0000',
+              borderColor: item.color ?? '#FF0000',
               percentage: nodeData.percentage != null
                   ? nodeData.percentage.toStringAsFixed(2)
                   : "0.00",

@@ -17,6 +17,7 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/s
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_monthly_bar_card_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_run_time_information_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_table_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_yearly_bar_chart_widget.dart';
 
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
@@ -26,7 +27,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../power_and_energy/widgets/yearly_bar_chart_widget.dart';
 
 class PowerViewWaterElementDetailsScreen extends StatefulWidget {
   final String elementName;
@@ -320,7 +320,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                             children: [
                                               SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
                                               SizedBox(width: size.width * k20TextSize,),
-                                              Expanded(child: TextComponent(text: "This month ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                              Expanded(child: TextComponent(text: "This month ${widget.elementName} Water Flow (m³)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
                                             ],
                                           ),
                                           Positioned(
@@ -407,7 +407,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                             children: [
                                               SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
                                               SizedBox(width: size.width * k20TextSize,),
-                                              Expanded(child: TextComponent(text: "This year ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                              Expanded(child: TextComponent(text: "This year ${widget.elementName} Water Flow (m³)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
                                             ],
                                           ),
                                           Positioned(
@@ -441,7 +441,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                               }
                                               return SizedBox(
                                                   height: size.height * .28,
-                                                  child: YearlyBarChartWidget(elementName: widget.elementName,screenName: 'waterScreen', waterYearlyDataModelList: waterYearlyDataController.yearlyDataList, viewName: 'powerView',));
+                                                  child: WaterYearlyBarChartWidget(elementName: widget.elementName,screenName: 'waterScreen', waterYearlyDataModelList: waterYearlyDataController.yearlyDataList, viewName: 'powerView',));
                                             }
                                         ),
                                         SizedBox(height: size.height * k20TextSize),

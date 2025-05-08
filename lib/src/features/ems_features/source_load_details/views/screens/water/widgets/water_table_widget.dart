@@ -105,12 +105,12 @@ class _WaterSpecificNodeDataTableState extends State<WaterSpecificNodeDataTable>
         ),
       ),
       GridColumn(
-        columnName: 'energy',
+        columnName: 'volume',
         label: Container(
           padding: const EdgeInsets.all(8.0),
           alignment: Alignment.center,
           child: const Text(
-            'Energy',
+            'Volume',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: AppColors.whiteTextColor,
@@ -201,9 +201,9 @@ class NodeDataSource extends DataGridSource {
           value: _formatDate(dataItem.date),
         ),
         DataGridCell<String>(
-          columnName: 'energy',
+          columnName: 'volume',
           value: dataItem.energy != null
-              ? '${NumberFormat("#,##0.00").format(dataItem.energy)} kWh'
+              ? '${NumberFormat("#,##0.00").format(dataItem.energy)} m³'
               : 'N/A',
         ),
         DataGridCell<String>(
@@ -246,8 +246,8 @@ class NodeDataSource extends DataGridSource {
     List<DataGridCell> totalCells = [
       const DataGridCell<String>(columnName: 'date', value: 'Total'),
       DataGridCell<String>(
-          columnName: 'energy',
-          value: '${NumberFormat("#,##0.00").format(totalEnergy)} kWh'),
+          columnName: 'volume',
+          value: '${NumberFormat("#,##0.00").format(totalEnergy)} m³'),
       DataGridCell<String>(
           columnName: 'runtime', value: _formatRuntime(totalRuntime)),
     ];
@@ -320,7 +320,7 @@ class NodeData {
   final String? date;
   final String? node;
   final String? fuel;
-  final dynamic energy;
+  final dynamic volume;
   final dynamic cost;
   final int? runtime;
   final String? nodeType;
@@ -333,7 +333,7 @@ class NodeData {
     this.date,
     this.node,
     this.fuel,
-    this.energy,
+    this.volume,
     this.cost,
     this.runtime,
     this.nodeType,
@@ -348,8 +348,8 @@ class NodeData {
       date: json['date'],
       node: json['node'],
       fuel: json['fuel'],
-      energy:
-      json['energy'] != null ? double.parse(json['energy'].toString()) : null,
+      volume:
+      json['volume'] != null ? double.parse(json['volume'].toString()) : null,
       cost: json['cost'] != null ? double.parse(json['cost'].toString()) : null,
       runtime: json['runtime'],
       nodeType: json['node_type'],
