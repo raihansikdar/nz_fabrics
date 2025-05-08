@@ -53,13 +53,16 @@ class _WaterShortSldState extends State<WaterShortSld>
   List<WaterShortViewPageModel> _viewPageData = [];
   Map<dynamic, WaterLiveDataModel> _liveData = {};
   WaterShortLoopAndBusCouplerModel loopAndBusCouplerModel = WaterShortLoopAndBusCouplerModel();
-  bool _isLoading = true;
+  bool _isLoadingCachedData = true;
+  bool _isLoadingViewPageData = true;
+  bool _isLoadingLiveData = true;
+  bool _isLoadingPFData = true;
   late AnimationController _controller;
   late ui.Image _mouseIcon;
 
   //Timer? _refreshTimer;
   Timer? _timer;
-
+  bool get _isLoading => _isLoadingCachedData || _isLoadingViewPageData || _isLoadingLiveData || _isLoadingPFData;
   @override
   void initState() {
     _controller = AnimationController(
@@ -93,7 +96,7 @@ class _WaterShortSldState extends State<WaterShortSld>
         _viewPageData = (json.decode(cachedViewPageData) as List)
             .map((data) => WaterShortViewPageModel.fromJson(data))
             .toList();
-        _isLoading = false;
+
       });
     }
 
@@ -105,6 +108,12 @@ class _WaterShortSldState extends State<WaterShortSld>
             .decode(cachedLiveData)
             .map((id, data) =>
             MapEntry(int.parse(id), WaterLiveDataModel.fromJson(data))));
+      });
+    }
+    if (mounted) {
+      setState(() {
+        _isLoadingCachedData = false;
+        debugPrint('Cached data loaded, _isLoadingCachedData: $_isLoadingCachedData');
       });
     }
   }
@@ -184,14 +193,17 @@ class _WaterShortSldState extends State<WaterShortSld>
             _liveData.addAll(result);
           }
         }
-        _isLoading = false;
+        _isLoadingLiveData = false;
+        debugPrint('Live data fetched, _isLoadingLiveData: $_isLoadingLiveData');
+
       });
     }
     } else {
       // Handle the error case when the API call fails
       debugPrint('-------Failed to fetch live data------------');
       setState(() {
-        _isLoading = false;
+        _isLoadingLiveData = false;
+        debugPrint('Live data fetch failed, _isLoadingLiveData: $_isLoadingLiveData');
       });
     }
   }
@@ -209,6 +221,8 @@ class _WaterShortSldState extends State<WaterShortSld>
 
         setState(() {
           _viewPageData = data.map((e) => WaterShortViewPageModel.fromJson(e)).toList();
+          _isLoadingViewPageData = false;
+          debugPrint('View page data fetched, _isLoadingViewPageData: $_isLoadingViewPageData');
         });
 
         WaterShortSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
@@ -223,6 +237,12 @@ class _WaterShortSldState extends State<WaterShortSld>
       }
     } catch (e) {
       debugPrint('Error fetching view page data: $e');
+      if (mounted) {
+        setState(() {
+          _isLoadingViewPageData = false;
+          debugPrint('View page data fetch failed, _isLoadingViewPageData: $_isLoadingViewPageData');
+        });
+      }
     }
   }
 
@@ -262,10 +282,18 @@ class _WaterShortSldState extends State<WaterShortSld>
      if(mounted){
        setState(() {
          _pfData = List<Map<String, dynamic>>.from(json.decode(response.body));
+         _isLoadingPFData = false;
+         debugPrint('PF data fetched, _isLoadingPFData: $_isLoadingPFData');
        });
      }
     } else {
       debugPrint('Failed to fetch PF data');
+      if (mounted) {
+        setState(() {
+          _isLoadingPFData = false;
+          debugPrint('PF data fetch failed, _isLoadingPFData: $_isLoadingPFData');
+        });
+      }
     }
   }
 

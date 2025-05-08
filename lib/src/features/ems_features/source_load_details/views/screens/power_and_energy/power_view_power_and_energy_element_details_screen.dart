@@ -16,7 +16,7 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/w
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/filter_chart_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/gauge_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/monthly_bar_card_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/power_date_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/water_details_date_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/run_time_information_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/table_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/yearly_bar_chart_widget.dart';
@@ -219,7 +219,7 @@ class _PowerViewPowerAndEnergyElementDetailsScreenState extends State<PowerViewP
                             horizontal: size.height * k16TextSize,
                             //vertical: size.height * k8TextSize,
                           ),
-                          child: PowerDateWidget(nodeName: widget.elementName,),
+                          child: WaterDetailsDateWidget(nodeName: widget.elementName,),
                         ),
         
                         Padding(

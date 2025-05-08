@@ -1,6 +1,8 @@
 import 'package:nz_fabrics/src/common_widgets/custom_box_shadow_container_widget.dart';
+import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_shimmer_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/filter_specific_node_data/water_filter_specific_node_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/power_and_energy/get_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_daily_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_monthly_data_controller.dart';
@@ -13,6 +15,8 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/w
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/gauge_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/monthly_bar_card_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/run_time_information_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/table_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/water_details_date_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/yearly_bar_chart_widget.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
@@ -116,332 +120,385 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                 ),
               ),
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: size.height * k40TextSize),
+                child: GetBuilder<WaterFilterSpecificNodeDataController>(
+                  builder: (waterFilterSpecificNodeDataController) {
+                    return Column(
+                      children: [
+                        SizedBox(height: size.height * k40TextSize),
 
-                    Padding(
-                      padding:  EdgeInsets.all( size.height * k16TextSize),
-                      child: CustomBoxShadowContainer(
-                        height:  size.height * 0.15,
-                        size: size,
-                        child: Padding(
-                          padding:  EdgeInsets.all(size.height * k16TextSize),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                        Padding(
+                          padding:  EdgeInsets.all( size.height * k16TextSize),
+                          child: CustomBoxShadowContainer(
+                            height:  size.height * 0.15,
+                            size: size,
+                            child: Padding(
+                              padding:  EdgeInsets.all(size.height * k16TextSize),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        TextComponent(text: "Live ${widget.elementCategory} ${widget.elementName}",color: AppColors.secondaryTextColor,maxLines: 1,),
+                                        SizedBox(height: size.height * k8TextSize),
+                                        TextComponent(text: "${widget.gaugeValue.toStringAsFixed(2)} ${widget.gaugeUnit}",color: AppColors.primaryTextColor,fontSize: size.height * k24TextSize,fontFamily: boldFontFamily,),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: size.width * k20TextSize),
+                                  Expanded(
+                                    child: GetBuilder<GetLiveDataController>(
+                                      builder: (getLiveDataController) {
+                                        return SizedBox(
+                                            height: size.height * 0.400,
+                                            width: size.width * 0.400,
+                                            child:  GaugeWidget(gaugeValue: widget.gaugeValue, gaugeMaxValue: getLiveDataController.getLiveDataModel.maxMeterValue ?? 2000,));
+                                      }
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        GetBuilder<WaterTodayRuntimeDataController>(
+                          builder: (waterTodayRuntimeDataController) {
+                            final thisDayController = Get.find<WaterThisDayDataController>();
+                            final thisMonthController = Get.find<WaterThisMonthDataController>();
+                            final thisYearController = Get.find<WaterThisYearDataController>();
+
+                            return RunTimeInformationWidget(
+                              viewName: "Water",
+                              elementCategory: widget.elementCategory,
+                              size: size,
+                              elementName: widget.elementName,
+                              todayRuntime: waterTodayRuntimeDataController.todayRunTimeData.runtimeToday.toString(),
+                              thisDay: thisDayController.thisDayData.thisDay ?? 0.00,
+                              thisMonth: thisMonthController.thisMonthData.isNotEmpty ? thisMonthController.thisMonthData[0].instantFlow ?? 0.00 : 0.00,
+                              thisYear: thisYearController.thisYearData.volume ?? 0.00,
+                            );
+                          }
+                        ),
+
+
+
+                        SizedBox(height: size.height * k8TextSize),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: size.height * k16TextSize,
+                            //vertical: size.height * k8TextSize,
+                          ),
+                          child: WaterDetailsDateWidget(nodeName: widget.elementName,),
+                        ),
+                        SizedBox(height: size.height * k8TextSize),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: size.height * k16TextSize,
+                            vertical: size.height * k8TextSize,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.circular(size.height * k16TextSize),
+                              border: Border.all(color: AppColors.containerBorderColor, width: 1.0),
+                            ),
+                            child: ClipRRect(
+                              borderRadius:
+                              BorderRadius.circular(size.height * k16TextSize),
+                              child: Theme(
+                                data: Theme.of(context).copyWith(
+                                  dividerColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  splashColor: Colors.transparent,
+                                  expansionTileTheme: const ExpansionTileThemeData(
+                                    backgroundColor: Colors.transparent,
+                                    collapsedBackgroundColor: Colors.transparent,
+                                  ),
+                                ),
+                                child: ExpansionTile(
+                                  backgroundColor: Colors.transparent,
+                                  initiallyExpanded: true,
+                                  showTrailingIcon: false,
+                                  title: Stack(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(AssetsPath.lineChartIconSVG,  height: size.height * k25TextSize,),
+                                          SizedBox(width: size.width * k20TextSize,),
+                                          Expanded(child: TextComponent(text: "${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                        ],
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        top: 0,
+                                        child: RotationTransition(
+                                          turns: _animation1,
+                                          child: SvgPicture.asset(
+                                            AssetsPath.upArrowIconSVG,
+                                            height: size.height * k25TextSize,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   children: [
-                                    TextComponent(text: "Live ${widget.elementCategory} ${widget.elementName}",color: AppColors.secondaryTextColor,maxLines: 1,),
-                                    SizedBox(height: size.height * k8TextSize),
-                                    TextComponent(text: "${widget.gaugeValue.toStringAsFixed(2)} ${widget.gaugeUnit}",color: AppColors.primaryTextColor,fontSize: size.height * k24TextSize,fontFamily: boldFontFamily,),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: size.width * k40TextSize),
+                                      child: const Divider(thickness: 2),
+                                    ),
+                                    GetBuilder<WaterDailyDataController>(
+                                        builder: (waterDailyDataController) {
+                                          if(waterDailyDataController.isLoading){
+                                            return CustomShimmerWidget(height:  size.height * .28, width: double.infinity);
+                                          }else if(!waterDailyDataController.isConnected){
+                                            return Lottie.asset(AssetsPath.noInternetJson, height: size.height * 0.23);
+                                          }
+                                          else if(waterDailyDataController.hasError){
+                                            return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
+                                          }
+                                          return SizedBox(
+                                              height: size.height * .28,
+                                              child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',));
+                                        }
+                                    ),
+                                    SizedBox(height: size.height * k20TextSize),
                                   ],
+                                  onExpansionChanged: (bool expanded) {
+                                    if (expanded) {
+                                      _controller1.reverse();
+                                    } else {
+                                      _controller1.forward();
+                                    }
+                                  },
                                 ),
-                              ),
-                              SizedBox(width: size.width * k20TextSize),
-                              Expanded(
-                                child: GetBuilder<GetLiveDataController>(
-                                  builder: (getLiveDataController) {
-                                    return SizedBox(
-                                        height: size.height * 0.400,
-                                        width: size.width * 0.400,
-                                        child:  GaugeWidget(gaugeValue: widget.gaugeValue, gaugeMaxValue: getLiveDataController.getLiveDataModel.maxMeterValue ?? 2000,));
-                                  }
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    GetBuilder<WaterTodayRuntimeDataController>(
-                      builder: (waterTodayRuntimeDataController) {
-                        final thisDayController = Get.find<WaterThisDayDataController>();
-                        final thisMonthController = Get.find<WaterThisMonthDataController>();
-                        final thisYearController = Get.find<WaterThisYearDataController>();
-
-                        return RunTimeInformationWidget(
-                          viewName: "Water",
-                          elementCategory: widget.elementCategory,
-                          size: size,
-                          elementName: widget.elementName,
-                          todayRuntime: waterTodayRuntimeDataController.todayRunTimeData.runtimeToday.toString(),
-                          thisDay: thisDayController.thisDayData.thisDay ?? 0.00,
-                          thisMonth: thisMonthController.thisMonthData.isNotEmpty ? thisMonthController.thisMonthData[0].instantFlow ?? 0.00 : 0.00,
-                          thisYear: thisYearController.thisYearData.volume ?? 0.00,
-                        );
-                      }
-                    ),
-
-
-
-                    SizedBox(height: size.height * k8TextSize),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.height * k16TextSize,
-                        vertical: size.height * k8TextSize,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(size.height * k16TextSize),
-                          border: Border.all(color: AppColors.containerBorderColor, width: 1.0),
-                        ),
-                        child: ClipRRect(
-                          borderRadius:
-                          BorderRadius.circular(size.height * k16TextSize),
-                          child: Theme(
-                            data: Theme.of(context).copyWith(
-                              dividerColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              expansionTileTheme: const ExpansionTileThemeData(
-                                backgroundColor: Colors.transparent,
-                                collapsedBackgroundColor: Colors.transparent,
                               ),
                             ),
-                            child: ExpansionTile(
-                              backgroundColor: Colors.transparent,
-                              initiallyExpanded: true,
-                              showTrailingIcon: false,
-                              title: Stack(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(AssetsPath.lineChartIconSVG,  height: size.height * k25TextSize,),
-                                      SizedBox(width: size.width * k20TextSize,),
-                                      Expanded(child: TextComponent(text: "${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
-                                    ],
+                          ),
+                        ),
+                        SizedBox(height: size.height * k8TextSize),
+                        waterFilterSpecificNodeDataController.selectedButton == 1 ?
+                        Column(
+                          children: [
+
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: size.height * k16TextSize, vertical: size.height * k8TextSize,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(size.height * k16TextSize),
+                                  border: Border.all(color: AppColors.containerBorderColor, width: 1.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius:
+                                  BorderRadius.circular(size.height * k16TextSize),
+                                  child: Theme(
+                                    data: Theme.of(context).copyWith(
+                                      dividerColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      expansionTileTheme: const ExpansionTileThemeData(
+                                        backgroundColor: Colors.transparent,
+                                        collapsedBackgroundColor: Colors.transparent,
+                                      ),
+                                    ),
+                                    child: ExpansionTile(
+                                      backgroundColor: Colors.transparent,
+                                      initiallyExpanded: true,
+                                      showTrailingIcon: false,
+                                      title: Stack(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
+                                              SizedBox(width: size.width * k20TextSize,),
+                                              Expanded(child: TextComponent(text: "This month ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                            ],
+                                          ),
+                                          Positioned(
+                                            right: 0,
+                                            top: 0,
+                                            child: RotationTransition(
+                                              turns: _animation2,
+                                              child: SvgPicture.asset(
+                                                AssetsPath.upArrowIconSVG,
+                                                height: size.height * k25TextSize,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: size.width * k40TextSize),
+                                          child: const Divider(thickness: 2),
+                                        ),
+                                        GetBuilder<WaterMonthlyDataController>(
+                                            builder: (waterMonthlyDataController) {
+                                              if(waterMonthlyDataController.isLoading){
+                                                return CustomShimmerWidget(height:  size.height * .28, width: double.infinity);
+                                              }else if(!waterMonthlyDataController.isConnected){
+                                                return Lottie.asset(AssetsPath.noInternetJson, height: size.height * 0.23);
+                                              }
+                                              else if(waterMonthlyDataController.hasError){
+                                                return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
+                                              }
+                                              return SizedBox(
+                                                  height: size.height * .28,
+                                                  child: MonthlyBarChartWidget(elementName: widget.elementName,solarCategory: 'water',viewName: 'powerView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
+                                            }
+                                        ),
+                                        SizedBox(height: size.height * k20TextSize),
+                                      ],
+                                      onExpansionChanged: (bool expanded) {
+                                        if (expanded) {
+                                          _controller2.reverse();
+                                        } else {
+                                          _controller2.forward();
+                                        }
+                                      },
+                                    ),
                                   ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: RotationTransition(
-                                      turns: _animation1,
-                                      child: SvgPicture.asset(
-                                        AssetsPath.upArrowIconSVG,
-                                        height: size.height * k25TextSize,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: size.height * k8TextSize),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: size.height * k16TextSize,
+                                vertical: size.height * k8TextSize,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(size.height * k16TextSize),
+                                  border: Border.all(color: AppColors.containerBorderColor, width: 1.0),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius:
+                                  BorderRadius.circular(size.height * k16TextSize),
+                                  child: Theme(
+                                    data: Theme.of(context).copyWith(
+                                      dividerColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      splashColor: Colors.transparent,
+                                      expansionTileTheme: const ExpansionTileThemeData(
+                                        backgroundColor: Colors.transparent,
+                                        collapsedBackgroundColor: Colors.transparent,
+                                      ),
+                                    ),
+                                    child: ExpansionTile(
+                                      backgroundColor: Colors.transparent,
+                                      initiallyExpanded: true,
+                                      showTrailingIcon: false,
+                                      title: Stack(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
+                                              SizedBox(width: size.width * k20TextSize,),
+                                              Expanded(child: TextComponent(text: "This year ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
+                                            ],
+                                          ),
+                                          Positioned(
+                                            right: 0,
+                                            top: 0,
+                                            child: RotationTransition(
+                                              turns: _animation3,
+                                              child: SvgPicture.asset(
+                                                AssetsPath.upArrowIconSVG,
+                                                height: size.height * k25TextSize,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: size.width * k40TextSize),
+                                          child: const Divider(thickness: 2),
+                                        ),
+                                        GetBuilder<WaterYearlyDataController>(
+                                            builder: (waterYearlyDataController) {
+                                              if(waterYearlyDataController.isLoading){
+                                                return CustomShimmerWidget(height:  size.height * .28, width: double.infinity);
+                                              }else if(!waterYearlyDataController.isConnected){
+                                                return Lottie.asset(AssetsPath.noInternetJson, height: size.height * 0.23);
+                                              }
+                                              else if(waterYearlyDataController.hasError){
+                                                return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
+                                              }
+                                              return SizedBox(
+                                                  height: size.height * .28,
+                                                  child: YearlyBarChartWidget(elementName: widget.elementName,screenName: 'waterScreen', waterYearlyDataModelList: waterYearlyDataController.yearlyDataList, viewName: 'powerView',));
+                                            }
+                                        ),
+                                        SizedBox(height: size.height * k20TextSize),
+                                      ],
+                                      onExpansionChanged: (bool expanded) {
+                                        if (expanded) {
+                                          _controller3.reverse();
+                                        } else {
+                                          _controller3.forward();
+                                        }
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ) : Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: (){
+                                  waterFilterSpecificNodeDataController.downloadDataSheet(context);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 16.0),
+                                  child: CustomContainer(
+                                    height: size.height * 0.050,
+                                    width:  size.width * 0.3,
+                                    borderRadius: BorderRadius.circular(size.height * k8TextSize),
+                                    child: const Center(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          TextComponent(text: "Download"),
+                                          Icon(Icons.download)
+                                        ],
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: size.width * k40TextSize),
-                                  child: const Divider(thickness: 2),
                                 ),
-                                GetBuilder<WaterDailyDataController>(
-                                    builder: (waterDailyDataController) {
-                                      if(waterDailyDataController.isLoading){
-                                        return CustomShimmerWidget(height:  size.height * .28, width: double.infinity);
-                                      }else if(!waterDailyDataController.isConnected){
-                                        return Lottie.asset(AssetsPath.noInternetJson, height: size.height * 0.23);
-                                      }
-                                      else if(waterDailyDataController.hasError){
-                                        return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
-                                      }
-                                      return SizedBox(
-                                          height: size.height * .28,
-                                          child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',));
-                                    }
-                                ),
-                                SizedBox(height: size.height * k20TextSize),
-                              ],
-                              onExpansionChanged: (bool expanded) {
-                                if (expanded) {
-                                  _controller1.reverse();
-                                } else {
-                                  _controller1.forward();
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: size.height * k8TextSize),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: size.height * k16TextSize, vertical: size.height * k8TextSize,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(size.height * k16TextSize),
-                          border: Border.all(color: AppColors.containerBorderColor, width: 1.0),
-                        ),
-                        child: ClipRRect(
-                          borderRadius:
-                          BorderRadius.circular(size.height * k16TextSize),
-                          child: Theme(
-                            data: Theme.of(context).copyWith(
-                              dividerColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              expansionTileTheme: const ExpansionTileThemeData(
-                                backgroundColor: Colors.transparent,
-                                collapsedBackgroundColor: Colors.transparent,
                               ),
                             ),
-                            child: ExpansionTile(
-                              backgroundColor: Colors.transparent,
-                              initiallyExpanded: true,
-                              showTrailingIcon: false,
-                              title: Stack(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
-                                      SizedBox(width: size.width * k20TextSize,),
-                                      Expanded(child: TextComponent(text: "This month ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: RotationTransition(
-                                      turns: _animation2,
-                                      child: SvgPicture.asset(
-                                        AssetsPath.upArrowIconSVG,
-                                        height: size.height * k25TextSize,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: size.width * k40TextSize),
-                                  child: const Divider(thickness: 2),
-                                ),
-                                GetBuilder<WaterMonthlyDataController>(
-                                    builder: (waterMonthlyDataController) {
-                                      if(waterMonthlyDataController.isLoading){
-                                        return CustomShimmerWidget(height:  size.height * .28, width: double.infinity);
-                                      }else if(!waterMonthlyDataController.isConnected){
-                                        return Lottie.asset(AssetsPath.noInternetJson, height: size.height * 0.23);
-                                      }
-                                      else if(waterMonthlyDataController.hasError){
-                                        return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
-                                      }
-                                      return SizedBox(
-                                          height: size.height * .28,
-                                          child: MonthlyBarChartWidget(elementName: widget.elementName,solarCategory: 'water',viewName: 'powerView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
-                                    }
-                                ),
-                                SizedBox(height: size.height * k20TextSize),
-                              ],
-                              onExpansionChanged: (bool expanded) {
-                                if (expanded) {
-                                  _controller2.reverse();
-                                } else {
-                                  _controller2.forward();
-                                }
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: size.height * k8TextSize),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: size.height * k16TextSize,
-                        vertical: size.height * k8TextSize,
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius:
-                          BorderRadius.circular(size.height * k16TextSize),
-                          border: Border.all(color: AppColors.containerBorderColor, width: 1.0),
-                        ),
-                        child: ClipRRect(
-                          borderRadius:
-                          BorderRadius.circular(size.height * k16TextSize),
-                          child: Theme(
-                            data: Theme.of(context).copyWith(
-                              dividerColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
-                              splashColor: Colors.transparent,
-                              expansionTileTheme: const ExpansionTileThemeData(
-                                backgroundColor: Colors.transparent,
-                                collapsedBackgroundColor: Colors.transparent,
+                            SizedBox(
+                              height: 500,
+                              width: double.infinity,
+                              child: SpecificNodeDataTable(
+                                tableData: waterFilterSpecificNodeDataController.filterSpecificNodeTableModel,
                               ),
                             ),
-                            child: ExpansionTile(
-                              backgroundColor: Colors.transparent,
-                              initiallyExpanded: true,
-                              showTrailingIcon: false,
-                              title: Stack(
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(AssetsPath.barChartIconSVG,  height: size.height * k25TextSize,),
-                                      SizedBox(width: size.width * k20TextSize,),
-                                      Expanded(child: TextComponent(text: "This year ${widget.elementName} Water Flow (m³/h)",fontWeight: FontWeight.w600,overflow: TextOverflow.ellipsis,maxLines: 1,)),
-                                    ],
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 0,
-                                    child: RotationTransition(
-                                      turns: _animation3,
-                                      child: SvgPicture.asset(
-                                        AssetsPath.upArrowIconSVG,
-                                        height: size.height * k25TextSize,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: size.width * k40TextSize),
-                                  child: const Divider(thickness: 2),
-                                ),
-                                GetBuilder<WaterYearlyDataController>(
-                                    builder: (waterYearlyDataController) {
-                                      if(waterYearlyDataController.isLoading){
-                                        return CustomShimmerWidget(height:  size.height * .28, width: double.infinity);
-                                      }else if(!waterYearlyDataController.isConnected){
-                                        return Lottie.asset(AssetsPath.noInternetJson, height: size.height * 0.23);
-                                      }
-                                      else if(waterYearlyDataController.hasError){
-                                        return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
-                                      }
-                                      return SizedBox(
-                                          height: size.height * .28,
-                                          child: YearlyBarChartWidget(elementName: widget.elementName,screenName: 'waterScreen', waterYearlyDataModelList: waterYearlyDataController.yearlyDataList, viewName: 'powerView',));
-                                    }
-                                ),
-                                SizedBox(height: size.height * k20TextSize),
-                              ],
-                              onExpansionChanged: (bool expanded) {
-                                if (expanded) {
-                                  _controller3.reverse();
-                                } else {
-                                  _controller3.forward();
-                                }
-                              },
-                            ),
-                          ),
+                          ],
                         ),
-                      ),
-                    ),
 
-                    SizedBox(height: size.height * 0.2,)
+                        SizedBox(height: size.height * 0.2,)
 
-                  ],
+                      ],
+                    );
+                  }
                 ),
               ),
             ),

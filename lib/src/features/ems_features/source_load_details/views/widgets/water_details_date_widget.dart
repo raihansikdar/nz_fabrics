@@ -2,21 +2,21 @@ import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_radio_button/custom_radio_button.dart';
 import 'package:nz_fabrics/src/common_widgets/small_button_circular_progress_bar_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/filter_specific_node_data/filter_specific_node_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/filter_specific_node_data/water_filter_specific_node_data_controller.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PowerDateWidget extends StatefulWidget {
+class WaterDetailsDateWidget extends StatefulWidget {
   final String nodeName;
-  const PowerDateWidget({super.key, required this.nodeName});
+  const WaterDetailsDateWidget({super.key, required this.nodeName});
 
   @override
-  State<PowerDateWidget> createState() => _DateWidgetState();
+  State<WaterDetailsDateWidget> createState() => _DateWidgetState();
 }
 
-class _DateWidgetState extends State<PowerDateWidget> {
+class _DateWidgetState extends State<WaterDetailsDateWidget> {
 
 
   @override
@@ -25,7 +25,7 @@ class _DateWidgetState extends State<PowerDateWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        GetBuilder<FilterSpecificNodeDataController>(
+        GetBuilder<WaterFilterSpecificNodeDataController>(
             builder: (filterSpecificNodeDataController) {
               return CustomContainer(
                   height: filterSpecificNodeDataController.selectedButton == 1 ? size.height * 0.05  : size.height * 0.2,
@@ -81,7 +81,7 @@ class _DateWidgetState extends State<PowerDateWidget> {
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
                                 children: [
-                                  GetBuilder<FilterSpecificNodeDataController>(
+                                  GetBuilder<WaterFilterSpecificNodeDataController>(
                                       builder: (filterSpecificNodeDataController) {
                                         return SizedBox(
                                           width: size.width * 0.370,
@@ -111,7 +111,7 @@ class _DateWidgetState extends State<PowerDateWidget> {
                                   SizedBox(
                                     width: size.width * 0.050,
                                   ),
-                                  GetBuilder<FilterSpecificNodeDataController>(
+                                  GetBuilder<WaterFilterSpecificNodeDataController>(
                                       builder: (filterSpecificNodeDataController) {
                                         return SizedBox(
                                           width: size.width * 0.385,
@@ -140,7 +140,7 @@ class _DateWidgetState extends State<PowerDateWidget> {
                               SizedBox(
                                 height: size.width > 600 ? size.width * 0.07 : size.width * 0.1,
                                 width: size.width * 0.4,
-                                child: GetBuilder<FilterSpecificNodeDataController>(
+                                child: GetBuilder<WaterFilterSpecificNodeDataController>(
                                     builder: (filterSpecificNodeDataController) {
                                       return ElevatedButton(
 

@@ -914,16 +914,17 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
   Map<dynamic, LiveDataModel> _liveData = {};
   WaterLongSLDLoopAndBusCouplerModel loopAndBusCouplerModel = WaterLongSLDLoopAndBusCouplerModel();
   List<Map<String, dynamic>> _pfData = [];
-  bool _isLoadingCachedData = true;
+ // bool _isLoadingCachedData = true;
   bool _isLoadingViewPageData = true;
-  bool _isLoadingLiveData = true;
-  bool _isLoadingPFData = true;
+//  bool _isLoadingLiveData = true;
+ // bool _isLoadingPFData = true;
   late AnimationController _controller;
   late ui.Image _mouseIcon;
   Timer? _timer;
 
   // Computed property to determine if the loader should be shown
-  bool get _isLoading => _isLoadingCachedData || _isLoadingViewPageData || _isLoadingLiveData || _isLoadingPFData;
+ // bool get _isLoading => _isLoadingCachedData || _isLoadingViewPageData || _isLoadingLiveData || _isLoadingPFData;
+  bool get _isLoading =>  _isLoadingViewPageData ;
 
   @override
   void initState() {
@@ -972,12 +973,12 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
       });
     }
 
-    if (mounted) {
-      setState(() {
-        _isLoadingCachedData = false;
-        debugPrint('Cached data loaded, _isLoadingCachedData: $_isLoadingCachedData');
-      });
-    }
+    // if (mounted) {
+    //   setState(() {
+    //     _isLoadingCachedData = false;
+    //     debugPrint('Cached data loaded, _isLoadingCachedData: $_isLoadingCachedData');
+    //   });
+    // }
   }
 
   void _loadMouseIcon() async {
@@ -1051,18 +1052,18 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
               _liveData.addAll(result);
             }
           }
-          _isLoadingLiveData = false;
-          debugPrint('Live data fetched, _isLoadingLiveData: $_isLoadingLiveData');
+          // _isLoadingLiveData = false;
+          // debugPrint('Live data fetched, _isLoadingLiveData: $_isLoadingLiveData');
         });
       }
     } else {
       debugPrint('-------Failed to fetch live data------------');
-      if (mounted) {
-        setState(() {
-          _isLoadingLiveData = false;
-          debugPrint('Live data fetch failed, _isLoadingLiveData: $_isLoadingLiveData');
-        });
-      }
+      // if (mounted) {
+      //   setState(() {
+      //     _isLoadingLiveData = false;
+      //     debugPrint('Live data fetch failed, _isLoadingLiveData: $_isLoadingLiveData');
+      //   });
+      // }
     }
   }
 
@@ -1135,18 +1136,18 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
       if (mounted) {
         setState(() {
           _pfData = List<Map<String, dynamic>>.from(json.decode(response.body));
-          _isLoadingPFData = false;
-          debugPrint('PF data fetched, _isLoadingPFData: $_isLoadingPFData');
+          // _isLoadingPFData = false;
+          // debugPrint('PF data fetched, _isLoadingPFData: $_isLoadingPFData');
         });
       }
     } else {
       debugPrint('Failed to fetch PF data');
-      if (mounted) {
-        setState(() {
-          _isLoadingPFData = false;
-          debugPrint('PF data fetch failed, _isLoadingPFData: $_isLoadingPFData');
-        });
-      }
+      // if (mounted) {
+      //   setState(() {
+      //     _isLoadingPFData = false;
+      //     debugPrint('PF data fetch failed, _isLoadingPFData: $_isLoadingPFData');
+      //   });
+      // }
     }
   }
 

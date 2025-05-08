@@ -13,7 +13,7 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/control
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/daily_line_chart_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/filter_cost_chart_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/monthly_bar_card_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/power_date_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/water_details_date_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/run_time_information_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/table_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/yearly_bar_chart_widget.dart';
@@ -143,7 +143,7 @@ class _RevenueViewPowerAndEnergyElementDetailsScreenState extends State<RevenueV
                             horizontal: size.height * k16TextSize,
                             //vertical: size.height * k8TextSize,
                           ),
-                          child: PowerDateWidget(nodeName: widget.elementName,),
+                          child: WaterDetailsDateWidget(nodeName: widget.elementName,),
                         ),
                         SizedBox(height: size.height * k8TextSize),
         
