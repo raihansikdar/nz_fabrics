@@ -9,7 +9,7 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
-class MonthlyBarChartWidget extends StatefulWidget {
+class MonthlyDetailsBarChartWidget extends StatefulWidget {
   final String elementName;
   final String viewName;
   final String? solarCategory;
@@ -18,7 +18,7 @@ class MonthlyBarChartWidget extends StatefulWidget {
   final List<WaterMonthlyDataModel>? waterMonthlyDataModel;
   final List<NaturalGasMonthlyDataModel>? naturalGasMonthlyDataModel;
 
-  const MonthlyBarChartWidget({
+  const MonthlyDetailsBarChartWidget({
     super.key,
     required this.elementName,
     required this.viewName,
@@ -30,10 +30,10 @@ class MonthlyBarChartWidget extends StatefulWidget {
   });
 
   @override
-  State<MonthlyBarChartWidget> createState() => _MonthlyBarChartWidgetState();
+  State<MonthlyDetailsBarChartWidget> createState() => _MonthlyDetailsBarChartWidgetState();
 }
 
-class _MonthlyBarChartWidgetState extends State<MonthlyBarChartWidget> with AutomaticKeepAliveClientMixin {
+class _MonthlyDetailsBarChartWidgetState extends State<MonthlyDetailsBarChartWidget> with AutomaticKeepAliveClientMixin {
   // Global static configuration
   static final _dateFormat = DateFormat('d');
   static final _legend = const Legend(isVisible: false);
@@ -67,7 +67,7 @@ class _MonthlyBarChartWidgetState extends State<MonthlyBarChartWidget> with Auto
   }
 
   @override
-  void didUpdateWidget(MonthlyBarChartWidget oldWidget) {
+  void didUpdateWidget(MonthlyDetailsBarChartWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.monthlyDataModelList != widget.monthlyDataModelList ||
         oldWidget.waterMonthlyDataModel != widget.waterMonthlyDataModel ||

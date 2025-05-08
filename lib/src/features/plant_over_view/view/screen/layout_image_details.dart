@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/power_and_energy_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/notification/controller/notification_controller.dart';
 import 'package:nz_fabrics/src/features/notification/views/screens/notification_screens.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';

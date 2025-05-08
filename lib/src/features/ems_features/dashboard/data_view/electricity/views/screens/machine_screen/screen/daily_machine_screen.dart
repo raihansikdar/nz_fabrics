@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/machine_screen/screen/acknowledge_history_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/each_machine_wise_load_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/each_category_live_data_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/power_and_energy_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';

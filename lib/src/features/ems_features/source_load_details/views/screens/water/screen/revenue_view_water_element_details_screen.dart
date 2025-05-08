@@ -8,10 +8,9 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/control
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_this_year_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_today_runtime_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_yearly_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/daily_line_chart_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/monthly_bar_card_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/run_time_information_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/yearly_bar_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/daily_line_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/monthly_bar_card_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/run_time_information_widget.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -19,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../power_and_energy/widgets/yearly_bar_chart_widget.dart';
 
 class RevenueViewWaterElementDetailsScreen extends StatefulWidget {
   final String elementName;
@@ -274,7 +275,7 @@ class _RevenueViewWaterElementDetailsScreenState extends State<RevenueViewWaterE
                                       }
                                       return SizedBox(
                                           height: size.height * .28,
-                                          child: MonthlyBarChartWidget(elementName: widget.elementName,solarCategory: 'water',viewName: 'revenueView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
+                                          child: MonthlyDetailsBarChartWidget(elementName: widget.elementName,solarCategory: 'water',viewName: 'revenueView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
                                     }
                                 ),
                                 SizedBox(height: size.height * k20TextSize),

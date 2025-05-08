@@ -12,14 +12,13 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/control
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/power_and_energy/this_year_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/power_and_energy/today_runtime_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/power_and_energy/yearly_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/daily_line_chart_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/filter_chart_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/gauge_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/monthly_bar_card_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/water_details_date_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/run_time_information_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/table_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/yearly_bar_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/daily_line_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/filter_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/gauge_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/monthly_bar_card_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/run_time_information_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/table_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/widgets/power_date_widget.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -27,6 +26,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import '../widgets/yearly_bar_chart_widget.dart';
+
 
 class PowerViewPowerAndEnergyElementDetailsScreen extends StatefulWidget {
   final String elementName;
@@ -219,7 +221,7 @@ class _PowerViewPowerAndEnergyElementDetailsScreenState extends State<PowerViewP
                             horizontal: size.height * k16TextSize,
                             //vertical: size.height * k8TextSize,
                           ),
-                          child: WaterDetailsDateWidget(nodeName: widget.elementName,),
+                          child: PowerDateWidget(nodeName: widget.elementName,),
                         ),
         
                         Padding(
@@ -402,7 +404,7 @@ class _PowerViewPowerAndEnergyElementDetailsScreenState extends State<PowerViewP
                                               }
                                               return SizedBox(
                                                   height: size.height * .35,
-                                                  child: MonthlyBarChartWidget(elementName: widget.elementName,viewName: 'powerView',monthlyDataModelList:monthlyDataController.monthlyDataList, screenName: 'powerScreen',));
+                                                  child: MonthlyDetailsBarChartWidget(elementName: widget.elementName,viewName: 'powerView',monthlyDataModelList:monthlyDataController.monthlyDataList, screenName: 'powerScreen',));
                                             }
                                         ),
                                         SizedBox(height: size.height * k20TextSize),

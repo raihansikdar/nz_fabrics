@@ -13,7 +13,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/generators/generator_element_details_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/power_and_energy_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -100,7 +100,7 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                             PageRouteBuilder(
                                 pageBuilder: (context, animation, secondaryAnimation) => GeneratorElementDetailsScreen(
                                   elementName: widget.categoryName,
-                                  gaugeValue:  categoryData.power ?? 0.00,
+                                  gaugeValue:  categoryData.instantFlow ?? 0.00,
                                   gaugeUnit: 'kW',
                                   elementCategory: 'Power',
                                 ),
@@ -134,7 +134,7 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                             PageRouteBuilder(
                                 pageBuilder: (context, animation, secondaryAnimation) =>  PowerAndEnergyElementDetailsScreen(
                                   elementName: categoryData.node ?? '',
-                                  gaugeValue: categoryData.power ?? 0.00,
+                                  gaugeValue: categoryData.instantFlow ?? 0.00,
                                   gaugeUnit: 'kW',
                                   elementCategory: 'Power',
                                   solarCategory: widget.categoryName,
@@ -219,7 +219,7 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            TextComponent(text: " ${categoryData.power?.toStringAsFixed(2) ?? '0.0'} kW",),
+                                            TextComponent(text: " ${categoryData.instantFlow?.toStringAsFixed(2) ?? '0.0'} kW",),
                                             TextComponent(text: " ${categoryData.netEnergy?.toStringAsFixed(2) ?? '0.00'} kWh"),
                                           ],
                                         )

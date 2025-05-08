@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:nz_fabrics/src/common_widgets/flutter_smart_download_widget/flutter_smart_download_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/line_chart_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/monthly_bar_chart_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/yearly_bar_chart_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/table_model/filter_specific_table_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_line_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_monthly_bar_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_yearly_bar_chart_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -28,9 +28,9 @@ class WaterFilterSpecificNodeDataController extends GetxController with Internet
   bool _isFilterTableInProgress = false;
   String _errorMessage = '';
 
-  List<LineData> _lineChartDataList = <LineData>[];
-  List<MonthlyBarChartData> _monthlyBarChartDataList = <MonthlyBarChartData>[];
-  List<YearlyBarChartData> _yearlyBarChartDataList = <YearlyBarChartData>[];
+  List<WaterLineData> _lineChartDataList = <WaterLineData>[];
+  List<WaterMonthlyBarChartData> _monthlyBarChartDataList = <WaterMonthlyBarChartData>[];
+  List<WaterYearlyBarChartData> _yearlyBarChartDataList = <WaterYearlyBarChartData>[];
   FilterSpecificNodeTableModel _filterSpecificNodeTableModel = FilterSpecificNodeTableModel();
 
   bool get isConnected => _isConnected;
@@ -39,9 +39,9 @@ class WaterFilterSpecificNodeDataController extends GetxController with Internet
   bool get isFilterButtonInProgress => _isFilterButtonInProgress;
   String get errorMessage => _errorMessage;
 
-  List<LineData> get lineChartDataList => _lineChartDataList;
-  List<MonthlyBarChartData> get monthlyBarChartDataList => _monthlyBarChartDataList;
-  List<YearlyBarChartData> get yearlyBarChartDataList => _yearlyBarChartDataList;
+  List<WaterLineData> get lineChartDataList => _lineChartDataList;
+  List<WaterMonthlyBarChartData> get monthlyBarChartDataList => _monthlyBarChartDataList;
+  List<WaterYearlyBarChartData> get yearlyBarChartDataList => _yearlyBarChartDataList;
 
   FilterSpecificNodeTableModel get filterSpecificNodeTableModel => _filterSpecificNodeTableModel;
 
@@ -114,17 +114,17 @@ class WaterFilterSpecificNodeDataController extends GetxController with Internet
 
         if(_graphType == "Line-Chart"){
           final jsonData = (response.body as Map<String, dynamic>)['data'] as List<dynamic>;
-          _lineChartDataList = jsonData.map((json) => LineData.fromJson(json as Map<String, dynamic>)).toList();
+          _lineChartDataList = jsonData.map((json) => WaterLineData.fromJson(json as Map<String, dynamic>)).toList();
         }  else if (_graphType == "Monthly-Bar-Chart"){
           final jsonData = (response.body as Map<String, dynamic>)['data'] as List<dynamic>;
-          _monthlyBarChartDataList = jsonData.map((json) => MonthlyBarChartData.fromJson(json as Map<String, dynamic>)).toList();
+          _monthlyBarChartDataList = jsonData.map((json) => WaterMonthlyBarChartData.fromJson(json as Map<String, dynamic>)).toList();
 
 
 
 
         }else{
           final jsonData = (response.body as Map<String, dynamic>)['data'] as List<dynamic>;
-          _yearlyBarChartDataList = jsonData.map((json) => YearlyBarChartData.fromJson(json as Map<String, dynamic>)).toList();
+          _yearlyBarChartDataList = jsonData.map((json) => WaterYearlyBarChartData.fromJson(json as Map<String, dynamic>)).toList();
         }
 
 
@@ -273,7 +273,7 @@ class WaterFilterSpecificNodeDataController extends GetxController with Internet
           final rowIndex = i + 2; // Start from row 2 (after header)
           final data = nodeTableData[i];
           sheet.getRangeByIndex(rowIndex, 1).setText(data.date?.toString() ?? 'N/A');
-          sheet.getRangeByIndex(rowIndex, 2).setText(data.energy?.toString() ?? 'N/A');
+          sheet.getRangeByIndex(rowIndex, 2).setText(data.volume?.toString() ?? 'N/A');
           sheet.getRangeByIndex(rowIndex, 3).setNumber(data.cost?.toDouble() ?? 0);
 
         }
@@ -426,19 +426,19 @@ class WaterFilterSpecificNodeDataController extends GetxController with Internet
   }
 
 
-  void findMinMaxCostDates() {
-    if (_monthlyBarChartDataList.isEmpty) {
-      log("No data available.");
-      return;
-    }
-
-    // Find min and max cost entries
-    MonthlyBarChartData minCostData = _monthlyBarChartDataList.reduce((a, b) => a.cost < b.cost ? a : b);
-    MonthlyBarChartData maxCostData = _monthlyBarChartDataList.reduce((a, b) => a.cost > b.cost ? a : b);
-
-    log("Minimum cost date: ${minCostData.date}, Cost: ${minCostData.cost}");
-    log("Maximum cost date: ${maxCostData.date}, Cost: ${maxCostData.cost}");
-  }
+  // void findMinMaxCostDates() {
+  //   if (_monthlyBarChartDataList.isEmpty) {
+  //     log("No data available.");
+  //     return;
+  //   }
+  //
+  //   // Find min and max cost entries
+  //   MonthlyBarChartData minCostData = WaterMonthlyBarChartData.reduce((a, b) => a.cost < b.cost ? a : b);
+  //   MonthlyBarChartData maxCostData = WaterMonthlyBarChartData.reduce((a, b) => a.cost > b.cost ? a : b);
+  //
+  //   log("Minimum cost date: ${minCostData.date}, Cost: ${minCostData.cost}");
+  //   log("Maximum cost date: ${maxCostData.date}, Cost: ${maxCostData.cost}");
+  // }
 
 
 }

@@ -11,13 +11,13 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/control
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_this_year_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_today_runtime_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_yearly_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/daily_line_chart_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/gauge_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/monthly_bar_card_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/run_time_information_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/table_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/water_details_date_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/widgets/yearly_bar_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_daily_line_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_details_date_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_gauge_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_monthly_bar_card_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_run_time_information_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_table_widget.dart';
+
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -25,6 +25,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+
+import '../../power_and_energy/widgets/yearly_bar_chart_widget.dart';
 
 class PowerViewWaterElementDetailsScreen extends StatefulWidget {
   final String elementName;
@@ -155,7 +157,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                         return SizedBox(
                                             height: size.height * 0.400,
                                             width: size.width * 0.400,
-                                            child:  GaugeWidget(gaugeValue: widget.gaugeValue, gaugeMaxValue: getLiveDataController.getLiveDataModel.maxMeterValue ?? 2000,));
+                                            child:  WaterGaugeWidget(gaugeValue: widget.gaugeValue, gaugeMaxValue: getLiveDataController.getLiveDataModel.maxMeterValue ?? 2000,));
                                       }
                                     ),
                                   ),
@@ -171,7 +173,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                             final thisMonthController = Get.find<WaterThisMonthDataController>();
                             final thisYearController = Get.find<WaterThisYearDataController>();
 
-                            return RunTimeInformationWidget(
+                            return WaterRunTimeInformationWidget(
                               viewName: "Water",
                               elementCategory: widget.elementCategory,
                               size: size,
@@ -263,7 +265,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                           }
                                           return SizedBox(
                                               height: size.height * .28,
-                                              child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',));
+                                              child:  WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',));
                                         }
                                     ),
                                     SizedBox(height: size.height * k20TextSize),
@@ -352,7 +354,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                               }
                                               return SizedBox(
                                                   height: size.height * .28,
-                                                  child: MonthlyBarChartWidget(elementName: widget.elementName,solarCategory: 'water',viewName: 'powerView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
+                                                  child: WaterMonthlyDetailsBarChartWidget(elementName: widget.elementName,solarCategory: 'water',viewName: 'powerView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
                                             }
                                         ),
                                         SizedBox(height: size.height * k20TextSize),
@@ -487,7 +489,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                             SizedBox(
                               height: 500,
                               width: double.infinity,
-                              child: SpecificNodeDataTable(
+                              child: WaterSpecificNodeDataTable(
                                 tableData: waterFilterSpecificNodeDataController.filterSpecificNodeTableModel,
                               ),
                             ),

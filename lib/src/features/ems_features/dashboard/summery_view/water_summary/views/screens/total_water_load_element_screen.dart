@@ -10,7 +10,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/wate
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_each_load_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/water_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/screen/water_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/error_page/error_page.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';

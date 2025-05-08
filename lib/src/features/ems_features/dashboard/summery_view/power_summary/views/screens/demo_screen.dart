@@ -21,7 +21,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/grid_widget/details_button_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/grid_widget/progress_indicator_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/grid_widget/reb_value_data_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/power_and_energy_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';

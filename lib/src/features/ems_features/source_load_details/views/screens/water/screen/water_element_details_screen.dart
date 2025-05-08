@@ -4,15 +4,8 @@ import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart
 import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_radio_button/custom_radio_button.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/element_button_view_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_daily_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_monthly_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_this_day_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_this_month_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_this_year_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_today_runtime_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_yearly_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/power_view_water_element_details_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/revenue_view_water_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/screen/power_view_water_element_details_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/screen/revenue_view_water_element_details_screen.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:flutter/material.dart';

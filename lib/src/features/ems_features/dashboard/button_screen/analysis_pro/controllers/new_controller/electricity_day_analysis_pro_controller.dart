@@ -1306,7 +1306,7 @@ class ElectricityDayAnalysisProController extends GetxController with InternetCo
               if (!groupedData.containsKey(date)) {
                 groupedData[date] = {'Date': date};
               }
-              double value = (valueField == 'power' ? data.power : data.energy)?.toDouble() ?? 0;
+              double value = (valueField == 'power' ? data.instantFlow : data.volume)?.toDouble() ?? 0;
               double cost = data.cost?.toDouble() ?? 0; // Use cost directly from JSON
               if (includeOnlyPowerData || includeBothData) {
                 groupedData[date]!['${data.node} Electricity'] = value; // Add "Electricity" to non-cost column
