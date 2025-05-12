@@ -25,17 +25,17 @@ class DashBoardButtonController extends GetxController with InternetConnectivity
 
   bool makeButtonTrue = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token){
-      if(token != null){
-        fetchButton();
-      }
-    });
-
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token){
+  //     if(token != null){
+  //       fetchButton();
+  //     }
+  //   });
+  //
+  // }
 
   Future<bool> fetchButton() async {
     _isConnected = true;
@@ -44,7 +44,7 @@ class DashBoardButtonController extends GetxController with InternetConnectivity
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getButtonInfoUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: "Urls.getButtonInfoUrl");
 
      //  log("getButtonInfoUrl statusCode ==> ${response.statusCode}");
      // log("getButtonInfoUrl body ==> ${response.body}");

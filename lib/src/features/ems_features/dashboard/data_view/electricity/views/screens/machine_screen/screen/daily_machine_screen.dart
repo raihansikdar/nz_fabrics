@@ -118,9 +118,9 @@ class MachineModel {
 
 class NodeModel {
   String name;
-  double power = 0.0;
-  double energy = 0.0;
-  double cost = 0.0;
+  dynamic power = 0.0;
+  dynamic energy = 0.0;
+  dynamic cost = 0.0;
 
   NodeModel({required this.name});
 

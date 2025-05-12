@@ -47,7 +47,7 @@ class _DieselGeneratorScreenState extends State<DieselGeneratorScreen> {
               return Column(
                 children: [
                   SizedBox(height: size.height * k16TextSize,),
-                  const DieselDateWidget(),
+               //   const DieselDateWidget(),
                   SizedBox(height: size.height * k12TextSize,),
                   dailyDieselButtonController.selectedButton == 1 ?  DailyDieselGeneratorListWidget(size: size, controller: dailyDieselButtonController,) :
                   dailyDieselButtonController.selectedButton == 2 ? MonthlyDieselGeneratorListWidget (size: size)  :

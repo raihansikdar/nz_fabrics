@@ -63,7 +63,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
   late final ScrollController _scrollController;
   TextEditingController searchTEController = TextEditingController();
 
-  DashBoardButtonController controllerExitOrNot = Get.put(DashBoardButtonController());
+ //DashBoardButtonController controllerExitOrNot = Get.put(DashBoardButtonController());
 
  NotificationService notificationService = NotificationService();
   @override
@@ -80,9 +80,9 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
       //notificationService.initNotification(); // off notification
       WidgetsBinding.instance.addPostFrameCallback((_){
-        Get.find<DashBoardButtonController>().fetchButton();
-      Get.find<AnalysisProDayButtonController>().fetchDayModelDGRData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);
-      Get.find<AnalysisProDayButtonController>().fetchSelectedNodeData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);
+       // Get.find<DashBoardButtonController>().fetchButton();
+     // Get.find<AnalysisProDayButtonController>().fetchDayModelDGRData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);
+    //  Get.find<AnalysisProDayButtonController>().fetchSelectedNodeData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);
       //Get.find<AllNotificationController>().fetchNotificationData();
       Get.find<LoadPowerController>().fetchLoadPowerData();
 
@@ -310,7 +310,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                         flex:  controller.buttonList.isEmpty ? 7 : controller.buttonList.length >2 ? 4 : 6,
                                                         fit: FlexFit.tight,
                                                         child:*/ Container(
-                                                             height:  size.width > 500 ? (controllerExitOrNot.buttonList.isEmpty ? dashBoardRadioButtonController.selectedValue != 3 ? size.height - 120 : size.height - 120  :  dashBoardRadioButtonController.selectedValue != 3 ?  size.height * 0.835 : size.height - 140)  :  (controllerExitOrNot.buttonList.isEmpty ? dashBoardRadioButtonController.selectedValue != 3 ? size.height - 100 : size.height + 30  :  dashBoardRadioButtonController.selectedValue != 3 ?  size.height * 0.835 : size.height + 100),
+                                                           //  height:  size.width > 500 ? (controllerExitOrNot.buttonList.isEmpty ? dashBoardRadioButtonController.selectedValue != 3 ? size.height - 120 : size.height - 120  :  dashBoardRadioButtonController.selectedValue != 3 ?  size.height * 0.835 : size.height - 140)  :  (controllerExitOrNot.buttonList.isEmpty ? dashBoardRadioButtonController.selectedValue != 3 ? size.height - 100 : size.height + 30  :  dashBoardRadioButtonController.selectedValue != 3 ?  size.height * 0.835 : size.height + 100),
+                                                             height:  size.width > 500 ? ( dashBoardRadioButtonController.selectedValue != 3 ? size.height - 120 : size.height - 120 )  :  ( dashBoardRadioButtonController.selectedValue != 3 ? size.height - 100 : size.height + 30 ),
                                                               // height: dashBoardRadioButtonController.selectedValue ==1 ?  size.height * .68 : dashBoardRadioButtonController.selectedValue == 2 ? size.height * 0.850 : size.height * .850,
                                                               width: double.infinity,
                                                               // borderRadius: BorderRadius.circular(size.height * k16TextSize),
@@ -437,7 +438,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                             ),
                                                                           ),
                                                                         )*/ SizedBox(
-                                                                            height:size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.83,
+                                                                           // height:size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.83,
+                                                                            height:size.width > 500 ?  size.height * 0.833  : size.height * 0.83,
                                                                             child: DefaultTabController(
                                                                                 length: 3,
                                                                                 child: Column(
@@ -495,11 +497,12 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
 
                                                                       SizedBox(
-                                                                          height:size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.82,
-                                                                        //  child: const NZPowerSldScreen(),
+                                                                       //   height:size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.82,
+                                                                          height:size.width > 500 ?  size.height * 0.833  : size.height * 0.82,
+
                                                                           child: const SldTabViewScreen(),
                                                                       ) : SizedBox(
-                                                                            height: size.width > 500 ? controllerExitOrNot.buttonList.isEmpty ? size.height * 0.833 :    size.height * 0.77 : size.height * 0.95,
+                                                                            height: size.width > 500 ?  size.height * 0.833 : size.height * 0.95,
 
 
                                                                             child: const DataTabViewScreen()) ,

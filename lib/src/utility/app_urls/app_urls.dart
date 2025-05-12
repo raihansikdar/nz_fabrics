@@ -37,7 +37,7 @@ class Urls{
 
  static String getLiveDataUrl(String sourceName) => "$_baseUrl/get-live-data/$sourceName/";
 
- static String getButtonInfoUrl = "$_baseUrl/get-button-info/";
+ //static String getButtonInfoUrl = "$_baseUrl/get-button-info/";
  static String getBusBarInfoUrl = "$_baseUrl/get-bus_bar-info/";
  //static String pieChartSourcePowerUrl = "$_baseUrl/total-contribution/?type=Source&category=Electricity/";
  static String pieChartWaterSourceUrl = "$_baseUrl/total-contribution/?type=Source&category=Water";
@@ -63,7 +63,7 @@ class Urls{
 
 
  /*----------------- Analysis Pro --------------------*/
- static String getDayUrl = "$_baseUrl/filter-dgr-data/";
+ //static String getDayUrl = "$_baseUrl/filter-dgr-data/";
 
  static String nodeNameElectricityAnalysisProUrl = "$_baseUrl/get-node-name-for-analysis-pro/Electricity/";
  static String postFilterDgrDataUrl = "$_baseUrl/api/v2/filter-dgr-data/";

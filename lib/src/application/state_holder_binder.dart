@@ -259,7 +259,7 @@ class StateHolderBinders extends Bindings{
 
 
      //Get.put(AnalysisProDateController());
-     Get.put(AnalysisProDayButtonController());
+    /// Get.put(AnalysisProDayButtonController());
      Get.put(AnalysisProMonthlyButtonController());
      Get.put(AnalysisProYearlyButtonController());
 

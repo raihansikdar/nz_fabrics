@@ -27,7 +27,7 @@ class _SteamDataViewScreenState extends State<SteamDataViewScreen> {
 
 
 
-  DashBoardButtonController controllerExitOrNot = Get.put(DashBoardButtonController());
+  //DashBoardButtonController controllerExitOrNot = Get.put(DashBoardButtonController());
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +48,9 @@ class _SteamDataViewScreenState extends State<SteamDataViewScreen> {
                         right: size.height * k8TextSize),
                     child: Container(
                       height: MediaQuery.sizeOf(context).width > 500
-                          ? controllerExitOrNot.buttonList.isEmpty
+                          //? controllerExitOrNot.buttonList.isEmpty
                           ? MediaQuery.sizeOf(context).height * 0.79
-                          : MediaQuery.sizeOf(context).height * 0.72
+                          //: MediaQuery.sizeOf(context).height * 0.72
                           : MediaQuery.sizeOf(context).height * 0.85,
                       decoration: BoxDecoration(
                         border: Border.all(color: AppColors.containerBorderColor),
