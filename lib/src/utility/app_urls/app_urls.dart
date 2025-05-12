@@ -1,9 +1,9 @@
 class Urls{
   Urls._();
 
-  //static const String _baseUrl = "http://192.168.15.61:8086/react";
+  static const String _baseUrl = "http://192.168.15.61:8086/react";
  //static const String _baseUrl = "http://192.168.15.60:8081/react";
-  static const String _baseUrl = "http://175.29.147.118/react";
+ //static const String _baseUrl = "http://175.29.147.118/react";
 
 
   static  String get baseUrl => _baseUrl;
@@ -19,7 +19,7 @@ class Urls{
 
 
 /*----------------- get api call --------------------*/
- static String getAllInfoUrl = "$_baseUrl/get-all-info/";
+ static String getAllInfoUrl = "/get-all-info/";
  static String getAllButtonUrl = "$_baseUrl/api/source-info-categories/";
 
  static String getSourceCategoryWiseLiveDataUrl = "$_baseUrl/api/get-source-categorywise-live-data/";
@@ -35,7 +35,7 @@ class Urls{
 
 
 
- static String getLiveDataUrl(String sourceName) => "$_baseUrl/get-live-data/$sourceName/";
+ static String getLiveDataUrl(String sourceName) => "/get-live-data/$sourceName/";
 
  //static String getButtonInfoUrl = "$_baseUrl/get-button-info/";
  static String getBusBarInfoUrl = "$_baseUrl/get-bus_bar-info/";
@@ -169,9 +169,9 @@ class Urls{
 
 
   /*----------------- PF History --------------------*/
- static String getPFHistoryUrl(String nodeName) => "$_baseUrl/api/get-pf-history/$nodeName/";
+ static String getPFHistoryUrl(String nodeName) => "/api/get-pf-history/$nodeName/";
  static String putAcknowledgeEventUrl(int id) => "$_baseUrl/api/acknowledge-event/$id/";
- static String getProductionVsCapacityUrl = "$_baseUrl/api/get-production-vs-capacity/";
+ static String getProductionVsCapacityUrl = "/api/get-production-vs-capacity/";
  static String getInnerChildrenDataUrl(String nodeName) => "$_baseUrl/api/V2.1/get-children-name/?parent=&node=$nodeName";
   /*----------------- specific Data --------------------*/
 
@@ -210,10 +210,10 @@ class Urls{
 
 
  /*----------------- SLD --------------------*/
- static String getLTProductionVsCapacityUrl = "$_baseUrl/api/get-lt-production-vs-capacity/";
+ static String getLTProductionVsCapacityUrl = "/api/get-lt-production-vs-capacity/";
  static String getElectricityLiveAllNodePowerUrl = "$_baseUrl/live-all-node-power/?type=electricity";
  static String getWaterLiveAllNodePowerUrl = "$_baseUrl/live-all-node-power/?type=water";
- static String getLivePFDataUrl(String nodeName) => "$_baseUrl/api/get-live-pf-data/$nodeName/";
+ static String getLivePFDataUrl(String nodeName) => "/api/get-live-pf-data/$nodeName/";
  static String filterBusBarEnergyCostUrl(String busBarName) => "$_baseUrl/api/filter-busbar-energy-cost/$busBarName/";
 
 

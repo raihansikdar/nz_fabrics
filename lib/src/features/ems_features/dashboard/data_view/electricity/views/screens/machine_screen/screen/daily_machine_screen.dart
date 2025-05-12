@@ -25,19 +25,19 @@ class MachineController extends GetxController {
 
   final CustomColumnSizer _customColumnSizer = CustomColumnSizer();
 
-  @override
-  void onInit() {
-    super.onInit();
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
-      if (token != null) {
-        fetchMachineData();
-
-      }
-    });
-
-
-
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
+  //     if (token != null) {
+  //       fetchMachineData();
+  //
+  //     }
+  //   });
+  //
+  //
+  //
+  // }
 
   Future<void> fetchMachineData() async {
     final response = await http.get(
@@ -126,7 +126,7 @@ class NodeModel {
 
   Future<void> fetchLiveData() async {
     final response = await http.get(
-      Uri.parse('${Urls.baseUrl}/get-live-data/$name/'),
+      Uri.parse('/get-live-data/$name/'),
       headers: {
         'Authorization': '${AuthUtilityController.accessToken}',
       },

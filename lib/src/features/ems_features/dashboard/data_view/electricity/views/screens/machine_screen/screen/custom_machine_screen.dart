@@ -78,6 +78,10 @@ class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
   }
 
   Future<void> _fetchApiDataTable1() async {
+
+    log('-----------Electricity Table 1 ---------------->>>${Urls.baseUrl}/api/filter-machine-view-data/?type=electricity');
+    log('-----------Electricity Table 2 ---------------->>>${Urls.baseUrl}/api/filter-perday-machine-view-data/?type=electricity');
+
     if (_startDate == null || _endDate == null) {
       log('Table 1: Start or end date is null');
       return;

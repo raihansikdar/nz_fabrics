@@ -251,7 +251,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
 
   Future<void> _fetchPFData() async {
     final response = await http.get(
-      Uri.parse('${Urls.baseUrl}/api/get-pf-item-positions/'),
+      Uri.parse('/api/get-pf-item-positions/'),
       headers: {
         'Authorization': '${AuthUtilityController.accessToken}',
       },

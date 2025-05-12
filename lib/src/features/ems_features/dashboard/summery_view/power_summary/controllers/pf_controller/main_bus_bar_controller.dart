@@ -56,18 +56,18 @@ class MainBusBarController extends GetxController with InternetConnectivityCheck
   bool _isStopApiCall = false;
   bool _isEnterGridScreen = false;
 
-  @override
-  onInit(){
-
-    WidgetsBinding.instance.addObserver(this);
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token){
-      if(token != null){
-        fetchMainBusBar();
-      }
-    });
-
-    super.onInit();
-  }
+  // @override
+  // onInit(){
+  //
+  //   WidgetsBinding.instance.addObserver(this);
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token){
+  //     if(token != null){
+  //       fetchMainBusBar();
+  //     }
+  //   });
+  //
+  //   super.onInit();
+  // }
 
   void enterGridScreenMethod(bool value){
     _isEnterGridScreen = value;

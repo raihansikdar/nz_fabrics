@@ -35,7 +35,7 @@ class WaterEachLoadCategoryWiseLiveDataController extends GetxController with In
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLoadEachCategoryLiveDataUrl(categoryName));
 
-      log("${Urls.getWaterLoadEachCategoryLiveDataUrl(categoryName)}");
+      //log("${Urls.getWaterLoadEachCategoryLiveDataUrl(categoryName)}");
       log("getWaterLoadEachCategoryLiveDataUrl: ${response.statusCode}");
       log("getWaterLoadEachCategoryLiveDataUrl: ${response.body}");
 

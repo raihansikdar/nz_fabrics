@@ -193,13 +193,18 @@ class _ShedWiseCustomScreenState extends State<ShedWiseCustomScreen> {
     }
 
     try {
-      final url = Uri.parse('${Urls.baseUrl}/get-live-data/$nodeName/');
+      final url = Uri.parse('/get-live-data/$nodeName/');
       final response = await http.get(
         url,
         headers: {
           'Authorization': '${AuthUtilityController.accessToken}',
         },
       );
+
+
+
+      log("-----------------get-live-data----------------->> ${Urls.baseUrl}/get-live-data/$nodeName/");
+      log("-----------------get-live-data----------------->> ${response.body}");
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);

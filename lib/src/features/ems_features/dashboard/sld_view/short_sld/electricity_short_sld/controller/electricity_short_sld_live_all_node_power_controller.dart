@@ -31,21 +31,21 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
   bool _isComeFromBackGround = false;
   bool _isStopApiCall = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-
-    WidgetsBinding.instance.addObserver(this);
-
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
-      if (token != null) {
-        fetchLiveAllNodePower();
-       // _startPeriodicApiCall();
-      } else {
-        _stopPeriodicApiCall();
-      }
-    });
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //
+  //   WidgetsBinding.instance.addObserver(this);
+  //
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
+  //     if (token != null) {
+  //       fetchLiveAllNodePower();
+  //      // _startPeriodicApiCall();
+  //     } else {
+  //       _stopPeriodicApiCall();
+  //     }
+  //   });
+  // }
 
 
 
@@ -137,7 +137,7 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
       await internetConnectivityCheck();
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getElectricityLiveAllNodePowerUrl);
-
+      log('-----electricity Short------>>> ${Urls.baseUrl}/live-all-node-power/?type=electricity');
      // log("getLiveAllNodePowerUrl statusCode ==> ${response.statusCode}");
      // log("getLiveAllNodePowerUrl body ==> ${response.body}");
 

@@ -20,6 +20,9 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/data_ta
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/sld_tab_view/sld_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/load_power_controller.dart';
@@ -353,6 +356,12 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                       Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
                                                                                       Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
                                                                                       Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
+
+                                                                                      Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                      Get.find<WaterShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                      Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                      Get.find<WaterLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+
                                                                                     });
 
                                                                                   },
@@ -394,6 +403,11 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
                                                                                     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
                                                                                     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
+
+                                                                                    Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                    Get.find<WaterShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                    Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                    Get.find<WaterLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                                                                                   });
 
 

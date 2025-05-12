@@ -53,6 +53,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       );
 
       if (response.statusCode == 200) {
+
         final data = json.decode(response.body);
         List<TableNodeModel> nodes = (data['main_busbars'] as List)
             .map((busbar) => TableNodeModel(busbar, 'Main Busbar', true, false, []))

@@ -708,7 +708,7 @@ class _ShedWiseTodayScreenState extends State<ShedWiseTodayScreen> {
     });
 
     try {
-      final url = Uri.parse('${Urls.baseUrl}/get-live-data/$nodeName/');
+      final url = Uri.parse('/get-live-data/$nodeName/');
       log('Fetching data from URL: $url');
       final response = await http.get(url, headers: {
         'Authorization': '${AuthUtilityController.accessToken}',

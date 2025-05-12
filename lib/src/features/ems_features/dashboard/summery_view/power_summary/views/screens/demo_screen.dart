@@ -43,6 +43,8 @@ class _DemoScreenState extends State<DemoScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Get.find<EachCategoryLiveDataController>().fetchEachCategoryLiveData(categoryName: widget.categoryName);
 
+      Get.find<MainBusBarController>().fetchMainBusBar();
+
       Get.find<MainBusBarController>().startApiCallOnScreenChange();
       Get.find<GetProductionVsCapacityController>().startApiCallOnScreenChange();
 

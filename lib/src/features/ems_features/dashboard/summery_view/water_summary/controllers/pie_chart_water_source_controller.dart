@@ -41,7 +41,7 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
     ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
       if (token != null) {
         fetchWaterCategoryWiseLiveData();
-        _startPeriodicApiCall();
+       // _startPeriodicApiCall();
       } else {
         _stopPeriodicApiCall();
       }

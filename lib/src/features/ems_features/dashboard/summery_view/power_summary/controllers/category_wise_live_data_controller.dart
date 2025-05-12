@@ -141,7 +141,7 @@ class CategoryWiseLiveDataController extends GetxController with InternetConnect
 
     NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getSourceCategoryWiseLiveDataUrl);
 
-     //  log("getSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
+       log("------------->> getSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
      //  log("getSourceCategoryWiseLiveDataUrl: ${response.body}");
 
 

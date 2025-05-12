@@ -24,18 +24,18 @@ class WaterSourceDataController extends GetxController {
   late Future<List<FormattedData>> dataFuture = Future.value([]);
   String token = AuthUtilityController.accessToken ?? '';
 
-  @override
-  void onInit() {
-    super.onInit();
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
-      if (token != null) {
-        fetchData(
-          Get.find<OverAllWaterSourceDataController>().fromDateTEController.text,
-          Get.find<OverAllWaterSourceDataController>().toDateTEController.text,
-        );
-      }
-    });
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
+  //     if (token != null) {
+  //       fetchData(
+  //         Get.find<OverAllWaterSourceDataController>().fromDateTEController.text,
+  //         Get.find<OverAllWaterSourceDataController>().toDateTEController.text,
+  //       );
+  //     }
+  //   });
+  // }
 
   Future<void> fetchData(String start, String end) async {
     if (AuthUtilityController.accessToken == null) {
@@ -305,10 +305,27 @@ class FormattedData {
 }
 
 // Initialize controller globally
-final WaterSourceDataController sourceDataController = Get.put(WaterSourceDataController());
 
-class WaterSourceTableWidget extends StatelessWidget {
+
+class WaterSourceTableWidget extends StatefulWidget {
   WaterSourceTableWidget({super.key});
+
+  @override
+  State<WaterSourceTableWidget> createState() => _WaterSourceTableWidgetState();
+}
+
+class _WaterSourceTableWidgetState extends State<WaterSourceTableWidget> {
+
+  final WaterSourceDataController sourceDataController = Get.put(WaterSourceDataController());
+
+  @override
+  void initState() {
+   sourceDataController. fetchData(
+               Get.find<OverAllWaterSourceDataController>().fromDateTEController.text,
+               Get.find<OverAllWaterSourceDataController>().toDateTEController.text,
+             );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -19,6 +19,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/pie_chart_power_source_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -43,13 +45,13 @@ class _PowerSummaryChartScreenState extends State<PowerSummaryChartScreen> {
       /*------------- Start Api in Electricity---------------*/
       Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
       Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
-      Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
-      Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
+     // Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
+    //  Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
 
 
       /*------------- Stop Api in Electricity ---------------*/
-     // Get.find<SourceWaterController>().stopApiCallOnScreenChange();
-    //  Get.find<LoadWaterController>().stopApiCallOnScreenChange();
+      Get.find<WaterSourceCategoryWiseDataController>().stopApiCallOnScreenChange();
+      Get.find<WaterLoadCategoryWiseDataController>().stopApiCallOnScreenChange();
       Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
       Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
       Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();

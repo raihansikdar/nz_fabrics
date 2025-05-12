@@ -39,7 +39,7 @@ class WaterSourceCategoryWiseDataController extends GetxController with Internet
     ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
       if (token != null) {
         fetchWaterCategoryWiseLiveData();
-        _startPeriodicApiCall();
+       // _startPeriodicApiCall();
       } else {
         _stopPeriodicApiCall();
       }

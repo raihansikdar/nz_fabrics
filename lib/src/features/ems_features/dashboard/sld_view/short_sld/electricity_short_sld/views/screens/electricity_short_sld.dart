@@ -206,6 +206,10 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
 
+      debugPrint('-----------layout-node-positions------------>> ${Urls.baseUrl}/api/layout-node-positions/?page_type=es');
+
+
+
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
 
@@ -255,7 +259,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
   Future<void> _fetchPFData() async {
     final response = await http.get(
-      Uri.parse('${Urls.baseUrl}/api/get-pf-item-positions/'),
+      Uri.parse('/api/get-pf-item-positions/'),
       headers: {
         'Authorization': '${AuthUtilityController.accessToken}',
       },

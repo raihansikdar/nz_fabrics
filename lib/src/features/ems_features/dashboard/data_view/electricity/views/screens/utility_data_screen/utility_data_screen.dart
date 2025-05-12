@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
@@ -56,6 +58,9 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
       });
     }
 
+
+    log('-----------ALL ------------->> ${Urls.baseUrl}/api/filter-all-utility-data/');
+
     await fetchChartData(start, end);
     await fetchTableData(start, end);
 
@@ -67,6 +72,7 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
   }
 
   Future<void> fetchChartData(DateTime start, DateTime end) async {
+
     final url = Uri.parse('${Urls.baseUrl}/api/filter-all-utility-data/');
     final headers = {
       'Authorization': '${AuthUtilityController.accessToken}',
@@ -79,6 +85,10 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
+
+      log('-----------ALL ------------->> ${Urls.baseUrl}/api/filter-all-utility-data/');
+
+
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
@@ -138,6 +148,9 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
+
+      log('-----------ALL ------------->> ${Urls.baseUrl}/api/filter-all-utility-data/');
+
       debugPrint('Table API Response Status: ${response.statusCode}');
       debugPrint('Table API Response Body: ${response.body}');
       if (response.statusCode == 200) {

@@ -31,22 +31,22 @@ class SourceDataController extends GetxController {
   // DateTime endDate = DateTime.now();
   String token = AuthUtilityController.accessToken ?? '';
 
-  @override
-  void onInit() {
-    super.onInit();
-
-
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token){
-      if(token != null){
-        fetchData(
-          Get.find<OverAllSourceDataController>().fromDateTEController.text,
-          Get.find<OverAllSourceDataController>().toDateTEController.text,
-        );
-      }
-    });
-
-
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //
+  //
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token){
+  //     if(token != null){
+  //       fetchData(
+  //         Get.find<OverAllSourceDataController>().fromDateTEController.text,
+  //         Get.find<OverAllSourceDataController>().toDateTEController.text,
+  //       );
+  //     }
+  //   });
+  //
+  //
+  // }
 
   Future<void> fetchData(String start, String end) async {
     if (AuthUtilityController.accessToken == null) {
@@ -338,12 +338,28 @@ class FormattedData {
     required this.dieselUnitCost,
   });
 }
-final SourceDataController sourceDataController = Get.put(SourceDataController());
+//final SourceDataController sourceDataController = Get.put(SourceDataController());
 
-class SourceTableWidget extends StatelessWidget {
-  final SourceDataController sourceDataController = Get.put(SourceDataController());
+class SourceTableWidget extends StatefulWidget {
 
   SourceTableWidget({super.key});
+
+  @override
+  State<SourceTableWidget> createState() => _SourceTableWidgetState();
+}
+
+class _SourceTableWidgetState extends State<SourceTableWidget> {
+  final SourceDataController sourceDataController = Get.put(SourceDataController());
+
+  @override
+  void initState() {
+    sourceDataController.fetchData(
+      Get.find<OverAllSourceDataController>().fromDateTEController.text,
+           Get.find<OverAllSourceDataController>().toDateTEController.text,
+              );
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
