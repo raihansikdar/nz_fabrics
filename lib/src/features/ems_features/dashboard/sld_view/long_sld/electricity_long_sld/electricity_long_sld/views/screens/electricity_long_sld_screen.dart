@@ -78,13 +78,16 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
      _fetchViewPageData();
      _fetchPFData();
 
+    Get.find<ElectricityLongSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
+
     // Stop other controllers
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
     Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
-    Get.find<ElectricityShortSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
+
+ //   Get.find<ElectricityShortSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
 
     // Register as an observer to handle app lifecycle changes
     WidgetsBinding.instance.addObserver(this);
@@ -400,8 +403,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBarWidget(text: "Electricity SLD", backPreviousScreen: true,onBackButtonPressed: (){
-        _isFetchingViewPageData = false;
-        _isFetchingPFData =false;
+        Get.find<ElectricityShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
       },),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

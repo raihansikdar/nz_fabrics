@@ -257,7 +257,7 @@ class Point {
 class LiveDataModel {
   int? id;
   DateTime? timedate;
-  String? node;
+  String? node ;
   double? power;
   double? voltage1;
   double? voltage2;
@@ -280,7 +280,7 @@ class LiveDataModel {
   LiveDataModel({
     this.id,
     this.timedate,
-    this.node,
+    this.node ,
     this.power,
     this.voltage1,
     this.voltage2,

@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
@@ -50,8 +49,7 @@ class ElectricityShortSld extends StatefulWidget {
   State<ElectricityShortSld> createState() => _ElectricityShortSldState();
 }
 
-class _ElectricityShortSldState extends State<ElectricityShortSld>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   // Keep state variables
   List<ElectricityShortViewPageModel> _viewPageData = [];
   Map<dynamic, LiveDataModel> _liveData = {};
@@ -69,12 +67,15 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
       duration: const Duration(seconds: 2),
       vsync: this,
     )..repeat();
-    super.initState();
+
     _loadMouseIcon();
     _loadCachedData();
 
    _fetchViewPageData();
-     _fetchPFData();
+
+
+    Get.find<ElectricityShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
+
 
     // Stop other controllers
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
@@ -82,11 +83,17 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
     Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
-    Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
 
-    // Register as an observer to handle app lifecycle changes
+
     WidgetsBinding.instance.addObserver(this);
+
+    super.initState();
   }
+
+
+
+
+
 
   void _loadMouseIcon() async {
     final ByteData data = await rootBundle.load('assets/images/Rectangle 1816.png');
@@ -129,13 +136,18 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           _viewPageData = parsedData;
           _liveData = parsedLiveData;
           _isLoading = false;
+
+          _liveData.forEach((key,value){
+            debugPrint('------------->>> $key +++> $value');
+          });
+
         });
       }
     }
 
     // Only fetch new data if cache is invalid or empty
     if (!isCacheValid) {
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: kTimer), () {
         if (!_isFetchingPFData) _fetchPFData();
         if (!_isFetchingViewPageData) _initializeData();
 
@@ -148,7 +160,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
       });
     } else {
       // Even with valid cache, start periodic updates
-      Future.delayed(const Duration(seconds: 2), () {
+      Future.delayed(const Duration(seconds: kTimer), () {
         startTimer();
       });
     }
@@ -178,7 +190,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     if (_isFetchingViewPageData || !mounted) return;
     _isFetchingViewPageData = true;
     final requestId = Uuid().v4(); // Unique ID for this request
-    debugPrint('[$requestId] Fetching view page data at ${DateTime.now()}');
+  //  debugPrint('[$requestId] Fetching view page data at ${DateTime.now()}');
 
     try {
       // Only show loading on initial load, not on refreshes
@@ -192,7 +204,8 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
         Uri.parse(Urls.shortElectricityUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
-      debugPrint('[$requestId] View page data response: ${response.statusCode} at ${DateTime.now()}');
+    //  debugPrint('[$requestId] View page data response: ${response.statusCode} at ${DateTime.now()}');
+      debugPrint('----------------------->>> Electricity Short _fetchViewPageData api call-------------------');
 
       if (response.statusCode == 200 && mounted) {
         final List<dynamic> data = json.decode(response.body);
@@ -213,7 +226,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
             .map((item) => fetchAndUpdatePowerMeter(item.nodeName, item.sourceType, controller, requestId))
             .toList();
 
-        debugPrint('[$requestId] Fetching ${fetchRequests.length} power meter requests');
+        //debugPrint('[$requestId] Fetching ${fetchRequests.length} power meter requests');
         await Future.wait(fetchRequests);
       } else {
         throw Exception('Failed to load view page data');
@@ -230,7 +243,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
         });
       }
 
-      debugPrint('[$requestId] Fetch view page data completed at ${DateTime.now()}');
+     // debugPrint('[$requestId] Fetch view page data completed at ${DateTime.now()}');
     }
   }
 
@@ -253,19 +266,20 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
   Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType,
       ElectricityShortSLDGetAllInfoUIControllers controller, String parentRequestId) async {
     final requestId = Uuid().v4();
-    debugPrint('[$requestId] Fetching power meter for $nodeName (Parent: $parentRequestId) at ${DateTime.now()}');
+  //  debugPrint('[$requestId] Fetching power meter for $nodeName (Parent: $parentRequestId) at ${DateTime.now()}');
 
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
-      debugPrint('[$requestId] Power meter response for $nodeName: ${meterResponse.statusCode}');
+     /// debugPrint('[$requestId] Power meter response for $nodeName: ${meterResponse.statusCode}');
+      debugPrint('----------------------->>> Electricity Short fetchAndUpdatePowerMeter api call-------------------');
 
       if (meterResponse.statusCode == 200) {
         final meterData = json.decode(meterResponse.body);
         double powerMeter = meterData['power_meter'] ?? 0.0;
-        debugPrint('[$requestId] Updating power meter for $nodeName -> $powerMeter');
+       // debugPrint('[$requestId] Updating power meter for $nodeName -> $powerMeter');
 
         // Update through controller without rebuilding entire widget
         controller.updatePowerMeter(powerMeter, nodeName);
@@ -280,14 +294,20 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     if (_isFetchingPFData || !mounted) return;
     _isFetchingPFData = true;
     final requestId = Uuid().v4();
-    debugPrint('[$requestId] Fetching PF data at ${DateTime.now()}');
+  //  debugPrint('[$requestId] Fetching PF data at ${DateTime.now()}');
 
     try {
       final response = await http.get(
         Uri.parse('/api/get-pf-item-positions/'),
         headers: {'Authorization': '${AuthUtilityController.accessToken}'},
       );
-      debugPrint('[$requestId] PF data response: ${response.statusCode} at ${DateTime.now()}');
+
+      debugPrint('----------------------->>> Electricity Short _fetchPFData api call-------------------');
+
+
+
+
+      // debugPrint('[$requestId] PF data response: ${response.statusCode} at ${DateTime.now()}');
 
       if (response.statusCode == 200 && mounted) {
         final newPfData = List<Map<String, dynamic>>.from(json.decode(response.body));
@@ -305,7 +325,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
       debugPrint('[$requestId] Error fetching PF data: $e');
     } finally {
       _isFetchingPFData = false;
-      debugPrint('[$requestId] Fetch PF data completed at ${DateTime.now()}');
+    //  debugPrint('[$requestId] Fetch PF data completed at ${DateTime.now()}');
     }
   }
 
@@ -626,10 +646,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
   List<Widget> _buildWidgets(double minX, double minY) {
     return _viewPageData.map((item) {
-      final liveData = _liveData[item.id];
-      final double power = liveData?.power ?? 0.0;
-      final bool sensorStatus = power != 0.0;
-
       Widget widget;
 
       Color hexToColor(String hex) {
@@ -644,315 +660,435 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
       switch (item.shape) {
         case 'circle':
-          widget = ShortElectricityCircleWithIcon(
-            sensorStatus: liveData?.sensorStatus ?? true,
-            value: power,
-            // textColor: item.textColor,
-            // textSize: item.textSize,
-            borderColor: item.color ?? '#FF0000',
-            icon: FontAwesomeIcons.bolt,
-            text: item.nodeName,
-            width: item.width.toDouble(),
-            height: item.height.toDouble(),
-            onTap: () {
-              debugPrint("----->CircleWithIcon<-----");
-              if (item.category == 'Diesel_Generator') {
-                Get.to(
-                      () => GeneratorElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                    gaugeUnit: 'kW',
-                    elementCategory: 'Power',
-                  ),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(seconds: 1),
-                );
-              } else {
-                Get.to(
-                      () => PowerAndEnergyElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                    gaugeUnit: 'kW',
-                    elementCategory: 'Power',
-                    solarCategory: item.category,
-                  ),
-                  transition: Transition.rightToLeft,
-                  duration: const Duration(seconds: 1),
-                );
+          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+            id: 'node_${item.nodeName}',
+            builder: (controller) {
+              debugPrint('Rebuilding circle node: ${item.nodeName}');
+              final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                    (element) => element.node == item.nodeName,
+                orElse: () => ElectricityShortLiveAllNodePowerModel(),
+              );
+              final bool hasData = nodeData.node != null;
+              if (!hasData) {
+                debugPrint('No data for circle node: ${item.nodeName}, using power: 0.0');
               }
+              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              debugPrint('Circle Node---------: ${item.nodeName}, Power: $power, Percentage: ${nodeData.percentage}, Capacity: ${nodeData.capacity}');
+              return ShortElectricityCircleWithIcon(
+                sensorStatus: power != 0.0,
+                value: power,
+                borderColor: item.color ?? '#FF0000',
+                icon: FontAwesomeIcons.bolt,
+                text: item.nodeName,
+                width: item.width.toDouble(),
+                height: item.height.toDouble(),
+                onTap: () {
+                  debugPrint("----->CircleWithIcon<-----");
+                  if (item.category == 'Diesel_Generator') {
+                    Get.to(
+                          () => GeneratorElementDetailsScreen(
+                        elementName: item.nodeName,
+                        gaugeValue: power,
+                        gaugeUnit: 'kW',
+                        elementCategory: 'Power',
+                      ),
+                      transition: Transition.rightToLeft,
+                      duration: const Duration(seconds: 1),
+                    );
+                  } else {
+                    Get.to(
+                          () => PowerAndEnergyElementDetailsScreen(
+                        elementName: item.nodeName,
+                        gaugeValue: power,
+                        gaugeUnit: 'kW',
+                        elementCategory: 'Power',
+                        solarCategory: item.category,
+                      ),
+                      transition: Transition.rightToLeft,
+                      duration: const Duration(seconds: 1),
+                    );
+                  }
+                },
+                unit: 'kW',
+              );
             },
-            unit: 'kW',
           );
           break;
+
         case 'LB_Meter':
-          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(builder: (controller) {
-            final nodeData = controller.liveAllNodePowerModel.firstWhere(
-                  (element) => element.node == item.nodeName,
-              orElse: () => ElectricityShortLiveAllNodePowerModel(),
-            );
-            return ShortElectricityBoxWithIconWidget(
-              sensorStatus: sensorStatus,
-              value: power,
-              icon: FontAwesomeIcons.solarPanel,
-              label: item.nodeName,
-              width: item.width.toDouble(),
-              height: item.height.toDouble(),
-              onTap: () {},
-              unit: 'kW',
-              // color: item.color ?? '#FF0000',
-              // textColor: item.textColor,
-              // textSize: item.textSize,
-              borderColor: item.borderColor ?? '#FF0000',
-              percentage: nodeData.percentage != null
+          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+            id: 'node_${item.nodeName}',
+            builder: (controller) {
+              debugPrint('Rebuilding LB_Meter node: ${item.nodeName}');
+              final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                    (element) => element.node == item.nodeName,
+                orElse: () => ElectricityShortLiveAllNodePowerModel(),
+              );
+              final bool hasData = nodeData.node != null;
+              if (!hasData) {
+                debugPrint('No data for LB_Meter node: ${item.nodeName}, using power: 0.0');
+              }
+              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              final String percentage = hasData && nodeData.percentage != null
                   ? nodeData.percentage.toStringAsFixed(2)
-                  : "0.00",
-              capacity: nodeData.capacity != null
+                  : "0.00";
+              final String capacity = hasData && nodeData.capacity != null
                   ? nodeData.capacity.toStringAsFixed(2)
-                  : "0.00",
-            );
-          });
-          break;
-      // ElectricityLongSLDLiveAllNodePowerController
-        case 'box':
-          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(builder: (controller) {
-            final nodeData = controller.liveAllNodePowerModel.firstWhere(
-                  (element) => element.node == item.nodeName,
-              orElse: () => ElectricityShortLiveAllNodePowerModel(),
-            );
-            return ShortElectrcityTrBoxWithIconWidget(
-              sensorStatus: liveData?.sensorStatus ?? true,
-              value: power,
-              icon: FontAwesomeIcons.solarPanel,
-              label: item.nodeName,
-              width: item.width.toDouble(),
-              height: item.height.toDouble(),
-              onTap: () {
-                debugPrint("----->TrBoxWithIconWidget<-----");
-                if (item.category == 'Diesel_Generator') {
-                  Get.to(
-                        () => GeneratorElementDetailsScreen(
-                      elementName: item.nodeName,
-                      gaugeValue: power,
-                      gaugeUnit: 'kW',
-                      elementCategory: 'Power',
-                    ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
-                } else {
-                  Get.to(
-                        () => PowerAndEnergyElementDetailsScreen(
-                      elementName: item.nodeName,
-                      gaugeValue: power,
-                      gaugeUnit: 'kW',
-                      elementCategory: 'Power',
-                      solarCategory: item.category,
-                    ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
-                }
-              },
-              unit: 'kW',
-              borderColor: item.color ?? '#FF0000',
-              percentage: nodeData.percentage != null
-                  ? nodeData.percentage.toStringAsFixed(2)
-                  : "0.00",
-              capacity: nodeData.capacity != null
-                  ? nodeData.capacity.toStringAsFixed(2)
-                  : "0.00",
-            );
-          });
-          break;
-        case 'Bus_Bar':
-          if (item.sourceType == 'Super_Bus_Bar') {
-            widget = GetBuilder<ElectricityShortSLDLtProductionVsCapacityController>(builder: (controller) {
-              return ShortElectricitySuperBusBarWidget(
-                sensorStatus: liveData?.sensorStatus ?? true,
+                  : "0.00";
+              debugPrint('LB_Meter Node: ${item.nodeName}, Power: $power, Percentage: $percentage, Capacity: $capacity');
+              return ShortElectricityBoxWithIconWidget(
+                sensorStatus: power != 0.0,
                 value: power,
-                nodeName: item.nodeName,
-                backgroundColor: item.color ?? '#FF0000',
-                borderColor: item.borderColor ?? '#FF0000',
-                textColor: item.textColor != null ? hexToColor(item.textColor!) : Colors.black,
-                loadBoxHeight: item.height.toDouble(),
-                loadBoxWidth: item.width.toDouble(),
+                icon: FontAwesomeIcons.solarPanel,
+                label: item.nodeName,
+                width: item.width.toDouble(),
+                height: item.height.toDouble(),
                 onTap: () {},
                 unit: 'kW',
-                gridColor: controller.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
-                generatorColor: controller.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
-                solarColor: controller.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
-                gridPercentage: item.nodeName == "LT-02 A"
-                    ? controller.ltProductionVsCapacityModel.lt02AGridPercentage ?? 0.00
-                    : item.nodeName == "LT-02 B"
-                    ? controller.ltProductionVsCapacityModel.lt02BGridPercentage ?? 0.00
-                    : item.nodeName == "LT-01 A"
-                    ? controller.ltProductionVsCapacityModel.lt01AGridPercentage ?? 0.00
-                    : item.nodeName == "LT-01 B"
-                    ? controller.ltProductionVsCapacityModel.lt01BGridPercentage ?? 0.00
-                    : 0.00,
-                generatorPercentage: item.nodeName == "LT-02 A"
-                    ? controller.ltProductionVsCapacityModel.lt02AGeneratorPercentage ?? 0.00
-                    : item.nodeName == "LT-02 B"
-                    ? controller.ltProductionVsCapacityModel.lt02BGeneratorPercentage ?? 0.00
-                    : item.nodeName == "LT-01 A"
-                    ? controller.ltProductionVsCapacityModel.lt01AGeneratorPercentage ?? 0.00
-                    : item.nodeName == "LT-01 B"
-                    ? controller.ltProductionVsCapacityModel.lt01BGeneratorPercentage ?? 0.00
-                    : 0.00,
-                solarPercentage: item.nodeName == "LT-02 A"
-                    ? controller.ltProductionVsCapacityModel.lt02ASolarPercentage ?? 0.00
-                    : item.nodeName == "LT-02 B"
-                    ? controller.ltProductionVsCapacityModel.lt02BSolarPercentage ?? 0.00
-                    : item.nodeName == "LT-01 A"
-                    ? controller.ltProductionVsCapacityModel.lt01ASolarPercentage ?? 0.00
-                    : item.nodeName == "LT-01 B"
-                    ? controller.ltProductionVsCapacityModel.lt01BSolarPercentage ?? 0.00
-                    : 0.00,
-                gridValue: item.nodeName == "LT-02 A"
-                    ? controller.ltProductionVsCapacityModel.lt02AGridPower ?? 0.00
-                    : item.nodeName == "LT-02 B"
-                    ? controller.ltProductionVsCapacityModel.lt02BGridPower ?? 0.00
-                    : item.nodeName == "LT-01 A"
-                    ? controller.ltProductionVsCapacityModel.lt01AGridPower ?? 0.00
-                    : item.nodeName == "LT-01 B"
-                    ? controller.ltProductionVsCapacityModel.lt01BGridPower ?? 0.00
-                    : 0.00,
-                generatorValue: item.nodeName == "LT-02 A"
-                    ? controller.ltProductionVsCapacityModel.lt02AGeneratorPower ?? 0.00
-                    : item.nodeName == "LT-02 B"
-                    ? controller.ltProductionVsCapacityModel.lt02BGeneratorPower ?? 0.00
-                    : item.nodeName == "LT-01 A"
-                    ? controller.ltProductionVsCapacityModel.lt01AGeneratorPower ?? 0.00
-                    : item.nodeName == "LT-01 B"
-                    ? controller.ltProductionVsCapacityModel.lt01BGeneratorPower ?? 0.00
-                    : 0.00,
-                solarValue: item.nodeName == "LT-02 A"
-                    ? controller.ltProductionVsCapacityModel.lt02ASolarPower ?? 0.00
-                    : item.nodeName == "LT-02 B"
-                    ? controller.ltProductionVsCapacityModel.lt02BSolarPower ?? 0.00
-                    : item.nodeName == "LT-01 A"
-                    ? controller.ltProductionVsCapacityModel.lt01ASolarPower ?? 0.00
-                    : item.nodeName == "LT-01 B"
-                    ? controller.ltProductionVsCapacityModel.lt01BSolarPower ?? 0.00
-                    : 0.00,
-                y: (item.nodeName == "LT-02 A" || item.nodeName == "LT-02 B") ? 40 : -95,
-                orientation: item.orientation,
+                borderColor: item.borderColor ?? '#FF0000',
+                percentage: percentage,
+                capacity: capacity,
               );
-            });
-          }
-          // ElectricityLongSLDLiveAllNodePowerController
+            },
+          );
+          break;
 
-          else if (item.sourceType == 'Load_Bus_Bar' || item.sourceType == 'Bus_Bar') {
+        case 'box':
+          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+            id: 'node_${item.nodeName}',
+            builder: (controller) {
+              debugPrint('Rebuilding box node: ${item.nodeName}');
+              final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                    (element) => element.node == item.nodeName,
+                orElse: () => ElectricityShortLiveAllNodePowerModel(),
+              );
+              final bool hasData = nodeData.node != null;
+              if (!hasData) {
+                debugPrint('No data for box node: ${item.nodeName}, using power: 0.0');
+              }
+              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              final String percentage = hasData && nodeData.percentage != null
+                  ? nodeData.percentage.toStringAsFixed(2)
+                  : "0.00";
+              final String capacity = hasData && nodeData.capacity != null
+                  ? nodeData.capacity.toStringAsFixed(2)
+                  : "0.00";
+              debugPrint('Box Node: ${item.nodeName}, Power: $power, Percentage: $percentage, Capacity: $capacity');
+              return ShortElectrcityTrBoxWithIconWidget(
+                sensorStatus: power != 0.0,
+                value: power,
+                icon: FontAwesomeIcons.solarPanel,
+                label: item.nodeName,
+                width: item.width.toDouble(),
+                height: item.height.toDouble(),
+                onTap: () {
+                  debugPrint("----->TrBoxWithIconWidget<-----");
+                  if (item.category == 'Diesel_Generator') {
+                    Get.to(
+                          () => GeneratorElementDetailsScreen(
+                        elementName: item.nodeName,
+                        gaugeValue: power,
+                        gaugeUnit: 'kW',
+                        elementCategory: 'Power',
+                      ),
+                      transition: Transition.rightToLeft,
+                      duration: const Duration(seconds: 1),
+                    );
+                  } else {
+                    Get.to(
+                          () => PowerAndEnergyElementDetailsScreen(
+                        elementName: item.nodeName,
+                        gaugeValue: power,
+                        gaugeUnit: 'kW',
+                        elementCategory: 'Power',
+                        solarCategory: item.category,
+                      ),
+                      transition: Transition.rightToLeft,
+                      duration: const Duration(seconds: 1),
+                    );
+                  }
+                },
+                unit: 'kW',
+                borderColor: item.color ?? '#FF0000',
+                percentage: percentage,
+                capacity: capacity,
+              );
+            },
+          );
+          break;
+
+        case 'Bus_Bar':
+          if (item.sourceType == 'Super_Bus_Bar') {
+            widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+              id: 'node_${item.nodeName}',
+              builder: (nodeController) {
+                debugPrint('Rebuilding Super_Bus_Bar node: ${item.nodeName}');
+                return GetBuilder<ElectricityShortSLDLtProductionVsCapacityController>(
+                  builder: (capacityController) {
+                    final nodeData = nodeController.liveAllNodePowerModel.firstWhere(
+                          (element) => element.node == item.nodeName,
+                      orElse: () => ElectricityShortLiveAllNodePowerModel(),
+                    );
+                    final bool hasData = nodeData.node != null;
+                    if (!hasData) {
+                      debugPrint('No data for Super_Bus_Bar node: ${item.nodeName}, using power: 0.0');
+                    }
+                    final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                    debugPrint('Super_Bus_Bar Node: ${item.nodeName}, Power: $power, Percentage: ${nodeData.percentage}, Capacity: ${nodeData.capacity}');
+                    return ShortElectricitySuperBusBarWidget(
+                      sensorStatus: power != 0.0,
+                      value: power,
+                      nodeName: item.nodeName,
+                      backgroundColor: item.color ?? '#FF0000',
+                      borderColor: item.borderColor ?? '#FF0000',
+                      textColor: item.textColor != null ? hexToColor(item.textColor!) : Colors.black,
+                      loadBoxHeight: item.height.toDouble(),
+                      loadBoxWidth: item.width.toDouble(),
+                      onTap: () {},
+                      unit: 'kW',
+                      gridColor: capacityController.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
+                      generatorColor: capacityController.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
+                      solarColor: capacityController.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
+                      gridPercentage: item.nodeName == "LT-02 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt02AGridPercentage ?? 0.00
+                          : item.nodeName == "LT-02 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt02BGridPercentage ?? 0.00
+                          : item.nodeName == "LT-01 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt01AGridPercentage ?? 0.00
+                          : item.nodeName == "LT-01 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt01BGridPercentage ?? 0.00
+                          : 0.00,
+                      generatorPercentage: item.nodeName == "LT-02 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt02AGeneratorPercentage ?? 0.00
+                          : item.nodeName == "LT-02 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt02BGeneratorPercentage ?? 0.00
+                          : item.nodeName == "LT-01 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt01AGeneratorPercentage ?? 0.00
+                          : item.nodeName == "LT-01 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt01BGeneratorPercentage ?? 0.00
+                          : 0.00,
+                      solarPercentage: item.nodeName == "LT-02 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt02ASolarPercentage ?? 0.00
+                          : item.nodeName == "LT-02 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt02BSolarPercentage ?? 0.00
+                          : item.nodeName == "LT-01 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt01ASolarPercentage ?? 0.00
+                          : item.nodeName == "LT-01 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt01BSolarPercentage ?? 0.00
+                          : 0.00,
+                      gridValue: item.nodeName == "LT-02 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt02AGridPower ?? 0.00
+                          : item.nodeName == "LT-02 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt02BGridPower ?? 0.00
+                          : item.nodeName == "LT-01 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt01AGridPower ?? 0.00
+                          : item.nodeName == "LT-01 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt01BGridPower ?? 0.00
+                          : 0.00,
+                      generatorValue: item.nodeName == "LT-02 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt02AGeneratorPower ?? 0.00
+                          : item.nodeName == "LT-02 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt02BGeneratorPower ?? 0.00
+                          : item.nodeName == "LT-01 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt01AGeneratorPower ?? 0.00
+                          : item.nodeName == "LT-01 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt01BGeneratorPower ?? 0.00
+                          : 0.00,
+                      solarValue: item.nodeName == "LT-02 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt02ASolarPower ?? 0.00
+                          : item.nodeName == "LT-02 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt02BSolarPower ?? 0.00
+                          : item.nodeName == "LT-01 A"
+                          ? capacityController.ltProductionVsCapacityModel.lt01ASolarPower ?? 0.00
+                          : item.nodeName == "LT-01 B"
+                          ? capacityController.ltProductionVsCapacityModel.lt01BSolarPower ?? 0.00
+                          : 0.00,
+                      y: (item.nodeName == "LT-02 A" || item.nodeName == "LT-02 B") ? 40 : -95,
+                      orientation: item.orientation,
+                    );
+                  },
+                );
+              },
+            );
+          } else if (item.sourceType == 'Load_Bus_Bar' || item.sourceType == 'Bus_Bar') {
             if (item.mainBusbar ?? false) {
-              widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(builder: (controller) {
+              widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+                id: 'node_${item.nodeName}',
+                builder: (controller) {
+                  debugPrint('Rebuilding Bus_Bar (mainBusbar) node: ${item.nodeName}');
+                  final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                        (element) => element.node == item.nodeName,
+                    orElse: () => ElectricityShortLiveAllNodePowerModel(),
+                  );
+                  final bool hasData = nodeData.node != null;
+                  if (!hasData) {
+                    debugPrint('No data for Bus_Bar node: ${item.nodeName}, using power: 0.0');
+                  }
+                  final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                  final String percentage = hasData && nodeData.percentage != null
+                      ? nodeData.percentage.toStringAsFixed(2)
+                      : "0.00";
+                  final String capacity = hasData && nodeData.capacity != null
+                      ? nodeData.capacity.toStringAsFixed(2)
+                      : "0.00";
+                  debugPrint('Bus_Bar Node: ${item.nodeName}, Power: $power, Percentage: $percentage, Capacity: $capacity');
+                  return ShortElectricityMainBusBarTrue(
+                    sensorStatus: power != 0.0,
+                    value: power,
+                    nodeName: item.nodeName,
+                    color: item.color ?? '#FF0000',
+                    borderColor: item.borderColor ?? '#FF0000',
+                    textColor: item.textColor,
+                    textSize: item.textSize,
+                    loadBoxHeight: item.height.toDouble(),
+                    loadBoxWidth: item.width.toDouble(),
+                    onTap: () {
+                      Get.to(
+                            () => ElectricityShortSLDMainBusBarTrueScreen(
+                          busBarName: item.nodeName,
+                        ),
+                        transition: Transition.rightToLeft,
+                        duration: const Duration(seconds: 1),
+                      );
+                    },
+                    unit: 'kW',
+                    percentage: percentage,
+                    capacity: capacity,
+                    orientation: item.orientation ?? 'horizontal',
+                  );
+                },
+              );
+            } else {
+              widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+                id: 'node_${item.nodeName}',
+                builder: (controller) {
+                  debugPrint('Rebuilding Load_Bus_Bar/Bus_Bar node: ${item.nodeName}');
+                  final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                        (element) => element.node == item.nodeName,
+                    orElse: () => ElectricityShortLiveAllNodePowerModel(),
+                  );
+                  final bool hasData = nodeData.node != null;
+                  if (!hasData) {
+                    debugPrint('No data for Load_Bus_Bar/Bus_Bar node: ${item.nodeName}, using power: 0.0');
+                  }
+                  final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                  debugPrint('Load_Bus_Bar/Bus_Bar Node: ${item.nodeName}, Power: $power');
+                  return ShortElectricitySourceAndLoadBoxWidget(
+                    sensorStatus: power != 0.0,
+                    value: power,
+                    nodeName: item.nodeName,
+                    borderColor: item.borderColor ?? '#FF0000',
+                    textColor: item.textColor,
+                    textSize: item.textSize,
+                    loadBoxHeight: item.height.toDouble(),
+                    loadBoxWidth: item.width.toDouble(),
+                    color: item.color ?? '#FF0000',
+                    onTap: () {
+                      Get.to(
+                            () => ElectricityShortSLDMainBusBarTrueScreen(busBarName: item.nodeName),
+                        transition: Transition.rightToLeft,
+                        duration: const Duration(seconds: 1),
+                      );
+                    },
+                    unit: 'kW',
+                    orientation: item.orientation,
+                  );
+                },
+              );
+            }
+          } else if (item.sourceType == 'Meter_Bus_Bar') {
+            widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+              id: 'node_${item.nodeName}',
+              builder: (controller) {
+                debugPrint('Rebuilding Meter_Bus_Bar node: ${item.nodeName}');
                 final nodeData = controller.liveAllNodePowerModel.firstWhere(
                       (element) => element.node == item.nodeName,
                   orElse: () => ElectricityShortLiveAllNodePowerModel(),
                 );
-                return ShortElectricityMainBusBarTrue(
-                  sensorStatus: liveData?.sensorStatus ?? true,
+                final bool hasData = nodeData.node != null;
+                if (!hasData) {
+                  debugPrint('No data for Meter_Bus_Bar node: ${item.nodeName}, using power: 0.0');
+                }
+                final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                debugPrint('Meter_Bus_Bar Node: ${item.nodeName}, Power: $power');
+                return ShortElectricityMeterBusBarWidget(
+                  sensorStatus: power != 0.0,
                   value: power,
                   nodeName: item.nodeName,
-                  color: item.color ?? '#FF0000',
-                  borderColor: item.borderColor ?? '#FF0000',
+                  color: item.color,
+                  borderColor: item.borderColor,
                   textColor: item.textColor,
                   textSize: item.textSize,
                   loadBoxHeight: item.height.toDouble(),
                   loadBoxWidth: item.width.toDouble(),
-                  onTap: () {
-                    Get.to(
-                          () => ElectricityShortSLDMainBusBarTrueScreen(busBarName: item.nodeName),
-                      transition: Transition.rightToLeft,
-                      duration: const Duration(seconds: 1),
-                    );
-                  },
+                  onTap: () {},
                   unit: 'kW',
-                  percentage: nodeData.percentage != null
-                      ? nodeData.percentage.toStringAsFixed(2)
-                      : "0.00",
-                  capacity: nodeData.capacity != null
-                      ? nodeData.capacity.toStringAsFixed(2)
-                      : "0.00",
-                  orientation: item.orientation ?? 'horizontal',
+                  orientation: item.orientation,
                 );
-              });
-            } else {
-              widget = ShortElectricitySourceAndLoadBoxWidget(
-                sensorStatus: liveData?.sensorStatus ?? true,
-                value: power,
-                nodeName: item.nodeName,
-                borderColor: item.borderColor ?? '#FF0000',
-                textColor: item.textColor,
-                textSize: item.textSize,
-                loadBoxHeight: item.height.toDouble(),
-                loadBoxWidth: item.width.toDouble(),
-                color: item.color ?? '#FF0000',
-
-                onTap: () {
-                  Get.to(
-                        () => ElectricityShortSLDMainBusBarTrueScreen(busBarName: item.nodeName),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
-                },
-                unit: 'kW',
-                orientation: item.orientation,
-              );
-            }
-          } else if (item.sourceType == 'Meter_Bus_Bar') {
-            widget = ShortElectricityMeterBusBarWidget(
-              sensorStatus: liveData?.sensorStatus ?? true,
-              value: power,
-              nodeName: item.nodeName,
-              color: item.color,
-              borderColor: item.borderColor,
-              textColor: item.textColor,
-              textSize: item.textSize,
-              loadBoxHeight: item.height.toDouble(),
-              loadBoxWidth: item.width.toDouble(),
-              onTap: () {},
-              unit: 'kW',
-              orientation: item.orientation,
+              },
             );
           } else {
             widget = const SizedBox.shrink();
           }
           break;
+
         case 'BusCoupler':
-          widget = GetBuilder<ElectricityShortSLDGetAllInfoUIControllers>(
+          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+            id: 'node_${item.nodeName}',
             builder: (controller) {
-              double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
-              bool isActive = powerMeter != 0.0;
+              debugPrint('Rebuilding BusCoupler node: ${item.nodeName}');
+              final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                    (element) => element.node == item.nodeName,
+
+                orElse:  () => ElectricityShortLiveAllNodePowerModel(),
+              );
+              final bool hasData = nodeData.node != null;
+              if (!hasData) {
+                debugPrint('No data for BusCoupler node: ${item.nodeName}, using power: 0.0');
+              }
+              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              debugPrint('BusCoupler Node: ${item.nodeName}, Power: $power');
               return ShortElectricityBusCouplerWidget(
-                key: ValueKey('${item.id}-${liveData?.sensorStatus}'),
+                key: ValueKey('${item.id}-${power != 0.0}'),
                 label: item.nodeName,
                 width: item.width.toDouble(),
                 height: item.height.toDouble(),
-                status: isActive,
+                status: power != 0.0,
                 shape: item.shape,
                 sourceType: item.sourceType,
               );
             },
           );
           break;
+
         case 'Loop':
-          widget = GetBuilder<ElectricityShortSLDGetAllInfoUIControllers>(
+          widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+            id: 'node_${item.nodeName}',
             builder: (controller) {
-              double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
-              bool isActive = powerMeter != 0.0;
-              debugPrint("Loop ${item.nodeName}: Power = $powerMeter, Status = $isActive");
+              debugPrint('Rebuilding Loop node: ${item.nodeName}');
+              final nodeData = controller.liveAllNodePowerModel.firstWhere(
+                    (element) => element.node == item.nodeName,
+                orElse: () => ElectricityShortLiveAllNodePowerModel(),
+              );
+              final bool hasData = nodeData.node != null;
+              if (!hasData) {
+                debugPrint('No data for Loop node: ${item.nodeName}, using power: 0.0');
+              }
+              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              debugPrint('Loop Node: ${item.nodeName}, Power: $power');
               return ShortElectricityBusCouplerWidget(
-                key: ValueKey('${item.id}-${liveData?.sensorStatus}'),
+                key: ValueKey('${item.id}-${power != 0.0}'),
                 label: item.nodeName,
                 width: item.width.toDouble(),
                 height: item.height.toDouble(),
-                status: isActive,
+                status: power != 0.0,
                 shape: item.shape,
                 sourceType: item.sourceType,
               );
             },
           );
           break;
+
         default:
           widget = const SizedBox.shrink();
       }

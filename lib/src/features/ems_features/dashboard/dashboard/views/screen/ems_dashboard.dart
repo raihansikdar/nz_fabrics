@@ -22,6 +22,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/sld_tab_view/sld_tab_view_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
@@ -60,7 +61,7 @@ class EmsDashboardScreen extends StatefulWidget {
   State<EmsDashboardScreen> createState() => _EmsDashboardScreenState();
 }
 
-class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerProviderStateMixin {
+class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerProviderStateMixin,WidgetsBindingObserver {
 
   //late final TabController _tabController;
   late final ScrollController _scrollController;
@@ -88,8 +89,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
     //  Get.find<AnalysisProDayButtonController>().fetchSelectedNodeData(fromDate:  Get.find<AnalysisProDayButtonController>().fromDateTEController.text, toDate:  Get.find<AnalysisProDayButtonController>().toDateTEController.text);
       //Get.find<AllNotificationController>().fetchNotificationData();
       Get.find<LoadPowerController>().fetchLoadPowerData();
-
-      Get.find<ElectricityLongSLDAllInfoController>().fetchSourcePowerData();
+      Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    //  Get.find<ElectricityLongSLDAllInfoController>().fetchSourcePowerData();
 
 
 
@@ -101,11 +102,11 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
   @override
   void dispose() {
-    //_tabController.dispose();
-    _scrollController.dispose();
+
+    Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-  }
-  
+    }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
@@ -359,6 +360,8 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
                                                                                       Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                                                                                       Get.find<WaterShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                      Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
+                                                                                      Get.find<ElectricityShortSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
                                                                                       Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                                                                                       Get.find<WaterLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
 

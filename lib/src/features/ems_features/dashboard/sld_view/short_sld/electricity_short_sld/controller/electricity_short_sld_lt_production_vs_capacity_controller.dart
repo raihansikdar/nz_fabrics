@@ -138,6 +138,7 @@ class ElectricityShortSLDLtProductionVsCapacityController extends GetxController
       await internetConnectivityCheck();
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getLTProductionVsCapacityUrl);
+      log('-----electricity Short ElectricityShortSLDLtProductionVsCapacityController ------>>> ${Urls.getLTProductionVsCapacityUrl}');
 
       //log("getLTProductionVsCapacityUrl statusCode ==> ${response.statusCode}");
       // log("getLTProductionVsCapacityUrl body ==> ${response.body}");

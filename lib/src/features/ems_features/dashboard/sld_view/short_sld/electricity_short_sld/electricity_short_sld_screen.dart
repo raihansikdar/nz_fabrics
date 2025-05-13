@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/screens/electricity_long_sld_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/screens/electricity_short_sld.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 
@@ -11,8 +11,7 @@ class ElectricityShortSldScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Register the controller before building the widget tree
-    Get.put(ElectricityShortSLDLtProductionVsCapacityController());
+
     Size size = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: AppColors.whiteTextColor,

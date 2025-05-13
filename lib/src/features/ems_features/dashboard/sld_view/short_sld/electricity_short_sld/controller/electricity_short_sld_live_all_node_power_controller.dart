@@ -296,7 +296,7 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getElectricityLiveAllNodePowerUrl);
 
-      log('-----electricity Short------>>> ${Urls.baseUrl}/live-all-node-power/?type=electricity');
+      log('-----electricity Short ElectricityShortSLDLiveAllNodePowerController ------>>> ${Urls.getElectricityLiveAllNodePowerUrl}');
 
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);
