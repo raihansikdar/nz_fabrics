@@ -407,9 +407,8 @@ class StateHolderBinders extends Bindings{
      Get.put(ElectricityLongSLDFilterBusBarEnergyCostController());
 
    /* ->>--------> Short SLD <--------<<- */
-     Get.put(ElectricityShortSLDGetAllInfoControllers());
-     Get.put(ElectricityShortSLDFilterBusBarEnergyCostController());
      Get.put(ElectricityShortSLDAllInfoController());
+     Get.put(ElectricityShortSLDFilterBusBarEnergyCostController());
      Get.put(ElectricityShortSLDLiveAllNodePowerController());
      Get.put(ElectricityShortSldLivePfDataController());
      Get.put(ElectricityShortSLDLtProductionVsCapacityController());

@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:nz_fabrics/src/common_widgets/circular_inside_button_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_text_field_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
@@ -18,8 +19,11 @@ import 'package:google_fonts/google_fonts.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
-  final TextEditingController _emailTEController = TextEditingController();
-  final TextEditingController _passwordTEController = TextEditingController();
+
+  final TextEditingController _emailTEController = TextEditingController(text: kDebugMode ? 'r007@gmail.com' : '');
+
+  final TextEditingController _passwordTEController = TextEditingController(text: kDebugMode ? '12345' : '');
+
 
   final GlobalKey <FormState> _formKey = GlobalKey<FormState>();
 

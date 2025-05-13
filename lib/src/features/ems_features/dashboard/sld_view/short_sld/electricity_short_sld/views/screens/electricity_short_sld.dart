@@ -38,6 +38,7 @@ import 'package:nz_fabrics/src/utility/style/constant.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
@@ -52,15 +53,16 @@ class ElectricityShortSld extends StatefulWidget {
 
 class _ElectricityShortSldState extends State<ElectricityShortSld>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  // Keep state variables
   List<ElectricityShortViewPageModel> _viewPageData = [];
   Map<dynamic, LiveDataModel> _liveData = {};
-  ElectricityShortLoopAndBusCouplerModel loopAndBusCouplerModel = ElectricityShortLoopAndBusCouplerModel();
   bool _isLoading = true;
   late AnimationController _controller;
   late ui.Image _mouseIcon;
-
-  //Timer? _refreshTimer;
+  bool _isFetchingViewPageData = false;
+  bool _isFetchingPFData = false;
   Timer? _timer;
+  List<Map<String, dynamic>> _pfData = [];
 
   @override
   void initState() {
@@ -71,14 +73,8 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     super.initState();
     _loadMouseIcon();
     _loadCachedData();
-    _fetchPFData();
-    _initializeData();
 
-    Get.find<ElectricityShortSLDLtProductionVsCapacityController>().fetchProductVsCapacityData();
-    Get.find<ElectricityShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
-    Get.find<ElectricityShortSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
-    Get.find<ElectricityShortSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
-
+    // Stop other controllers
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
@@ -86,244 +82,301 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
     Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
 
-  }
-
-  Future<void> _loadCachedData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Load cached view page data if available
-    String? cachedViewPageData = prefs.getString('cached_viewPageData');
-    if (cachedViewPageData != null) {
-      setState(() {
-        _viewPageData = (json.decode(cachedViewPageData) as List)
-            .map((data) => ElectricityShortViewPageModel.fromJson(data))
-            .toList();
-        _isLoading = false;
-      });
-    }
-
-    // Load cached live data if available
-    String? cachedLiveData = prefs.getString('cached_liveData');
-    if (cachedLiveData != null) {
-      setState(() {
-        _liveData = Map<int, LiveDataModel>.from(json
-            .decode(cachedLiveData)
-            .map((id, data) =>
-            MapEntry(int.parse(id), LiveDataModel.fromJson(data))));
-      });
-    }
+    // Register as an observer to handle app lifecycle changes
+    WidgetsBinding.instance.addObserver(this);
   }
 
   void _loadMouseIcon() async {
-    final ByteData data =
-    await rootBundle.load('assets/images/Rectangle 1816.png');
-    final ui.Codec codec =
-    await ui.instantiateImageCodec(data.buffer.asUint8List());
+    final ByteData data = await rootBundle.load('assets/images/Rectangle 1816.png');
+    final ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List());
     final ui.FrameInfo fi = await codec.getNextFrame();
     setState(() {
       _mouseIcon = fi.image;
     });
   }
 
+  // OPTIMIZATION 1: Load cached data first without triggering full UI rebuilds
+  Future<void> _loadCachedData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Load cached view page data
+    String? cachedViewPageData = prefs.getString('cached_viewPageData');
+    String? viewPageCacheTime = prefs.getString('cached_viewPageData_time');
+    bool isCacheValid = false;
+
+    if (cachedViewPageData != null && viewPageCacheTime != null) {
+      DateTime cacheTime = DateTime.parse(viewPageCacheTime);
+      if (DateTime.now().difference(cacheTime).inMinutes < 5) { // Cache valid for 5 minutes
+        isCacheValid = true;
+        final List<ElectricityShortViewPageModel> parsedData = (json.decode(cachedViewPageData) as List)
+            .map((data) => ElectricityShortViewPageModel.fromJson(data))
+            .toList();
+
+        // Load cached live data
+        String? cachedLiveData = prefs.getString('cached_liveData');
+        Map<dynamic, LiveDataModel> parsedLiveData = {};
+
+        if (cachedLiveData != null) {
+          parsedLiveData = Map<int, LiveDataModel>.from(json
+              .decode(cachedLiveData)
+              .map((id, data) => MapEntry(int.parse(id), LiveDataModel.fromJson(data))));
+        }
+
+        // Set state only once
+        setState(() {
+          _viewPageData = parsedData;
+          _liveData = parsedLiveData;
+          _isLoading = false;
+        });
+      }
+    }
+
+    // Only fetch new data if cache is invalid or empty
+    if (!isCacheValid) {
+      Future.delayed(const Duration(seconds: 1), () {
+        if (!_isFetchingPFData) _fetchPFData();
+        if (!_isFetchingViewPageData) _initializeData();
+
+        // Start controllers for data fetching but not UI rebuilding
+        final productionController = Get.find<ElectricityShortSLDLtProductionVsCapacityController>();
+        final nodePowerController = Get.find<ElectricityShortSLDLiveAllNodePowerController>();
+
+        productionController.fetchProductVsCapacityData();
+        nodePowerController.fetchLiveAllNodePower();
+      });
+    } else {
+      // Even with valid cache, start periodic updates
+      Future.delayed(const Duration(seconds: 2), () {
+        startTimer();
+      });
+    }
+  }
+
+  // OPTIMIZATION 2: Separate initialization of data without full UI rebuilds
   Future<void> _initializeData() async {
     await _fetchViewPageData();
-  //  await _fetchLiveData();
     _cacheData(); // Cache data after fetching
   }
 
+  // OPTIMIZATION 3: Cache data for future use
   Future<void> _cacheData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString('cached_viewPageData',
+    await prefs.setString(
+        'cached_viewPageData',
         json.encode(_viewPageData.map((data) => data.toJson()).toList()));
+    await prefs.setString('cached_viewPageData_time', DateTime.now().toIso8601String());
     await prefs.setString(
         'cached_liveData',
-        json.encode(_liveData
-            .map((id, data) => MapEntry(id.toString(), data.toJson()))));
+        json.encode(_liveData.map((id, data) => MapEntry(id.toString(), data.toJson()))));
   }
 
-  // Future<void> _fetchLiveData() async {
-  //   if (!mounted) return;
-  //
-  //   final response = await http.get(
-  //     Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=electricity'),
-  //     headers: {
-  //       'Authorization': AuthUtilityController.accessToken ?? '',
-  //     },
-  //   );
-  //
-  //   // debugPrint("live-all-node-power -----> ${response.body}");
-  //
-  //   if (response.statusCode == 200) {
-  //     final data = json.decode(response.body) as List<dynamic>;
-  //     var fetchRequests = _viewPageData
-  //         .where((item) => item.nodeName.isNotEmpty)
-  //         .map((item) async {
-  //       final nodeData = data.firstWhere(
-  //             (node) => node['node'] == item.nodeName,
-  //         orElse: () => null,
-  //       );
-  //
-  //       if (nodeData != null) {
-  //         LiveDataModel liveDataModel = LiveDataModel(
-  //           power: nodeData['power']?.toDouble() ?? 0.0,
-  //           sensorStatus: nodeData['sensor_status'] ?? false,
-  //           sourceType: nodeData['source_type'] ?? '',
-  //           timedate: nodeData['timedate'] != null
-  //               ? DateTime.tryParse(nodeData['timedate'])
-  //               : null,
-  //           //  color: nodeData['color']?.toString(),
-  //         );
-  //
-  //         return {item.id: liveDataModel};
-  //       }
-  //       return null;
-  //     }).toList();
-  //
-  //     final results = await Future.wait(fetchRequests);
-  //
-  //     if (mounted) {
-  //       setState(() {
-  //         for (var result in results) {
-  //           if (result != null) {
-  //             _liveData.addAll(result);
-  //           }
-  //         }
-  //         _isLoading = false;
-  //       });
-  //     }
-  //   } else {
-  //     // Handle the error case when the API call fails
-  //     debugPrint('-------Failed to fetch live data------------');
-  //     if (mounted) {
-  //       setState(() {
-  //         _isLoading = false;
-  //       });
-  //     }
-  //   }
-  // }
-
+  // OPTIMIZATION 4: Fetch view page data without triggering full UI rebuilds
   Future<void> _fetchViewPageData() async {
-    if (!mounted) return;
+    if (_isFetchingViewPageData || !mounted) return;
+    _isFetchingViewPageData = true;
+    final requestId = Uuid().v4(); // Unique ID for this request
+    debugPrint('[$requestId] Fetching view page data at ${DateTime.now()}');
+
     try {
+      // Only show loading on initial load, not on refreshes
+      if (_viewPageData.isEmpty) {
+        setState(() {
+          _isLoading = true;
+        });
+      }
+
       final response = await http.get(
         Uri.parse(Urls.shortElectricityUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
+      debugPrint('[$requestId] View page data response: ${response.statusCode} at ${DateTime.now()}');
 
-      debugPrint('-----------layout-node-positions------------>> ${Urls.baseUrl}/api/layout-node-positions/?page_type=es');
-
-
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && mounted) {
         final List<dynamic> data = json.decode(response.body);
+        final newViewPageData = data.map((e) => ElectricityShortViewPageModel.fromJson(e)).toList();
 
-        setState(() {
-          _viewPageData = data.map((e) => ElectricityShortViewPageModel.fromJson(e)).toList();
-        });
-
-        ElectricityShortSLDGetAllInfoControllers controller = Get.find(); // Get controller instance
-
-        for (var item in _viewPageData) {
-          if (item.sourceType == 'BusCoupler' || item.sourceType == 'Loop') {
-            fetchAndUpdatePowerMeter(item.nodeName, item.sourceType, controller);
-          }
+        // Only update the UI if data actually changed
+        if (!_compareViewPageData(_viewPageData, newViewPageData)) {
+          setState(() {
+            _viewPageData = newViewPageData;
+            if (_isLoading) _isLoading = false;
+          });
         }
+
+        // Fetch bus coupler and loop data without rebuilding the whole UI
+        ElectricityShortSLDGetAllInfoControllers controller = Get.find();
+        final fetchRequests = _viewPageData
+            .where((item) => item.sourceType == 'BusCoupler' || item.sourceType == 'Loop')
+            .map((item) => fetchAndUpdatePowerMeter(item.nodeName, item.sourceType, controller, requestId))
+            .toList();
+
+        debugPrint('[$requestId] Fetching ${fetchRequests.length} power meter requests');
+        await Future.wait(fetchRequests);
       } else {
         throw Exception('Failed to load view page data');
       }
     } catch (e) {
-      debugPrint('Error fetching view page data: $e');
+      debugPrint('[$requestId] Error fetching view page data: $e');
+    } finally {
+      _isFetchingViewPageData = false;
+
+      // Only update loading state if we started loading in this method
+      if (_isLoading && mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+
+      debugPrint('[$requestId] Fetch view page data completed at ${DateTime.now()}');
     }
   }
 
-  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType, ElectricityShortSLDGetAllInfoControllers controller) async {
+  // Helper method to compare view page data to avoid unnecessary rebuilds
+  bool _compareViewPageData(List<ElectricityShortViewPageModel> oldData, List<ElectricityShortViewPageModel> newData) {
+    if (oldData.length != newData.length) return false;
+
+    for (int i = 0; i < oldData.length; i++) {
+      if (oldData[i].id != newData[i].id ||
+          oldData[i].nodeName != newData[i].nodeName ||
+          oldData[i].sourceType != newData[i].sourceType) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // OPTIMIZATION 5: Update power meter data without triggering full UI rebuilds
+  Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType,
+      ElectricityShortSLDGetAllInfoControllers controller, String parentRequestId) async {
+    final requestId = Uuid().v4();
+    debugPrint('[$requestId] Fetching power meter for $nodeName (Parent: $parentRequestId) at ${DateTime.now()}');
+
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
+      debugPrint('[$requestId] Power meter response for $nodeName: ${meterResponse.statusCode}');
 
       if (meterResponse.statusCode == 200) {
         final meterData = json.decode(meterResponse.body);
         double powerMeter = meterData['power_meter'] ?? 0.0;
+        debugPrint('[$requestId] Updating power meter for $nodeName -> $powerMeter');
 
-        // Debug log
-        debugPrint("Updating power meter for $nodeName -> $powerMeter");
-
-        // Update power meter value in the map
+        // Update through controller without rebuilding entire widget
         controller.updatePowerMeter(powerMeter, nodeName);
       }
     } catch (e) {
-      debugPrint('Error fetching power meter data for $nodeName: $e');
+      debugPrint('[$requestId] Error fetching power meter data for $nodeName: $e');
     }
   }
 
-  /*--------------Pf here----------*/
-  List<Map<String, dynamic>> _pfData = [];
-
+  // OPTIMIZATION 6: Fetch PF data without triggering full UI rebuilds
   Future<void> _fetchPFData() async {
-    final response = await http.get(
-      Uri.parse('/api/get-pf-item-positions/'),
-      headers: {
-        'Authorization': '${AuthUtilityController.accessToken}',
-      },
-    );
-    if (response.statusCode == 200) {
-     if(mounted){
-       setState(() {
-         _pfData = List<Map<String, dynamic>>.from(json.decode(response.body));
-       });
-     }
-    } else {
-      debugPrint('Failed to fetch PF data');
+    if (_isFetchingPFData || !mounted) return;
+    _isFetchingPFData = true;
+    final requestId = Uuid().v4();
+    debugPrint('[$requestId] Fetching PF data at ${DateTime.now()}');
+
+    try {
+      final response = await http.get(
+        Uri.parse('/api/get-pf-item-positions/'),
+        headers: {'Authorization': '${AuthUtilityController.accessToken}'},
+      );
+      debugPrint('[$requestId] PF data response: ${response.statusCode} at ${DateTime.now()}');
+
+      if (response.statusCode == 200 && mounted) {
+        final newPfData = List<Map<String, dynamic>>.from(json.decode(response.body));
+
+        // Only update if data actually changed
+        if (!_comparePFData(_pfData, newPfData)) {
+          setState(() {
+            _pfData = newPfData;
+          });
+        }
+      } else {
+        debugPrint('[$requestId] Failed to fetch PF data');
+      }
+    } catch (e) {
+      debugPrint('[$requestId] Error fetching PF data: $e');
+    } finally {
+      _isFetchingPFData = false;
+      debugPrint('[$requestId] Fetch PF data completed at ${DateTime.now()}');
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (ModalRoute.of(context)?.isCurrent ?? false) {
-      startTimer();
-    } else {
-      stopTimer();
+  // Helper method to compare PF data to avoid unnecessary rebuilds
+  bool _comparePFData(List<Map<String, dynamic>> oldData, List<Map<String, dynamic>> newData) {
+    if (oldData.length != newData.length) return false;
+
+    for (int i = 0; i < oldData.length; i++) {
+      if (oldData[i]['node_name'] != newData[i]['node_name']) {
+        return false;
+      }
     }
+
+    return true;
   }
 
-  void startTimer() {
-    stopTimer();
-    _timer = Timer.periodic(const Duration(seconds: kTimer), (Timer timer) {
-      //_fetchLiveData();
-      _fetchViewPageData();
-    });
-  }
-
+  // OPTIMIZATION 7: Smart timer management
   void stopTimer() {
     _timer?.cancel();
     _timer = null;
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.inactive) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (ModalRoute.of(context)?.isCurrent ?? false) {
+      // Delay timer start to avoid overlap with initState
+      Future.delayed(const Duration(seconds: 2), () {
+        startTimer();
+      });
+    } else {
       stopTimer();
-    } else if (state == AppLifecycleState.resumed) {
-      startTimer();
+    }
+  }
+
+  // OPTIMIZATION 8: Timer only updates data, not UI
+  void startTimer() {
+    stopTimer();
+    _timer = Timer.periodic(const Duration(seconds: kTimer), (Timer timer) {
+      // Only fetch data if not already fetching
+      if (!_isFetchingViewPageData) _fetchViewPageData();
+      if (!_isFetchingPFData) _fetchPFData();
+
+      // Update controller data without rebuilding entire UI
+      final productionController = Get.find<ElectricityShortSLDLtProductionVsCapacityController>();
+      final nodePowerController = Get.find<ElectricityShortSLDLiveAllNodePowerController>();
+
+      productionController.fetchProductVsCapacityData();
+      nodePowerController.fetchLiveAllNodePower();
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Handle app lifecycle changes to manage timer efficiently
+    if (state == AppLifecycleState.resumed) {
+      // App came to foreground
+      if (ModalRoute.of(context)?.isCurrent ?? false) {
+        startTimer();
+      }
+    } else if (state == AppLifecycleState.paused) {
+      // App went to background
+      stopTimer();
     }
   }
 
   @override
   void dispose() {
     _controller.dispose();
-    _timer?.cancel();
     stopTimer();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-//  final PhotoViewController _photoViewController = PhotoViewController();
-
-
 
 
   @override
@@ -657,7 +710,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
             );
           });
           break;
-         // ElectricityLongSLDLiveAllNodePowerController
+      // ElectricityLongSLDLiveAllNodePowerController
         case 'box':
           widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(builder: (controller) {
             final nodeData = controller.liveAllNodePowerModel.firstWhere(
@@ -785,7 +838,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
               );
             });
           }
-     // ElectricityLongSLDLiveAllNodePowerController
+          // ElectricityLongSLDLiveAllNodePowerController
 
           else if (item.sourceType == 'Load_Bus_Bar' || item.sourceType == 'Bus_Bar') {
             if (item.mainBusbar ?? false) {
@@ -799,9 +852,9 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
                   value: power,
                   nodeName: item.nodeName,
                   color: item.color ?? '#FF0000',
-                 borderColor: item.borderColor ?? '#FF0000',
-                 textColor: item.textColor,
-                 textSize: item.textSize,
+                  borderColor: item.borderColor ?? '#FF0000',
+                  textColor: item.textColor,
+                  textSize: item.textSize,
                   loadBoxHeight: item.height.toDouble(),
                   loadBoxWidth: item.width.toDouble(),
                   onTap: () {
@@ -929,5 +982,5 @@ class ElectricityShortSLDGetAllInfoControllers extends GetxController {
   void updatePowerMeter(double powerMeter, String nodeName) {
     powerMeterMap[nodeName] = powerMeter;
     update();
-  }
+    }
 }
