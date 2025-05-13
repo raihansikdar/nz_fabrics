@@ -73,6 +73,9 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     _loadMouseIcon();
     _loadCachedData();
 
+   _fetchViewPageData();
+     _fetchPFData();
+
     // Stop other controllers
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();

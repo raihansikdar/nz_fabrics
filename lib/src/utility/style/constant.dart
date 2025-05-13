@@ -48,7 +48,7 @@ const iconSize = 0.030;
 
 /*---Refresh timer---*/
 
-const kTimer = 30;
+const kTimer = 10;
 
 
 

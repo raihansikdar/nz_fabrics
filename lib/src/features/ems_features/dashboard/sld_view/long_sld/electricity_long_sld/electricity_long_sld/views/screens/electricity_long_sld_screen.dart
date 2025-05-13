@@ -17,6 +17,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_long_nz_tr_box_with_icon_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_long_super_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_meter_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
 
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
@@ -73,13 +75,16 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     _loadMouseIcon();
     _loadCachedData1();
 
+     _fetchViewPageData();
+     _fetchPFData();
+
     // Stop other controllers
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
-   // Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
-//Get.find<ElectricityShortSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
 
     // Register as an observer to handle app lifecycle changes
     WidgetsBinding.instance.addObserver(this);
@@ -394,7 +399,10 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBarWidget(text: "Electricity SLD", backPreviousScreen: true),
+      appBar: CustomAppBarWidget(text: "Electricity SLD", backPreviousScreen: true,onBackButtonPressed: (){
+        _isFetchingViewPageData = false;
+        _isFetchingPFData =false;
+      },),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: LayoutBuilder(
@@ -461,15 +469,16 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                           child: Stack(
                             children: [
                               CustomPaint(
-                                size: Size(contentWidth, contentHeight),
-                                painter: ElectricityLongAnimatedLinePainter(
-                                  viewPageData: _viewPageData,
-                                  liveData: _liveData,
-                                  minX: minX,
-                                  minY: minY,
-                                  animation: _controller.view,
-                                ),
-                              ),
+                              size: Size(contentWidth, contentHeight),
+                            painter: ElectricityLongSLDAnimatedLinePainter(
+                              viewPageData: _viewPageData,
+                              liveData: _liveData,
+                              minX: minX,
+                              minY: minY,
+                              animation: _controller.view,
+                              controller: Get.find<ElectricityLongSLDGetAllInfoUIControllers>(), // Pass controller
+                            ),
+                           ),
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),
                             ],
