@@ -90,7 +90,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class ElectrictyLongCircleWithIcon extends StatelessWidget {
+class ElectricityLongCircleWithIcon extends StatelessWidget {
   final double value;
   final IconData icon;
   final String text;
@@ -101,7 +101,7 @@ class ElectrictyLongCircleWithIcon extends StatelessWidget {
   final bool sensorStatus;
   final String borderColor;
 
-  const ElectrictyLongCircleWithIcon({
+  const ElectricityLongCircleWithIcon({
     required this.value,
     required this.icon,
     required this.text,

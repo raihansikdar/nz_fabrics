@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ElectrictyLongBusCouplerWidget extends StatelessWidget {
+class ElectricityLongBusCouplerWidget extends StatelessWidget {
   final String label;
   final double width, height;
   final bool status; // ✅ Ensure status is a boolean
   final String shape, sourceType;
 
-  const ElectrictyLongBusCouplerWidget({
+  const ElectricityLongBusCouplerWidget({
     required this.label,
     required this.width,
     required this.height,

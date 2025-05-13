@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class ElectrictyLongSourceAndLoadBoxWidget extends StatelessWidget {
+class ElectricityLongSourceAndLoadBoxWidget extends StatelessWidget {
   final bool sensorStatus;
   final double value;
   final String nodeName;
@@ -15,7 +15,7 @@ class ElectrictyLongSourceAndLoadBoxWidget extends StatelessWidget {
   final String unit;
   final String orientation;
 
-  const ElectrictyLongSourceAndLoadBoxWidget({
+  const ElectricityLongSourceAndLoadBoxWidget({
     super.key,
     required this.sensorStatus,
     required this.value,

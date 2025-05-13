@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 
-class ElectrictyLongTrBoxWithIconWidget extends StatelessWidget {
+class ElectricityLongTrBoxWithIconWidget extends StatelessWidget {
   final double value;
   final IconData icon;
   final String label;
@@ -15,7 +15,7 @@ class ElectrictyLongTrBoxWithIconWidget extends StatelessWidget {
   final dynamic percentage;
   final dynamic capacity;
 
-  const ElectrictyLongTrBoxWithIconWidget({
+  const ElectricityLongTrBoxWithIconWidget({
     super.key,
     required this.value,
     required this.icon,

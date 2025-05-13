@@ -231,7 +231,7 @@ class ElectrictylongSuperBusBarWidget extends StatelessWidget {
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class ElectrictylongSuperBusBarWidget extends StatelessWidget {
+class ElectricityLongSuperBusBarWidget extends StatelessWidget {
   final bool sensorStatus;
   final double value;
   final String nodeName;
@@ -254,7 +254,7 @@ class ElectrictylongSuperBusBarWidget extends StatelessWidget {
   final double y;
   final String orientation;
 
-  const ElectrictylongSuperBusBarWidget({
+  const ElectricityLongSuperBusBarWidget({
     super.key,
     required this.sensorStatus,
     required this.value,

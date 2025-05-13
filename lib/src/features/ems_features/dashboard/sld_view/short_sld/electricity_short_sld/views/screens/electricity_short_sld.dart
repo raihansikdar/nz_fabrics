@@ -7,7 +7,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/model/electricity_short_loop_and_bus_cupler_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/model/electricity_short_view_page_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/screens/electricity_short_sld_main_bus_bar_true/screen/electricity_short_sld_main_bus_bar_true_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_bus_couplar_widget.dart';
@@ -205,7 +204,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
         }
 
         // Fetch bus coupler and loop data without rebuilding the whole UI
-        ElectricityShortSLDGetAllInfoControllers controller = Get.find();
+        ElectricityShortSLDGetAllInfoUIControllers controller = Get.find();
         final fetchRequests = _viewPageData
             .where((item) => item.sourceType == 'BusCoupler' || item.sourceType == 'Loop')
             .map((item) => fetchAndUpdatePowerMeter(item.nodeName, item.sourceType, controller, requestId))
@@ -249,7 +248,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
   // OPTIMIZATION 5: Update power meter data without triggering full UI rebuilds
   Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType,
-      ElectricityShortSLDGetAllInfoControllers controller, String parentRequestId) async {
+      ElectricityShortSLDGetAllInfoUIControllers controller, String parentRequestId) async {
     final requestId = Uuid().v4();
     debugPrint('[$requestId] Fetching power meter for $nodeName (Parent: $parentRequestId) at ${DateTime.now()}');
 
@@ -917,7 +916,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           }
           break;
         case 'BusCoupler':
-          widget = GetBuilder<ElectricityShortSLDGetAllInfoControllers>(
+          widget = GetBuilder<ElectricityShortSLDGetAllInfoUIControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -934,7 +933,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
           );
           break;
         case 'Loop':
-          widget = GetBuilder<ElectricityShortSLDGetAllInfoControllers>(
+          widget = GetBuilder<ElectricityShortSLDGetAllInfoUIControllers>(
             builder: (controller) {
               double powerMeter = controller.powerMeterMap[item.nodeName] ?? 0.0;
               bool isActive = powerMeter != 0.0;
@@ -976,7 +975,7 @@ T? firstWhereOrNull<T>(Iterable<T> items, bool Function(T) test) {
   return null;
 }
 
-class ElectricityShortSLDGetAllInfoControllers extends GetxController {
+class ElectricityShortSLDGetAllInfoUIControllers extends GetxController {
   var powerMeterMap = <String, double>{}.obs;
 
   void updatePowerMeter(double powerMeter, String nodeName) {
