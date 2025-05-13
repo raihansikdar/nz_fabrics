@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/category_wise_live_data_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/pie_chart_data_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -19,6 +20,8 @@ class CategoryWiseLiveDataController extends GetxController with InternetConnect
   bool isFirstTimeLoading = true;
   String _errorMessage = '';
   List<CategoryWiseLiveDataModel> _categoryWiseLiveData = [];
+  PieChartDataModel pieChartDataModel = PieChartDataModel();
+  List<Data> pieChartDataList = [];
 
   bool get isLoading => _isLoading;
   bool get isConnected => _isConnected;
@@ -147,7 +150,8 @@ class CategoryWiseLiveDataController extends GetxController with InternetConnect
 
     if(response.isSuccess){
       _categoryWiseLiveData = ((response.body )['data'] as List<dynamic>).map((json)=> CategoryWiseLiveDataModel.fromJson(json)).toList();
-
+      pieChartDataModel = PieChartDataModel.fromJson(response.body );
+      pieChartDataList = pieChartDataModel.data ?? [];
       _hasError = false;
       update();
       return true;

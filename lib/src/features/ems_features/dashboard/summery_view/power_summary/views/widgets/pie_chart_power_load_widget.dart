@@ -1,5 +1,6 @@
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/static_pie_chart.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/pie_chart_data_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
@@ -40,7 +41,7 @@ class _PieChartPowerLoadWidgetState extends State<PieChartPowerLoadWidget> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return GetBuilder<PieChartPowerLoadController>(
+    return GetBuilder<MachineViewNamesDataController>(
         // init: _controller,
         builder: (controller) {
 

@@ -19,6 +19,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_long_nz_tr_box_with_icon_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_long_super_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_meter_bus_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
 
 
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
@@ -78,10 +80,13 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     Get.find<ElectricityLongSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
     Get.find<ElectricityLongSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
     Get.find<ElectricityLongSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
+
     Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
     Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
 
   }
 
@@ -124,7 +129,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
   Future<void> _initializeData() async {
     await _fetchViewPageData();
-    await _fetchLiveData();
+    //await _fetchLiveData();
     _cacheData(); // Cache data after fetching
   }
 
@@ -143,66 +148,66 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
 
 
-  Future<void> _fetchLiveData() async {
-    if (!mounted) return;
-
-    final response = await http.get(
-      Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=electricity'),
-      headers: {
-        'Authorization': AuthUtilityController.accessToken ?? '',
-      },
-    );
-
-    // debugPrint("live-all-node-power -----> ${response.body}");
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body) as List<dynamic>;
-      var fetchRequests = _viewPageData
-          .where((item) => item.nodeName.isNotEmpty)
-          .map((item) async {
-        final nodeData = data.firstWhere(
-              (node) => node['node'] == item.nodeName,
-          orElse: () => null,
-        );
-
-        if (nodeData != null) {
-          LiveDataModel liveDataModel = LiveDataModel(
-            power: nodeData['power']?.toDouble() ?? 0.0,
-            sensorStatus: nodeData['sensor_status'] ?? false,
-            sourceType: nodeData['source_type'] ?? '',
-            timedate: nodeData['timedate'] != null
-                ? DateTime.tryParse(nodeData['timedate'])
-                : null,
-          //  color: nodeData['color']?.toString(),
-          );
-
-          return {item.id: liveDataModel};
-        }
-        return null;
-      }).toList();
-
-      final results = await Future.wait(fetchRequests);
-
-      if (mounted) {
-        setState(() {
-          for (var result in results) {
-            if (result != null) {
-              _liveData.addAll(result);
-            }
-          }
-          _isLoading = false;
-        });
-      }
-    } else {
-      // Handle the error case when the API call fails
-      debugPrint('-------Failed to fetch live data------------');
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
+  // Future<void> _fetchLiveData() async {
+  //   if (!mounted) return;
+  //
+  //   final response = await http.get(
+  //     Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=electricity'),
+  //     headers: {
+  //       'Authorization': AuthUtilityController.accessToken ?? '',
+  //     },
+  //   );
+  //
+  //   // debugPrint("live-all-node-power -----> ${response.body}");
+  //
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body) as List<dynamic>;
+  //     var fetchRequests = _viewPageData
+  //         .where((item) => item.nodeName.isNotEmpty)
+  //         .map((item) async {
+  //       final nodeData = data.firstWhere(
+  //             (node) => node['node'] == item.nodeName,
+  //         orElse: () => null,
+  //       );
+  //
+  //       if (nodeData != null) {
+  //         LiveDataModel liveDataModel = LiveDataModel(
+  //           power: nodeData['power']?.toDouble() ?? 0.0,
+  //           sensorStatus: nodeData['sensor_status'] ?? false,
+  //           sourceType: nodeData['source_type'] ?? '',
+  //           timedate: nodeData['timedate'] != null
+  //               ? DateTime.tryParse(nodeData['timedate'])
+  //               : null,
+  //         //  color: nodeData['color']?.toString(),
+  //         );
+  //
+  //         return {item.id: liveDataModel};
+  //       }
+  //       return null;
+  //     }).toList();
+  //
+  //     final results = await Future.wait(fetchRequests);
+  //
+  //     if (mounted) {
+  //       setState(() {
+  //         for (var result in results) {
+  //           if (result != null) {
+  //             _liveData.addAll(result);
+  //           }
+  //         }
+  //         _isLoading = false;
+  //       });
+  //     }
+  //   } else {
+  //     // Handle the error case when the API call fails
+  //     debugPrint('-------Failed to fetch live data------------');
+  //     if (mounted) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //     }
+  //   }
+  // }
 
 
 
@@ -213,6 +218,9 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
         Uri.parse(Urls.longElectricityUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
+
+
+      debugPrint("---------------------------------->>>>> ${Urls.longElectricityUrl}");
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
@@ -292,7 +300,8 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
   void startTimer() {
     stopTimer();
     _timer = Timer.periodic(const Duration(seconds: kTimer), (Timer timer) {
-      _fetchLiveData();
+     // _fetchLiveData();
+
       _fetchViewPageData();
     });
   }

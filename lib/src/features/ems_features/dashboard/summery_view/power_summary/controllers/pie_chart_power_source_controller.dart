@@ -32,20 +32,20 @@ class PieChartPowerSourceController extends GetxController with InternetConnecti
   bool _isComeFromBackGround = false;
   bool _isStopApiCall = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-    WidgetsBinding.instance.addObserver(this);
-
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
-      if (token != null) {
-        fetchPieChartData();
-       // _startPeriodicApiCall();
-      } /*else {
-        _stopPeriodicApiCall();
-      }*/
-    });
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   WidgetsBinding.instance.addObserver(this);
+  //
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
+  //     if (token != null) {
+  //       fetchPieChartData();
+  //      // _startPeriodicApiCall();
+  //     } /*else {
+  //       _stopPeriodicApiCall();
+  //     }*/
+  //   });
+  // }
 
 
 
@@ -145,7 +145,7 @@ class PieChartPowerSourceController extends GetxController with InternetConnecti
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getSourceCategoryWiseLiveDataUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: "Urls.getSourceCategoryWiseLiveDataUrl");
 
      log('PieChartPowerSourceController Status: ${response.statusCode}');
     // log('getSourceCategoryWiseLiveDataUrl Data Body: ${response.body}');

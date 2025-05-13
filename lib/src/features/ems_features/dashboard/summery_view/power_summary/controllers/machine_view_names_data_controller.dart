@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/load_machine_wise_live_data.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/pie_chart_data_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
@@ -20,6 +21,8 @@ class MachineViewNamesDataController extends GetxController with InternetConnect
   bool isFirstTimeLoading = true;
 
   List<LoadMachineWiseLiveDataModel>_machineViewNamesDataList = [];
+  PieChartDataModel pieChartDataModel = PieChartDataModel();
+  List<Data> pieChartDataList = [];
 
   bool get isLoading => _isLoading;
   bool get isConnected => _isConnected;
@@ -152,6 +155,10 @@ class MachineViewNamesDataController extends GetxController with InternetConnect
         final body = (response.body)['data'];
 
         _machineViewNamesDataList = (body as List<dynamic>).map((json) =>  LoadMachineWiseLiveDataModel.fromJson(json)).toList();
+
+        pieChartDataModel = PieChartDataModel.fromJson(response.body );
+        pieChartDataList = pieChartDataModel.data ?? [];
+
         update();
         return true;
       }else{

@@ -1,6 +1,7 @@
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_source_category_wise_live_data_model.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -41,9 +42,9 @@ class _PieChartWaterSourceWidgetState extends State<PieChartWaterSourceWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<PieChartWaterSourceController>().fetchWaterCategoryWiseLiveData();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Get.find<PieChartWaterSourceController>().fetchWaterCategoryWiseLiveData();
+    // });
 
     _tooltipBehavior = TooltipBehavior(enable: true, format: 'point.x: point.y m³/h');
   }
@@ -52,7 +53,7 @@ class _PieChartWaterSourceWidgetState extends State<PieChartWaterSourceWidget> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return GetBuilder<PieChartWaterSourceController>(
+    return GetBuilder<WaterSourceCategoryWiseDataController>(
            // init: _controller,
             builder: (controller) {
 

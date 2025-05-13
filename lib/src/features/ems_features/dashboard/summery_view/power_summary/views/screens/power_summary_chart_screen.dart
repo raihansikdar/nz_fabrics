@@ -43,8 +43,8 @@ class _PowerSummaryChartScreenState extends State<PowerSummaryChartScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_){
       /*------------- Start Api in Electricity---------------*/
-      Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-      Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
+     /// Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
+     // Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
      // Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
     //  Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
 

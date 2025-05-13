@@ -44,42 +44,21 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
       /*------------- Start Api in Water ---------------*/
       Get.find<WaterSourceCategoryWiseDataController>().fetchWaterCategoryWiseLiveData();
       Get.find<WaterLoadCategoryWiseDataController>().fetchWaterCategoryWiseLiveData();
+     //Get.find<PieChartPowerSourceController>().fetchPieChartData();
+     //Get.find<PieChartPowerLoadController>().fetchPieChartLoadData();
 
       //Get.find<SourceWaterController>().startApiCallOnScreenChange();
      // Get.find<LoadWaterController>().startApiCallOnScreenChange();
 
       Get.find<WaterSourceCategoryWiseDataController>().startApiCallOnScreenChange();
       Get.find<WaterLoadCategoryWiseDataController>().startApiCallOnScreenChange();
-      Get.find<PieChartWaterSourceController>().startApiCallOnScreenChange();
-      Get.find<PieChartWaterLoadController>().startApiCallOnScreenChange();
+      //Get.find<PieChartWaterSourceController>().startApiCallOnScreenChange();
+      //Get.find<PieChartWaterLoadController>().startApiCallOnScreenChange();
       /*------------- Stop Api in Water ---------------*/
       Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
       Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
       Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
       Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
-
-
-
-
-     //
-     // Get.find<CategorySourceCategoryWiseDataController>().fetchWaterCategoryWiseLiveData().then((_){
-     //
-     //     Get.find<FindWaterValueController>().fetchFindWaterData(
-     //       nodeNameList: Get.find<CategorySourceCategoryWiseDataController>().waterSourceCategoryWiseLiveData.map((e) => e.nodeName ?? '').toList(),
-     //        );
-     //
-     // });
-     //
-     // Get.find<LoadWaterController>().fetchLoadWaterData().then((_){
-     //   Future.delayed(const Duration(seconds: 1),(){
-     //     Get.find<FindWaterValueController>().fetchFindWaterData(
-     //       nodeNameList: Get.find<LoadWaterController>().waterList.map((e) => e.nodeName ?? '').toList(),
-     //        );
-     //   });
-     // });
-
-
-
 
 
     });
@@ -176,7 +155,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                         primary: false,
                                         itemCount: controller.isLoading
                                             ? 4
-                                            : controller.waterSourceCategoryWiseLiveData.data!.isEmpty || controller.waterSourceCategoryWiseLiveData.data == null || controller.hasError
+                                            :( controller.waterSourceCategoryWiseLiveData.data == null || controller.waterSourceCategoryWiseLiveData.data!.isEmpty) || controller.waterSourceCategoryWiseLiveData.data == null || controller.hasError
                                             ? 1
                                             : controller.waterSourceCategoryWiseLiveData.data!.length,
                                         itemBuilder: (context,index){
@@ -185,7 +164,7 @@ class _WaterSummaryChartScreenState extends State<WaterSummaryChartScreen> {
                                               padding: EdgeInsets.all(size.height * k8TextSize),
                                               child: CustomShimmerWidget(height: size.height * 0.09 , width: double.infinity,),
                                             );
-                                          } else if(controller.waterSourceCategoryWiseLiveData.data!.isEmpty){
+                                          } else if(controller.waterSourceCategoryWiseLiveData.data == null || controller.waterSourceCategoryWiseLiveData.data!.isEmpty){
                                             return EmptyPageWidget(size: size);
                                           } else if(controller.hasError){
                                             return  Lottie.asset(AssetsPath.errorJson,height: size.height * 0.250);

@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/static_pie_chart.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_load_category_wise_live_data_model.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -43,9 +44,9 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.find<PieChartWaterLoadController>().fetchWaterCategoryWiseLiveData();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Get.find<PieChartWaterLoadController>().fetchWaterCategoryWiseLiveData();
+    // });
     _tooltipBehavior = TooltipBehavior(enable: true, format: 'point.x: point.y m³/h');
   }
 
@@ -53,7 +54,7 @@ class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return GetBuilder<PieChartWaterLoadController>(
+    return GetBuilder<WaterLoadCategoryWiseDataController>(
         // init: _controller,
         builder: (controller) {
 

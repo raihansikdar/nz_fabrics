@@ -19,6 +19,7 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
   bool isFirstTimeLoading = true;
   String _errorMessage = '';
   WaterLoadCategoryWiseLiveDataModel _waterLoadCategoryWiseLiveData = WaterLoadCategoryWiseLiveDataModel();
+  List<Data> pieChartDataList = [];
 
   bool get isLoading => _isLoading;
   bool get isConnected => _isConnected;
@@ -31,20 +32,20 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
   bool _isComeFromBackGround = false;
   bool _isStopApiCall = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-    WidgetsBinding.instance.addObserver(this);
-
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
-      if (token != null) {
-        fetchWaterCategoryWiseLiveData();
-       // _startPeriodicApiCall();
-      } else {
-        _stopPeriodicApiCall();
-      }
-    });
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   WidgetsBinding.instance.addObserver(this);
+  //
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
+  //     if (token != null) {
+  //       fetchWaterCategoryWiseLiveData();
+  //      // _startPeriodicApiCall();
+  //     } else {
+  //       _stopPeriodicApiCall();
+  //     }
+  //   });
+  // }
 
 
   @override
@@ -145,7 +146,7 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
       if(response.isSuccess){
         // _waterSourceCategoryWiseLiveData = ((response.body )['data'] as List<dynamic>).map((json)=> WaterSourceCategoryWiseLiveDataModel.fromJson(json)).toList();
         _waterLoadCategoryWiseLiveData =  WaterLoadCategoryWiseLiveDataModel.fromJson(response.body);
-
+        pieChartDataList = _waterLoadCategoryWiseLiveData.data ?? [];
         _hasError = false;
         update();
         return true;

@@ -33,20 +33,20 @@ class PieChartWaterSourceController extends GetxController with InternetConnecti
   bool _isComeFromBackGround = false;
   bool _isStopApiCall = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-    WidgetsBinding.instance.addObserver(this);
-
-    ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
-      if (token != null) {
-        fetchWaterCategoryWiseLiveData();
-       // _startPeriodicApiCall();
-      } else {
-        _stopPeriodicApiCall();
-      }
-    });
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  //   WidgetsBinding.instance.addObserver(this);
+  //
+  //   ever(AuthUtilityController.accessTokenForApiCall, (String? token) {
+  //     if (token != null) {
+  //       fetchWaterCategoryWiseLiveData();
+  //      // _startPeriodicApiCall();
+  //     } else {
+  //       _stopPeriodicApiCall();
+  //     }
+  //   });
+  // }
 
 
   @override
