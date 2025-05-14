@@ -22,6 +22,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/pf_history_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/screen/water_element_details_screen.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:flutter/material.dart';
@@ -70,8 +71,9 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
 
     Get.find<SteamLongSLDLtProductionVsCapacityController>().fetchProductVsCapacityData();
     Get.find<SteamLongSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
-    Get.find<SteamLongSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
-    Get.find<SteamLongSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
+
+    // Get.find<SteamLongSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
+    // Get.find<SteamLongSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
 
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
@@ -588,17 +590,17 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
               debugPrint("----->CircleWithIcon<-----");
 
 
-              // Get.to(() => WaterElementDetailsScreen(
-              //   elementName: item.nodeName,
-              //   gaugeValue: power,
-              //     gaugeUnit: 'm³/s',
-              //     elementCategory: 'Water',
-              // ),
-              //   transition: Transition.rightToLeft,
-              //   duration: const Duration(seconds: 1),
-              // );
+              Get.to(() => WaterElementDetailsScreen(
+                elementName: item.nodeName,
+                gaugeValue: power,
+                  gaugeUnit: 'm³/h',
+                  elementCategory: 'Water',
+              ),
+                transition: Transition.rightToLeft,
+                duration: const Duration(seconds: 1),
+              );
             },
-            unit: 'm³/s',
+            unit: 'm³/h',
           );
           break;
         case 'LB_Meter':
@@ -616,7 +618,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
               width: item.width.toDouble(),
               height: item.height.toDouble(),
               onTap: () {},
-              unit: 'kW',
+              unit: 'm³/h',
               // color: item.color ?? '#FF0000',
               // textColor: item.textColor,
               // textSize: item.textSize,
@@ -646,17 +648,17 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
               height: item.height.toDouble(),
               onTap: () {
                 debugPrint("----->TrBoxWithIconWidget<-----");
-                // Get.to(() => WaterElementDetailsScreen(
-                //   elementName: item.nodeName,
-                //   gaugeValue: power,
-                //   gaugeUnit: 'm³/s',
-                //   elementCategory: 'Water',
-                // ),
-                //   transition: Transition.rightToLeft,
-                //   duration: const Duration(seconds: 1),
-                // );
+                Get.to(() => WaterElementDetailsScreen(
+                  elementName: item.nodeName,
+                  gaugeValue: power,
+                  gaugeUnit: 'm³/h',
+                  elementCategory: 'Water',
+                ),
+                  transition: Transition.rightToLeft,
+                  duration: const Duration(seconds: 1),
+                );
               },
-              unit: 'm³/s',
+              unit: 'm³/h',
               borderColor: item.borderColor ?? '#FF0000',
               percentage: nodeData.percentage != null
                   ? nodeData.percentage.toStringAsFixed(2)
@@ -680,7 +682,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
                 loadBoxHeight: item.height.toDouble(),
                 loadBoxWidth: item.width.toDouble(),
                 onTap: () {},
-                unit: 'kW',
+                unit: 'm³/h',
                 gridColor: controller.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
                 generatorColor: controller.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
                 solarColor: controller.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
@@ -765,7 +767,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
                       duration: const Duration(seconds: 1),
                     );
                   },
-                  unit: 'm³/s',
+                  unit: 'm³/h',
                   percentage: nodeData.percentage != null
                       ? nodeData.percentage.toStringAsFixed(2)
                       : "0.00",
@@ -794,7 +796,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
                     duration: const Duration(seconds: 1),
                   );
                 },
-                unit: 'm³/s',
+                unit: 'm³/h',
                 orientation: item.orientation,
               );
             }
@@ -810,7 +812,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
               loadBoxHeight: item.height.toDouble(),
               loadBoxWidth: item.width.toDouble(),
               onTap: () {},
-              unit: 'm³/s',
+              unit: 'm³/h',
               orientation: item.orientation,
             );
           } else {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/screens/steam_long_sld.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/views/screens/water_long_sld_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/views/screens/water_short_sld.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
@@ -34,7 +35,8 @@ class WaterShortSldScreen extends StatelessWidget {
             ),
           ),
           onPressed: (){
-            Get.to(()=>WaterLongSldScreen());
+          //  Get.to(()=>WaterLongSldScreen());
+            Get.to(()=>SteamLongSldScreen());
           },child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
