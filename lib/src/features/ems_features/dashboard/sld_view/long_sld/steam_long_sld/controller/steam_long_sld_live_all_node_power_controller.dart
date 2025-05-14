@@ -136,7 +136,7 @@ class SteamLongSLDLiveAllNodePowerController extends GetxController with Interne
     try {
       await internetConnectivityCheck();
 
-      NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getElectricityLiveAllNodePowerUrl);
+      NetworkResponse response = await NetworkCaller.getRequest(url: "Urls.getElectricityLiveAllNodePowerUrl");
 
      // log("getLiveAllNodePowerUrl statusCode ==> ${response.statusCode}");
      // log("getLiveAllNodePowerUrl body ==> ${response.body}");

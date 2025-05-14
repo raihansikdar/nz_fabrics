@@ -10,8 +10,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/comm
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/each_machine_wise_load_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/generators/generator_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
@@ -35,8 +33,7 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
       log("====== categoryName =========> ${widget.categoryName}");
       Get.find<EachMachineWiseLoadLiveDataController>().fetchEachCategoryLiveData(categoryName: widget.categoryName);
 
-      Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-      Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
       Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
       Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
 
@@ -52,8 +49,6 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: CustomAppBarWidget(text: widget.categoryName, backPreviousScreen: true,onBackButtonPressed: (){
-        Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-        Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
         Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
         Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
       },),

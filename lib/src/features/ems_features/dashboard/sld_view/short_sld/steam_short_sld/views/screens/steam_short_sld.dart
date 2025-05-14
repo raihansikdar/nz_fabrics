@@ -21,8 +21,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sl
 
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/pf_history_screen.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
@@ -74,8 +72,6 @@ class _SteamShortSldState extends State<SteamShortSld>
     Get.find<SteamShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
     Get.find<SteamShortSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
     Get.find<SteamShortSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
-    Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-    Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
 

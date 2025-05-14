@@ -148,6 +148,7 @@ class MachineViewNamesDataController extends GetxController with InternetConnect
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getLoadMachineWiseLiveDataUrl);
 
+     log("------------->> getLoadMachineWiseLiveDataUrl: ${Urls.getLoadMachineWiseLiveDataUrl}");
      // log("getLoadMachineWiseLiveDataUrl: ${response.statusCode}");
      //  log("getLoadMachineWiseLiveDataUrl: ${response.body}");
 

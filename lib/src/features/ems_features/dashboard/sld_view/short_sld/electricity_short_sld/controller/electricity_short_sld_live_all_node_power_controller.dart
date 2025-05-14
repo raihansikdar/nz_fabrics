@@ -313,7 +313,7 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
         return true;
       } else {
         _errorMessage = "Failed to fetch Live All Node Power Data.";
-        update(['error']); // Update only error-related widgets if needed
+        update(['error']);
         return false;
       }
     } catch (e) {
@@ -324,7 +324,7 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
       }
       log('Error in fetching Live All Node Power Data: $_errorMessage');
       _errorMessage = "Failed to fetch Live All Node Power Data.";
-      update(['error']); // Update only error-related widgets if needed
+      update(['error']);
       return false;
     }
   }

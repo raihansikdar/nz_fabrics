@@ -1,6 +1,5 @@
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/model/pie_chart_data_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
@@ -50,23 +49,22 @@ class _PieChartPowerSourceWidgetState extends State<PieChartPowerSourceWidget> {
       child: GetBuilder<CategoryWiseLiveDataController>(
              // init: _controller,
               builder: (controller) {
-                // if (controller.pageState == PageState.loading) {
-                //   return Center(child: SpinKitFadingCircle(
-                //     color: AppColors.primaryColor,
-                //     size: 50.0,
-                //   ),);
-                // }
-                // else if (!controller.isConnected) {
-                //   return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Power',unitText: 'kW');
-                // }
-                //
-                // else if (controller.pieChartDataList.isEmpty) {
-                //   return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Power',unitText: 'kW');
-                // }
-                //
-                // else if (controller.pageState == PageState.error) {
-                //   return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Power',unitText: 'kW');
-                // }
+                if (!controller.isConnected) {
+                  return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Power',unitText: 'kW');
+                }
+
+                if (controller.isLoading) {
+                  return Center(child: SpinKitFadingCircle(
+                    color: AppColors.primaryColor,
+                    size: 50.0,
+                  ),);
+                }
+                if (controller.hasError) {
+                  return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Power',unitText: 'kW');
+                }
+                if (controller.pieChartDataList.isEmpty) {
+                  return   StaticPieChart(size: size, tooltipBehavior: _tooltipBehavior, chartData: noInternetChartData,titleText: 'Total Power',unitText: 'kW');
+                }
 
                 return  Stack(
                   alignment: Alignment.center,

@@ -94,8 +94,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pf_controller/get_production_vs_capacityController.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pf_controller/main_bus_bar_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pf_controller/pf_history_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/source_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_each_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_each_load_category_wise_live_data_controller.dart';
@@ -205,8 +203,7 @@ class StateHolderBinders extends Bindings{
 
      Get.put(SourcePowerController());
      Get.put(LoadPowerController());
-     Get.put(PieChartPowerSourceController());
-     Get.put(PieChartPowerLoadController());
+
 
      ///Get.put(LoadWaterController());
    ///  Get.put(SourceWaterController());

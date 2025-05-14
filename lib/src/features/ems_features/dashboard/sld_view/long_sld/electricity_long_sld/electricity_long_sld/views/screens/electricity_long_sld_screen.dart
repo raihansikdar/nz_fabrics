@@ -18,12 +18,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_long_super_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/views/widgets/electricty_meter_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_lt_production_vs_capacity_controller.dart';
-
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/pf_history_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/generators/generator_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
@@ -81,8 +77,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     Get.find<ElectricityLongSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
 
     // Stop other controllers
-    Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-    Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
     Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
@@ -1123,8 +1118,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                 onTap: () {
                   debugPrint("----->TrBoxWithIconWidget<-----");
                   if (item.category == 'Diesel_Generator') {
-                    Get.to(
-                          () => GeneratorElementDetailsScreen(
+                    Get.to(() => GeneratorElementDetailsScreen(
                         elementName: item.nodeName,
                         gaugeValue: power,
                         gaugeUnit: 'kW',
@@ -1134,8 +1128,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                       duration: const Duration(seconds: 1),
                     );
                   } else {
-                    Get.to(
-                          () => PowerAndEnergyElementDetailsScreen(
+                    Get.to(() => PowerAndEnergyElementDetailsScreen(
                         elementName: item.nodeName,
                         gaugeValue: power,
                         gaugeUnit: 'kW',

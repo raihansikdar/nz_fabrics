@@ -19,8 +19,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sl
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/views/widgets/short_electricity_super_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/pf_history_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/generators/generator_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
@@ -78,8 +76,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
 
 
     // Stop other controllers
-    Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-    Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
     Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
@@ -450,8 +446,8 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
             // Ensure scale is finite
             scale = scale.isFinite ? scale : 1.0;
 
-            debugPrint('minX: $minX, minY: $minY, maxX: $maxX, maxY: $maxY');
-            debugPrint('contentWidth: $contentWidth, contentHeight: $contentHeight, scale: $scale');
+          //  debugPrint('minX: $minX, minY: $minY, maxX: $maxX, maxY: $maxY');
+          //  debugPrint('contentWidth: $contentWidth, contentHeight: $contentHeight, scale: $scale');
 
             return PhotoViewGallery.builder(
               itemCount: 1,
@@ -663,7 +659,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
           widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-              debugPrint('Rebuilding circle node: ${item.nodeName}');
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
                 orElse: () => ElectricityShortLiveAllNodePowerModel(),
@@ -673,7 +668,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
                 debugPrint('No data for circle node: ${item.nodeName}, using power: 0.0');
               }
               final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-              debugPrint('Circle Node---------: ${item.nodeName}, Power: $power, Percentage: ${nodeData.percentage}, Capacity: ${nodeData.capacity}');
               return ShortElectricityCircleWithIcon(
                 sensorStatus: power != 0.0,
                 value: power,
@@ -719,7 +713,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
           widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-              debugPrint('Rebuilding LB_Meter node: ${item.nodeName}');
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
                 orElse: () => ElectricityShortLiveAllNodePowerModel(),
@@ -735,7 +728,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
               final String capacity = hasData && nodeData.capacity != null
                   ? nodeData.capacity.toStringAsFixed(2)
                   : "0.00";
-              debugPrint('LB_Meter Node: ${item.nodeName}, Power: $power, Percentage: $percentage, Capacity: $capacity');
               return ShortElectricityBoxWithIconWidget(
                 sensorStatus: power != 0.0,
                 value: power,
@@ -757,7 +749,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
           widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-              debugPrint('Rebuilding box node: ${item.nodeName}');
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
                 orElse: () => ElectricityShortLiveAllNodePowerModel(),
@@ -773,7 +764,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
               final String capacity = hasData && nodeData.capacity != null
                   ? nodeData.capacity.toStringAsFixed(2)
                   : "0.00";
-              debugPrint('Box Node: ${item.nodeName}, Power: $power, Percentage: $percentage, Capacity: $capacity');
               return ShortElectrcityTrBoxWithIconWidget(
                 sensorStatus: power != 0.0,
                 value: power,
@@ -822,7 +812,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
             widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
               id: 'node_${item.nodeName}',
               builder: (nodeController) {
-                debugPrint('Rebuilding Super_Bus_Bar node: ${item.nodeName}');
                 return GetBuilder<ElectricityShortSLDLtProductionVsCapacityController>(
                   builder: (capacityController) {
                     final nodeData = nodeController.liveAllNodePowerModel.firstWhere(
@@ -834,7 +823,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
                       debugPrint('No data for Super_Bus_Bar node: ${item.nodeName}, using power: 0.0');
                     }
                     final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-                    debugPrint('Super_Bus_Bar Node: ${item.nodeName}, Power: $power, Percentage: ${nodeData.percentage}, Capacity: ${nodeData.capacity}');
                     return ShortElectricitySuperBusBarWidget(
                       sensorStatus: power != 0.0,
                       value: power,
@@ -915,7 +903,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
               widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
                 id: 'node_${item.nodeName}',
                 builder: (controller) {
-                  debugPrint('Rebuilding Bus_Bar (mainBusbar) node: ${item.nodeName}');
                   final nodeData = controller.liveAllNodePowerModel.firstWhere(
                         (element) => element.node == item.nodeName,
                     orElse: () => ElectricityShortLiveAllNodePowerModel(),
@@ -931,7 +918,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
                   final String capacity = hasData && nodeData.capacity != null
                       ? nodeData.capacity.toStringAsFixed(2)
                       : "0.00";
-                  debugPrint('Bus_Bar Node: ${item.nodeName}, Power: $power, Percentage: $percentage, Capacity: $capacity');
                   return ShortElectricityMainBusBarTrue(
                     sensorStatus: power != 0.0,
                     value: power,
@@ -962,7 +948,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
               widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
                 id: 'node_${item.nodeName}',
                 builder: (controller) {
-                  debugPrint('Rebuilding Load_Bus_Bar/Bus_Bar node: ${item.nodeName}');
                   final nodeData = controller.liveAllNodePowerModel.firstWhere(
                         (element) => element.node == item.nodeName,
                     orElse: () => ElectricityShortLiveAllNodePowerModel(),
@@ -972,7 +957,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
                     debugPrint('No data for Load_Bus_Bar/Bus_Bar node: ${item.nodeName}, using power: 0.0');
                   }
                   final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-                  debugPrint('Load_Bus_Bar/Bus_Bar Node: ${item.nodeName}, Power: $power');
                   return ShortElectricitySourceAndLoadBoxWidget(
                     sensorStatus: power != 0.0,
                     value: power,
@@ -1000,7 +984,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
             widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
               id: 'node_${item.nodeName}',
               builder: (controller) {
-                debugPrint('Rebuilding Meter_Bus_Bar node: ${item.nodeName}');
                 final nodeData = controller.liveAllNodePowerModel.firstWhere(
                       (element) => element.node == item.nodeName,
                   orElse: () => ElectricityShortLiveAllNodePowerModel(),
@@ -1010,7 +993,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
                   debugPrint('No data for Meter_Bus_Bar node: ${item.nodeName}, using power: 0.0');
                 }
                 final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-                debugPrint('Meter_Bus_Bar Node: ${item.nodeName}, Power: $power');
                 return ShortElectricityMeterBusBarWidget(
                   sensorStatus: power != 0.0,
                   value: power,
@@ -1036,7 +1018,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
           widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-              debugPrint('Rebuilding BusCoupler node: ${item.nodeName}');
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
 
@@ -1047,7 +1028,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
                 debugPrint('No data for BusCoupler node: ${item.nodeName}, using power: 0.0');
               }
               final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-              debugPrint('BusCoupler Node: ${item.nodeName}, Power: $power');
               return ShortElectricityBusCouplerWidget(
                 key: ValueKey('${item.id}-${power != 0.0}'),
                 label: item.nodeName,
@@ -1065,7 +1045,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
           widget = GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-              debugPrint('Rebuilding Loop node: ${item.nodeName}');
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
                 orElse: () => ElectricityShortLiveAllNodePowerModel(),
@@ -1075,7 +1054,6 @@ class _ElectricityShortSldState extends State<ElectricityShortSld> with SingleTi
                 debugPrint('No data for Loop node: ${item.nodeName}, using power: 0.0');
               }
               final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-              debugPrint('Loop Node: ${item.nodeName}, Power: $power');
               return ShortElectricityBusCouplerWidget(
                 key: ValueKey('${item.id}-${power != 0.0}'),
                 label: item.nodeName,

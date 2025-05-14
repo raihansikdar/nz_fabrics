@@ -5,7 +5,6 @@ import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_shimmer_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/flutter_smart_exit/flutter_smart_exit_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/analysis_pro/controllers/analysis_pro_day_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/analysis_pro/views/screens/analysis_pro_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/diesel_generator/views/screens/diesel_generator_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/gas_generator/views/screens/gas_generator_screen.dart';
@@ -17,7 +16,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/control
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/tab_bar_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/views/widgets/navigation_drawer_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/data_tab_view_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_all_node_power_controller.dart';
@@ -28,20 +26,9 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/sld_tab_
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/load_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/power_summary_chart_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/steam_summary/views/screen/steam_summary_chart_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/load_water_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/source_water_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/views/screens/water_summary_chart_screen.dart';
-import 'package:nz_fabrics/src/features/error_page/error_page.dart';
-import 'package:nz_fabrics/src/features/error_page/no_internet_page.dart';
-import 'package:nz_fabrics/src/features/notification/controller/all_notification_controller.dart';
 import 'package:nz_fabrics/src/features/notification/controller/notification_controller.dart';
 import 'package:nz_fabrics/src/features/notification/local_notification_service/local_notification_service.dart';
 import 'package:nz_fabrics/src/features/notification/views/screens/notification_screens.dart';
@@ -279,8 +266,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                 body: RefreshIndicator(
                   onRefresh: () async{
                     WidgetsBinding.instance.addPostFrameCallback((_){
-                      Get.find<PieChartPowerSourceController>().fetchPieChartData();
-                      Get.find<PieChartPowerLoadController>().fetchPieChartLoadData();
+
                       Get.find<CategoryWiseLiveDataController>().fetchCategoryWiseLiveData();
                       Get.find<MachineViewNamesDataController>().fetchMachineViewNamesData();
 
@@ -353,8 +339,6 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                     log("----------Press-------- 1");
                                                                                     WidgetsBinding.instance.addPostFrameCallback((_) {
                                                                                       dashBoardRadioButtonController.updateSelectedValue(1);
-                                                                                      Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-                                                                                      Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
                                                                                       Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
                                                                                       Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
 
@@ -402,8 +386,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
 
                                                                                   WidgetsBinding.instance.addPostFrameCallback((_) {
 
-                                                                                    Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-                                                                                    Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
                                                                                     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
                                                                                     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
 
@@ -634,16 +617,14 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                 onDrawerChanged: (isOpened) {
                   if (isOpened) {
 
-                    Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-                    Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
                     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
                     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
                    // Get.find<SourceWaterController>().stopApiCallOnScreenChange();
                   //  Get.find<LoadWaterController>().stopApiCallOnScreenChange();
 
                   } else {
-                    Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-                    Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
+
                     Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
                     Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
                   }

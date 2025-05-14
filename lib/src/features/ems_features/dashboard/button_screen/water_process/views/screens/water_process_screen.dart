@@ -12,8 +12,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/wat
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/views/widgets/yearly_water_generator_list_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
@@ -36,8 +34,7 @@ class _WaterGeneratorScreenState extends State<WaterGeneratorScreen> {
       Get.find  <CustomWaterButtonController>().fetchCustomWaterData(fromDate:  Get.find  <CustomWaterButtonController>().fromDateTEController.text, toDate:  Get.find  <CustomWaterButtonController>().toDateTEController.text);
 
 
-      Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-      Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
       Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
       Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
 
@@ -54,8 +51,7 @@ class _WaterGeneratorScreenState extends State<WaterGeneratorScreen> {
         backgroundColor: AppColors.backgroundColor,
         appBar:  CustomAppBarWidget(text: "Water", backPreviousScreen: true,onBackButtonPressed: (){
 
-          Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-          Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
+
           Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
           Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
 

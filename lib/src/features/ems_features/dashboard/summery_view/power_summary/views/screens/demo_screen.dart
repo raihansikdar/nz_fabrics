@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
-import 'package:nz_fabrics/src/common_widgets/custom_container_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/custom_shimmer_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
@@ -14,10 +10,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pf_controller/get_production_vs_capacityController.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pf_controller/main_bus_bar_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pf_controller/pf_history_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/pf_history_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/grid_widget/details_button_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/grid_widget/progress_indicator_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/grid_widget/reb_value_data_widget.dart';
@@ -49,8 +41,7 @@ class _DemoScreenState extends State<DemoScreen> {
       Get.find<GetProductionVsCapacityController>().startApiCallOnScreenChange();
 
 
-      Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-      Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
       Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
       Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
       Get.find<MainBusBarController>().enterGridScreenMethod(true);
@@ -79,8 +70,7 @@ class _DemoScreenState extends State<DemoScreen> {
         text: "Grid",
         backPreviousScreen: true,
         onBackButtonPressed: (){
-          Get.find<PieChartPowerSourceController>().startApiCallOnScreenChange();
-          Get.find<PieChartPowerLoadController>().startApiCallOnScreenChange();
+
           Get.find<CategoryWiseLiveDataController>().startApiCallOnScreenChange();
           Get.find<MachineViewNamesDataController>().startApiCallOnScreenChange();
 
@@ -100,8 +90,7 @@ class _DemoScreenState extends State<DemoScreen> {
           Get.find<GetProductionVsCapacityController>().startApiCallOnScreenChange();
 
 
-          Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-          Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
           Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
           Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
           Get.find<MainBusBarController>().enterGridScreenMethod(true);

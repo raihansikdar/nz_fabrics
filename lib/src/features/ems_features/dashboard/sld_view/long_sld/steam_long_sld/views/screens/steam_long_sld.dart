@@ -21,8 +21,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/steam_long_sld/views/widgets/steam_long_bus_super_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/machine_view_names_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/pie_chart_power_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/pf_history_screen.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
@@ -74,8 +72,7 @@ class _SteamLongSldScreenState extends State<SteamLongSldScreen>
     Get.find<SteamLongSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
     Get.find<SteamLongSLDLtProductionVsCapacityController>().startApiCallOnScreenChange();
     Get.find<SteamLongSLDLiveAllNodePowerController>().startApiCallOnScreenChange();
-    Get.find<PieChartPowerSourceController>().stopApiCallOnScreenChange();
-    Get.find<PieChartPowerLoadController>().stopApiCallOnScreenChange();
+
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
 
