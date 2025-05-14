@@ -76,11 +76,6 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                 }*/
 
 
-
-
-
-
-
                   dynamic categoryData = eachMachineWiseLoadLiveDataController.eachMachineWiseLoadDataList[index];
                   return  Padding(
                     padding: EdgeInsets.only(left: size.height * k8TextSize,right: size.height * k8TextSize,),
@@ -109,20 +104,10 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                             ),
                           );
 
-
-
-
-
-
-
-
                         }else{
                           // Get.to(()=> PowerAndEnergyElementDetailsScreen(elementName: categoryData.node ?? '',
                           //   gaugeValue:  categoryData.power ?? 0.00, gaugeUnit: 'kW', elementCategory: 'Power', solarCategory: widget.categoryName,),transition: Transition.rightToLeft,duration: const Duration(seconds: 1)
                           // );
-
-
-
 
                           Navigator.push(
                             context,
@@ -143,12 +128,6 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                                 transitionDuration: const Duration(milliseconds: 0)
                             ),
                           );
-
-
-
-
-
-
                         }
 
                       },
@@ -233,10 +212,6 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                       ),
                     ),
                   );
-
-
-
-
 
               }, separatorBuilder: (context,index) => const SizedBox(height: 0,),);
           }
