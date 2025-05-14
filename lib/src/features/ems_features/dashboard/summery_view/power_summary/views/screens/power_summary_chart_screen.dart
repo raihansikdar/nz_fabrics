@@ -164,7 +164,7 @@ class _PowerSummaryChartScreenState extends State<PowerSummaryChartScreen> {
                                                       children: [
                                                         ListTile(
                                                           //'Solar','Diesel_Generator','Gas_Generator','Grid'
-                                                          contentPadding: EdgeInsets.only(left: size.height * k8TextSize,right: size.height * k8TextSize),
+                                                          contentPadding: EdgeInsets.only(left: size.height * k8TextSize,right: size.height * 0.004),
                                                           leading: powerData.category == 'Grid' ?  SvgPicture.asset(AssetsPath.gridIconSVG,height: size.height * k24TextSize,) : powerData.category == 'Gas_Generator' ?  SvgPicture.asset(AssetsPath.gasGeneratorIconSVG,height: size.height * k24TextSize,)
 
                                                               : powerData.category == 'Diesel_Generator' ?  SvgPicture.asset(AssetsPath.dieselGeneratorIconSVG,height: size.height * k24TextSize,) : SvgPicture.asset(AssetsPath.solarCellIconSVG,height: size.height * k24TextSize,),
@@ -290,7 +290,7 @@ class _PowerSummaryChartScreenState extends State<PowerSummaryChartScreen> {
                                                   child: Column(
                                                         children: [
                                                           ListTile(
-                                                            contentPadding: EdgeInsets.only(left: size.height * k8TextSize,right: size.height * k8TextSize),
+                                                            contentPadding: EdgeInsets.only(left: size.height * k8TextSize,right: size.height * 0.004),
                                                             leading: SvgPicture.asset(AssetsPath.loadIconSVG,height: size.height * k24TextSize,),
                                                             title: Column(
                                                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -306,8 +306,14 @@ class _PowerSummaryChartScreenState extends State<PowerSummaryChartScreen> {
                                                                       ),
 
                                                                     ),
-                                                                    SizedBox(width: size.width * k16TextSize,),
-                                                                    TextComponent(text: "${machineViewData.category} (${machineViewData.powerPercentage.toStringAsFixed(2)}%)"),
+                                                                    SizedBox(width: size.width * k8TextSize,),
+                                                                    Row(
+                                                                      children: [
+                                                                        TextComponent(text: "${machineViewData.category}"),
+                                                                        TextComponent(text: "(${machineViewData.powerPercentage.toStringAsFixed(2)}%)"),
+                                                                      ],
+                                                                    ),
+
                                                                   ],
                                                                 ),
 
