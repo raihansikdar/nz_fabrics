@@ -1653,32 +1653,17 @@ class _WaterShortSldState extends State<WaterShortSld>
                 height: item.height.toDouble(),
                 onTap: () {
                   debugPrint("----->CircleWithIcon<-----");
-                  // if (item.category == 'Diesel_Generator') {
-                  //   Get.to(
-                  //         () => GeneratorElementDetailsScreen(
-                  //       elementName: item.nodeName,
-                  //       gaugeValue: power,
-                  //       gaugeUnit: 'kW',
-                  //       elementCategory: 'Power',
-                  //     ),
-                  //     transition: Transition.rightToLeft,
-                  //     duration: const Duration(seconds: 1),
-                  //   );
-                  // } else {
-                  //   Get.to(
-                  //         () => PowerAndEnergyElementDetailsScreen(
-                  //       elementName: item.nodeName,
-                  //       gaugeValue: power,
-                  //       gaugeUnit: 'kW',
-                  //       elementCategory: 'Power',
-                  //       solarCategory: item.category,
-                  //     ),
-                  //     transition: Transition.rightToLeft,
-                  //     duration: const Duration(seconds: 1),
-                  //   );
-                  // }
+                  Get.to(() => WaterElementDetailsScreen(
+                    elementName: item.nodeName,
+                    gaugeValue: power,
+                      gaugeUnit: 'm³/h',
+                      elementCategory: 'Water',
+                  ),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(seconds: 1),
+                  );
                 },
-                unit: 'kW',
+                unit: 'm³/h',
               );
             },
           );
@@ -1716,7 +1701,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                 width: item.width.toDouble(),
                 height: item.height.toDouble(),
                 onTap: () {},
-                unit: 'kW',
+                unit: 'm³/h',
                 borderColor: item.borderColor ?? '#FF0000',
                 percentage: percentage,
                 capacity: capacity,
@@ -1743,7 +1728,7 @@ class _WaterShortSldState extends State<WaterShortSld>
               final String capacity = hasData && nodeData.capacity != null
                   ? nodeData.capacity.toStringAsFixed(2)
                   : "0.00";
-              debugPrint('Box Node: ${item.nodeName}, Power: $power');
+
               _liveData[item.id] = LiveDataModel(
                 power: power,
                 sensorStatus: power != 0.0,
@@ -1759,30 +1744,17 @@ class _WaterShortSldState extends State<WaterShortSld>
                 height: item.height.toDouble(),
                 onTap: () {
                   debugPrint("----->TrBoxWithIconWidget<-----");
-                  // if (item.category == 'Diesel_Generator') {
-                  //   Get.to(() => GeneratorElementDetailsScreen(
-                  //     elementName: item.nodeName,
-                  //     gaugeValue: power,
-                  //     gaugeUnit: 'kW',
-                  //     elementCategory: 'Power',
-                  //   ),
-                  //     transition: Transition.rightToLeft,
-                  //     duration: const Duration(seconds: 1),
-                  //   );
-                  // } else {
-                  //   Get.to(() => PowerAndEnergyElementDetailsScreen(
-                  //     elementName: item.nodeName,
-                  //     gaugeValue: power,
-                  //     gaugeUnit: 'kW',
-                  //     elementCategory: 'Power',
-                  //     solarCategory: item.category,
-                  //   ),
-                  //     transition: Transition.rightToLeft,
-                  //     duration: const Duration(seconds: 1),
-                  //   );
-                  // }
+                  Get.to(() => WaterElementDetailsScreen(
+                    elementName: item.nodeName,
+                    gaugeValue: power,
+                    gaugeUnit: 'm³/h',
+                    elementCategory: 'Water',
+                  ),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(seconds: 1),
+                  );
                 },
-                unit: 'kW',
+                unit: 'm³/h',
                 borderColor: item.color ?? '#FF0000',
                 percentage: percentage,
                 capacity: capacity,
@@ -1822,7 +1794,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                       loadBoxHeight: item.height.toDouble(),
                       loadBoxWidth: item.width.toDouble(),
                       onTap: () {},
-                      unit: 'kW',
+                      unit: 'm³/h',
                       gridColor: capacityController.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
                       generatorColor: capacityController.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
                       solarColor: capacityController.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
@@ -1933,7 +1905,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                         duration: const Duration(seconds: 1),
                       );
                     },
-                    unit: 'kW',
+                    unit: 'm³/h',
                     percentage: percentage,
                     capacity: capacity,
                     orientation: item.orientation ?? 'horizontal',
@@ -1944,14 +1916,12 @@ class _WaterShortSldState extends State<WaterShortSld>
               widget = GetBuilder<WaterShortSLDLiveAllNodePowerController>(
                 id: 'node_${item.nodeName}',
                 builder: (controller) {
-                  debugPrint('Rebuilding Load_Bus_Bar/Bus_Bar node: ${item.nodeName}');
                   final nodeData = controller.liveAllNodePowerModel.firstWhere(
                         (element) => element.node == item.nodeName,
                     orElse: () => WaterShortLiveAllNodePowerModel(),
                   );
                   final bool hasData = nodeData.node != null;
                   final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-                  debugPrint('Load_Bus_Bar/Bus_Bar Node: ${item.nodeName}, Power: $power');
                   _liveData[item.id] = LiveDataModel(
                     power: power,
                     sensorStatus: power != 0.0,
@@ -1974,7 +1944,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                         duration: const Duration(seconds: 1),
                       );
                     },
-                    unit: 'kW',
+                    unit: 'm³/h',
                     orientation: item.orientation,
                   );
                 },
@@ -2009,7 +1979,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                   loadBoxHeight: item.height.toDouble(),
                   loadBoxWidth: item.width.toDouble(),
                   onTap: () {},
-                  unit: 'kW',
+                  unit: 'm³/h',
                   orientation: item.orientation,
                 );
               },
@@ -2023,14 +1993,14 @@ class _WaterShortSldState extends State<WaterShortSld>
           widget = GetBuilder<WaterShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-              debugPrint('Rebuilding BusCoupler node: ${item.nodeName}');
+
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
                 orElse: () => WaterShortLiveAllNodePowerModel(),
               );
               final bool hasData = nodeData.node != null;
               final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-              debugPrint('BusCoupler Node: ${item.nodeName}, Power: $power');
+
               _liveData[item.id] = LiveDataModel(
                 power: power,
                 sensorStatus: power != 0.0,
@@ -2054,14 +2024,14 @@ class _WaterShortSldState extends State<WaterShortSld>
           widget = GetBuilder<WaterShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-              debugPrint('Rebuilding Loop node: ${item.nodeName}');
+
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
                 orElse: () => WaterShortLiveAllNodePowerModel(),
               );
               final bool hasData = nodeData.node != null;
               final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-              debugPrint('Loop Node: ${item.nodeName}, Power: $power');
+
               _liveData[item.id] = LiveDataModel(
                 power: power,
                 sensorStatus: power != 0.0,
