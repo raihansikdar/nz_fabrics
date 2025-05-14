@@ -48,7 +48,8 @@ class GetButtonFromAllController extends GetxController with InternetConnectivit
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getAllButtonUrl);
 
-      log("-------------------->> fetchButtonFromAllData statusCode ==> ${response.statusCode}");
+      log("------------->> fetchButtonFromAllData ==> ${Urls.getAllButtonUrl}");
+      //log("-------------------->> fetchButtonFromAllData statusCode ==> ${response.statusCode}");
        log("fetchButtonFromAllData body ==> ${response.body}");
 
       _isGetButtonFromGetAll = false;

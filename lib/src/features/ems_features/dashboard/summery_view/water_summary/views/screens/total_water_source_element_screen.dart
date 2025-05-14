@@ -5,12 +5,9 @@ import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart
 import 'package:nz_fabrics/src/common_widgets/custom_shimmer_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_each_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/screen/water_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/error_page/error_page.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
@@ -35,8 +32,7 @@ class _TotalWaterSourceElementScreenState extends State<TotalWaterSourceElementS
 
       Get.find<WaterSourceCategoryWiseDataController>().stopApiCallOnScreenChange();
       Get.find<WaterLoadCategoryWiseDataController>().stopApiCallOnScreenChange();
-      Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
-      Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
+
 
     });
     super.initState();
@@ -52,8 +48,7 @@ class _TotalWaterSourceElementScreenState extends State<TotalWaterSourceElementS
       appBar: CustomAppBarWidget(text: widget.categoryName, backPreviousScreen: true,onBackButtonPressed: (){
         Get.find<WaterSourceCategoryWiseDataController>().startApiCallOnScreenChange();
         Get.find<WaterLoadCategoryWiseDataController>().startApiCallOnScreenChange();
-        Get.find<PieChartWaterSourceController>().startApiCallOnScreenChange();
-        Get.find<PieChartWaterLoadController>().startApiCallOnScreenChange();
+
       },),
       body:  GetBuilder<WaterEachCategoryWiseLiveDataController>(
           builder: (waterEachCategoryWiseLiveDataController) {

@@ -13,16 +13,8 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/wat
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/find_power_value_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/load_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/source_power_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/find_water_value_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/load_water_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/source_water_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/generators/generator_element_details_screen.dart';
-import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/power_and_energy/screen/power_and_energy_element_details_screen.dart';
 import 'package:nz_fabrics/src/features/plant_over_view/view/screen/plant_over_view_screen.dart';
 import 'package:nz_fabrics/src/features/profile/views/screens/profile_screen.dart';
-import 'package:nz_fabrics/src/features/solar_feature/inverter_data/views/screens/inverter_data_screen.dart';
-import 'package:nz_fabrics/src/features/solar_feature/module_cleaning/views/screen/module_cleaning_screen.dart';
-import 'package:nz_fabrics/src/features/solar_feature/solar_summery/solar_summary_screen.dart';
 import 'package:nz_fabrics/src/features/source/electricity/views/screen/source_screen.dart';
 import 'package:nz_fabrics/src/features/source/water_source/views/screen/water_source_screen.dart';
 import 'package:nz_fabrics/src/features/summary_feature/views/screen/summary_screen.dart';

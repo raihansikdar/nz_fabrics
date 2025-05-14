@@ -7,7 +7,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/wate
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
-import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -20,6 +19,7 @@ class WaterSourceCategoryWiseDataController extends GetxController with Internet
   String _errorMessage = '';
   WaterSourceCategoryWiseLiveDataModel _waterSourceCategoryWiseLiveData = WaterSourceCategoryWiseLiveDataModel();
   List<Data> pieChartDataList = [];
+
   bool get isLoading => _isLoading;
   bool get isConnected => _isConnected;
   bool get hasError => _hasError;
@@ -138,7 +138,8 @@ class WaterSourceCategoryWiseDataController extends GetxController with Internet
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterSourceCategoryWiseLiveDataUrl);
 
-       // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
+        log("------------>> getWaterSourceCategoryWiseLiveDataUrl: ${Urls.getWaterSourceCategoryWiseLiveDataUrl}");
+      //  log("getWaterSourceCategoryWiseLiveDataUrl: ${response.statusCode}");
        // log("getWaterSourceCategoryWiseLiveDataUrl: ${response.body}");
 
 

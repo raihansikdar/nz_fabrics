@@ -7,7 +7,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/wate
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
 import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
-import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -139,6 +138,7 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLoadMachineWiseLiveDataUrl);
 
+     log("------------>> getWaterLoadMachineWiseLiveDataUrl: ${Urls.getWaterLoadMachineWiseLiveDataUrl}");
      // log("getWaterLoadMachineWiseLiveDataUrl: ${response.statusCode}");
      // log("getWaterLoadMachineWiseLiveDataUrl: ${response.body}");
 

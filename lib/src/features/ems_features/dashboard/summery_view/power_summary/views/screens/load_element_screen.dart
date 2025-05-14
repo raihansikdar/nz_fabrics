@@ -214,7 +214,7 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            TextComponent(text: " ${categoryData.instantFlow?.toStringAsFixed(2) ?? '0.0'} kW",),
+                                            TextComponent(text: " ${categoryData.power?.toStringAsFixed(2) ?? '0.0'} kW",),
                                             TextComponent(text: " ${categoryData.netEnergy?.toStringAsFixed(2) ?? '0.00'} kWh"),
                                           ],
                                         )

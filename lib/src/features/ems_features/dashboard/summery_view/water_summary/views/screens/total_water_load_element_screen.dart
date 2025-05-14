@@ -5,8 +5,6 @@ import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart
 import 'package:nz_fabrics/src/common_widgets/custom_shimmer_widget.dart';
 import 'package:nz_fabrics/src/common_widgets/text_component.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_each_load_category_wise_live_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
@@ -34,8 +32,7 @@ class _TotalWaterLoadElementScreenState extends State<TotalWaterLoadElementScree
 
       Get.find<WaterSourceCategoryWiseDataController>().stopApiCallOnScreenChange();
       Get.find<WaterLoadCategoryWiseDataController>().stopApiCallOnScreenChange();
-      Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
-      Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
+
 
     });
     super.initState();
@@ -51,8 +48,7 @@ class _TotalWaterLoadElementScreenState extends State<TotalWaterLoadElementScree
       appBar: CustomAppBarWidget(text: widget.categoryName, backPreviousScreen: true,onBackButtonPressed: (){
         Get.find<WaterSourceCategoryWiseDataController>().startApiCallOnScreenChange();
         Get.find<WaterLoadCategoryWiseDataController>().startApiCallOnScreenChange();
-        Get.find<PieChartWaterSourceController>().startApiCallOnScreenChange();
-        Get.find<PieChartWaterLoadController>().startApiCallOnScreenChange();
+
       },),
       body:  GetBuilder<WaterEachLoadCategoryWiseLiveDataController>(
           builder: (waterEachLoadCategoryWiseLiveDataController) {

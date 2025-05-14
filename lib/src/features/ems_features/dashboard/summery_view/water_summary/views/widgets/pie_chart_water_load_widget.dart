@@ -2,7 +2,6 @@
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/static_pie_chart.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/common_widget/color_palette_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/model/water_load_category_wise_live_data_model.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
@@ -23,14 +22,7 @@ class PieChartWaterLoadWidget extends StatefulWidget {
 
 class _PieChartWaterLoadWidgetState extends State<PieChartWaterLoadWidget> {
 
-  // final List<ChartData> chartData = [
-  //   ChartData('Category A', 40),
-  //   ChartData('Category B', 30),
-  //   ChartData('Category C', 20),
-  //   ChartData('Category D', 10),
-  //   ChartData('Category D', 15),
-  //   ChartData('Category D', 5),
-  // ];
+
 
   final List<ChartData> noInternetChartData = [
     ChartData('Category A', 100),

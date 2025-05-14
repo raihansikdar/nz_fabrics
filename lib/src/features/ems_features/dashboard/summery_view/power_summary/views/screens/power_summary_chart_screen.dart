@@ -15,8 +15,6 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/powe
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/screens/total_power_element_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/pie_chart_power_load_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/views/widgets/pie_chart_power_source_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_load_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/pie_chart_water_source_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_load_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/water_summary/controllers/water_source_category_wise_data_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
@@ -50,8 +48,6 @@ class _PowerSummaryChartScreenState extends State<PowerSummaryChartScreen> {
       /*------------- Stop Api in Electricity ---------------*/
       Get.find<WaterSourceCategoryWiseDataController>().stopApiCallOnScreenChange();
       Get.find<WaterLoadCategoryWiseDataController>().stopApiCallOnScreenChange();
-      Get.find<PieChartWaterSourceController>().stopApiCallOnScreenChange();
-      Get.find<PieChartWaterLoadController>().stopApiCallOnScreenChange();
       Get.find<ElectricityLongSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
       Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
     });
