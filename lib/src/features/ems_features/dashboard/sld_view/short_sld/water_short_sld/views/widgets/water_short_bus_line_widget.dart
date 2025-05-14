@@ -135,7 +135,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sl
 
 class WaterShortAnimatedLinePainter extends CustomPainter {
   final List<WaterShortViewPageModel> viewPageData;
-  final Map<dynamic, WaterLiveDataModel> liveData;
+  final Map<dynamic, LiveDataModel> liveData;
   final double minX;
   final double minY;
   final Animation<double> animation;
@@ -267,7 +267,7 @@ class WaterShortAnimatedLinePainter extends CustomPainter {
       WaterShortViewPageModel startItem,
       WaterShortViewPageModel endItem,
       Line line,
-      Map<dynamic, WaterLiveDataModel> liveData,
+      Map<dynamic, LiveDataModel> liveData,
       ) {
     if (startItem.sourceType == "BusCoupler" ||
         endItem.sourceType == "BusCoupler" ||

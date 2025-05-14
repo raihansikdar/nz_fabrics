@@ -425,7 +425,7 @@ class StateHolderBinders extends Bindings{
      Get.put(WaterShortSLDLiveAllNodePowerController());
      Get.put(WaterShortSldLivePfDataController());
      Get.put(WaterShortSLDLtProductionVsCapacityController());
-     Get.put(WaterShortSLDGetAllInfoControllers());
+     Get.put(WaterShortSLDGetAllInfoUIControllers());
 
 
    /* ->>--------------------------> Steam SLD <---------------------------<<- */

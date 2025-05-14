@@ -254,7 +254,7 @@ class Point {
 //
 // String liveDataModelToJson(LiveDataModel data) => json.encode(data.toJson());
 
-class WaterLiveDataModel {
+class LiveDataModel {
   int? id;
   DateTime? timedate;
   String? node;
@@ -277,7 +277,7 @@ class WaterLiveDataModel {
   String? shape;         // Adding shape for distinguishing between different types
   String? sourceType;    // Adding sourceType to handle bus couplers and loops
 
-  WaterLiveDataModel({
+  LiveDataModel({
     this.id,
     this.timedate,
     this.node,
@@ -301,8 +301,8 @@ class WaterLiveDataModel {
     this.sourceType,    // Initialize sourceType
   });
 
-  factory WaterLiveDataModel.fromJson(Map<String, dynamic> json) {
-    return WaterLiveDataModel(
+  factory LiveDataModel.fromJson(Map<String, dynamic> json) {
+    return LiveDataModel(
       id: json["id"] != null ? json["id"] as int : null,
       timedate: json["timedate"] != null ? DateTime.tryParse(json["timedate"]) : null,
       node: json["node"] != null ? json["node"] as String : null,
