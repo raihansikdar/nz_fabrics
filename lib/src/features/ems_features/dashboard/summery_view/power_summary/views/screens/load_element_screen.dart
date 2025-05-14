@@ -129,7 +129,7 @@ class _LoadElementScreenState extends State<LoadElementScreen> {
                             PageRouteBuilder(
                                 pageBuilder: (context, animation, secondaryAnimation) =>  PowerAndEnergyElementDetailsScreen(
                                   elementName: categoryData.node ?? '',
-                                  gaugeValue: categoryData.instantFlow ?? 0.00,
+                                  gaugeValue: categoryData.power ?? 0.00,
                                   gaugeUnit: 'kW',
                                   elementCategory: 'Power',
                                   solarCategory: widget.categoryName,
