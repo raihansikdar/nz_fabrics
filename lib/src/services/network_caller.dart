@@ -314,7 +314,6 @@ class NetworkCaller{
     if(!result ){
         await AuthUtilityController.clearInfo();
         AuthUtilityController.accessTokenForApiCall.value = null;
-        getx.Get.find<DashBoardRadioButtonController>().updateSelectedValue(1);
         Navigator.pushAndRemoveUntil(
           EnergyManagementSystem.globalKey.currentContext!,
           PageRouteBuilder(

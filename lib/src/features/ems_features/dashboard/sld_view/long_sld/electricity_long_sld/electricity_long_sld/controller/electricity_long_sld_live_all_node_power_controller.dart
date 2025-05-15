@@ -459,16 +459,16 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
       await internetConnectivityCheck();
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getElectricityLiveAllNodePowerUrl);
 
-      log('-----electricity LOng------>>> ${Urls.getElectricityLiveAllNodePowerUrl}');
-      log('-----electricity Long Body ------>>> ${response.body}');
+      log('-----electricity Long getElectricityLiveAllNodePowerUrl------>>> ${Urls.getElectricityLiveAllNodePowerUrl}');
+      // log('-----electricity Long Body ------>>> ${response.body}');
 
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);
         final newData = jsonData.map((json) => ElectricityLongLiveAllNodePowerModel.fromJson(json)).toList();
 
         if (!_areListsEqual(_liveAllNodePowerModel, newData)) {
-          _liveAllNodePowerModel.assignAll(newData); // Update RxList
-          update(); // Notify GetBuilder widgets
+          _liveAllNodePowerModel.assignAll(newData);
+          update();
           log('Updated liveAllNodePowerModel with ${newData.length} nodes');
         }
         update();

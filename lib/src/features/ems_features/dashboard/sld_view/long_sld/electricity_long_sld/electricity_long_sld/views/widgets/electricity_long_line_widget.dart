@@ -746,8 +746,8 @@ class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
               endItem,
             );
           } else {
-            debugPrint('Skipping animation for line from ${startItem.nodeName} to ${endItem.nodeName}: '
-                'shouldSkip=$shouldSkipAnimation, startSensor=$startSensorStatus, endSensor=$endSensorStatus');
+            // debugPrint('Skipping animation for line from ${startItem.nodeName} to ${endItem.nodeName}: '
+            //     'shouldSkip=$shouldSkipAnimation, startSensor=$startSensorStatus, endSensor=$endSensorStatus');
           }
         }
       }

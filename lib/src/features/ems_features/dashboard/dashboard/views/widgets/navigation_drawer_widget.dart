@@ -1278,10 +1278,11 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                         final response = await logoutController.logout(refreshToken: AuthUtilityController.refreshToken ?? '');
                         // final response = await logoutController.logout();
                          if(response){
-                           Get.find<DashBoardRadioButtonController>().updateSelectedValue(1);
                            Get.offAll(()=> LoginScreen(),transition: Transition.fadeIn,duration: const Duration(milliseconds: 100));
                            await AuthUtilityController.clearInfo();
                            AuthUtilityController.accessTokenForApiCall.value = null;
+                           Get.find<DashBoardRadioButtonController>().updateSelectedValue(1);
+
                          }
                     
                       },

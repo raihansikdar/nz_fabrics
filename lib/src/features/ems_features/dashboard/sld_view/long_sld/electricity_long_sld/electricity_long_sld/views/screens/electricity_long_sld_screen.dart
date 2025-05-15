@@ -1688,7 +1688,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     }
 
     if (!isCacheValid) {
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: kTimer), () {
         if (!_isFetchingPFData) _fetchPFData();
         if (!_isFetchingViewPageData) _initializeData();
         //_fetchLiveData();
@@ -1698,9 +1698,10 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
         nodePowerController.fetchLiveAllNodePower();
       });
     } else {
-      Future.delayed(const Duration(seconds: 2), () {
-        startTimer();
-      });
+      // Future.delayed(const Duration(seconds: 2), () {
+      //   startTimer();
+      // });
+      startTimer();
     }
   }
 
@@ -1732,7 +1733,8 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
   // OPTIMIZATION 4: Fetch view page data without triggering full UI rebuilds
   Future<void> _fetchViewPageData() async {
-    if (_isFetchingViewPageData || !mounted) return;
+   // if (_isFetchingViewPageData || !mounted) return;
+    if (!mounted) return;
     _isFetchingViewPageData = true;
     final requestId = Uuid().v4(); // Unique ID for this request
     // debugPrint('[$requestId] Fetching view page data at ${DateTime.now()}');
@@ -1749,8 +1751,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
         Uri.parse(Urls.longElectricityUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
-      // debugPrint('[$requestId] View page data response: ${response.statusCode} at ${DateTime.now()}');
-
+      debugPrint('-----electricity Long  ------>>> ${Urls.longElectricityUrl}');
       if (response.statusCode == 200 && mounted) {
         final List<dynamic> data = json.decode(response.body);
         final newViewPageData = data.map((e) => ElectricityLongViewPageModel.fromJson(e)).toList();
@@ -1807,25 +1808,25 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
 
 
-  // OPTIMIZATION 5: Update power meter data without triggering full UI rebuilds
   Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType,
       ElectricityLongSLDGetAllInfoUIControllers controller, String parentRequestId) async {
+
+    if(!mounted) return;
+
+
     final requestId = Uuid().v4();
-    //debugPrint('[$requestId] Fetching power meter for $nodeName (Parent: $parentRequestId) at ${DateTime.now()}');
 
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
-      // debugPrint('[$requestId] Power meter response for $nodeName: ${meterResponse.statusCode}');
 
       if (meterResponse.statusCode == 200) {
         final meterData = json.decode(meterResponse.body);
         double powerMeter = meterData['power_meter'] ?? 0.0;
         debugPrint('[$requestId] Updating power meter for $nodeName -> $powerMeter');
 
-        // Update through controller without rebuilding entire widget
         controller.updatePowerMeter(powerMeter, nodeName);
       }
     } catch (e) {
@@ -1833,19 +1834,20 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     }
   }
 
-  // OPTIMIZATION 6: Fetch PF data without triggering full UI rebuilds
+
   Future<void> _fetchPFData() async {
-    if (_isFetchingPFData || !mounted) return;
+   // if (_isFetchingPFData || !mounted) return;
+    if (!mounted) return;
     _isFetchingPFData = true;
     final requestId = Uuid().v4();
-    debugPrint('[$requestId] Fetching PF data at ${DateTime.now()}');
 
     try {
       final response = await http.get(
         Uri.parse('/api/get-pf-item-positions/'),
         headers: {'Authorization': '${AuthUtilityController.accessToken}'},
       );
-      debugPrint('[$requestId] PF data response: ${response.statusCode} at ${DateTime.now()}');
+
+      debugPrint('-----electricity Long  ------>>> /api/get-pf-item-positions/}');
 
       if (response.statusCode == 200 && mounted) {
         final newPfData = List<Map<String, dynamic>>.from(json.decode(response.body));
@@ -1891,9 +1893,11 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     super.didChangeDependencies();
     if (ModalRoute.of(context)?.isCurrent ?? false) {
       // Delay timer start to avoid overlap with initState
-      Future.delayed(const Duration(seconds: 2), () {
-        startTimer();
-      });
+      // Future.delayed(const Duration(seconds: 2), () {
+      //   startTimer();
+      // });
+
+      startTimer();
     } else {
       stopTimer();
     }
