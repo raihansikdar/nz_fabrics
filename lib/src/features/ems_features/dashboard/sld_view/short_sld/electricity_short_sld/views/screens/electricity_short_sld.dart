@@ -1137,7 +1137,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
 
     _fetchViewPageData();
     _fetchPFData();
-    _fetchLiveData();
+    //_fetchLiveData();
 
     Get.find<ElectricityShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
 
@@ -1204,7 +1204,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
       Future.delayed(const Duration(seconds: 1), () {
         if (!_isFetchingPFData) _fetchPFData();
         if (!_isFetchingViewPageData) _initializeData();
-        _fetchLiveData(); // Ensure live data is fetched
+        //_fetchLiveData();
         final productionController = Get.find<ElectricityShortSLDLtProductionVsCapacityController>();
         final nodePowerController = Get.find<ElectricityShortSLDLiveAllNodePowerController>();
         productionController.fetchProductVsCapacityData();
@@ -1317,7 +1317,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     return true;
   }
 
-  Future<void> _fetchLiveData() async {
+ /* Future<void> _fetchLiveData() async {
     if (!mounted) return;
 
     final requestId = Uuid().v4();
@@ -1400,13 +1400,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
         });
       }
     }
-  }
-
-
-
-
-
-
+  }*/
 
 
 

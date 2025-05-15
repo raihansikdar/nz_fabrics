@@ -460,6 +460,7 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getElectricityLiveAllNodePowerUrl);
 
       log('-----electricity LOng------>>> ${Urls.getElectricityLiveAllNodePowerUrl}');
+      log('-----electricity Long Body ------>>> ${response.body}');
 
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);
@@ -470,6 +471,7 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
           update(); // Notify GetBuilder widgets
           log('Updated liveAllNodePowerModel with ${newData.length} nodes');
         }
+        update();
         _isConnected = true;
         return true;
       } else {
