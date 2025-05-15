@@ -1139,7 +1139,15 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
     _fetchPFData();
     //_fetchLiveData();
 
-    Get.find<ElectricityShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
+       // Ensure controller is ready and fetches data
+    final nodePowerController = Get.find<ElectricityShortSLDLiveAllNodePowerController>();
+    nodePowerController.fetchLiveAllNodePower().then((_) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false; // Only set loading false after data is fetched
+        });
+      }
+    });
 
     // Stop other controllers
 

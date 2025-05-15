@@ -310,6 +310,7 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
             update(['node_${node.node}']);
           }
         }
+        update();
         return true;
       } else {
         _errorMessage = "Failed to fetch Live All Node Power Data.";
