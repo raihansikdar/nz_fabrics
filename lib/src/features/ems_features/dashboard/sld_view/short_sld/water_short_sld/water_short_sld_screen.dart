@@ -35,8 +35,8 @@ class WaterShortSldScreen extends StatelessWidget {
             ),
           ),
           onPressed: (){
-          //  Get.to(()=>WaterLongSldScreen());
-            Get.to(()=>SteamLongSldScreen());
+           Get.to(()=>WaterLongSldScreen());
+           // Get.to(()=>SteamLongSldScreen());
           },child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
