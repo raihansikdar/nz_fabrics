@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_lt_production_vs_capacity_controller.dart';
@@ -951,15 +952,23 @@ class _WaterShortSldState extends State<WaterShortSld>
 
     _fetchViewPageData();
     _fetchPFData();
-    _fetchLiveData();
+    //_fetchLiveData();
 
-    Get.find<WaterShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
+    // Ensure controller is ready and fetches data
+    final nodePowerController = Get.find<WaterShortSLDLiveAllNodePowerController>();
+    nodePowerController.fetchLiveAllNodePower().then((_) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false; // Only set loading false after data is fetched
+        });
+      }
+    });
 
     // Stop other controllers
 
-    Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
-    Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
-    //Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    // Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
+    // Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
 
     WidgetsBinding.instance.addObserver(this);
   }
@@ -1015,19 +1024,21 @@ class _WaterShortSldState extends State<WaterShortSld>
     }
 
     if (!isCacheValid) {
-      Future.delayed(const Duration(seconds: 1), () {
+      Future.delayed(const Duration(seconds: kTimer), () {
         if (!_isFetchingPFData) _fetchPFData();
         if (!_isFetchingViewPageData) _initializeData();
-        _fetchLiveData(); // Ensure live data is fetched
+        //_fetchLiveData();
         final productionController = Get.find<WaterShortSLDLtProductionVsCapacityController>();
         final nodePowerController = Get.find<WaterShortSLDLiveAllNodePowerController>();
         productionController.fetchProductVsCapacityData();
         nodePowerController.fetchLiveAllNodePower();
       });
     } else {
-      Future.delayed(const Duration(seconds: 2), () {
-        startTimer();
-      });
+      // Future.delayed(const Duration(seconds: 2), () {
+      //   startTimer();
+      // });
+
+      startTimer();
     }
   }
 
@@ -1057,10 +1068,11 @@ class _WaterShortSldState extends State<WaterShortSld>
 
   // OPTIMIZATION 4: Fetch view page data without triggering full UI rebuilds
   Future<void> _fetchViewPageData() async {
-    if (_isFetchingViewPageData || !mounted) return;
+    if (!mounted) return;
+    //  if (_isFetchingViewPageData || !mounted) return;
     _isFetchingViewPageData = true;
     final requestId = Uuid().v4(); // Unique ID for this request
-    // debugPrint('[$requestId] Fetching view page data at ${DateTime.now()}');
+
 
     try {
       // Only show loading on initial load, not on refreshes
@@ -1074,7 +1086,8 @@ class _WaterShortSldState extends State<WaterShortSld>
         Uri.parse(Urls.shortWaterUrl),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
-      // debugPrint('[$requestId] View page data response: ${response.statusCode} at ${DateTime.now()}');
+      debugPrint('-----Water Short  ------>>> ${Urls.shortWaterUrl}');
+
 
       if (response.statusCode == 200 && mounted) {
         final List<dynamic> data = json.decode(response.body);
@@ -1131,21 +1144,21 @@ class _WaterShortSldState extends State<WaterShortSld>
     return true;
   }
 
-  Future<void> _fetchLiveData() async {
+  /* Future<void> _fetchLiveData() async {
     if (!mounted) return;
 
     final requestId = Uuid().v4();
-    //  debugPrint('[$requestId] Fetching live data at ${DateTime.now()}');
+  //  debugPrint('[$requestId] Fetching live data at ${DateTime.now()}');
 
     try {
       final response = await http.get(
-        Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=water'),
+        Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=electricity'),
         headers: {
           'Authorization': AuthUtilityController.accessToken ?? '',
         },
       );
 
-      //  debugPrint('[$requestId] Live data response: ${response.statusCode}, body: ${response.body}');
+    //  debugPrint('[$requestId] Live data response: ${response.statusCode}, body: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -1158,7 +1171,7 @@ class _WaterShortSldState extends State<WaterShortSld>
 
         for (var item in _viewPageData) {
           if (item.nodeName.isEmpty) {
-            // debugPrint('[$requestId] Skipping empty nodeName for item id: ${item.id}');
+           // debugPrint('[$requestId] Skipping empty nodeName for item id: ${item.id}');
             continue;
           }
 
@@ -1169,17 +1182,17 @@ class _WaterShortSldState extends State<WaterShortSld>
 
           if (nodeData != null) {
             LiveDataModel liveDataModel = LiveDataModel(
-              power: nodeData['instant_flow']?.toDouble() ?? 0.0,
-              sensorStatus: (nodeData['instant_flow']?.toDouble() ?? 0.0) != 0.0,
+              power: nodeData['power']?.toDouble() ?? 0.0,
+              sensorStatus: (nodeData['power']?.toDouble() ?? 0.0) != 0.0,
               sourceType: nodeData['source_type'] ?? '',
               timedate: nodeData['timedate'] != null
                   ? DateTime.tryParse(nodeData['timedate'])
                   : null,
             );
             newLiveData[item.id] = liveDataModel;
-            //  debugPrint('[$requestId] Added live data for node: ${item.nodeName}, power: ${liveDataModel.power}, sensorStatus: ${liveDataModel.sensorStatus}');
+          //  debugPrint('[$requestId] Added live data for node: ${item.nodeName}, power: ${liveDataModel.power}, sensorStatus: ${liveDataModel.sensorStatus}');
           } else {
-            // debugPrint('[$requestId] No live data found for node: ${item.nodeName}');
+           // debugPrint('[$requestId] No live data found for node: ${item.nodeName}');
             newLiveData[item.id] = LiveDataModel(
               power: 0.0,
               sensorStatus: false,
@@ -1195,10 +1208,10 @@ class _WaterShortSldState extends State<WaterShortSld>
             _isLoading = false;
           });
           await _cacheData1();
-          // debugPrint('[$requestId] Updated _liveData with ${newLiveData.length} entries');
+         // debugPrint('[$requestId] Updated _liveData with ${newLiveData.length} entries');
         }
       } else {
-        // debugPrint('[$requestId] Failed to fetch live data: ${response.statusCode}');
+       // debugPrint('[$requestId] Failed to fetch live data: ${response.statusCode}');
         if (mounted) {
           setState(() {
             _isLoading = false;
@@ -1214,33 +1227,29 @@ class _WaterShortSldState extends State<WaterShortSld>
         });
       }
     }
-  }
-
-
-
-
-
-
+  }*/
 
 
 
   // OPTIMIZATION 5: Update power meter data without triggering full UI rebuilds
   Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType,
       WaterShortSLDGetAllInfoUIControllers controller, String parentRequestId) async {
-    final requestId = Uuid().v4();
 
+    if(!mounted) return;
+
+    final requestId = Uuid().v4();
 
     try {
       final meterResponse = await http.get(
         Uri.parse(Urls.busCouplerConnectedMeterUrl(nodeName, sourceType)),
         headers: {'Authorization': "${AuthUtilityController.accessToken}"},
       );
-      debugPrint('[$requestId] Power meter response for $nodeName: ${meterResponse.statusCode}');
+      // debugPrint('[$requestId] Power meter response for $nodeName: ${meterResponse.statusCode}');
 
       if (meterResponse.statusCode == 200) {
         final meterData = json.decode(meterResponse.body);
         double powerMeter = meterData['power_meter'] ?? 0.0;
-
+       // debugPrint('[$requestId] Updating power meter for $nodeName -> $powerMeter');
 
         // Update through controller without rebuilding entire widget
         controller.updatePowerMeter(powerMeter, nodeName);
@@ -1252,17 +1261,18 @@ class _WaterShortSldState extends State<WaterShortSld>
 
   // OPTIMIZATION 6: Fetch PF data without triggering full UI rebuilds
   Future<void> _fetchPFData() async {
-    if (_isFetchingPFData || !mounted) return;
+    //if (_isFetchingPFData || !mounted) return;
+    if( !mounted) return;
     _isFetchingPFData = true;
     final requestId = Uuid().v4();
-    debugPrint('[$requestId] Fetching PF data at ${DateTime.now()}');
+
 
     try {
       final response = await http.get(
         Uri.parse('/api/get-pf-item-positions/'),
         headers: {'Authorization': '${AuthUtilityController.accessToken}'},
       );
-      debugPrint('[$requestId] PF data response: ${response.statusCode} at ${DateTime.now()}');
+      debugPrint('-----electricity Short  ------>>> /api/get-pf-item-positions/}');
 
       if (response.statusCode == 200 && mounted) {
         final newPfData = List<Map<String, dynamic>>.from(json.decode(response.body));
@@ -1307,10 +1317,12 @@ class _WaterShortSldState extends State<WaterShortSld>
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (ModalRoute.of(context)?.isCurrent ?? false) {
-      // Delay timer start to avoid overlap with initState
-      Future.delayed(const Duration(seconds: 2), () {
-        startTimer();
-      });
+      // // Delay timer start to avoid overlap with initState
+      // Future.delayed(const Duration(seconds: 2), () {
+      //   startTimer();
+      // });
+
+      startTimer();
     } else {
       stopTimer();
     }
@@ -1349,6 +1361,7 @@ class _WaterShortSldState extends State<WaterShortSld>
 
   @override
   void dispose() {
+    _timer?.cancel();
     _controller.dispose();
     stopTimer();
     WidgetsBinding.instance.removeObserver(this);
@@ -1618,7 +1631,6 @@ class _WaterShortSldState extends State<WaterShortSld>
         try {
           return Color(int.parse('0xFF$hex'));
         } catch (e) {
-          debugPrint('Invalid hex color: $hex, using default #000000');
           return const Color(0xFF000000);
         }
       }
@@ -1634,7 +1646,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                 orElse: () => WaterShortLiveAllNodePowerModel(),
               );
               final bool hasData = nodeData.node != null;
-              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
 
 
               _liveData[item.id] = LiveDataModel(
@@ -1653,17 +1665,32 @@ class _WaterShortSldState extends State<WaterShortSld>
                 height: item.height.toDouble(),
                 onTap: () {
                   debugPrint("----->CircleWithIcon<-----");
-                  Get.to(() => WaterElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                      gaugeUnit: 'm³/h',
-                      elementCategory: 'Water',
-                  ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
+                  // if (item.category == 'Diesel_Generator') {
+                  //   Get.to(
+                  //         () => GeneratorElementDetailsScreen(
+                  //       elementName: item.nodeName,
+                  //       gaugeValue: power,
+                  //       gaugeUnit: 'kW',
+                  //       elementCategory: 'Power',
+                  //     ),
+                  //     transition: Transition.rightToLeft,
+                  //     duration: const Duration(seconds: 1),
+                  //   );
+                  // } else {
+                  //   Get.to(
+                  //         () => PowerAndEnergyElementDetailsScreen(
+                  //       elementName: item.nodeName,
+                  //       gaugeValue: power,
+                  //       gaugeUnit: 'kW',
+                  //       elementCategory: 'Power',
+                  //       solarCategory: item.category,
+                  //     ),
+                  //     transition: Transition.rightToLeft,
+                  //     duration: const Duration(seconds: 1),
+                  //   );
+                  // }
                 },
-                unit: 'm³/h',
+                unit: 'kW',
               );
             },
           );
@@ -1679,7 +1706,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                 orElse: () => WaterShortLiveAllNodePowerModel(),
               );
               final bool hasData = nodeData.node != null;
-              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
               final String percentage = hasData && nodeData.percentage != null
                   ? nodeData.percentage.toStringAsFixed(2)
                   : "0.00";
@@ -1701,7 +1728,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                 width: item.width.toDouble(),
                 height: item.height.toDouble(),
                 onTap: () {},
-                unit: 'm³/h',
+                unit: 'kW',
                 borderColor: item.borderColor ?? '#FF0000',
                 percentage: percentage,
                 capacity: capacity,
@@ -1721,13 +1748,13 @@ class _WaterShortSldState extends State<WaterShortSld>
                 orElse: () => WaterShortLiveAllNodePowerModel(),
               );
               final bool hasData = nodeData.node != null;
-              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-              final String percentage = hasData && nodeData.percentage != null
-                  ? nodeData.percentage.toStringAsFixed(2)
-                  : "0.00";
-              final String capacity = hasData && nodeData.capacity != null
-                  ? nodeData.capacity.toStringAsFixed(2)
-                  : "0.00";
+              final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
+              // final String percentage = hasData && nodeData.percentage != null
+              //     ? nodeData.percentage.toStringAsFixed(2)
+              //     : "0.00";
+              // final String capacity = hasData && nodeData.capacity != null
+              //     ? nodeData.capacity.toStringAsFixed(2)
+              //     : "0.00";
 
               _liveData[item.id] = LiveDataModel(
                 power: power,
@@ -1744,20 +1771,33 @@ class _WaterShortSldState extends State<WaterShortSld>
                 height: item.height.toDouble(),
                 onTap: () {
                   debugPrint("----->TrBoxWithIconWidget<-----");
-                  Get.to(() => WaterElementDetailsScreen(
-                    elementName: item.nodeName,
-                    gaugeValue: power,
-                    gaugeUnit: 'm³/h',
-                    elementCategory: 'Water',
-                  ),
-                    transition: Transition.rightToLeft,
-                    duration: const Duration(seconds: 1),
-                  );
+                  // if (item.category == 'Diesel_Generator') {
+                  //   Get.to(() => GeneratorElementDetailsScreen(
+                  //     elementName: item.nodeName,
+                  //     gaugeValue: power,
+                  //     gaugeUnit: 'kW',
+                  //     elementCategory: 'Power',
+                  //   ),
+                  //     transition: Transition.rightToLeft,
+                  //     duration: const Duration(seconds: 1),
+                  //   );
+                  // } else {
+                  //   Get.to(() => PowerAndEnergyElementDetailsScreen(
+                  //     elementName: item.nodeName,
+                  //     gaugeValue: power,
+                  //     gaugeUnit: 'kW',
+                  //     elementCategory: 'Power',
+                  //     solarCategory: item.category,
+                  //   ),
+                  //     transition: Transition.rightToLeft,
+                  //     duration: const Duration(seconds: 1),
+                  //   );
+                  // }
                 },
-                unit: 'm³/h',
+                unit: 'kW',
                 borderColor: item.color ?? '#FF0000',
-                percentage: percentage,
-                capacity: capacity,
+                percentage: 0,
+                capacity: 0,
               );
             },
           );
@@ -1776,7 +1816,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                       orElse: () => WaterShortLiveAllNodePowerModel(),
                     );
                     final bool hasData = nodeData.node != null;
-                    final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                    final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
 
                     _liveData[item.id] = LiveDataModel(
                       power: power,
@@ -1794,7 +1834,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                       loadBoxHeight: item.height.toDouble(),
                       loadBoxWidth: item.width.toDouble(),
                       onTap: () {},
-                      unit: 'm³/h',
+                      unit: 'kW',
                       gridColor: capacityController.ltProductionVsCapacityModel.gridColor ?? '#ffffff',
                       generatorColor: capacityController.ltProductionVsCapacityModel.generatorColor ?? '#ffffff',
                       solarColor: capacityController.ltProductionVsCapacityModel.solarColor ?? '#ffffff',
@@ -1870,7 +1910,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                     orElse: () => WaterShortLiveAllNodePowerModel(),
                   );
                   final bool hasData = nodeData.node != null;
-                  final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                  final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
                   final String percentage = hasData && nodeData.percentage != null
                       ? nodeData.percentage.toStringAsFixed(2)
                       : "0.00";
@@ -1905,7 +1945,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                         duration: const Duration(seconds: 1),
                       );
                     },
-                    unit: 'm³/h',
+                    unit: 'kW',
                     percentage: percentage,
                     capacity: capacity,
                     orientation: item.orientation ?? 'horizontal',
@@ -1921,7 +1961,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                     orElse: () => WaterShortLiveAllNodePowerModel(),
                   );
                   final bool hasData = nodeData.node != null;
-                  final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                  final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
                   _liveData[item.id] = LiveDataModel(
                     power: power,
                     sensorStatus: power != 0.0,
@@ -1944,7 +1984,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                         duration: const Duration(seconds: 1),
                       );
                     },
-                    unit: 'm³/h',
+                    unit: 'kW',
                     orientation: item.orientation,
                   );
                 },
@@ -1960,7 +2000,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                   orElse: () => WaterShortLiveAllNodePowerModel(),
                 );
                 final bool hasData = nodeData.node != null;
-                final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+                final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
                 debugPrint('Meter_Bus_Bar Node: ${item.nodeName}, Power: $power');
                 _liveData[item.id] = LiveDataModel(
                   power: power,
@@ -1979,7 +2019,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                   loadBoxHeight: item.height.toDouble(),
                   loadBoxWidth: item.width.toDouble(),
                   onTap: () {},
-                  unit: 'm³/h',
+                  unit: 'kW',
                   orientation: item.orientation,
                 );
               },
@@ -1999,7 +2039,7 @@ class _WaterShortSldState extends State<WaterShortSld>
                 orElse: () => WaterShortLiveAllNodePowerModel(),
               );
               final bool hasData = nodeData.node != null;
-              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
+              final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
 
               _liveData[item.id] = LiveDataModel(
                 power: power,
@@ -2024,14 +2064,12 @@ class _WaterShortSldState extends State<WaterShortSld>
           widget = GetBuilder<WaterShortSLDLiveAllNodePowerController>(
             id: 'node_${item.nodeName}',
             builder: (controller) {
-
               final nodeData = controller.liveAllNodePowerModel.firstWhere(
                     (element) => element.node == item.nodeName,
                 orElse: () => WaterShortLiveAllNodePowerModel(),
               );
               final bool hasData = nodeData.node != null;
-              final double power = hasData ? (nodeData.power ?? 0.0) : 0.0;
-
+              final double power = hasData ? (nodeData.instantFlow ?? 0.0) : 0.0;
               _liveData[item.id] = LiveDataModel(
                 power: power,
                 sensorStatus: power != 0.0,

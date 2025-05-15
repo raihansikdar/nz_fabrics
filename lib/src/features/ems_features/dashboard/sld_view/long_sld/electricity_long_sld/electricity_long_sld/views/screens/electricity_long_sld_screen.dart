@@ -1622,7 +1622,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     nodePowerController.fetchLiveAllNodePower().then((_) {
       if (mounted) {
         setState(() {
-          _isLoading = false; // Only set loading false after data is fetched
+          _isLoading = false;
         });
       }
     });
@@ -1936,6 +1936,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
   @override
   void dispose() {
+    _timer?.cancel();
     _controller.dispose();
     stopTimer();
     WidgetsBinding.instance.removeObserver(this);

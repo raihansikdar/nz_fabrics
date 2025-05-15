@@ -1,5 +1,5 @@
 class WaterShortLiveAllNodePowerModel {
-  dynamic power;
+  //dynamic power;
   dynamic instantFlow;
   String? timedate;
   String? color;
@@ -10,7 +10,8 @@ class WaterShortLiveAllNodePowerModel {
   dynamic capacity;
 
   WaterShortLiveAllNodePowerModel(
-      {this.power,
+      {
+        //this.power,
         this.instantFlow,
         this.timedate,
         this.color,
@@ -19,7 +20,7 @@ class WaterShortLiveAllNodePowerModel {
         this.sourceType});
 
   WaterShortLiveAllNodePowerModel.fromJson(Map<String, dynamic> json) {
-    power = json['power'];
+    //power = json['power'];
     instantFlow = json['instant_flow'];
     timedate = json['timedate'];
     color = json['color'];
@@ -32,7 +33,7 @@ class WaterShortLiveAllNodePowerModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['power'] = power;
+    //data['power'] = power;
     data['instant_flow'] = instantFlow;
     data['timedate'] = timedate;
     data['color'] = color;
@@ -44,3 +45,30 @@ class WaterShortLiveAllNodePowerModel {
     return data;
   }
 }
+
+
+// class WaterShortLiveAllNodePowerModel {
+//   double? instantFlow;
+//   String? timedate;
+//   String? node;
+//   bool? sensorStatus;
+//
+//   WaterShortLiveAllNodePowerModel(
+//       {this.instantFlow, this.timedate, this.node, this.sensorStatus});
+//
+//   WaterShortLiveAllNodePowerModel.fromJson(Map<String, dynamic> json) {
+//     instantFlow = json['instant_flow'];
+//     timedate = json['timedate'];
+//     node = json['node'];
+//     sensorStatus = json['sensor_status'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['instant_flow'] = this.instantFlow;
+//     data['timedate'] = this.timedate;
+//     data['node'] = this.node;
+//     data['sensor_status'] = this.sensorStatus;
+//     return data;
+//   }
+// }

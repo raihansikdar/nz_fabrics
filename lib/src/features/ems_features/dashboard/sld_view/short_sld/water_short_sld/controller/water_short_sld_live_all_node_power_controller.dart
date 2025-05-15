@@ -300,6 +300,8 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
 
       log('-----Water Short WaterShortSLDLiveAllNodePowerController ------>>> ${Urls.getWaterLiveAllNodePowerUrl}');
 
+      log("--------->> ${response.body}");
+
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);
         final newData = jsonData.map((json) => WaterShortLiveAllNodePowerModel.fromJson(json)).toList();
@@ -336,9 +338,8 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
     if (oldList.length != newList.length) return false;
     for (int i = 0; i < oldList.length; i++) {
       if (oldList[i].node != newList[i].node ||
-          oldList[i].power != newList[i].power ||
-          oldList[i].percentage != newList[i].percentage ||
-          oldList[i].capacity != newList[i].capacity) {
+          oldList[i].instantFlow != newList[i].instantFlow
+        ) {
         return false;
       }
     }
