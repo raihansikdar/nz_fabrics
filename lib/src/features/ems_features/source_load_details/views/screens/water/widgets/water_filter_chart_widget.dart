@@ -5,6 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/line_chart_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/monthly_bar_chart_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/yearly_bar_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_line_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_monthly_bar_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_yearly_bar_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -12,9 +15,9 @@ import 'package:nz_fabrics/src/utility/style/constant.dart';
 
 class WaterFilterSpecificChartWidget extends StatelessWidget {
   final String graphType;
-  final List<LineData> _lineChartDataList;
-  final List<MonthlyBarChartData> _monthlyDataList;
-  final List<YearlyBarChartData> _yearlyDataList;
+  final List<WaterLineData> _lineChartDataList;
+  final List<WaterMonthlyBarChartData> _monthlyDataList;
+  final List<WaterYearlyBarChartData> _yearlyDataList;
   final int dateDifference;
   final Size size;
 
@@ -24,7 +27,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
       this._lineChartDataList,
       this._monthlyDataList,
       this._yearlyDataList,
-      this.dateDifference, 
+      this.dateDifference,
       );
 
   @override
@@ -40,7 +43,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
     final List<LineChartData> chartData = _lineChartDataList
         .map((lineData) => LineChartData(
       dateTime: DateTime.parse(lineData.timedate!),
-      power: (lineData.power ?? 0).toDouble(),
+      power: (lineData.instantFlow ?? 0).toDouble(),
     ))
         .toList();
 
@@ -48,7 +51,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
     final List<MonthlyChartData> monthlyChartData = _monthlyDataList
         .map((monthlyData) => MonthlyChartData(
       date: DateTime.parse(monthlyData.date!),
-      energy: (monthlyData.energy ?? 0).toDouble(),
+      energy: (monthlyData.volume ?? 0).toDouble(),
     ))
         .toList();
 
@@ -56,7 +59,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
     final List<YearlyChartData> yearlyChartData = _yearlyDataList
         .map((yearlyData) => YearlyChartData(
       date: DateTime.parse(yearlyData.date!),
-      energy: (yearlyData.energy ?? 0.0),
+      energy: (yearlyData.volume ?? 0.0),
     ))
         .toList();
 
@@ -118,7 +121,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
                 dataSource: chartData,
                 xValueMapper: (LineChartData data, _) => data.dateTime,
                 yValueMapper: (LineChartData data, _) => data.power,
-                name: 'Power(kW)',
+                name: 'Instant Flow(m³/h)',
               )
                       ],
                     ),
@@ -153,7 +156,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
                 dataSource: monthlyChartData,
                 xValueMapper: (MonthlyChartData data, _) => data.date,
                 yValueMapper: (MonthlyChartData data, _) => data.energy,
-                name: 'Energy(kWh)',
+                name: 'Volume(m³)',
               ),
                       ],
                     ),
@@ -186,7 +189,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
             xValueMapper: (YearlyChartData data, _) =>
                 DateFormat('MMM/yy').format(data.date),
             yValueMapper: (YearlyChartData data, _) => data.energy,
-            name: 'Energy(kWh)',
+            name: 'Volume(m³)',
           ),
         ],
       ),

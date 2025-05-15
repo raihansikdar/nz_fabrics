@@ -433,7 +433,7 @@ class StateHolderBinders extends Bindings{
    Get.put(SteamLongSLDAllInfoController());
    Get.put(SteamLongSLDLiveAllNodePowerController());
    Get.put(SteamLongSldLivePfDataController());
-   Get.put(SteamLongSLDGetAllInfoControllers());
+   //Get.put(SteamLongSLDGetAllInfoControllers());
    Get.put(SteamLongSLDLtProductionVsCapacityController());
 
    /* ->>--------> Steam Short SLD <--------<<- */
@@ -442,7 +442,7 @@ class StateHolderBinders extends Bindings{
    Get.put(SteamShortSLDLiveAllNodePowerController());
    Get.put(SteamShortSldLivePfDataController());
    Get.put(SteamShortSLDLtProductionVsCapacityController());
-   Get.put(SteamShortSLDGetAllInfoControllers());
+  // Get.put(SteamShortSLDGetAllInfoControllers());
 
 
      Get.put(LayoutPositionController());

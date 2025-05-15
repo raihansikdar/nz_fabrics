@@ -13,6 +13,7 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/control
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/controllers/water/water_yearly_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_daily_line_chart_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_details_date_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_filter_chart_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_gauge_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_monthly_bar_card_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_run_time_information_widget.dart';
@@ -52,6 +53,8 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_){
+      Get.find<WaterFilterSpecificNodeDataController>().fetchFilterSpecificData(nodeName: widget.elementName, fromDate: Get.find<WaterFilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<WaterFilterSpecificNodeDataController>().toDateTEController.text);
+      Get.find<WaterFilterSpecificNodeDataController>().fetchFilterSpecificTableData(nodeName: widget.elementName, fromDate: Get.find<WaterFilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<WaterFilterSpecificNodeDataController>().toDateTEController.text);
       Get.find<GetLiveDataController>().fetchGetLiveData(meterName: widget.elementName);
       Get.find<WaterTodayRuntimeDataController>().fetchTodayRuntimeData(sourceName: widget.elementName);
       Get.find<WaterThisDayDataController>().fetchThisDayData(sourceName: widget.elementName);
@@ -263,9 +266,21 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                           else if(waterDailyDataController.hasError){
                                             return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
                                           }
-                                          return SizedBox(
-                                              height: size.height * .28,
-                                              child:  WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',));
+                                          // return SizedBox(
+                                          //     height: size.height * .28,
+                                          //     child:  WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',),
+                                          // );
+
+                                          return GetBuilder<WaterFilterSpecificNodeDataController>(
+                                              builder: (controller) {
+                                                return SizedBox(
+                                                    height: size.height * .35,
+                                                    child: controller.selectedButton == 2 ?
+                                                    WaterFilterSpecificChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList,controller.dateDifference)
+                                                        :   WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',),
+                                                );
+                                              }
+                                          );
                                         }
                                     ),
                                     SizedBox(height: size.height * k20TextSize),

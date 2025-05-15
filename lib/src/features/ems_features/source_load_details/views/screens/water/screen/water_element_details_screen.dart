@@ -29,8 +29,8 @@ class _WaterElementDetailsScreenState extends State<WaterElementDetailsScreen> w
   void initState() {
     super.initState();
 
-   log("--------->${widget.elementCategory}");
-   log("--------->${widget.gaugeValue}");
+  // log("--------->${widget.elementCategory}");
+  // log("--------->${widget.gaugeValue}");
     // Get.find<WaterTodayRuntimeDataController>().fetchTodayRuntimeData(sourceName: widget.elementName);
     // Get.find<WaterThisDayDataController>().fetchThisDayData(sourceName: widget.elementName);
     // Get.find<WaterThisMonthDataController>().fetchThisMonthData(sourceName: widget.elementName);

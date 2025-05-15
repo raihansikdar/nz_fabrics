@@ -125,7 +125,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
               showLater: false,
               shouldPopScope: () => false, // Prevent dismissing the dialog
               upgrader: Upgrader(
-                minAppVersion: '1.0.4',
+                minAppVersion: '1.0.5',
                 durationUntilAlertAgain: Duration.zero, // Show update prompt every time
                // debugDisplayAlways: true, // Ensure it always shows (for testing)
                 storeController: UpgraderStoreController(
