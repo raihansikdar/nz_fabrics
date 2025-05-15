@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nz_fabrics/src/application/app.dart';
 import 'package:nz_fabrics/src/features/authentication/login/controller/refresh_token_api_controller.dart';
 import 'package:nz_fabrics/src/features/authentication/login/views/screen/login_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/dash_board_radio_button_controller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:http/http.dart';
@@ -313,7 +314,7 @@ class NetworkCaller{
     if(!result ){
         await AuthUtilityController.clearInfo();
         AuthUtilityController.accessTokenForApiCall.value = null;
-
+        getx.Get.find<DashBoardRadioButtonController>().updateSelectedValue(1);
         Navigator.pushAndRemoveUntil(
           EnergyManagementSystem.globalKey.currentContext!,
           PageRouteBuilder(

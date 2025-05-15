@@ -10,6 +10,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/die
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/gas_generator/views/screens/gas_generator_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/get_button_from_all/controller/get_button_from_all_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/button_screen/water_process/views/screens/water_process_screen.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/controllers/dash_board_radio_button_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/find_power_value_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/load_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/source_power_controller.dart';
@@ -1277,7 +1278,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                         final response = await logoutController.logout(refreshToken: AuthUtilityController.refreshToken ?? '');
                         // final response = await logoutController.logout();
                          if(response){
-                    
+                           Get.find<DashBoardRadioButtonController>().updateSelectedValue(1);
                            Get.offAll(()=> LoginScreen(),transition: Transition.fadeIn,duration: const Duration(milliseconds: 100));
                            await AuthUtilityController.clearInfo();
                            AuthUtilityController.accessTokenForApiCall.value = null;
