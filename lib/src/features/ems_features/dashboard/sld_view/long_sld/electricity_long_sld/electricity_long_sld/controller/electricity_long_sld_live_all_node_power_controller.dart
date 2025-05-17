@@ -469,7 +469,7 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
         if (!_areListsEqual(_liveAllNodePowerModel, newData)) {
           _liveAllNodePowerModel.assignAll(newData);
           update();
-          log('Updated liveAllNodePowerModel with ${newData.length} nodes');
+         // log('Updated liveAllNodePowerModel with ${newData.length} nodes');
         }
         update();
         _isConnected = true;

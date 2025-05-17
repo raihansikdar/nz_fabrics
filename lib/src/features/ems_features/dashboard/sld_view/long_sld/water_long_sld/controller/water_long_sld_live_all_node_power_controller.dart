@@ -289,6 +289,7 @@ class WaterLongSLDLiveAllNodePowerController extends GetxController with Interne
       final controller = Get.find<WaterLongSLDLiveAllNodePowerController>();
       controller._stopPeriodicApiCall();
       log("LiveAllNodePowerController Stop Api Call");
+      update();
     }
   }
 
@@ -313,7 +314,7 @@ class WaterLongSLDLiveAllNodePowerController extends GetxController with Interne
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getWaterLiveAllNodePowerUrl);
 
-      log('-----electricity LOng------>>> ${Urls.baseUrl}/live-all-node-power/?type=water');
+      log('-----Water LOng------>>> ${Urls.baseUrl}/live-all-node-power/?type=water');
 
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);
@@ -351,7 +352,7 @@ class WaterLongSLDLiveAllNodePowerController extends GetxController with Interne
     if (oldList.length != newList.length) return false;
     for (int i = 0; i < oldList.length; i++) {
       if (oldList[i].node != newList[i].node ||
-          oldList[i].power != newList[i].power ||
+          oldList[i].instantFlow != newList[i].instantFlow ||
           oldList[i].percentage != newList[i].percentage ||
           oldList[i].capacity != newList[i].capacity) {
         return false;

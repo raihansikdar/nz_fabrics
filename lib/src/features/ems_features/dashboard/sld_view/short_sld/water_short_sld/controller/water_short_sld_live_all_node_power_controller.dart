@@ -273,7 +273,7 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
     if (Get.isRegistered<WaterShortSLDLiveAllNodePowerController>()) {
       final controller = Get.find<WaterShortSLDLiveAllNodePowerController>();
       controller._stopPeriodicApiCall();
-      log("LiveAllNodePowerController Stop Api Call");
+      log("------------LiveAllNodePowerController Stop Api Call");
     }
   }
 
@@ -300,7 +300,7 @@ class WaterShortSLDLiveAllNodePowerController extends GetxController with Intern
 
       log('-----Water Short WaterShortSLDLiveAllNodePowerController ------>>> ${Urls.getWaterLiveAllNodePowerUrl}');
 
-      log("--------->> ${response.body}");
+     // log("--------->> ${response.body}");
 
       if (response.isSuccess) {
         final jsonData = (response.body as List<dynamic>);

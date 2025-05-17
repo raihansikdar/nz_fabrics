@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_lt_production_vs_capacity_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/model/water_short_live_all_node_power_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/model/water_short_loop_and_bus_cupler_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/model/water_short_view_page_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/views/screens/water_short_sld_main_bus_bar_true/screen/water_short_sld_main_bus_bar_true_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/views/widgets/water_short_bus_couplar_widget.dart';
@@ -78,16 +78,16 @@ class _WaterShortSldState extends State<WaterShortSld>
     nodePowerController.fetchLiveAllNodePower().then((_) {
       if (mounted) {
         setState(() {
-          _isLoading = false; // Only set loading false after data is fetched
+          _isLoading = false;
         });
       }
     });
 
     // Stop other controllers
 
-    // Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
-    // Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
-    Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
+     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
 
     WidgetsBinding.instance.addObserver(this);
   }

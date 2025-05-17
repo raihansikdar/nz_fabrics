@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_busbar_status_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
@@ -39,6 +40,7 @@ import 'package:uuid/uuid.dart';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
+import '../../model/electricity_long_busbar_status_info_model.dart';
 import '../../model/electricity_long_view_page_model.dart';
 
 // class ElectricityLongSldScreen extends StatefulWidget {
@@ -1630,6 +1632,9 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
     // Stop other controllers
 
+    Get.find<ElectricityLongBusBarStatusInfoController>().fetchBusBarStatusData();
+
+
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
     Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
@@ -1825,7 +1830,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
       if (meterResponse.statusCode == 200) {
         final meterData = json.decode(meterResponse.body);
         double powerMeter = meterData['power_meter'] ?? 0.0;
-        debugPrint('[$requestId] Updating power meter for $nodeName -> $powerMeter');
+       // debugPrint('[$requestId] Updating power meter for $nodeName -> $powerMeter');
 
         controller.updatePowerMeter(powerMeter, nodeName);
       }
@@ -2014,15 +2019,39 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                           height: contentHeight,
                           child: Stack(
                             children: [
-                              CustomPaint(
-                                size: Size(contentWidth, contentHeight),
-                                painter: ElectricityLongSLDAnimatedLinePainter(
-                                  viewPageData: _viewPageData,
-                                  liveData: _liveData,
-                                  minX: minX,
-                                  minY: minY,
-                                  animation: _controller.view,
-                                ),
+                              // GetBuilder<ElectricityLongBusBarStatusInfoController>(
+                              //   builder: (electricityLongBusBarStatusInfoController) {
+                              //     return CustomPaint(
+                              //       size: Size(contentWidth, contentHeight),
+                              //       painter: ElectricityLongSLDAnimatedLinePainter(
+                              //         viewPageData: _viewPageData,
+                              //         connectedDetails: electricityLongBusBarStatusInfoController.busBarStatusModels,
+                              //         minX: minX,
+                              //         minY: minY,
+                              //         animation: _controller.view,
+                              //       ),
+                              //     );
+                              //   }
+                              // ),
+                              GetBuilder<ElectricityLongBusBarStatusInfoController>(
+                                builder: (electricityLongBusBarStatusInfoController) {
+                                  List<ConnectedWithDetails> connectedDetails = electricityLongBusBarStatusInfoController
+                                      .busBarStatusModels
+                                      .expand((model) => model.connectedWithDetails ?? [])
+                                      .cast<ConnectedWithDetails>()
+                                      .toList();
+
+                                  return CustomPaint(
+                                    size: Size(contentWidth, contentHeight),
+                                    painter: ElectricityLongSLDAnimatedLinePainter(
+                                      viewPageData: _viewPageData,
+                                      connectedDetails: connectedDetails,
+                                      minX: minX,
+                                      minY: minY,
+                                      animation: _controller.view,
+                                    ),
+                                  );
+                                },
                               ),
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),

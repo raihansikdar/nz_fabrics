@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_lt_production_vs_capacity_controller.dart';
@@ -13,6 +14,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/views/widgets/water_long_sld_meter_bus_bar_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/views/widgets/water_long_sld_source_and_load_box_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/views/widgets/water_long_sld_main_bus_bar_2.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/water_short_sld/controller/water_short_sld_live_all_node_power_controller.dart';
 
 import 'package:nz_fabrics/src/features/ems_features/dashboard/summery_view/power_summary/controllers/category_wise_live_data_controller.dart';
@@ -1492,9 +1494,11 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
 
     // Stop other controllers
 
-    // Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
-    // Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
+    Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
+    Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
     Get.find<WaterShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+    Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
 
     WidgetsBinding.instance.addObserver(this);
   }
@@ -1554,9 +1558,9 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
         if (!_isFetchingPFData) _fetchPFData();
         if (!_isFetchingViewPageData) _initializeData();
         //_fetchLiveData();
-        final productionController = Get.find<WaterLongSLDLtProductionVsCapacityController>();
+       // final productionController = Get.find<WaterLongSLDLtProductionVsCapacityController>();
         final nodePowerController = Get.find<WaterLongSLDLiveAllNodePowerController>();
-        productionController.fetchProductVsCapacityData();
+        //productionController.fetchProductVsCapacityData();
         nodePowerController.fetchLiveAllNodePower();
       });
     } else {
@@ -1798,7 +1802,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
         Uri.parse('/api/get-pf-item-positions/'),
         headers: {'Authorization': '${AuthUtilityController.accessToken}'},
       );
-      debugPrint('-----electricity Short  ------>>> /api/get-pf-item-positions/}');
+      debugPrint('-----water Long  ------>>> /api/get-pf-item-positions/}');
 
       if (response.statusCode == 200 && mounted) {
         final newPfData = List<Map<String, dynamic>>.from(json.decode(response.body));
@@ -1816,7 +1820,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
       debugPrint('[$requestId] Error fetching PF data: $e');
     } finally {
       _isFetchingPFData = false;
-      debugPrint('[$requestId] Fetch PF data completed at ${DateTime.now()}');
+     // debugPrint('[$requestId] Fetch PF data completed at ${DateTime.now()}');
     }
   }
 
@@ -1837,6 +1841,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
   void stopTimer() {
     _timer?.cancel();
     _timer = null;
+    debugPrint("---------Stop Timer---------");
   }
 
   @override
@@ -1863,10 +1868,10 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
       if (!_isFetchingPFData) _fetchPFData();
 
       // Update controller data without rebuilding entire UI
-      final productionController = Get.find<WaterLongSLDLtProductionVsCapacityController>();
+     // final productionController = Get.find<WaterLongSLDLtProductionVsCapacityController>();
       final nodePowerController = Get.find<WaterLongSLDLiveAllNodePowerController>();
 
-      productionController.fetchProductVsCapacityData();
+     // productionController.fetchProductVsCapacityData();
       nodePowerController.fetchLiveAllNodePower();
     });
   }
@@ -1911,7 +1916,9 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: CustomAppBarWidget(text: "Water SLD", backPreviousScreen: true,onBackButtonPressed: (){}),
+        appBar: CustomAppBarWidget(text: "Water SLD", backPreviousScreen: true,onBackButtonPressed: (){
+          Get.find<WaterShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+        }),
 
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -2,8 +2,8 @@ class Urls{
   Urls._();
 
   // static const String _baseUrl = "http://192.168.15.61:8086/react";
-  static const String _baseUrl = "http://192.168.15.60:8081/react";
-  // static const String _baseUrl = "http://175.29.147.118/react";
+  //static const String _baseUrl = "http://192.168.15.60:8081/react";
+   static const String _baseUrl = "http://175.29.147.118/react";
 
 
   static  String get baseUrl => _baseUrl;
@@ -219,6 +219,8 @@ class Urls{
 
  static String shortElectricityUrl = "$_baseUrl/api/layout-node-positions/?page_type=es";
  static String longElectricityUrl = "$_baseUrl/get-all-info/?sld_type=electricity";
+
+ static String getBusBarStatusUrl = "$_baseUrl/get-busbar-status-info/";
 
  static String shortWaterUrl = "$_baseUrl/api/layout-node-positions/?page_type=ws";
  static String longWateryUrl = "$_baseUrl/get-all-info/?sld_type=water";
