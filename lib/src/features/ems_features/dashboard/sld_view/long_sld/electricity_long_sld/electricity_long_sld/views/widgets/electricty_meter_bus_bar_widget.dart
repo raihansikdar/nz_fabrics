@@ -136,23 +136,23 @@ class ElectricityLongMeterBusBarWidget extends StatelessWidget {
 
   Color hexToColor(String? hex, {bool isBorderOrText = false}) {
     if (hex == null || hex.isEmpty) {
-      debugPrint('hexToColor: Input is null or empty, returning ${isBorderOrText ? "Colors.black" : "Colors.transparent"}');
+     // debugPrint('hexToColor: Input is null or empty, returning ${isBorderOrText ? "Colors.black" : "Colors.transparent"}');
       return isBorderOrText ? Colors.black : Colors.transparent;
     }
     hex = hex.replaceAll('#', '');
     try {
       return Color(int.parse('0xFF$hex'));
     } catch (e) {
-      debugPrint('Invalid hex color: $hex, returning ${isBorderOrText ? "Colors.black" : "Colors.transparent"}');
+   //   debugPrint('Invalid hex color: $hex, returning ${isBorderOrText ? "Colors.black" : "Colors.transparent"}');
       return isBorderOrText ? Colors.black : Colors.transparent;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('MeterBusBarWidget: nodeName=$nodeName, orientation=$orientation, '
-        'width=$loadBoxWidth, height=$loadBoxHeight, '
-        'color=$color, borderColor=$borderColor, textColor=$textColor, textSize=$textSize');
+    // debugPrint('MeterBusBarWidget: nodeName=$nodeName, orientation=$orientation, '
+    //     'width=$loadBoxWidth, height=$loadBoxHeight, '
+    //     'color=$color, borderColor=$borderColor, textColor=$textColor, textSize=$textSize');
 
     final isVertical = orientation.toLowerCase().trim() == 'vertical';
     final baseFontSize = textSize;

@@ -1646,7 +1646,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
     });
   }
 
-  // OPTIMIZATION 1: Load cached data first without triggering full UI rebuilds
+ // OPTIMIZATION 1: Load cached data first without triggering full UI rebuilds
   Future<void> _loadCachedData1() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

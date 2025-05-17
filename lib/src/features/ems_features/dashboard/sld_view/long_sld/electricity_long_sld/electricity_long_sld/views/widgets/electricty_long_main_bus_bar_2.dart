@@ -71,7 +71,7 @@ class ElectricityLongMainBusBarTrue extends StatelessWidget {
     final textLength = longestText.length;
     final baseFontSize = textSize;
     final fontSize = textLength > 20 ? baseFontSize * 0.7 : textLength > 15 ? baseFontSize * 0.85 : baseFontSize;
-    debugPrint('MainBusBarTrue: longestText="$longestText", baseFontSize=$baseFontSize, fontSize=$fontSize');
+    //debugPrint('MainBusBarTrue: longestText="$longestText", baseFontSize=$baseFontSize, fontSize=$fontSize');
 
     return GestureDetector(
       onTap: onTap,

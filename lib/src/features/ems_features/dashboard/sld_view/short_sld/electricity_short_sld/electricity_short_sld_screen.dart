@@ -36,6 +36,7 @@ class ElectricityShortSldScreen extends StatelessWidget {
             ),
           ),
           onPressed: () {
+            Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
             Get.to(() => ElectricityLongSldScreen());
           },
           child: Row(
