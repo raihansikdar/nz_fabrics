@@ -1,7 +1,7 @@
 class Urls{
   Urls._();
 
-   //static const String _baseUrl = "http://192.168.15.61:8086/react";
+  // static const String _baseUrl = "http://192.168.15.61:8086/react";
   //static const String _baseUrl = "http://192.168.15.60:8081/react";
    static const String _baseUrl = "http://175.29.147.118/react";
 

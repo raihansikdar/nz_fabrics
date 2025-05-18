@@ -2033,26 +2033,43 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                               //     );
                               //   }
                               // ),
-                              GetBuilder<ElectricityLongBusBarStatusInfoController>(
-                                builder: (electricityLongBusBarStatusInfoController) {
-                                  List<ConnectedWithDetails> connectedDetails = electricityLongBusBarStatusInfoController
-                                      .busBarStatusModels
-                                      .expand((model) => model.connectedWithDetails ?? [])
-                                      .cast<ConnectedWithDetails>()
-                                      .toList();
+                              // GetBuilder<ElectricityLongBusBarStatusInfoController>(
+                              //   builder: (electricityLongBusBarStatusInfoController) {
+                              //     List<ConnectedWithDetails> connectedDetails = electricityLongBusBarStatusInfoController
+                              //         .busBarStatusModels
+                              //         .expand((model) => model.connectedWithDetails ?? [])
+                              //         .cast<ConnectedWithDetails>()
+                              //         .toList();
+                              //
+                              //     return CustomPaint(
+                              //       size: Size(contentWidth, contentHeight),
+                              //       painter: ElectricityLongSLDAnimatedLinePainter(
+                              //         viewPageData: _viewPageData,
+                              //        // connectedDetails: connectedDetails,
+                              //         minX: minX,
+                              //         minY: minY,
+                              //         animation: _controller.view,
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
 
-                                  return CustomPaint(
-                                    size: Size(contentWidth, contentHeight),
-                                    painter: ElectricityLongSLDAnimatedLinePainter(
-                                      viewPageData: _viewPageData,
-                                      connectedDetails: connectedDetails,
-                                      minX: minX,
-                                      minY: minY,
-                                      animation: _controller.view,
-                                    ),
-                                  );
-                                },
-                              ),
+                              GetBuilder<ElectricityLongBusBarStatusInfoController>(
+                                  builder: (electricityLongBusBarStatusInfoController) {
+                                    return CustomPaint(
+                                      size: Size(contentWidth, contentHeight),
+                                      painter: ElectricityLongSLDAnimatedLinePainter(
+                                        viewPageData: _viewPageData,
+                                        sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
+                                        minX: minX,
+                                        minY: minY,
+                                        animation: _controller.view,
+                                      ),
+                                    );
+                                  },
+                                  ),
+
+
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),
                             ],
