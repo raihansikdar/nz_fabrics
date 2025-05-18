@@ -15,9 +15,9 @@ class DebugLogger {
       } else {
         prettyJson = 'Unsupported response body type: ${responseBody.runtimeType}';
       }
-      log("----->[$tag] URL        ==> $url");
+      log("----->[$tag] URL         ==> $url");
       log("----->[$tag] statusCode  ==> $statusCode");
-      log("----->[$tag] body ==> $prettyJson");
+      log("----->[$tag] body        ==> $prettyJson");
     } catch (e) {
       log("------->>[$tag] Failed to parse response body: $e");
     }

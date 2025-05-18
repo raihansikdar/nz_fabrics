@@ -7,6 +7,7 @@ import 'package:nz_fabrics/src/services/network_response.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:get/get.dart';
+import 'package:nz_fabrics/src/utility/exception/debug_logger.dart';
 
 class UserProfileController extends GetxController with InternetConnectivityCheckMixin {
 
@@ -33,8 +34,13 @@ class UserProfileController extends GetxController with InternetConnectivityChec
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getUserProfileUrl);
 
-        log("getUserProfileUrl statusCode ==> ${response.statusCode}");
-       // log("getUserProfileUrl body ==> ${response.body}");
+      DebugLogger.printJsonResponse(
+        url: Urls.getUserProfileUrl,
+        tag: 'getUserProfileUrl',
+        responseBody: response.body,
+        statusCode: response.statusCode,
+      );
+
 
       _isUserProfileInProgress = false;
       update();

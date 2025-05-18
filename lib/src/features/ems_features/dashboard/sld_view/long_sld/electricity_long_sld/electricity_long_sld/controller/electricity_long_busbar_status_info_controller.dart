@@ -8,6 +8,7 @@ import 'package:nz_fabrics/src/services/network_caller.dart';
 import 'package:nz_fabrics/src/services/network_response.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
+import 'package:nz_fabrics/src/utility/exception/debug_logger.dart';
 
 class ElectricityLongBusBarStatusInfoController extends GetxController with InternetConnectivityCheckMixin {
   bool _isConnected = true;
@@ -33,10 +34,12 @@ class ElectricityLongBusBarStatusInfoController extends GetxController with Inte
       // log("getBusBarStatusUrl body ==> ${response.body}");
 
      // Pretty-print the JSON response body
-      const encoder = JsonEncoder.withIndent('  ');
-      final prettyJson = encoder.convert(jsonDecode(response.body));
-      log("getBusBarStatusUrl statusCode  ==> ${response.statusCode}");
-      log("getBusBarStatusUrl body ==> $prettyJson");
+      DebugLogger.printJsonResponse(
+        url: Urls.getBusBarStatusUrl,
+        tag: 'getBusBarStatusUrl',
+        responseBody: response.body,
+        statusCode: response.statusCode,
+      );
 
       _isBusBarStatusProgress = false;
 
