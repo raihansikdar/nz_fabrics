@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
@@ -28,8 +29,14 @@ class ElectricityLongBusBarStatusInfoController extends GetxController with Inte
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getBusBarStatusUrl);
 
-      log("getBusBarStatusUrl statusCode ==> ${response.statusCode}");
-      log("getBusBarStatusUrl body ==> ${response.body}");
+      // log("getBusBarStatusUrl statusCode ==> ${response.statusCode}");
+      // log("getBusBarStatusUrl body ==> ${response.body}");
+
+     // Pretty-print the JSON response body
+      const encoder = JsonEncoder.withIndent('  ');
+      final prettyJson = encoder.convert(jsonDecode(response.body));
+      log("getBusBarStatusUrl statusCode  ==> ${response.statusCode}");
+      log("getBusBarStatusUrl body ==> $prettyJson");
 
       _isBusBarStatusProgress = false;
 

@@ -1,4 +1,5 @@
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:nz_fabrics/src/services/network_response.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
+import 'package:nz_fabrics/src/utility/exception/debug_logger.dart';
 
 class GetButtonFromAllController extends GetxController with InternetConnectivityCheckMixin {
 
@@ -48,9 +50,17 @@ class GetButtonFromAllController extends GetxController with InternetConnectivit
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.getAllButtonUrl);
 
-      log("------------->> fetchButtonFromAllData ==> ${Urls.getAllButtonUrl}");
+     // log("------------->> fetchButtonFromAllData ==> ${Urls.getAllButtonUrl}");
       //log("-------------------->> fetchButtonFromAllData statusCode ==> ${response.statusCode}");
-       log("fetchButtonFromAllData body ==> ${response.body}");
+      //  log("fetchButtonFromAllData body ==> ${response.body}");
+
+      DebugLogger.printJsonResponse(
+        url: Urls.getAllButtonUrl,
+        tag: 'fetchButtonFromAllData',
+        responseBody: response.body,
+        statusCode: response.statusCode,
+      );
+
 
       _isGetButtonFromGetAll = false;
       update();
