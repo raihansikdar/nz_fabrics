@@ -226,6 +226,217 @@
 
 
 
+// import 'dart:math' as math;
+// import 'dart:ui' as ui;
+// import 'dart:ui';
+// import 'package:flutter/material.dart';
+// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_view_page_model.dart';
+// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_busbar_status_info_model.dart';
+//
+// class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
+//   final List<ElectricityLongViewPageModel> viewPageData;
+//   final List<ElectricityLongBusBarStatusInfoModel> sensorStatusData;
+//   final double minX;
+//   final double minY;
+//   final Animation<double> animation;
+//
+//   ElectricityLongSLDAnimatedLinePainter({
+//     required this.viewPageData,
+//     required this.sensorStatusData,
+//     required this.minX,
+//     required this.minY,
+//     required this.animation,
+//   }) : super(repaint: animation);
+//
+//   Color hexToColor(String? hex) {
+//     if (hex == null || hex.isEmpty) {
+//       debugPrint('Hex color is null or empty, using black');
+//       return Colors.black;
+//     }
+//     hex = hex.replaceAll('#', '');
+//     try {
+//       return Color(int.parse('0xFF$hex'));
+//     } catch (e) {
+//       debugPrint('Error parsing hex color: $hex, error: $e');
+//       return Colors.black;
+//     }
+//   }
+//
+//   bool shouldAnimateLine(String? lineId) {
+//     if (lineId == null || sensorStatusData.isEmpty) {
+//       debugPrint('LineID is null or sensorStatusData is empty for lineID: $lineId');
+//       return false;
+//     }
+//
+//     for (var statusInfo in sensorStatusData) {
+//       if (statusInfo.connectedWithDetails != null) {
+//         for (var connectedDetail in statusInfo.connectedWithDetails!) {
+//           if (connectedDetail.lineID == lineId && connectedDetail.sensorStatus == true) {
+//             debugPrint('Animation enabled for lineID: $lineId (sensorStatus: true)');
+//             return true;
+//           }
+//         }
+//       }
+//     }
+//     debugPrint('Animation disabled for lineID: $lineId (no active sensorStatus)');
+//     return false;
+//   }
+//
+//   Color getLineColor(Line line) {
+//     if (line.lineId == null) {
+//       debugPrint('lineId is null, using line.lineColor');
+//       return hexToColor(line.lineColor);
+//     }
+//
+//     for (var statusInfo in sensorStatusData) {
+//       if (statusInfo.connectedWithDetails != null) {
+//         for (var connectedDetail in statusInfo.connectedWithDetails!) {
+//           if (connectedDetail.lineID == line.lineId && connectedDetail.color != null) {
+//             debugPrint('Using color from connectedWithDetails for lineID: ${line.lineId}');
+//             return hexToColor(connectedDetail.color);
+//           }
+//         }
+//       }
+//     }
+//     debugPrint('Using line.lineColor for lineID: ${line.lineId}');
+//     return hexToColor(line.lineColor);
+//   }
+//
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     debugPrint('Canvas size: ${size.width}x${size.height}');
+//     if (viewPageData.isEmpty) {
+//       debugPrint('viewPageData is empty');
+//       return;
+//     }
+//
+//     for (var item in viewPageData) {
+//       if (item.lines == null || item.lines!.isEmpty) {
+//         debugPrint('No lines in item');
+//         continue;
+//       }
+//
+//       for (var line in item.lines!) {
+//         if (line.points.isEmpty) {
+//           debugPrint('Line has no points');
+//           continue;
+//         }
+//
+//         try {
+//           Path path = createLinePath(line);
+//           Color lineColor = getLineColor(line);
+//
+//           drawStaticLine(canvas, path, lineColor);
+//
+//           if (shouldAnimateLine(line.lineId)) {
+//             drawAnimatedPointer(canvas, path, animation.value, lineColor, line.points);
+//           }
+//         } catch (e) {
+//           debugPrint('Error drawing line: $e');
+//         }
+//       }
+//     }
+//   }
+//
+//   Path createLinePath(Line line) {
+//     Path path = Path();
+//     try {
+//       var firstPoint = Offset(line.points.first.x - minX, line.points.first.y - minY);
+//       debugPrint('First point: (${firstPoint.dx}, ${firstPoint.dy})');
+//       path.moveTo(firstPoint.dx, firstPoint.dy);
+//       for (int i = 1; i < line.points.length; i++) {
+//         var point = line.points[i];
+//         path.lineTo(point.x - minX, point.y - minY);
+//       }
+//     } catch (e) {
+//       debugPrint('Error creating path: $e');
+//     }
+//     return path;
+//   }
+//
+//   void drawStaticLine(Canvas canvas, Path path, Color lineColor) {
+//     final linePaint = Paint()
+//       ..strokeWidth = 3
+//       ..style = PaintingStyle.stroke
+//       ..color = lineColor
+//       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
+//
+//     canvas.drawPath(path, linePaint);
+//   }
+//
+//   void drawAnimatedPointer(
+//       Canvas canvas,
+//       Path path,
+//       double animatedValue,
+//       Color lineColor,
+//       List<Point> points,
+//       ) {
+//     debugPrint('Animation value: $animatedValue');
+//     PathMetrics pathMetrics = path.computeMetrics();
+//     if (!pathMetrics.iterator.moveNext()) {
+//       debugPrint('No valid path metrics');
+//       return;
+//     }
+//
+//     PathMetric pathMetric = pathMetrics.iterator.current;
+//     double length = pathMetric.length;
+//     if (length == 0) {
+//       debugPrint('Path length is zero');
+//       return;
+//     }
+//
+//     double offset = length * animatedValue;
+//     Tangent? tangent = pathMetric.getTangentForOffset(offset);
+//     if (tangent == null) {
+//       debugPrint('No tangent found for offset: $offset');
+//       return;
+//     }
+//
+//     canvas.save();
+//     canvas.translate(tangent.position.dx, tangent.position.dy);
+//
+//     double finalAngle;
+//     bool isVertical = tangent.vector.dy.abs() > tangent.vector.dx.abs();
+//     if (isVertical) {
+//       finalAngle = tangent.vector.dy < 0 ? -math.pi / 2 : math.pi / 2;
+//     } else {
+//       finalAngle = tangent.vector.dx < 0 ? math.pi : 0;
+//     }
+//
+//     canvas.rotate(finalAngle);
+//
+//     final arrowPath = Path();
+//     const arrowLength = 20.0;
+//     const arrowWidth = 16.0;
+//     arrowPath.moveTo(0, 0);
+//     arrowPath.lineTo(-arrowLength, -arrowWidth / 2);
+//     arrowPath.lineTo(-arrowLength, arrowWidth / 2);
+//     arrowPath.close();
+//
+//     final arrowPaint = Paint()
+//       ..color = lineColor
+//       ..style = PaintingStyle.fill;
+//
+//     final arrowOutlinePaint = Paint()
+//       ..color = lineColor.withOpacity(0.8)
+//       ..style = PaintingStyle.stroke
+//       ..strokeWidth = 1.5;
+//
+//     canvas.drawPath(arrowPath, arrowPaint);
+//     canvas.drawPath(arrowPath, arrowOutlinePaint);
+//
+//     canvas.restore();
+//   }
+//
+//   @override
+//   bool shouldRepaint(ElectricityLongSLDAnimatedLinePainter oldDelegate) {
+//     return oldDelegate.animation != animation ||
+//         oldDelegate.viewPageData != viewPageData ||
+//         oldDelegate.sensorStatusData != sensorStatusData;
+//   }
+// }
+
+
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 import 'dart:ui';
@@ -283,22 +494,31 @@ class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
   }
 
   Color getLineColor(Line line) {
-    if (line.lineId == null) {
-      debugPrint('lineId is null, using line.lineColor');
+    // For lines without lineId (usually bus bar connections), always use the original line color
+    if (line.lineId == null || line.lineId!.isEmpty) {
+      debugPrint('lineId is null/empty, using line.lineColor: ${line.lineColor}');
       return hexToColor(line.lineColor);
     }
 
+    // For lines with lineId, check if there's a dynamic color from sensor data
     for (var statusInfo in sensorStatusData) {
       if (statusInfo.connectedWithDetails != null) {
         for (var connectedDetail in statusInfo.connectedWithDetails!) {
-          if (connectedDetail.lineID == line.lineId && connectedDetail.color != null) {
-            debugPrint('Using color from connectedWithDetails for lineID: ${line.lineId}');
-            return hexToColor(connectedDetail.color);
+          if (connectedDetail.lineID == line.lineId) {
+            // If color is provided and not the default white/light colors, use it
+            if (connectedDetail.color != null &&
+                connectedDetail.color != "#FBFBFB" &&
+                connectedDetail.color!.isNotEmpty) {
+              debugPrint('Using dynamic color from connectedWithDetails for lineID: ${line.lineId}, color: ${connectedDetail.color}');
+              return hexToColor(connectedDetail.color);
+            }
           }
         }
       }
     }
-    debugPrint('Using line.lineColor for lineID: ${line.lineId}');
+
+    // Fallback to original line color
+    debugPrint('Using fallback line.lineColor for lineID: ${line.lineId}, color: ${line.lineColor}');
     return hexToColor(line.lineColor);
   }
 
@@ -326,8 +546,10 @@ class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
           Path path = createLinePath(line);
           Color lineColor = getLineColor(line);
 
+          // Always draw the static line - this ensures bus bar lines are always visible
           drawStaticLine(canvas, path, lineColor);
 
+          // Only add animation for lines that should be animated
           if (shouldAnimateLine(line.lineId)) {
             drawAnimatedPointer(canvas, path, animation.value, lineColor, line.points);
           }
@@ -355,12 +577,16 @@ class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
   }
 
   void drawStaticLine(Canvas canvas, Path path, Color lineColor) {
+    // Ensure the color has proper opacity - don't make it transparent
+    final effectiveColor = lineColor.alpha == 0 ? lineColor.withOpacity(1.0) : lineColor;
+
     final linePaint = Paint()
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke
-      ..color = lineColor
+      ..color = effectiveColor
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
 
+    debugPrint('Drawing static line with color: ${effectiveColor.toString()}');
     canvas.drawPath(path, linePaint);
   }
 
@@ -432,6 +658,8 @@ class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
   bool shouldRepaint(ElectricityLongSLDAnimatedLinePainter oldDelegate) {
     return oldDelegate.animation != animation ||
         oldDelegate.viewPageData != viewPageData ||
-        oldDelegate.sensorStatusData != sensorStatusData;
-  }
+        oldDelegate.sensorStatusData != sensorStatusData ||
+        oldDelegate.minX != minX ||
+        oldDelegate.minY!=minY;
+    }
 }
