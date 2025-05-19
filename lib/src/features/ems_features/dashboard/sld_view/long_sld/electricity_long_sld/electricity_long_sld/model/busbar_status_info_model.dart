@@ -1,10 +1,10 @@
-class ElectricityLongBusBarStatusInfoModel {
+class BusBarStatusInfoModel {
   BusBar? busBar;
   List<ConnectedWithDetails>? connectedWithDetails;
 
-  ElectricityLongBusBarStatusInfoModel({this.busBar, this.connectedWithDetails});
+  BusBarStatusInfoModel({this.busBar, this.connectedWithDetails});
 
-  ElectricityLongBusBarStatusInfoModel.fromJson(Map<String, dynamic> json) {
+  BusBarStatusInfoModel.fromJson(Map<String, dynamic> json) {
     busBar =
     json['bus_bar'] != null ? BusBar.fromJson(json['bus_bar']) : null;
     if (json['connected_with_details'] != null) {

@@ -2,7 +2,7 @@
 // import 'dart:ui' as ui;
 // import 'dart:ui';
 // import 'package:flutter/material.dart';
-// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_busbar_status_info_model.dart';
+// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/busbar_status_info_model.dart';
 // import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_view_page_model.dart';
 //
 // class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
@@ -231,7 +231,7 @@
 // import 'dart:ui';
 // import 'package:flutter/material.dart';
 // import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_view_page_model.dart';
-// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_busbar_status_info_model.dart';
+// import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/busbar_status_info_model.dart';
 //
 // class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
 //   final List<ElectricityLongViewPageModel> viewPageData;
@@ -442,11 +442,11 @@ import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_view_page_model.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/electricity_long_busbar_status_info_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/busbar_status_info_model.dart';
 
 class ElectricityLongSLDAnimatedLinePainter extends CustomPainter {
   final List<ElectricityLongViewPageModel> viewPageData;
-  final List<ElectricityLongBusBarStatusInfoModel> sensorStatusData;
+  final List<BusBarStatusInfoModel> sensorStatusData;
   final double minX;
   final double minY;
   final Animation<double> animation;

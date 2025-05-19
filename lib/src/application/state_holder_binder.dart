@@ -44,7 +44,7 @@ import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electri
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/electricity/views/screens/shed_screen/controller/shed_view_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/steam/controller/steam_data_view_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/data_view/water/controller/water_data_view_controller.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_busbar_status_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/busbar_status_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_all_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_pf_data_controller.dart';
@@ -400,7 +400,7 @@ class StateHolderBinders extends Bindings{
      Get.put(ElectricityLongSLDAllInfoController());
      Get.put(ElectricityLongSLDGetAllInfoUIControllers());
      Get.put(ElectricityLongSLDFilterBusBarEnergyCostController());
-     Get.put(ElectricityLongBusBarStatusInfoController());
+     Get.put(BusBarStatusInfoController());
 
    /* ->>--------> Short SLD <--------<<- */
      Get.put(ElectricityShortSLDAllInfoController());

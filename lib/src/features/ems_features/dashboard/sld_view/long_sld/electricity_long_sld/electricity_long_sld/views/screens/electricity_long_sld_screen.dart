@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
-import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_busbar_status_info_controller.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/busbar_status_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_pf_data_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_lt_production_vs_capacity_controller.dart';
@@ -40,7 +40,7 @@ import 'package:uuid/uuid.dart';
 import 'dart:convert';
 import 'dart:ui' as ui;
 
-import '../../model/electricity_long_busbar_status_info_model.dart';
+import '../../model/busbar_status_info_model.dart';
 import '../../model/electricity_long_view_page_model.dart';
 
 // class ElectricityLongSldScreen extends StatefulWidget {
@@ -1632,7 +1632,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
     // Stop other controllers
 
-    Get.find<ElectricityLongBusBarStatusInfoController>().fetchBusBarStatusData();
+    Get.find<BusBarStatusInfoController>().fetchBusBarStatusData();
 
 
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
@@ -2054,7 +2054,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                               //   },
                               // ),
 
-                              GetBuilder<ElectricityLongBusBarStatusInfoController>(
+                              GetBuilder<BusBarStatusInfoController>(
                                   builder: (electricityLongBusBarStatusInfoController) {
                                     return CustomPaint(
                                       size: Size(contentWidth, contentHeight),
