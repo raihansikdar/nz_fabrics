@@ -1631,10 +1631,6 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
 
     // Stop other controllers
-
-    Get.find<BusBarStatusInfoController>().fetchBusBarStatusData();
-
-
     Get.find<CategoryWiseLiveDataController>().stopApiCallOnScreenChange();
     Get.find<MachineViewNamesDataController>().stopApiCallOnScreenChange();
     Get.find<ElectricityShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nz_fabrics/src/common_widgets/app_bar/custom_app_bar_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/busbar_status_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/water_long_sld/controller/water_long_sld_live_pf_data_controller.dart';
@@ -1985,16 +1986,39 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                           height: contentHeight,
                           child: Stack(
                             children: [
-                              CustomPaint(
-                                size: Size(contentWidth, contentHeight),
-                                painter: WaterLongSLDAnimatedLinePainter(
-                                  viewPageData: _viewPageData,
-                                  liveData: _liveData,
-                                  minX: minX,
-                                  minY: minY,
-                                  animation: _controller.view,
-                                ),
+                              // CustomPaint(
+                              //   size: Size(contentWidth, contentHeight),
+                              //   painter: WaterLongSLDAnimatedLinePainter(
+                              //     viewPageData: _viewPageData,
+                              //     liveData: _liveData,
+                              //     minX: minX,
+                              //     minY: minY,
+                              //     animation: _controller.view,
+                              //   ),
+                              // ),
+
+
+                              GetBuilder<WaterLongSLDLiveAllNodePowerController>(
+                                builder: (controller) {
+                                  return GetBuilder<BusBarStatusInfoController>(
+                                    builder: (electricityLongBusBarStatusInfoController) {
+                                      return CustomPaint(
+                                        size: Size(contentWidth, contentHeight),
+                                        painter: WaterLongSLDAnimatedLinePainter(
+                                          viewPageData: _viewPageData,
+                                          sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
+                                          liveAllNodeModel: controller.liveAllNodePowerModel,
+                                          minX: minX,
+                                          minY: minY,
+                                          animation: _controller.view,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
                               ),
+
+
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),
                             ],

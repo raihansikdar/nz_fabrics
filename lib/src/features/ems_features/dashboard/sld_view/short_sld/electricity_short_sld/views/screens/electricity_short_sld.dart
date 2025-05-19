@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/busbar_status_info_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/controller/electricity_long_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_all_node_power_controller.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/short_sld/electricity_short_sld/controller/electricity_short_sld_live_pf_data_controller.dart';
@@ -1647,6 +1648,20 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
                                   animation: _controller.view,
                                 ),
                               ),
+                              // GetBuilder<BusBarStatusInfoController>(
+                              //   builder: (electricityLongBusBarStatusInfoController) {
+                              //     return CustomPaint(
+                              //       size: Size(contentWidth, contentHeight),
+                              //       painter: ElectricityShortSLDAnimatedLinePainter(
+                              //         viewPageData: _viewPageData,
+                              //         sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
+                              //         minX: minX,
+                              //         minY: minY,
+                              //         animation: _controller.view,
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),
                             ],

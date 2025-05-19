@@ -382,13 +382,13 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
   bool _isLiveAllNodePowerInProgress = false;
   String _errorMessage = '';
   // Change to RxList to make it observable
-  final RxList<ElectricityLongLiveAllNodePowerModel> _liveAllNodePowerModel = <ElectricityLongLiveAllNodePowerModel>[].obs;
+  final List<ElectricityLongLiveAllNodePowerModel> _liveAllNodePowerModel = <ElectricityLongLiveAllNodePowerModel>[].obs;
 
   bool get isConnected => _isConnected;
   bool get isLiveAllNodePowerInProgress => _isLiveAllNodePowerInProgress;
   String get errorMessage => _errorMessage;
   // Update getter to return RxList
-  RxList<ElectricityLongLiveAllNodePowerModel> get liveAllNodePowerModel => _liveAllNodePowerModel;
+  List<ElectricityLongLiveAllNodePowerModel> get liveAllNodePowerModel => _liveAllNodePowerModel;
 
   Timer? _timer;
   bool _isComeFromBackGround = false;
