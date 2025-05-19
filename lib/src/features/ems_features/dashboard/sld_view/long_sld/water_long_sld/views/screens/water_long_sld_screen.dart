@@ -2006,7 +2006,7 @@ class _WaterLongSldScreenState extends State<WaterLongSldScreen>
                                         size: Size(contentWidth, contentHeight),
                                         painter: WaterLongSLDAnimatedLinePainter(
                                           viewPageData: _viewPageData,
-                                          sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
+                                         // sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
                                           liveAllNodeModel: controller.liveAllNodePowerModel,
                                           minX: minX,
                                           minY: minY,
