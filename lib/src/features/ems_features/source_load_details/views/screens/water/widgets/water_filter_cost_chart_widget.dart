@@ -3,15 +3,19 @@ import 'package:intl/intl.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/line_chart_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/monthly_bar_chart_model.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/filter_specific_node_model/yearly_bar_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_line_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_monthly_bar_chart_model.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/models/water_filter_specific_node_model/water_yearly_bar_chart_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
 
 class WaterFilterCostChartWidget extends StatelessWidget {
   final String graphType;
-  final List<LineData> _lineChartDataList;
-  final List<MonthlyBarChartData> _monthlyDataList;
-  final List<YearlyBarChartData> _yearlyDataList;
+  final List<WaterLineData> _lineChartDataList;
+  final List<WaterMonthlyBarChartData> _monthlyDataList;
+  final List<WaterYearlyBarChartData> _yearlyDataList;
+  final int dateDifference;
   final Size size;
 
   const WaterFilterCostChartWidget(
@@ -20,6 +24,7 @@ class WaterFilterCostChartWidget extends StatelessWidget {
       this._lineChartDataList,
       this._monthlyDataList,
       this._yearlyDataList,
+      this.dateDifference,
       );
 
   @override
@@ -103,7 +108,7 @@ class WaterFilterCostChartWidget extends StatelessWidget {
     final List<YearlyChartData> yearlyChartData = _yearlyDataList
         .map((yearlyData) => YearlyChartData(
       date: DateTime.parse(yearlyData.date!),
-      cost: (yearlyData.energy ?? 0.0),
+      cost: (yearlyData.volume ?? 0.0),
     ))
         .toList();
 

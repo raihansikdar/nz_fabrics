@@ -369,7 +369,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                               }
                                               return SizedBox(
                                                   height: size.height * .28,
-                                                  child: WaterMonthlyDetailsBarChartWidget(elementName: widget.elementName,solarCategory: 'water',viewName: 'powerView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
+                                                  child: WaterMonthlyDetailsBarChartWidget(elementName: widget.elementName,viewName: 'powerView',waterMonthlyDataModel:waterMonthlyDataController.monthlyDataList, screenName: 'waterScreen',));
                                             }
                                         ),
                                         SizedBox(height: size.height * k20TextSize),

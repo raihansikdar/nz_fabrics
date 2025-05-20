@@ -31,8 +31,8 @@ class TodayRuntimeDataController extends GetxController with InternetConnectivit
 
       NetworkResponse response = await NetworkCaller.getRequest(url: Urls.todayRuntimeDataUrl(sourceName));
 
-     log("todayRuntimeDataUrl statusCode ==> ${response.statusCode}");
-     log("todayRuntimeDataUrl body ==> ${response.body}");
+     // log("todayRuntimeDataUrl statusCode ==> ${response.statusCode}");
+     // log("todayRuntimeDataUrl body ==> ${response.body}");
 
       _isLoading = false;
       update();

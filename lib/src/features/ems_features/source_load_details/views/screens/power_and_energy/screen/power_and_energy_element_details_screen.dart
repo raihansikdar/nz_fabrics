@@ -41,28 +41,28 @@ class _PowerAndEnergyElementDetailsScreenState extends State<PowerAndEnergyEleme
   @override
   void initState() {
 
-    TodayRuntimeDataController todayRuntimeDataController = Get.put(TodayRuntimeDataController());
-    ThisDayDataController thisDayDataController = Get.put(ThisDayDataController());
+    //TodayRuntimeDataController todayRuntimeDataController = Get.put(TodayRuntimeDataController());
+   // ThisDayDataController thisDayDataController = Get.put(ThisDayDataController());
 
 
     WidgetsBinding.instance.addPostFrameCallback((_){
 
       log("--> solarCategory --> ${widget.solarCategory}");
 
-      todayRuntimeDataController.fetchTodayRuntimeData(sourceName: widget.elementName);
-      thisDayDataController.fetchThisDayData(sourceName: widget.elementName);
-      Get.find<ThisMonthDataController>().fetchThisMonthData(sourceName: widget.elementName);
-      Get.find<ThisYearDataController>().fetchThisYearData(sourceName: widget.elementName);
+     // todayRuntimeDataController.fetchTodayRuntimeData(sourceName: widget.elementName);
+     // thisDayDataController.fetchThisDayData(sourceName: widget.elementName);
+     // Get.find<ThisMonthDataController>().fetchThisMonthData(sourceName: widget.elementName);
+    //  Get.find<ThisYearDataController>().fetchThisYearData(sourceName: widget.elementName);
 
-      Get.find<DailyDataController>().fetchDailyData(elementName: widget.elementName);
-      Get.find<MonthlyDataController>().fetchMonthlyData(elementName: widget.elementName);
-      Get.find<YearlyDataController>().fetchYearlyData(elementName: widget.elementName);
+     // Get.find<DailyDataController>().fetchDailyData(elementName: widget.elementName);
+     // Get.find<MonthlyDataController>().fetchMonthlyData(elementName: widget.elementName);
+     // Get.find<YearlyDataController>().fetchYearlyData(elementName: widget.elementName);
 
 
 
-      Get.find<FilterSpecificNodeDataController>().fetchFilterSpecificData(nodeName: widget.elementName, fromDate: Get.find<FilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<FilterSpecificNodeDataController>().toDateTEController.text);
-      Get.find<FilterSpecificNodeDataController>().fetchFilterSpecificTableData(nodeName: widget.elementName, fromDate: Get.find<FilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<FilterSpecificNodeDataController>().toDateTEController.text);
-      plotLineController.fetchMaxMachineData(nodeName: widget.elementName);
+      //Get.find<FilterSpecificNodeDataController>().fetchFilterSpecificData(nodeName: widget.elementName, fromDate: Get.find<FilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<FilterSpecificNodeDataController>().toDateTEController.text);
+     // Get.find<FilterSpecificNodeDataController>().fetchFilterSpecificTableData(nodeName: widget.elementName, fromDate: Get.find<FilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<FilterSpecificNodeDataController>().toDateTEController.text);
+     // plotLineController.fetchMaxMachineData(nodeName: widget.elementName);
 
     });
 

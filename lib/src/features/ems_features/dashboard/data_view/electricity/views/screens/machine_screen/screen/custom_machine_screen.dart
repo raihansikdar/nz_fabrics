@@ -615,7 +615,7 @@ class _CombinedMachineScreenState extends State<CombinedMachineScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 70),
+                margin: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 110),
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),

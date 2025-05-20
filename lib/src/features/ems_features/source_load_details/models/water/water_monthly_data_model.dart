@@ -21,7 +21,7 @@ class WaterMonthlyDataModel {
   WaterMonthlyDataModel.fromJson(Map<String, dynamic> json) {
     date = json['date'];
     node = json['node'];
-    instantFlow = json['instant_flow'];
+    instantFlow = json['volume'];
     cost = json['cost'];
     runtime = json['runtime'];
     nodeType = json['node_type'];
@@ -33,7 +33,7 @@ class WaterMonthlyDataModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['date'] = date;
     data['node'] = node;
-    data['instant_flow'] = instantFlow;
+    data['volume'] = instantFlow;
     data['cost'] = cost;
     data['runtime'] = runtime;
     data['node_type'] = nodeType;

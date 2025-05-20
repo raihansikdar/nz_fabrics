@@ -16,6 +16,7 @@ import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/s
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_daily_line_chart_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_details_date_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_filter_chart_widget.dart';
+import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_filter_cost_chart_widget.dart';
 import 'package:nz_fabrics/src/features/ems_features/source_load_details/views/screens/water/widgets/water_table_widget.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
@@ -124,7 +125,7 @@ _controller1 = AnimationController(
                           todayRuntime: Get.find<WaterTodayRuntimeDataController>().todayRunTimeData.runtimeToday.toString(),
                           thisDay: Get.find<WaterThisDayDataController>().thisDayData.thisDayCostWater ?? 0.00,
                           thisMonth: Get.find<WaterThisMonthDataController>().thisMonthData.isNotEmpty ? Get.find<WaterThisMonthDataController>().thisMonthData[0].cost ?? 0.00 : 0.00,
-                          thisYear: Get.find<WaterThisYearDataController>().thisYearData.volume ?? 0.00,
+                          thisYear: Get.find<WaterThisYearDataController>().thisYearData.cost ?? 0.00,
                         ),
 
                         SizedBox(height: size.height * k8TextSize),
@@ -212,7 +213,7 @@ _controller1 = AnimationController(
                                                 return SizedBox(
                                                   height: size.height * .35,
                                                   child: controller.selectedButton == 2 ?
-                                                  WaterFilterSpecificChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList,controller.dateDifference)
+                                                  WaterFilterCostChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList,controller.dateDifference)
                                                       :   WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'revenueView', waterDailyDataList: waterDailyDataController.dailyDataList, /*screenName: 'water',*/),
                                                 );
                                               }

@@ -202,9 +202,9 @@ class NodeDataSource extends DataGridSource {
         ),
         DataGridCell<String>(
           columnName: 'volume',
-          value: dataItem.energy != null
-              ? '${NumberFormat("#,##0.00").format(dataItem.energy)} m³'
-              : 'N/A',
+          value: dataItem.energyMod != null
+              ? '${NumberFormat("#,##0.00").format(dataItem.energyMod)} m³'
+              : '0.0',
         ),
         DataGridCell<String>(
           columnName: 'runtime',
@@ -219,7 +219,7 @@ class NodeDataSource extends DataGridSource {
             columnName: 'revenue',
             value: revenue != null
                 ? '৳${NumberFormat("#,##0.00").format(revenue)}'
-                : 'N/A',
+                : '0.0',
           ),
         );
       } else {
@@ -228,7 +228,7 @@ class NodeDataSource extends DataGridSource {
             columnName: 'cost',
             value: dataItem.cost != null
                 ? '৳${NumberFormat("#,##0.00").format(dataItem.cost)}'
-                : 'N/A',
+                : '0.0',
           ),
         );
       }
@@ -238,7 +238,7 @@ class NodeDataSource extends DataGridSource {
         [];
 
     final totalEnergy =
-        tableData.data?.fold(0.0, (sum, item) => sum + (item.energy ?? 0.0)) ??
+        tableData.data?.fold(0.0, (sum, item) => sum + (item.energyMod ?? 0.0)) ??
             0.0;
     final totalRuntime =
         tableData.data?.fold(0, (sum, item) => sum + (item.runtime ?? 0)) ?? 0;

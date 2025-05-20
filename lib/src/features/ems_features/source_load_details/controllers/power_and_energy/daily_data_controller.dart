@@ -25,9 +25,9 @@ class DailyDataController extends GetxController with InternetConnectivityCheckM
       isLoading = false;
 
 
-      log(" dailyDataUrl url ==> ${Urls.dailyDataUrl(elementName)}");
-      log(" dailyDataUrl statusCode ==> ${response.statusCode}");
-      log(" dailyDataUrl body ==> ${response.body}");
+      // log(" dailyDataUrl url ==> ${Urls.dailyDataUrl(elementName)}");
+      // log(" dailyDataUrl statusCode ==> ${response.statusCode}");
+      // log(" dailyDataUrl body ==> ${response.body}");
 
 
       if (response.isSuccess) {

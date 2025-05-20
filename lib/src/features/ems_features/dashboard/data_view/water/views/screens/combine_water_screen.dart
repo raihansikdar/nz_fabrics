@@ -610,7 +610,7 @@ class _WaterCombinedScreenState extends State<WaterCombinedScreen> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 70,top: 10),
+                margin: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 110,top: 10),
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),

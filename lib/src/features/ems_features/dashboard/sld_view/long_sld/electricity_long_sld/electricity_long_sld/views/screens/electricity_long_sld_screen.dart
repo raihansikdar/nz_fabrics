@@ -1938,6 +1938,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
   @override
   void dispose() {
     _timer?.cancel();
+    _controller.stop();
     _controller.dispose();
     stopTimer();
     WidgetsBinding.instance.removeObserver(this);
@@ -1951,7 +1952,7 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
 
       backgroundColor: Colors.white,
         appBar: CustomAppBarWidget(text: "Electricity SLD", backPreviousScreen: true,onBackButtonPressed: (){
-        //Get.find<ElectricityShortSLDLiveAllNodePowerController>().fetchLiveAllNodePower();
+        stopTimer();
       },),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -2015,40 +2016,6 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                           height: contentHeight,
                           child: Stack(
                             children: [
-                              // GetBuilder<ElectricityLongBusBarStatusInfoController>(
-                              //   builder: (electricityLongBusBarStatusInfoController) {
-                              //     return CustomPaint(
-                              //       size: Size(contentWidth, contentHeight),
-                              //       painter: ElectricityLongSLDAnimatedLinePainter(
-                              //         viewPageData: _viewPageData,
-                              //         connectedDetails: electricityLongBusBarStatusInfoController.busBarStatusModels,
-                              //         minX: minX,
-                              //         minY: minY,
-                              //         animation: _controller.view,
-                              //       ),
-                              //     );
-                              //   }
-                              // ),
-                              // GetBuilder<ElectricityLongBusBarStatusInfoController>(
-                              //   builder: (electricityLongBusBarStatusInfoController) {
-                              //     List<ConnectedWithDetails> connectedDetails = electricityLongBusBarStatusInfoController
-                              //         .busBarStatusModels
-                              //         .expand((model) => model.connectedWithDetails ?? [])
-                              //         .cast<ConnectedWithDetails>()
-                              //         .toList();
-                              //
-                              //     return CustomPaint(
-                              //       size: Size(contentWidth, contentHeight),
-                              //       painter: ElectricityLongSLDAnimatedLinePainter(
-                              //         viewPageData: _viewPageData,
-                              //        // connectedDetails: connectedDetails,
-                              //         minX: minX,
-                              //         minY: minY,
-                              //         animation: _controller.view,
-                              //       ),
-                              //     );
-                              //   },
-                              // ),
 
                               GetBuilder<BusBarStatusInfoController>(
                                   builder: (electricityLongBusBarStatusInfoController) {
@@ -2064,26 +2031,6 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                                     );
                                   },
                                   ),
-
-                              // GetBuilder<ElectricityLongSLDLiveAllNodePowerController>(
-                              //   builder: (controller) {
-                              //     return GetBuilder<BusBarStatusInfoController>(
-                              //       builder: (electricityLongBusBarStatusInfoController) {
-                              //         return CustomPaint(
-                              //           size: Size(contentWidth, contentHeight),
-                              //           painter: ElectricityLongSLDAnimatedLinePainter(
-                              //             viewPageData: _viewPageData,
-                              //             liveAllNodeModel: controller.liveAllNodePowerModel,
-                              //             busBarStatusModels: electricityLongBusBarStatusInfoController.busBarStatusModels, // Pass busbar status
-                              //             minX: minX,
-                              //             minY: minY,
-                              //             animation: _controller.view,
-                              //           ),
-                              //         );
-                              //       },
-                              //     );
-                              //   },
-                              // ),
 
 
                               ..._buildWidgets(minX, minY),

@@ -1549,6 +1549,7 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
   @override
   void dispose() {
     _timer?.cancel();
+    _controller.stop();
     _controller.dispose();
     stopTimer();
     WidgetsBinding.instance.removeObserver(this);

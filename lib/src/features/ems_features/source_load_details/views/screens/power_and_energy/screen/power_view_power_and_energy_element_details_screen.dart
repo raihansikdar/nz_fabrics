@@ -60,10 +60,22 @@ class _PowerViewPowerAndEnergyElementDetailsScreenState extends State<PowerViewP
     super.initState();
     //log("--> solarCategory inner --> ${widget.solarCategory}");
     WidgetsBinding.instance.addPostFrameCallback((_){
+
+      Get.find<TodayRuntimeDataController>().fetchTodayRuntimeData(sourceName: widget.elementName);
       Get.find<ThisDayDataController>().fetchThisDayData(sourceName: widget.elementName);
       Get.find<ThisMonthDataController>().fetchThisMonthData(sourceName: widget.elementName);
       Get.find<ThisYearDataController>().fetchThisYearData(sourceName: widget.elementName);
       Get.find<GetLiveDataController>().fetchGetLiveData(meterName: widget.elementName);
+
+      Get.find<DailyDataController>().fetchDailyData(elementName: widget.elementName);
+      Get.find<MonthlyDataController>().fetchMonthlyData(elementName: widget.elementName);
+      Get.find<YearlyDataController>().fetchYearlyData(elementName: widget.elementName);
+
+
+      Get.find<FilterSpecificNodeDataController>().fetchFilterSpecificData(nodeName: widget.elementName, fromDate: Get.find<FilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<FilterSpecificNodeDataController>().toDateTEController.text);
+      Get.find<FilterSpecificNodeDataController>().fetchFilterSpecificTableData(nodeName: widget.elementName, fromDate: Get.find<FilterSpecificNodeDataController>().fromDateTEController.text, toDate: Get.find<FilterSpecificNodeDataController>().toDateTEController.text);
+      plotLineController.fetchMaxMachineData(nodeName: widget.elementName);
+
     });
 
     _controller1 = AnimationController(

@@ -59,8 +59,8 @@ class Data {
     cost = json['cost'];
     runtime = json['runtime'];
     nodeType = json['node_type'];
-    energyMod = json['energy_mod'];
-    costMod = json['cost_mod'];
+    energyMod = json['volume'];
+    costMod = json['total'];
     category = json['category'];
   }
 
@@ -74,8 +74,8 @@ class Data {
     data['cost'] = cost;
     data['runtime'] = runtime;
     data['node_type'] = nodeType;
-    data['energy_mod'] = energyMod;
-    data['cost_mod'] = costMod;
+    data['volume'] = energyMod;
+    data['total'] = costMod;
     data['category'] = category;
     return data;
   }
