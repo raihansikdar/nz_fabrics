@@ -1638,30 +1638,37 @@ class _ElectricityShortSldState extends State<ElectricityShortSld>
                           height: contentHeight,
                           child: Stack(
                             children: [
-                              CustomPaint(
-                                size: Size(contentWidth, contentHeight),
-                                painter: ElectricityShortSLDAnimatedLinePainter(
-                                  viewPageData: _viewPageData,
-                                  liveData: _liveData,
-                                  minX: minX,
-                                  minY: minY,
-                                  animation: _controller.view,
-                                ),
-                              ),
-                              // GetBuilder<BusBarStatusInfoController>(
-                              //   builder: (electricityLongBusBarStatusInfoController) {
-                              //     return CustomPaint(
-                              //       size: Size(contentWidth, contentHeight),
-                              //       painter: ElectricityShortSLDAnimatedLinePainter(
-                              //         viewPageData: _viewPageData,
-                              //         sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
-                              //         minX: minX,
-                              //         minY: minY,
-                              //         animation: _controller.view,
-                              //       ),
-                              //     );
-                              //   },
+                              // CustomPaint(
+                              //   size: Size(contentWidth, contentHeight),
+                              //   painter: ElectricityShortSLDAnimatedLinePainter(
+                              //     viewPageData: _viewPageData,
+                              //     liveData: _liveData,
+                              //     minX: minX,
+                              //     minY: minY,
+                              //     animation: _controller.view,
+                              //   ),
                               // ),
+
+                              GetBuilder<ElectricityShortSLDLiveAllNodePowerController>(
+                                builder: (controller) {
+                                  return GetBuilder<BusBarStatusInfoController>(
+                                    builder: (electricityLongBusBarStatusInfoController) {
+                                      return CustomPaint(
+                                        size: Size(contentWidth, contentHeight),
+                                        painter: ElectricityShortSLDAnimatedLinePainter(
+                                          viewPageData: _viewPageData,
+                                          liveAllNodeModel: controller.liveAllNodePowerModel,
+                                          busBarStatusModels: electricityLongBusBarStatusInfoController.busBarStatusModels, // Pass busbar status
+                                          minX: minX,
+                                          minY: minY,
+                                          animation: _controller.view,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),
                             ],

@@ -277,7 +277,7 @@ class _PowerViewWaterElementDetailsScreenState extends State<PowerViewWaterEleme
                                                     height: size.height * .35,
                                                     child: controller.selectedButton == 2 ?
                                                     WaterFilterSpecificChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList,controller.dateDifference)
-                                                        :   WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',),
+                                                        :   WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', waterDailyDataList: waterDailyDataController.dailyDataList, /*screenName: 'water',*/),
                                                 );
                                               }
                                           );

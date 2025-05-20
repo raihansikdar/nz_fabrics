@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/sld_view/long_sld/electricity_long_sld/electricity_long_sld/model/busbar_status_info_model.dart';
 import 'package:nz_fabrics/src/services/internet_connectivity_check_mixin.dart';
@@ -10,7 +12,9 @@ import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
 import 'package:nz_fabrics/src/utility/exception/app_exception.dart';
 import 'package:nz_fabrics/src/utility/exception/debug_logger.dart';
 
-class BusBarStatusInfoController extends GetxController with InternetConnectivityCheckMixin {
+import '../../../../../../../../utility/style/constant.dart';
+
+class BusBarStatusInfoController extends GetxController with InternetConnectivityCheckMixin,WidgetsBindingObserver {
   bool _isConnected = true;
   bool _isBusBarStatusProgress = false;
   String _errorMessage = '';
@@ -20,6 +24,72 @@ class BusBarStatusInfoController extends GetxController with InternetConnectivit
   bool get isBusBarStatusProgress => _isBusBarStatusProgress;
   String get errorMessage => _errorMessage;
   List<BusBarStatusInfoModel> get busBarStatusModels => _busBarStatusModels; // Updated getter
+
+  Timer? _timer;
+  bool _isStopApiCall = false;
+  bool _isComeFromBackGround = false;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.inactive) {
+      _isComeFromBackGround = true;
+      log("===> isComeFromBackGround true");
+      _stopPeriodicApiCall();
+    } else if (state == AppLifecycleState.resumed) {
+      log("===> App resumed");
+      if (!_isStopApiCall && _isComeFromBackGround) {
+        log("===> Resuming API calls...");
+        startApiCallOnScreenChange();
+        _isComeFromBackGround = false;
+      }
+    }
+  }
+
+  void _startPeriodicApiCall() {
+    _stopPeriodicApiCall();
+    _timer = Timer.periodic(const Duration(seconds: kTimer), (timer) {
+      fetchBusBarStatusData();
+    });
+  }
+
+  void _stopPeriodicApiCall() {
+    _isStopApiCall = true;
+    _timer?.cancel();
+    _timer = null;
+    log("===> isStopApiCall $_isStopApiCall");
+  }
+
+  @override
+  void onClose() {
+    _stopPeriodicApiCall();
+    WidgetsBinding.instance.removeObserver(this);
+    super.onClose();
+  }
+
+  void stopApiCallOnScreenChange() {
+    if (Get.isRegistered<BusBarStatusInfoController>()) {
+      final controller = Get.find<BusBarStatusInfoController>();
+      controller._stopPeriodicApiCall();
+    }
+  }
+
+  void startApiCallOnScreenChange() {
+    if (!Get.isRegistered<BusBarStatusInfoController>()) {
+      final controller = Get.put(BusBarStatusInfoController());
+      controller._startPeriodicApiCall();
+    } else {
+      final controller = Get.find<BusBarStatusInfoController>();
+      controller._startPeriodicApiCall();
+
+    }
+    _isStopApiCall = false;
+    update();
+  }
+
+
+
 
   Future<bool> fetchBusBarStatusData() async {
     _isBusBarStatusProgress = true;

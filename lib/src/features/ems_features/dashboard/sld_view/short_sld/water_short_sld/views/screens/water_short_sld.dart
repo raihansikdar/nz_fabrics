@@ -47,9 +47,8 @@ class WaterShortSld extends StatefulWidget {
   State<WaterShortSld> createState() => _WaterShortSldState();
 }
 
-class _WaterShortSldState extends State<WaterShortSld>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  // Keep state variables
+class _WaterShortSldState extends State<WaterShortSld> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+
   List<WaterShortViewPageModel> _viewPageData = [];
   Map<dynamic, LiveDataModel> _liveData = {};
   bool _isLoading = true;
@@ -264,92 +263,6 @@ class _WaterShortSldState extends State<WaterShortSld>
     return true;
   }
 
-  /* Future<void> _fetchLiveData() async {
-    if (!mounted) return;
-
-    final requestId = Uuid().v4();
-  //  debugPrint('[$requestId] Fetching live data at ${DateTime.now()}');
-
-    try {
-      final response = await http.get(
-        Uri.parse('${Urls.baseUrl}/live-all-node-power/?type=electricity'),
-        headers: {
-          'Authorization': AuthUtilityController.accessToken ?? '',
-        },
-      );
-
-    //  debugPrint('[$requestId] Live data response: ${response.statusCode}, body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data is! List) {
-          //debugPrint('[$requestId] Error: Expected List, got ${data.runtimeType}');
-          return;
-        }
-
-        Map<dynamic, LiveDataModel> newLiveData = {};
-
-        for (var item in _viewPageData) {
-          if (item.nodeName.isEmpty) {
-           // debugPrint('[$requestId] Skipping empty nodeName for item id: ${item.id}');
-            continue;
-          }
-
-          final nodeData = data.firstWhere(
-                (node) => node['node'] == item.nodeName,
-            orElse: () => null,
-          );
-
-          if (nodeData != null) {
-            LiveDataModel liveDataModel = LiveDataModel(
-              power: nodeData['power']?.toDouble() ?? 0.0,
-              sensorStatus: (nodeData['power']?.toDouble() ?? 0.0) != 0.0,
-              sourceType: nodeData['source_type'] ?? '',
-              timedate: nodeData['timedate'] != null
-                  ? DateTime.tryParse(nodeData['timedate'])
-                  : null,
-            );
-            newLiveData[item.id] = liveDataModel;
-          //  debugPrint('[$requestId] Added live data for node: ${item.nodeName}, power: ${liveDataModel.power}, sensorStatus: ${liveDataModel.sensorStatus}');
-          } else {
-           // debugPrint('[$requestId] No live data found for node: ${item.nodeName}');
-            newLiveData[item.id] = LiveDataModel(
-              power: 0.0,
-              sensorStatus: false,
-              sourceType: item.sourceType,
-              timedate: DateTime.now(),
-            );
-          }
-        }
-
-        if (mounted) {
-          setState(() {
-            _liveData = newLiveData;
-            _isLoading = false;
-          });
-          await _cacheData1();
-         // debugPrint('[$requestId] Updated _liveData with ${newLiveData.length} entries');
-        }
-      } else {
-       // debugPrint('[$requestId] Failed to fetch live data: ${response.statusCode}');
-        if (mounted) {
-          setState(() {
-            _isLoading = false;
-          });
-        }
-      }
-    } catch (e, stackTrace) {
-      //debugPrint('[$requestId] Error fetching live data: $e');
-      //debugPrint('[$requestId] Stack trace: $stackTrace');
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }*/
-
-
 
   // OPTIMIZATION 5: Update power meter data without triggering full UI rebuilds
   Future<void> fetchAndUpdatePowerMeter(String nodeName, String sourceType,
@@ -482,6 +395,7 @@ class _WaterShortSldState extends State<WaterShortSld>
   @override
   void dispose() {
     _timer?.cancel();
+    _controller.stop();
     _controller.dispose();
     stopTimer();
     WidgetsBinding.instance.removeObserver(this);
@@ -582,20 +496,43 @@ class _WaterShortSldState extends State<WaterShortSld>
                               //   ),
                               // ),
 
-                              GetBuilder<BusBarStatusInfoController>(
-                                builder: (electricityLongBusBarStatusInfoController) {
-                                  return CustomPaint(
-                                    size: Size(contentWidth, contentHeight),
-                                    painter: WaterShortAnimatedLinePainter(
-                                      viewPageData: _viewPageData,
-                                      sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
-                                      minX: minX,
-                                      minY: minY,
-                                      animation: _controller.view,
-                                    ),
+                              // GetBuilder<BusBarStatusInfoController>(
+                              //   builder: (electricityLongBusBarStatusInfoController) {
+                              //     return CustomPaint(
+                              //       size: Size(contentWidth, contentHeight),
+                              //       painter: WaterShortAnimatedLinePainter(
+                              //         viewPageData: _viewPageData,
+                              //         sensorStatusData: electricityLongBusBarStatusInfoController.busBarStatusModels,
+                              //         minX: minX,
+                              //         minY: minY,
+                              //         animation: _controller.view,
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
+
+
+                              GetBuilder<WaterShortSLDLiveAllNodePowerController>(
+                                builder: (controller) {
+                                  return GetBuilder<BusBarStatusInfoController>(
+                                    builder: (electricityLongBusBarStatusInfoController) {
+                                      return CustomPaint(
+                                        size: Size(contentWidth, contentHeight),
+                                        painter: WaterShortAnimatedLinePainter(
+                                          viewPageData: _viewPageData,
+                                          liveAllNodeModel: controller.liveAllNodePowerModel,
+                                          busBarStatusModels: electricityLongBusBarStatusInfoController.busBarStatusModels, // Pass busbar status
+                                          minX: minX,
+                                          minY: minY,
+                                          animation: _controller.view,
+                                        ),
+                                      );
+                                    },
                                   );
                                 },
                               ),
+
+
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),
                             ],

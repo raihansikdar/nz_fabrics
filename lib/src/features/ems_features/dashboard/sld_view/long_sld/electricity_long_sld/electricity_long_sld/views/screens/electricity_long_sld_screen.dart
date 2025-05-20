@@ -2065,6 +2065,26 @@ class _ElectricityLongSldScreenState extends State<ElectricityLongSldScreen>
                                   },
                                   ),
 
+                              // GetBuilder<ElectricityLongSLDLiveAllNodePowerController>(
+                              //   builder: (controller) {
+                              //     return GetBuilder<BusBarStatusInfoController>(
+                              //       builder: (electricityLongBusBarStatusInfoController) {
+                              //         return CustomPaint(
+                              //           size: Size(contentWidth, contentHeight),
+                              //           painter: ElectricityLongSLDAnimatedLinePainter(
+                              //             viewPageData: _viewPageData,
+                              //             liveAllNodeModel: controller.liveAllNodePowerModel,
+                              //             busBarStatusModels: electricityLongBusBarStatusInfoController.busBarStatusModels, // Pass busbar status
+                              //             minX: minX,
+                              //             minY: minY,
+                              //             animation: _controller.view,
+                              //           ),
+                              //         );
+                              //       },
+                              //     );
+                              //   },
+                              // ),
+
 
                               ..._buildWidgets(minX, minY),
                               ..._buildPFWidgets(minX, minY),

@@ -398,7 +398,7 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
-    startApiCallOnScreenChange();
+    _startPeriodicApiCall();
   }
 
   @override
@@ -419,11 +419,6 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
     }
   }
 
-  void startApiCallOnScreenChange() {
-    _isStopApiCall = false;
-    _startPeriodicApiCall();
-    log("LiveAllNodePowerController Start Api Call");
-  }
 
   void _startPeriodicApiCall() {
     _stopPeriodicApiCall();
@@ -447,9 +442,25 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
   }
 
   void stopApiCallOnScreenChange() {
-    _stopPeriodicApiCall();
-    log("LiveAllNodePowerController Stop Api Call");
+    if (Get.isRegistered<ElectricityLongSLDLiveAllNodePowerController>()) {
+      final controller = Get.find<ElectricityLongSLDLiveAllNodePowerController>();
+      controller._stopPeriodicApiCall();
+    }
   }
+
+  void startApiCallOnScreenChange() {
+    if (!Get.isRegistered<ElectricityLongSLDLiveAllNodePowerController>()) {
+      final controller = Get.put(ElectricityLongSLDLiveAllNodePowerController());
+      controller._startPeriodicApiCall();
+    } else {
+      final controller = Get.find<ElectricityLongSLDLiveAllNodePowerController>();
+      controller._startPeriodicApiCall();
+
+    }
+    _isStopApiCall = false;
+    update();
+  }
+
 
   Future<bool> fetchLiveAllNodePower() async {
     if (_isLiveAllNodePowerInProgress) return false;

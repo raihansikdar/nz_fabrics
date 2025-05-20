@@ -349,7 +349,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                       Get.find<ElectricityShortSLDLtProductionVsCapacityController>().stopApiCallOnScreenChange();
                                                                                       Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                                                                                       Get.find<WaterLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
-
+                                                                                      Get.find<BusBarStatusInfoController>().stopApiCallOnScreenChange();
                                                                                     });
 
                                                                                   },
@@ -368,6 +368,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                 onTap: (){
                                                                                   dashBoardRadioButtonController.updateSelectedValue(2);
                                                                                   Get.find<BusBarStatusInfoController>().fetchBusBarStatusData();
+                                                                                  Get.find<BusBarStatusInfoController>().startApiCallOnScreenChange();
                                                                                   log("----------Press-------- 2");
                                                                                 },
                                                                                 child: Container(
@@ -396,6 +397,7 @@ class _EmsDashboardScreenState extends State<EmsDashboardScreen>   with TickerPr
                                                                                     Get.find<WaterShortSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                                                                                     Get.find<ElectricityLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
                                                                                     Get.find<WaterLongSLDLiveAllNodePowerController>().stopApiCallOnScreenChange();
+                                                                                    Get.find<BusBarStatusInfoController>().stopApiCallOnScreenChange();
                                                                                   });
 
 

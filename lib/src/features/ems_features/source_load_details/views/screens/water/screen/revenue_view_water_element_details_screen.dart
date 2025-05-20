@@ -213,7 +213,7 @@ _controller1 = AnimationController(
                                                   height: size.height * .35,
                                                   child: controller.selectedButton == 2 ?
                                                   WaterFilterSpecificChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList,controller.dateDifference)
-                                                      :   WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'revenueView', waterDailyDataList: waterDailyDataController.dailyDataList, screenName: 'water',),
+                                                      :   WaterDailyLineChartWidget(elementName: widget.elementName,viewName: 'revenueView', waterDailyDataList: waterDailyDataController.dailyDataList, /*screenName: 'water',*/),
                                                 );
                                               }
                                           );
