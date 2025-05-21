@@ -3,7 +3,7 @@ description: "NZ utility management system."
 
 publish_to: 'none'
 
-version: 1.0.5
+version: 1.0.6
 
 environment:
   sdk: 3.7.0-323.0.dev
@@ -40,7 +40,7 @@ dependencies:
   flutter_spinkit: ^5.2.1
   dropdown_button2: ^2.3.9
   hexcolor: ^3.0.1
-  upgrader: ^11.3.1
+  upgrader: ^11.4.0
   photo_view: ^0.15.0
   zoom_pinch_overlay: ^1.4.3
   in_app_update: ^4.2.2

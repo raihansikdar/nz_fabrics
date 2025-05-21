@@ -63,7 +63,7 @@ class _UtilityAllDataTableState extends State<UtilityAllDataTable> {
             tempList.add(UtilityData(
               category: 'Water',
               liveData: '${item['instant_flow'].toStringAsFixed(2)} m³/h',
-              consumption: '${item['volume'].toStringAsFixed(2)} m³',
+              consumption: '${item['today_volume'].toStringAsFixed(2)} m³',
               cost: '\৳${item['cost'].toStringAsFixed(2)}',
             ));
           }
