@@ -11,6 +11,7 @@ import 'package:nz_fabrics/src/features/notification/controller/notification_con
 import 'package:nz_fabrics/src/features/notification/views/screens/notification_screens.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
 import 'package:nz_fabrics/src/utility/app_urls/app_urls.dart';
+import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'dart:convert';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -31,6 +32,13 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
   List<dynamic> layoutLines = [];
   Map<String, dynamic> nodeLiveData = {};
   bool isLoading = true;
+  int selectedButton = 1;
+
+  void updateSelectedButton({required int value}){
+  setState(() {
+    selectedButton = value;
+  });
+  }
 
 
   final double imageWidth = 1970;
@@ -144,13 +152,18 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
     viewportSize = screenSize;
 
     return Scaffold(
-      appBar: CustomLayoutAppBar(layoutName: widget.layoutName, backPreviousScreen: true),
+      appBar: CustomLayoutAppBar(layoutName: widget.layoutName,selectedButton: selectedButton, backPreviousScreen: true),
       body: LayoutBuilder(
         builder: (context, constraints) {
           double scaleX = constraints.maxWidth / 1970;
           double scaleY = constraints.maxHeight / 1220;
           double scale = math.min(scaleX, scaleY);
 
+          if (selectedButton == 2) {
+            return const Center(child: Text("Water"));
+          }else if(selectedButton == 3){
+            return const Center(child: Text("Steam"));
+          }
           return PhotoViewGallery.builder(
             itemCount: 1,
             builder: (context, index) {
@@ -212,7 +225,7 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
                     ),
                   ),
                 ),
-              );
+              ) ;
             },
             scrollDirection: Axis.horizontal,
             backgroundDecoration: const BoxDecoration(color: Colors.white),
@@ -220,6 +233,41 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
           );
         },
       ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            heroTag: 'steam_button',
+            shape: const CircleBorder(),
+            backgroundColor: AppColors.whiteTextColor,
+            onPressed: () {
+              updateSelectedButton(value: 3);
+            },
+            child: Icon(Icons.stream),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            heroTag: 'water_button',
+            shape: const CircleBorder(),
+            backgroundColor: AppColors.whiteTextColor,
+            onPressed: () {
+              updateSelectedButton(value: 2);
+            },
+            child: Icon(Icons.water),
+          ),
+          const SizedBox(height: 10),
+          FloatingActionButton(
+            heroTag: 'electric_button',
+            shape: const CircleBorder(),
+            backgroundColor: AppColors.whiteTextColor,
+            onPressed: () {
+              updateSelectedButton(value: 1);
+            },
+            child: Icon(Icons.electric_bolt),
+          ),
+        ],
+      ),
+
     );
   }
 
@@ -289,15 +337,6 @@ class NodeWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Text(
-              //   node["node_name"],
-              //   // textAlign: TextAlign.center,
-              //   style: const TextStyle(
-              //     color: Colors.black,
-              //     fontSize: 7,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
               if (liveData != null)
                 Text(
                   "${node["node_name"]}: $powerValue",
@@ -487,53 +526,15 @@ class LinePainter extends CustomPainter {
   }
 }
 
-/*
-class NodeDataRefresher {
-  final String token;
-  final Function(Map<String, dynamic>) onDataUpdate;
-  Timer? _timer;
-
-  NodeDataRefresher({
-    required this.token,
-    required this.onDataUpdate,
-  });
-
-
-
-  void startPeriodicRefresh(String nodeName, {Duration interval = const Duration(seconds: 30)}) {
-    _timer?.cancel();
-    _timer = Timer.periodic(interval, (timer) => refreshData(nodeName));
-  }
-
-  Future<void> refreshData(String nodeName) async {
-    try {
-      var encodedNodeName = Uri.encodeComponent(nodeName);
-      var response = await http.get(
-        // Uri.parse("http://175.29.189.138/react/get-live-data/$encodedNodeName/"),
-          Uri.parse(Urls.getLiveDataUrl(encodedNodeName)),
-          headers: {"Authorization": token}
-      );
-
-      if (response.statusCode == 200) {
-        Map<String, dynamic> data = json.decode(response.body);
-        onDataUpdate(data);
-      }
-    } catch (e) {
-      log("Error refreshing data for node $nodeName: $e");
-    }
-  }
-
-  void dispose() {
-    _timer?.cancel();
-    }
-}*/
 class CustomLayoutAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String layoutName;
   final bool backPreviousScreen;
+  final int selectedButton;
 
   const CustomLayoutAppBar({
     super.key,
     required this.layoutName,
+    required this.selectedButton,
     this.backPreviousScreen = true,
   });
 
@@ -602,24 +603,51 @@ class _CustomLayoutAppBarState extends State<CustomLayoutAppBar> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Machine type chips with formatted summary
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: summaryList.map((summary) =>
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Chip(
-                         // backgroundColor: Colors.blue.shade700,
-                          label: Text(
-                            summary.formattedSummary,
-                            style: const TextStyle(color: Colors.black, fontSize: 12,fontWeight: FontWeight.bold),
+              
+              if(widget.selectedButton == 1)
+                 SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: summaryList.map((summary) =>
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Chip(
+                            // backgroundColor: Colors.blue.shade700,
+                            label: Text(
+                              summary.formattedSummary,
+                              style: const TextStyle(color: Colors.black, fontSize: 12,fontWeight: FontWeight.bold),
+                            ),
                           ),
-                        ),
-                      )
-                  ).toList(),
-                ),
-              ),
+                        )
+                    ).toList(),
+                  ),
+                )
+              else if(widget.selectedButton == 2)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Chip(
+                    // backgroundColor: Colors.blue.shade700,
+                    label: Text(
+                      'Water',
+                      style: const TextStyle(color: Colors.black, fontSize: 12,fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
+              else if(widget.selectedButton == 3)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Chip(
+                      // backgroundColor: Colors.blue.shade700,
+                      label: Text(
+                        'Steam',
+                        style: const TextStyle(color: Colors.black, fontSize: 12,fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+
+              
+           
+              
             ],
           ),
         ),
