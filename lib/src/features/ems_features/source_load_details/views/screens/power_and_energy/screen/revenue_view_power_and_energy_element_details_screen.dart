@@ -227,7 +227,7 @@ class _RevenueViewPowerAndEnergyElementDetailsScreenState extends State<RevenueV
                                                     height: size.height * .35,
                                                     child: controller.selectedButton == 2 ?
                                                     FilterCostChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList)
-                                                        :  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', dailyDataList: dailyDataController.dailyDataList, screenName: 'powerAndEnergy', machineMaxPowerModel: plotLineController.plotMachineMaxPower,)
+                                                        :  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', dailyDataList: dailyDataController.dailyDataList, /*screenName: 'powerAndEnergy', machineMaxPowerModel: plotLineController.plotMachineMaxPower,*/ )
                                                 );
                                               }
                                           );

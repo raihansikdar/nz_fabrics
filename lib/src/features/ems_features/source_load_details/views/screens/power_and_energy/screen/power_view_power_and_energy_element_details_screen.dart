@@ -314,7 +314,7 @@ class _PowerViewPowerAndEnergyElementDetailsScreenState extends State<PowerViewP
                                                height: size.height * .35,
                                                child: controller.selectedButton == 2 ?
                                                FilterSpecificChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList,controller.dateDifference)
-                                                   :  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', dailyDataList: dailyDataController.dailyDataList, screenName: 'powerAndEnergy', machineMaxPowerModel: plotLineController.plotMachineMaxPower,)
+                                                   :  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', dailyDataList: dailyDataController.dailyDataList, /*screenName: 'powerAndEnergy', machineMaxPowerModel: plotLineController.plotMachineMaxPower,*/)
                                            );
                                          }
                                      );

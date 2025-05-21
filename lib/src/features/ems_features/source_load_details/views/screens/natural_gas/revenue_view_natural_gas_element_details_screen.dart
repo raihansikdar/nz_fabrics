@@ -172,7 +172,8 @@ class _RevenueViewNaturalGasElementDetailsScreenState extends State<RevenueViewN
                                     }
                                     return SizedBox(
                                         height: size.height * .28,
-                                        child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'revenueView', naturalGasDailyDataList: naturalGasDailyDataController.dailyDataList, screenName: 'naturalGasScreen',));
+                                      //  child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'revenueView', naturalGasDailyDataList: naturalGasDailyDataController.dailyDataList, screenName: 'naturalGasScreen',)
+                                    );
                                   }
                               ),
                               SizedBox(height: size.height * k20TextSize),

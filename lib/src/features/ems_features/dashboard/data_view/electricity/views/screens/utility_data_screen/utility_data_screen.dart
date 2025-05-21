@@ -299,7 +299,7 @@
 //                                 ),
 //                               ],
 //                             ),
-//                              SizedBox(height: size.width > 500 ? 16: 8),
+//                             SizedBox(height: size.width > 500 ? 16: 8),
 //                             SizedBox(
 //                               height: size.width > 500 ? size.height * 0.04 : size.width * 0.09,
 //                               width: size.width * 0.4,
@@ -346,133 +346,133 @@
 //             const SizedBox(height: 8),
 //             isLoading
 //                 ? const Center(child: Padding(
-//                   padding: EdgeInsets.only(top: 158.0),
-//                   child: SpinKitFadingCircle(
-//                     color: AppColors.primaryColor,
-//                     size: 50.0,
-//                   ),
-//                 ))
+//               padding: EdgeInsets.only(top: 158.0),
+//               child: SpinKitFadingCircle(
+//                 color: AppColors.primaryColor,
+//                 size: 50.0,
+//               ),
+//             ))
 //                 :  Column(
-//              children: [
-//                graphType == 'Line-Chart'
-//                    ? LineChartWidget(
-//                  electricityData: electricityData,
-//                  waterData: waterData,
-//                  showElectricity: showElectricity,
-//                  showWater: showWater,
-//                )
-//                    : graphType == 'Monthly-Bar-Chart'
-//                    ? MonthlyBarChartWidget(
-//                  electricityData: electricityData,
-//                  waterData: waterData,
-//                  showElectricity: showElectricity,
-//                  showWater: showWater,
-//                )
-//                    : YearlyBarChartWidget(
-//                  electricityData: electricityData,
-//                  waterData: waterData,
-//                  showElectricity: showElectricity,
-//                  showWater: showWater,
-//                ),
-//                const SizedBox(height: 16),
-//                SizedBox(
-//                    height: 160,
-//                    child: UtilityAllDataTable()),
+//               children: [
+//                 graphType == 'Line-Chart'
+//                     ? LineChartWidget(
+//                   electricityData: electricityData,
+//                   waterData: waterData,
+//                   showElectricity: showElectricity,
+//                   showWater: showWater,
+//                 )
+//                     : graphType == 'Monthly-Bar-Chart'
+//                     ? MonthlyBarChartWidget(
+//                   electricityData: electricityData,
+//                   waterData: waterData,
+//                   showElectricity: showElectricity,
+//                   showWater: showWater,
+//                 )
+//                     : YearlyBarChartWidget(
+//                   electricityData: electricityData,
+//                   waterData: waterData,
+//                   showElectricity: showElectricity,
+//                   showWater: showWater,
+//                 ),
+//                 const SizedBox(height: 16),
+//                 SizedBox(
+//                     height: 160,
+//                     child: UtilityAllDataTable()),
 //
-//                const SizedBox(height: 16),
+//                 const SizedBox(height: 16),
 //
-//                tableData.isEmpty
-//                    ? const Text(
-//                  'No data available for the selected date range',
-//                  style: TextStyle(fontSize: 16, color: Colors.grey),
-//                )
-//                    : Container(
-//                  height: 300,
-//                  width: double.infinity,
-//                  margin: const EdgeInsets.all(8.0),
-//                  clipBehavior: Clip.antiAlias,
-//                  decoration: BoxDecoration(
-//                    borderRadius: BorderRadius.circular(16),
-//                    color: Colors.white,
-//                  ),
-//                  child: SfDataGridTheme(
-//                    data: SfDataGridThemeData(
-//                      headerColor: AppColors.secondaryTextColor,
-//                    ),
-//                    child: SfDataGrid(
-//                      source: machineDataSource,
-//                      columnWidthMode: size.width > 500 ? ColumnWidthMode.fill : ColumnWidthMode.fitByCellValue,
-//                      gridLinesVisibility: GridLinesVisibility.both,
-//                      headerGridLinesVisibility: GridLinesVisibility.both,
-//                      headerRowHeight:47,
-//                      rowHeight: 35,
-//                      stackedHeaderRows: [
-//                        StackedHeaderRow(cells: [
-//                          // StackedHeaderCell(
-//                          //   columnNames: ['date'],
-//                          //   child: Container(
-//                          //     alignment: Alignment.center,
-//                          //     child: const Text('Date'),
-//                          //   ),
-//                          // ),
-//                          StackedHeaderCell(
-//                            columnNames: ['electricity_energy', 'electricity_cost'],
-//                            child: Container(
-//                              alignment: Alignment.center,
-//                              child:  Text('Electricity',style: TextStyle(color: AppColors.whiteTextColor),),
-//                            ),
-//                          ),
-//                          StackedHeaderCell(
-//                            columnNames: ['water_volume', 'water_cost'],
-//                            child: Container(
-//                              alignment: Alignment.center,
-//                              child: const Text('Water',style: TextStyle(color: AppColors.whiteTextColor),),
-//                            ),
-//                          ),
-//                        ]),
-//                      ],
-//                      columns: <GridColumn>[
-//                        GridColumn(
-//                          columnName: 'date',
-//                          label: Container(
-//                            alignment: Alignment.center,
-//                            child: const Text('Date',style: TextStyle(color: AppColors.whiteTextColor),),
-//                          ),
-//                        ),
-//                        GridColumn(
-//                          columnName: 'electricity_energy',
-//                          label: Container(
-//                            alignment: Alignment.center,
-//                            child: const Text('Energy (kWh)',style: TextStyle(color: AppColors.whiteTextColor),),
-//                          ),
-//                        ),
-//                        GridColumn(
-//                          columnName: 'electricity_cost',
-//                          label: Container(
-//                            alignment: Alignment.center,
-//                            child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
-//                          ),
-//                        ),
-//                        GridColumn(
-//                          columnName: 'water_volume',
-//                          label: Container(
-//                            alignment: Alignment.center,
-//                            child: const Text('Volume (m³)',style: TextStyle(color: AppColors.whiteTextColor),),
-//                          ),
-//                        ),
-//                        GridColumn(
-//                          columnName: 'water_cost',
-//                          label: Container(
-//                            alignment: Alignment.center,
-//                            child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
-//                          ),
-//                        ),
-//                      ],
-//                    ),
-//                  ),
-//                ),
-//              ],
-//            )
+//                 tableData.isEmpty
+//                     ? const Text(
+//                   'No data available for the selected date range',
+//                   style: TextStyle(fontSize: 16, color: Colors.grey),
+//                 )
+//                     : Container(
+//                   height: 300,
+//                   width: double.infinity,
+//                   margin: const EdgeInsets.all(8.0),
+//                   clipBehavior: Clip.antiAlias,
+//                   decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(16),
+//                     color: Colors.white,
+//                   ),
+//                   child: SfDataGridTheme(
+//                     data: SfDataGridThemeData(
+//                       headerColor: AppColors.secondaryTextColor,
+//                     ),
+//                     child: SfDataGrid(
+//                       source: machineDataSource,
+//                       columnWidthMode: size.width > 500 ? ColumnWidthMode.fill : ColumnWidthMode.fitByCellValue,
+//                       gridLinesVisibility: GridLinesVisibility.both,
+//                       headerGridLinesVisibility: GridLinesVisibility.both,
+//                       headerRowHeight:47,
+//                       rowHeight: 35,
+//                       stackedHeaderRows: [
+//                         StackedHeaderRow(cells: [
+//                           // StackedHeaderCell(
+//                           //   columnNames: ['date'],
+//                           //   child: Container(
+//                           //     alignment: Alignment.center,
+//                           //     child: const Text('Date'),
+//                           //   ),
+//                           // ),
+//                           StackedHeaderCell(
+//                             columnNames: ['electricity_energy', 'electricity_cost'],
+//                             child: Container(
+//                               alignment: Alignment.center,
+//                               child:  Text('Electricity',style: TextStyle(color: AppColors.whiteTextColor),),
+//                             ),
+//                           ),
+//                           StackedHeaderCell(
+//                             columnNames: ['water_volume', 'water_cost'],
+//                             child: Container(
+//                               alignment: Alignment.center,
+//                               child: const Text('Water',style: TextStyle(color: AppColors.whiteTextColor),),
+//                             ),
+//                           ),
+//                         ]),
+//                       ],
+//                       columns: <GridColumn>[
+//                         GridColumn(
+//                           columnName: 'date',
+//                           label: Container(
+//                             alignment: Alignment.center,
+//                             child: const Text('Date',style: TextStyle(color: AppColors.whiteTextColor),),
+//                           ),
+//                         ),
+//                         GridColumn(
+//                           columnName: 'electricity_energy',
+//                           label: Container(
+//                             alignment: Alignment.center,
+//                             child: const Text('Energy (kWh)',style: TextStyle(color: AppColors.whiteTextColor),),
+//                           ),
+//                         ),
+//                         GridColumn(
+//                           columnName: 'electricity_cost',
+//                           label: Container(
+//                             alignment: Alignment.center,
+//                             child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
+//                           ),
+//                         ),
+//                         GridColumn(
+//                           columnName: 'water_volume',
+//                           label: Container(
+//                             alignment: Alignment.center,
+//                             child: const Text('Volume (m³)',style: TextStyle(color: AppColors.whiteTextColor),),
+//                           ),
+//                         ),
+//                         GridColumn(
+//                           columnName: 'water_cost',
+//                           label: Container(
+//                             alignment: Alignment.center,
+//                             child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 ),
+//               ],
+//             )
 //           ],
 //         ),
 //       ),
@@ -658,399 +658,6 @@
 //   }
 // }
 //
-// /*class LineChartWidget extends StatelessWidget {
-//   final List<ElectricityData> electricityData;
-//   final List<WaterData> waterData;
-//   final bool showElectricity;
-//   final bool showWater;
-//
-//   const LineChartWidget({
-//     super.key,
-//     required this.electricityData,
-//     required this.waterData,
-//     required this.showElectricity,
-//     required this.showWater,
-//   });
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: 400,
-//       child: SfCartesianChart(
-//         trackballBehavior: TrackballBehavior(
-//           enable: true,
-//           tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-//           activationMode: ActivationMode.longPress,
-//         ),
-//         primaryXAxis: DateTimeAxis(
-//           dateFormat: DateFormat('dd/MM hh:mm'),
-//           intervalType: DateTimeIntervalType.hours,
-//           majorGridLines: const MajorGridLines(width: 0.2),
-//         ),
-//         primaryYAxis: NumericAxis(
-//           labelFormat: '{value}k', // Formats the value with a 'k' suffix
-//           numberFormat: NumberFormat.decimalPattern()..maximumFractionDigits = 0, // No decimals
-//           axisLabelFormatter: (AxisLabelRenderDetails details) {
-//
-//             int value = (details.value / 1000).toInt();
-//             return ChartAxisLabel('${value}k', details.textStyle);
-//           },
-//         ),
-//         legend: Legend(isVisible: false, position: LegendPosition.top),
-//         series: <CartesianSeries<dynamic, dynamic>>[
-//           if (showElectricity)
-//             SplineSeries<ElectricityData, DateTime>(
-//               dataSource: electricityData,
-//               xValueMapper: (ElectricityData data, _) => data.timedate!,
-//               yValueMapper: (ElectricityData data, _) => data.power,
-//               name: 'Power (kW)',
-//               color: Colors.blue,
-//             ),
-//           if (showWater)
-//             SplineSeries<WaterData, DateTime>(
-//               dataSource: waterData,
-//               xValueMapper: (WaterData data, _) => data.timedate!,
-//               yValueMapper: (WaterData data, _) => data.instantFlow,
-//               name: 'Flow (L/min)',
-//               color: Colors.green,
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }*/
-//
-// /*class LineChartWidget extends StatefulWidget {
-//   final List<ElectricityData> electricityData;
-//   final List<WaterData> waterData;
-//   final bool showElectricity;
-//   final bool showWater;
-//
-//   const LineChartWidget({
-//     super.key,
-//     required this.electricityData,
-//     required this.waterData,
-//     required this.showElectricity,
-//     required this.showWater,
-//   });
-//
-//   @override
-//   _LineChartWidgetState createState() => _LineChartWidgetState();
-// }
-//
-// class _LineChartWidgetState extends State<LineChartWidget> {
-//   late bool _showElectricity;
-//   late bool _showWater;
-//   late ZoomPanBehavior _zoomPanBehavior;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _showElectricity = widget.showElectricity;
-//     _showWater = widget.showWater;
-//     _zoomPanBehavior = ZoomPanBehavior(
-//       enablePanning: true,
-//       zoomMode: ZoomMode.x,
-//     );
-//
-//     // Debug: Log data counts
-//     debugPrint('Electricity Data Count: ${widget.electricityData.length}');
-//     debugPrint('Water Data Count: ${widget.waterData.length}');
-//   }
-//
-//   // Safe conversion method to handle potential NaN/Infinity issues
-//   double safeToDouble(dynamic value) {
-//     if (value == null) return 0.0;
-//     try {
-//       double result = value is double ? value : double.parse(value.toString());
-//       if (result.isNaN || !result.isFinite) return 0.0;
-//       return result;
-//     } catch (e) {
-//       return 0.0;
-//     }
-//   }
-//
-//   // Calculate maximum values for each series
-//   double calculateMaxPower(List<ElectricityData> data) {
-//     if (data.isEmpty) return 1000.0;
-//     double maxValue = data
-//         .map((d) => safeToDouble(d.power))
-//         .reduce((a, b) => a > b ? a : b);
-//     double result = maxValue > 0 ? maxValue * 1.1 : 1000.0;
-//     debugPrint('Max Power: $result');
-//     return result;
-//   }
-//
-//   double calculateMaxFlow(List<WaterData> data) {
-//     if (data.isEmpty) return 1000.0;
-//     double maxValue = data
-//         .map((d) => safeToDouble(d.instantFlow))
-//         .reduce((a, b) => a > b ? a : b);
-//     double result = maxValue > 0 ? maxValue * 1.1 : 1000.0;
-//     debugPrint('Max Flow: $result');
-//     return result;
-//   }
-//
-//   // Determine interval based on data length
-//   double determineInterval(int dataLength) {
-//     double interval;
-//     if (dataLength > 1220) {
-//       interval = 1220.0;
-//     } else if (dataLength > 1050) {
-//       interval = 1050.0;
-//     } else if (dataLength > 860) {
-//       interval = 860.0;
-//     } else {
-//       interval = 740.0;
-//     }
-//     debugPrint('Interval: $interval');
-//     return interval;
-//   }
-//
-//   DateTime _parseDateTime(DateTime? timedate) {
-//     if (timedate == null) {
-//       debugPrint('Null timedate, using fallback');
-//       return DateTime.now();
-//     }
-//     try {
-//       // Removed 6-hour subtraction; add back if needed
-//       return timedate.toLocal();
-//     } catch (e) {
-//       debugPrint('Error parsing timedate: $e');
-//       return DateTime.now();
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     Size size = MediaQuery.of(context).size;
-//     List<ElectricityData> electricityChartData = widget.electricityData;
-//     List<WaterData> waterChartData = widget.waterData;
-//
-//     // Find min and max dates for x-axis
-//     DateTime? minDate, maxDate;
-//     List<DateTime> allDates = [
-//       ...electricityChartData
-//           .map((d) => d.timedate)
-//           .where((d) => d != null)
-//           .cast<DateTime>(),
-//       ...waterChartData
-//           .map((d) => d.timedate)
-//           .where((d) => d != null)
-//           .cast<DateTime>(),
-//     ];
-//
-//     if (allDates.isNotEmpty) {
-//       minDate = allDates.reduce((a, b) => a.isBefore(b) ? a : b);
-//       maxDate = allDates.reduce((a, b) => a.isAfter(b) ? a : b);
-//       debugPrint('Min Date: $minDate, Max Date: $maxDate');
-//     } else {
-//       debugPrint('No valid dates found');
-//     }
-//
-//     // Check if there's data to display
-//     if (electricityChartData.isEmpty && waterChartData.isEmpty) {
-//       return const Padding(
-//         padding: EdgeInsets.all(16.0),
-//         child: Text(
-//           'No data available to display',
-//           style: TextStyle(fontSize: 16, color: Colors.grey),
-//         ),
-//       );
-//     }
-//
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-//       child: Card(
-//         color: AppColors.whiteTextColor,
-//         elevation: 4,
-//         child: Column(
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: Wrap(
-//                 spacing: 8.0,
-//                 runSpacing: 8.0,
-//                 children: [
-//                   FilterChip(
-//                     label: const Text('Electricity', style: TextStyle(fontSize: 12)),
-//                     selected: _showElectricity,
-//                     onSelected: (selected) {
-//                       setState(() {
-//                         _showElectricity = selected;
-//                       });
-//                     },
-//                     selectedColor: Colors.blue.withOpacity(0.3),
-//                     checkmarkColor: Colors.blue,
-//                   ),
-//                   FilterChip(
-//                     label: const Text('Water', style: TextStyle(fontSize: 12)),
-//                     selected: _showWater,
-//                     onSelected: (selected) {
-//                       setState(() {
-//                         _showWater = selected;
-//                       });
-//                     },
-//                     selectedColor: Colors.green.withOpacity(0.3),
-//                     checkmarkColor: Colors.green,
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-//               child: SizedBox(
-//                 height: size.width > 500 ? size.height * 0.48 : size.height * 0.38,
-//                 width: size.width - 16,
-//                 child: SfCartesianChart(
-//                   plotAreaBorderWidth: 0,
-//                   zoomPanBehavior: _zoomPanBehavior,
-//                   trackballBehavior: TrackballBehavior(
-//                     enable: true,
-//                     tooltipAlignment: ChartAlignment.near,
-//                     tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-//                     activationMode: ActivationMode.longPress,
-//                   ),
-//                   legend: const Legend(
-//                     isVisible: false,
-//                     position: LegendPosition.top,
-//                     overflowMode: LegendItemOverflowMode.wrap,
-//                   ),
-//                   primaryXAxis: DateTimeAxis(
-//                     dateFormat: DateFormat('dd-MMM-yyyy HH:mm'),
-//                     majorGridLines: const MajorGridLines(width: 0),
-//                     labelStyle: TextStyle(
-//                       color: Colors.grey.shade500,
-//                       fontWeight: FontWeight.bold,
-//                     ),
-//                     intervalType: DateTimeIntervalType.hours, // Simplified interval
-//                     minimum: minDate,
-//                     maximum: maxDate,
-//                     // Removed initialVisibleMinimum/maximum for debugging
-//                     axisLabelFormatter: (AxisLabelRenderDetails args) {
-//                       final String text = DateFormat('dd/MMM HH:mm').format(
-//                         DateTime.fromMillisecondsSinceEpoch(args.value.toInt()),
-//                       );
-//                       return ChartAxisLabel(text, args.textStyle);
-//                     },
-//                   ),
-//                   primaryYAxis: NumericAxis(
-//                     name: 'PowerAxis',
-//                     minimum: 0,
-//                     maximum: electricityChartData.isNotEmpty
-//                         ? calculateMaxPower(electricityChartData)
-//                         : 1000,
-//                     majorGridLines: const MajorGridLines(width: 1),
-//                     numberFormat: NumberFormat.compact(),
-//                     labelFormat: '{value}',
-//                     labelStyle: const TextStyle(color: Colors.blue),
-//                     isVisible: _showElectricity && electricityChartData.isNotEmpty,
-//                     axisLabelFormatter: (AxisLabelRenderDetails args) {
-//                       double value = safeToDouble(args.text);
-//                       String formattedText = value >= 1000
-//                           ? '${(value / 1000).toStringAsFixed(1)}k'
-//                           : value.toStringAsFixed(1);
-//                       return ChartAxisLabel(formattedText, args.textStyle);
-//                     },
-//                   ),
-//                   axes: [
-//                     NumericAxis(
-//                       name: 'FlowAxis',
-//                       opposedPosition: true,
-//                       minimum: 0,
-//                       maximum: waterChartData.isNotEmpty
-//                           ? calculateMaxFlow(waterChartData)
-//                           : 1000,
-//                       labelStyle: const TextStyle(color: Colors.green),
-//                       isVisible: _showWater && waterChartData.isNotEmpty,
-//                       axisLabelFormatter: (AxisLabelRenderDetails args) {
-//                         double value = safeToDouble(args.text);
-//                         String formattedText = value >= 1000
-//                             ? '${(value / 1000).toStringAsFixed(1)}k'
-//                             : value.toStringAsFixed(1);
-//                         return ChartAxisLabel(formattedText, args.textStyle);
-//                       },
-//                     ),
-//                   ],
-//                   series: <CartesianSeries<dynamic, DateTime>>[
-//                     if (_showElectricity && electricityChartData.isNotEmpty)
-//                       FastLineSeries<ElectricityData, DateTime>(
-//                         name: 'Power (kW)',
-//                         dataSource: electricityChartData,
-//                         xValueMapper: (ElectricityData data, _) =>
-//                             _parseDateTime(data.timedate),
-//                         yValueMapper: (ElectricityData data, _) =>
-//                             safeToDouble(data.power),
-//                         yAxisName: 'PowerAxis',
-//                         color: Colors.blue,
-//                         dataLabelSettings: const DataLabelSettings(
-//                           isVisible: false, // Enable for debugging if needed
-//                         ),
-//                       ),
-//                     if (_showWater && waterChartData.isNotEmpty)
-//                       FastLineSeries<WaterData, DateTime>(
-//                         name: 'Flow (L/min)',
-//                         dataSource: waterChartData,
-//                         xValueMapper: (WaterData data, _) => _parseDateTime(data.timedate),
-//                         yValueMapper: (WaterData data, _) =>
-//                             safeToDouble(data.instantFlow),
-//                         yAxisName: 'FlowAxis',
-//                         color: Colors.green,
-//                         dataLabelSettings: const DataLabelSettings(
-//                           isVisible: false, // Enable for debugging if needed
-//                         ),
-//                       ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.only(bottom: 20.0, top: 20),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   if (_showElectricity && electricityChartData.isNotEmpty)
-//                     Transform.rotate(
-//                       angle: 90 * 3.14159 / 180,
-//                       child: Container(
-//                         transform: _showWater
-//                             ? Matrix4.translationValues(-45, -30, 0)
-//                             : Matrix4.translationValues(-45, -32, 0),
-//                         child: const Text(
-//                           'Power (kW)',
-//                           style: TextStyle(
-//                             color: Colors.blue,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                   const Spacer(),
-//                   if (_showWater && waterChartData.isNotEmpty)
-//                     Transform.rotate(
-//                       angle: 90 * 3.14159 / 180,
-//                       child: Container(
-//                         transform: Matrix4.translationValues(-25, 22, 0),
-//                         child: const Text(
-//                           'Flow (L/min)',
-//                           style: TextStyle(
-//                             color: Colors.green,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ),
-//                     ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }*/
-//
-//
 // class LineChartWidget extends StatefulWidget {
 //   final List<ElectricityData> electricityData;
 //   final List<WaterData> waterData;
@@ -1138,17 +745,17 @@
 //       return DateTime.now();
 //     }
 //   }
-//     double determineInterval(int dataLength) {
-//       if (dataLength > 720) {
-//         return 720.0;
-//       } else if (dataLength > 450) {
-//         return 450.0;
-//       } else if (dataLength > 360) {
-//         return 360.0;
-//       } else {
-//         return 240.0;
-//       }
+//   double determineInterval(int dataLength) {
+//     if (dataLength > 720) {
+//       return 720.0;
+//     } else if (dataLength > 450) {
+//       return 450.0;
+//     } else if (dataLength > 360) {
+//       return 360.0;
+//     } else {
+//       return 240.0;
 //     }
+//   }
 //
 //
 //
@@ -1235,17 +842,15 @@
 //               child: SizedBox(
 //                 height: size.width > 500 ? size.height * 0.48 : size.height * 0.38,
 //                 width: size.width - 16,
-//                 child: SfCartesianChart(
+//                 child:
+//
+//                 SfCartesianChart(
 //                   plotAreaBorderWidth: 0,
 //                   zoomPanBehavior: _zoomPanBehavior,
 //                   trackballBehavior: TrackballBehavior(
 //                     enable: true,
-//                     tooltipAlignment: ChartAlignment.near,
 //                     tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
 //                     activationMode: ActivationMode.longPress,
-//                     tooltipSettings: const InteractiveTooltip(
-//                       format: 'point.x : point.y',
-//                     ),
 //                   ),
 //                   legend: const Legend(
 //                     isVisible: false,
@@ -1260,7 +865,7 @@
 //                       fontWeight: FontWeight.bold,
 //                     ),
 //                     intervalType: DateTimeIntervalType.days,
-//                      interval: 1,
+//                     interval: 1,
 //                     minimum: minDate,
 //                     maximum: maxDate,
 //                     initialZoomFactor: 0.5, // Show 50% of the data range initially
@@ -1293,6 +898,7 @@
 //                   axes: [
 //                     NumericAxis(
 //                       name: 'FlowAxis',
+//
 //                       opposedPosition: true,
 //                       minimum: 0,
 //                       maximum: waterChartData.isNotEmpty
@@ -1311,13 +917,14 @@
 //                   ],
 //                   series: <CartesianSeries<dynamic, DateTime>>[
 //                     if (_showElectricity && electricityChartData.isNotEmpty)
-//                       FastLineSeries<ElectricityData, DateTime>(
+//                       SplineSeries<ElectricityData, DateTime>(
 //                         name: 'Power (kW)',
+//
 //                         dataSource: electricityChartData,
 //                         xValueMapper: (ElectricityData data, _) =>
 //                             _parseDateTime(data.timedate),
 //                         yValueMapper: (ElectricityData data, _) =>
-//                         safeToDouble(data.power) / 1000, // Convert to kW if in watts
+//                             safeToDouble(data.power) , // Convert to kW if in watts
 //                         yAxisName: 'PowerAxis',
 //                         color: Colors.blue,
 //                         width: 2.0, // Make the line slightly thicker for visibility
@@ -1326,8 +933,8 @@
 //                         ),
 //                       ),
 //                     if (_showWater && waterChartData.isNotEmpty)
-//                       FastLineSeries<WaterData, DateTime>(
-//                         name: 'Flow (m³/h)',
+//                       SplineSeries<WaterData, DateTime>(
+//                         name: 'Water Flow (m³/h)',
 //                         dataSource: waterChartData,
 //                         xValueMapper: (WaterData data, _) =>
 //                             _parseDateTime(data.timedate),
@@ -1424,7 +1031,7 @@
 //             return ChartAxisLabel('${value}k', details.textStyle);
 //           },
 //         ),
-//         legend: Legend(isVisible: false, position: LegendPosition.top),
+//         legend: Legend(isVisible: true, position: LegendPosition.top),
 //         series: <CartesianSeries<dynamic, dynamic>>[
 //           if (showElectricity)
 //             ColumnSeries<ElectricityData, String>(
@@ -1439,7 +1046,7 @@
 //               dataSource: waterData,
 //               xValueMapper: (WaterData data, _) => data.date!,
 //               yValueMapper: (WaterData data, _) => data.volume,
-//               name: 'Volume (m³)',
+//               name: 'Water Volume (m³)',
 //               color: Colors.green,
 //             ),
 //         ],
@@ -1465,51 +1072,49 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return SizedBox(
-//       height: 400,
-//       child: SfCartesianChart(
-//         primaryXAxis: CategoryAxis(),
-//         primaryYAxis: NumericAxis(
-//           labelFormat: '{value}k',
-//           numberFormat: NumberFormat.decimalPattern()..maximumFractionDigits = 0,
-//           axisLabelFormatter: (AxisLabelRenderDetails details) {
-//             int value = (details.value / 1000).toInt();
-//             return ChartAxisLabel('${value}k', details.textStyle);
-//           },
-//         ),
-//         legend: Legend(isVisible: false, position: LegendPosition.top),
-//         tooltipBehavior: TooltipBehavior(enable: true),
-//         trackballBehavior: TrackballBehavior(
-//           enable: true,
-//           tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
-//           activationMode: ActivationMode.longPress,
-//         ),
-//         series: <CartesianSeries<dynamic, dynamic>>[
-//           if (showElectricity)
-//             ColumnSeries<ElectricityData, String>(
-//               dataSource: electricityData,
-//               xValueMapper: (ElectricityData data, _) => data.date!,
-//               yValueMapper: (ElectricityData data, _) => data.energy,
-//               name: 'Energy (kWh)',
-//               color: Colors.blue,
+//         height: 400,
+//         child: SfCartesianChart(
+//             primaryXAxis: CategoryAxis(),
+//             primaryYAxis: NumericAxis(
+//               labelFormat: '{value}k',
+//               numberFormat: NumberFormat.decimalPattern()..maximumFractionDigits = 0,
+//               axisLabelFormatter: (AxisLabelRenderDetails details) {
+//                 int value = (details.value / 1000).toInt();
+//                 return ChartAxisLabel('${value}k', details.textStyle);
+//               },
 //             ),
-//           if (showWater)
-//             ColumnSeries<WaterData, String>(
-//               dataSource: waterData,
-//               xValueMapper: (WaterData data, _) => data.date!,
-//               yValueMapper: (WaterData data, _) => data.volume,
-//               name: 'Volume (m³)',
-//               color: Colors.green,
+//             legend: Legend(isVisible: true, position: LegendPosition.top),
+//             tooltipBehavior: TooltipBehavior(enable: true),
+//             trackballBehavior: TrackballBehavior(
+//               enable: true,
+//               tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,
+//               activationMode: ActivationMode.longPress,
 //             ),
-//         ],
-//       ),
+//             series: <CartesianSeries<dynamic, dynamic>>[
+//               if (showElectricity)
+//                 ColumnSeries<ElectricityData, String>(
+//                   dataSource: electricityData,
+//                   xValueMapper: (ElectricityData data, _) => data.date!,
+//                   yValueMapper: (ElectricityData data, _) => data.energy,
+//                   name: 'Energy (kWh)',
+//                   color: Colors.blue,
+//                 ),
+//               if (showWater)
+//                 ColumnSeries<WaterData, String>(
+//                   dataSource: waterData,
+//                   xValueMapper: (WaterData data, _) => data.date!,
+//                   yValueMapper: (WaterData data, _) => data.volume,
+//                   name: 'Water Volume (m³)',
+//                   color: Colors.green,
+//                 ),
+//             ],
+//         ),
 //     );
 //   }
 // }
 
 
-
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
@@ -1905,7 +1510,8 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                     borderRadius: BorderRadius.circular(16),
                     color: Colors.white,
                   ),
-                  child: SfDataGridTheme(
+                  child:
+                  SfDataGridTheme(
                     data: SfDataGridThemeData(
                       headerColor: AppColors.secondaryTextColor,
                     ),
@@ -1914,29 +1520,28 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                       columnWidthMode: size.width > 500 ? ColumnWidthMode.fill : ColumnWidthMode.fitByCellValue,
                       gridLinesVisibility: GridLinesVisibility.both,
                       headerGridLinesVisibility: GridLinesVisibility.both,
-                      headerRowHeight:47,
+                      headerRowHeight: 47,
                       rowHeight: 35,
                       stackedHeaderRows: [
                         StackedHeaderRow(cells: [
-                          // StackedHeaderCell(
-                          //   columnNames: ['date'],
-                          //   child: Container(
-                          //     alignment: Alignment.center,
-                          //     child: const Text('Date'),
-                          //   ),
-                          // ),
                           StackedHeaderCell(
                             columnNames: ['electricity_energy', 'electricity_cost'],
                             child: Container(
                               alignment: Alignment.center,
-                              child:  Text('Electricity',style: TextStyle(color: AppColors.whiteTextColor),),
+                              child: const Text(
+                                'Electricity',
+                                style: TextStyle(color: AppColors.whiteTextColor),
+                              ),
                             ),
                           ),
                           StackedHeaderCell(
                             columnNames: ['water_volume', 'water_cost'],
                             child: Container(
                               alignment: Alignment.center,
-                              child: const Text('Water',style: TextStyle(color: AppColors.whiteTextColor),),
+                              child: const Text(
+                                'Water',
+                                style: TextStyle(color: AppColors.whiteTextColor),
+                              ),
                             ),
                           ),
                         ]),
@@ -1946,35 +1551,50 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
                           columnName: 'date',
                           label: Container(
                             alignment: Alignment.center,
-                            child: const Text('Date',style: TextStyle(color: AppColors.whiteTextColor),),
+                            child: const Text(
+                              'Date',
+                              style: TextStyle(color: AppColors.whiteTextColor),
+                            ),
                           ),
                         ),
                         GridColumn(
                           columnName: 'electricity_energy',
                           label: Container(
                             alignment: Alignment.center,
-                            child: const Text('Energy (kWh)',style: TextStyle(color: AppColors.whiteTextColor),),
+                            child: const Text(
+                              'Energy',
+                              style: TextStyle(color: AppColors.whiteTextColor),
+                            ),
                           ),
                         ),
                         GridColumn(
                           columnName: 'electricity_cost',
                           label: Container(
                             alignment: Alignment.center,
-                            child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
+                            child: const Text(
+                              'Cost/Unit Cost',
+                              style: TextStyle(color: AppColors.whiteTextColor),
+                            ),
                           ),
                         ),
                         GridColumn(
                           columnName: 'water_volume',
                           label: Container(
                             alignment: Alignment.center,
-                            child: const Text('Volume (m³)',style: TextStyle(color: AppColors.whiteTextColor),),
+                            child: const Text(
+                              'Volume',
+                              style: TextStyle(color: AppColors.whiteTextColor),
+                            ),
                           ),
                         ),
                         GridColumn(
                           columnName: 'water_cost',
                           label: Container(
                             alignment: Alignment.center,
-                            child: const Text('Cost (৳)',style: TextStyle(color: AppColors.whiteTextColor),),
+                            child: const Text(
+                              'Cost /Unit Cost',
+                              style: TextStyle(color: AppColors.whiteTextColor),
+                            ),
                           ),
                         ),
                       ],
@@ -2075,8 +1695,16 @@ class MachineDataGridSource extends DataGridSource {
     // Create data grid rows
     _formattedData = pivotedData.entries.map((entry) {
       final date = entry.key;
-      final electricData = entry.value['electric'] ?? {'energy': '0.00', 'cost': '0.00'};
-      final waterData = entry.value['water'] ?? {'energy': '0.00', 'cost': '0.00'};
+      final electricData = entry.value['electric'] ?? {
+        'energy': '0.00',
+        'cost': '0.00',
+        'unit_cost': '0.00'
+      };
+      final waterData = entry.value['water'] ?? {
+        'energy': '0.00',
+        'cost': '0.00',
+        'unit_cost': '0.00'
+      };
       return DataGridRow(cells: [
         DataGridCell<String>(columnName: 'date', value: date),
         DataGridCell<String>(
@@ -2085,7 +1713,7 @@ class MachineDataGridSource extends DataGridSource {
         ),
         DataGridCell<String>(
           columnName: 'electricity_cost',
-          value: '৳${electricData['cost']}',
+          value: '৳${electricData['cost']} /${electricData['unit_cost']}',
         ),
         DataGridCell<String>(
           columnName: 'water_volume',
@@ -2093,24 +1721,30 @@ class MachineDataGridSource extends DataGridSource {
         ),
         DataGridCell<String>(
           columnName: 'water_cost',
-          value: '৳${waterData['cost']}',
+          value: '৳${waterData['cost']} /${waterData['unit_cost']}',
         ),
       ]);
     }).toList();
 
-    // Add total row (assuming totals are available in tableData or from API)
+    // Add total row
     double totalElectricEnergy = data
         .where((item) => item.type == 'electric')
         .fold(0.0, (sum, item) => sum + item.totalEnergy);
     double totalElectricCost = data
         .where((item) => item.type == 'electric')
         .fold(0.0, (sum, item) => sum + item.totalCost);
+    double totalElectricUnitCost = totalElectricEnergy > 0
+        ? totalElectricCost / totalElectricEnergy
+        : 0.0;
     double totalWaterVolume = data
         .where((item) => item.type == 'water')
         .fold(0.0, (sum, item) => sum + item.totalEnergy);
     double totalWaterCost = data
         .where((item) => item.type == 'water')
         .fold(0.0, (sum, item) => sum + item.totalCost);
+    double totalWaterUnitCost = totalWaterVolume > 0
+        ? totalWaterCost / totalWaterVolume
+        : 0.0;
 
     _formattedData.add(DataGridRow(cells: [
       const DataGridCell<String>(columnName: 'date', value: 'Total'),
@@ -2120,7 +1754,7 @@ class MachineDataGridSource extends DataGridSource {
       ),
       DataGridCell<String>(
         columnName: 'electricity_cost',
-        value: '৳${totalElectricCost.toStringAsFixed(2)}',
+        value: '৳${totalElectricCost.toStringAsFixed(2)} / ৳${totalElectricUnitCost.toStringAsFixed(2)}',
       ),
       DataGridCell<String>(
         columnName: 'water_volume',
@@ -2128,7 +1762,7 @@ class MachineDataGridSource extends DataGridSource {
       ),
       DataGridCell<String>(
         columnName: 'water_cost',
-        value: '৳${totalWaterCost.toStringAsFixed(2)}',
+        value: '৳${totalWaterCost.toStringAsFixed(2)} / ৳${totalWaterUnitCost.toStringAsFixed(2)}',
       ),
     ]));
   }
@@ -2167,7 +1801,6 @@ class MachineDataGridSource extends DataGridSource {
     );
   }
 }
-
 class LineChartWidget extends StatefulWidget {
   final List<ElectricityData> electricityData;
   final List<WaterData> waterData;
@@ -2330,8 +1963,8 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                         _showElectricity = selected;
                       });
                     },
-                    selectedColor: Colors.blue.withOpacity(0.3),
-                    checkmarkColor: Colors.blue,
+                    selectedColor: Colors.orange.withOpacity(0.3),
+                    checkmarkColor: Colors.orange,
                   ),
                   FilterChip(
                     label: const Text('Water', style: TextStyle(fontSize: 12)),
@@ -2342,7 +1975,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                       });
                     },
                     selectedColor: Colors.green.withOpacity(0.3),
-                    checkmarkColor: Colors.green,
+                    checkmarkColor: Colors.blue,
                   ),
                 ],
               ),
@@ -2414,7 +2047,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                       maximum: waterChartData.isNotEmpty
                           ? calculateMaxFlow(waterChartData)
                           : 10,
-                      labelStyle: const TextStyle(color: Colors.green),
+                      labelStyle: const TextStyle(color: Colors.blue),
                       isVisible: _showWater && waterChartData.isNotEmpty,
                       axisLabelFormatter: (AxisLabelRenderDetails args) {
                         double value = safeToDouble(args.value);
@@ -2436,7 +2069,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                         yValueMapper: (ElectricityData data, _) =>
                             safeToDouble(data.power) , // Convert to kW if in watts
                         yAxisName: 'PowerAxis',
-                        color: Colors.blue,
+                        color: Colors.orange,
                         width: 2.0, // Make the line slightly thicker for visibility
                         dataLabelSettings: const DataLabelSettings(
                           isVisible: false, // Data labels disabled
@@ -2451,7 +2084,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                         yValueMapper: (WaterData data, _) =>
                             safeToDouble(data.instantFlow),
                         yAxisName: 'FlowAxis',
-                        color: Colors.green,
+                        color: Colors.blue,
                         width: 2.0, // Make the line slightly thicker for visibility
                         dataLabelSettings: const DataLabelSettings(
                           isVisible: false, // Data labels disabled
@@ -2474,7 +2107,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                         child: const Text(
                           'Electricity',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.orange,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -2489,7 +2122,7 @@ class _LineChartWidgetState extends State<LineChartWidget> {
                         child: const Text(
                           'Water',
                           style: TextStyle(
-                            color: Colors.green,
+                            color: Colors.blue,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -2549,7 +2182,7 @@ class MonthlyBarChartWidget extends StatelessWidget {
               xValueMapper: (ElectricityData data, _) => data.date!,
               yValueMapper: (ElectricityData data, _) => data.energy,
               name: 'Energy (kWh)',
-              color: Colors.blue,
+              color: Colors.orange,
             ),
           if (showWater)
             ColumnSeries<WaterData, String>(
@@ -2557,7 +2190,7 @@ class MonthlyBarChartWidget extends StatelessWidget {
               xValueMapper: (WaterData data, _) => data.date!,
               yValueMapper: (WaterData data, _) => data.volume,
               name: 'Water Volume (m³)',
-              color: Colors.green,
+              color: Colors.blue,
             ),
         ],
       ),
@@ -2607,7 +2240,7 @@ class YearlyBarChartWidget extends StatelessWidget {
                   xValueMapper: (ElectricityData data, _) => data.date!,
                   yValueMapper: (ElectricityData data, _) => data.energy,
                   name: 'Energy (kWh)',
-                  color: Colors.blue,
+                  color: Colors.orange,
                 ),
               if (showWater)
                 ColumnSeries<WaterData, String>(
@@ -2615,10 +2248,10 @@ class YearlyBarChartWidget extends StatelessWidget {
                   xValueMapper: (WaterData data, _) => data.date!,
                   yValueMapper: (WaterData data, _) => data.volume,
                   name: 'Water Volume (m³)',
-                  color: Colors.green,
+                  color: Colors.blue,
                 ),
             ],
-        ),
-    );
-  }
+            ),
+        );
+    }
 }

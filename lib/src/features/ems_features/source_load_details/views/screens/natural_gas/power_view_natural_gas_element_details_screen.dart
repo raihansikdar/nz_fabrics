@@ -224,7 +224,8 @@ class _PowerViewNaturalGasElementDetailsScreenState extends State<PowerViewNatur
                                     }
                                     return SizedBox(
                                         height: size.height * .28,
-                                        child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', naturalGasDailyDataList: naturalGasDailyDataController.dailyDataList, screenName: 'naturalGasScreen',));
+                                       // child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', /*naturalGasDailyDataList: naturalGasDailyDataController.dailyDataList, screenName: 'naturalGasScreen',*/)
+                                        );
                                   }
                               ),
                               SizedBox(height: size.height * k20TextSize),
