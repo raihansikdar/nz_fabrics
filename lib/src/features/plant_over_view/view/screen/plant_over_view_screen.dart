@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:lottie/lottie.dart';
@@ -39,7 +40,10 @@ class _PlantOverViewScreenState extends State<PlantOverViewScreen> {
       body: GetBuilder<PlantLayoutController>(
         builder: (layoutController) {
           if( layoutController.isLayoutListInProgress || layoutController.isLayoutSummaryListInProgress){
-            return Center(child: Lottie.asset(AssetsPath.loadingJson, height: size.height * 0.12));
+            return Center(child: Center(child: SpinKitFadingCircle(
+              color: AppColors.primaryColor,
+              size: 50.0,
+            ),));
 
           } else if(layoutController.layoutSummaryDetailsList.isEmpty){
             return EmptyPageWidget(size: size);
