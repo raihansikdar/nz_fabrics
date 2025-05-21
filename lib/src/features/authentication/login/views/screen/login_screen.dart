@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 SizedBox(height: size.height * 0.06,),
                 SizedBox(height: size.height * k16TextSize,),
-                Text("NZ UMS",style: GoogleFonts.kadwa(color:AppColors.primaryColor,fontSize: size.height * 0.028,fontWeight: FontWeight.w700 )),
+                Text("NZ Fabrics",style: GoogleFonts.kadwa(color:AppColors.primaryColor,fontSize: size.height * 0.028,fontWeight: FontWeight.w700 )),
                 SizedBox(height: size.height * k8TextSize,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
