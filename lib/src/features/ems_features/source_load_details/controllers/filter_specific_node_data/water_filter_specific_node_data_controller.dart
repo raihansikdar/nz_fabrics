@@ -273,7 +273,7 @@ class WaterFilterSpecificNodeDataController extends GetxController with Internet
           final rowIndex = i + 2; // Start from row 2 (after header)
           final data = nodeTableData[i];
           sheet.getRangeByIndex(rowIndex, 1).setText(data.date?.toString() ?? 'N/A');
-          sheet.getRangeByIndex(rowIndex, 2).setText(data.volume?.toString() ?? 'N/A');
+          sheet.getRangeByIndex(rowIndex, 2).setText(data.energyMod?.toString() ?? 'N/A');
           sheet.getRangeByIndex(rowIndex, 3).setNumber(data.cost?.toDouble() ?? 0);
 
         }

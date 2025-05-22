@@ -273,7 +273,7 @@ class FilterSpecificNodeDataController extends GetxController with InternetConne
           final rowIndex = i + 2; // Start from row 2 (after header)
           final data = nodeTableData[i];
           sheet.getRangeByIndex(rowIndex, 1).setText(data.date?.toString() ?? 'N/A');
-          sheet.getRangeByIndex(rowIndex, 2).setText(data.volume?.toString() ?? 'N/A');
+          sheet.getRangeByIndex(rowIndex, 2).setText(data.energy?.toString() ?? 'N/A');
           sheet.getRangeByIndex(rowIndex, 3).setNumber(data.cost?.toDouble() ?? 0);
 
         }
@@ -412,12 +412,6 @@ class FilterSpecificNodeDataController extends GetxController with InternetConne
     update();
   }
 
-
-
-
-
-
-
   int selectedButton = 1;
   void updateSelectedButton({required int value}) {
     selectedButton = value;
@@ -425,20 +419,6 @@ class FilterSpecificNodeDataController extends GetxController with InternetConne
     update();
   }
 
-
-  // void findMinMaxCostDates() {
-  //   if (_monthlyBarChartDataList.isEmpty) {
-  //     log("No data available.");
-  //     return;
-  //   }
-  //
-  //   // Find min and max cost entries
-  //   MonthlyBarChartData minCostData = _monthlyBarChartDataList.reduce((a, b) => a.cost < b.cost ? a : b);
-  //   MonthlyBarChartData maxCostData = _monthlyBarChartDataList.reduce((a, b) => a.cost > b.cost ? a : b);
-  //
-  //   log("Minimum cost date: ${minCostData.date}, Cost: ${minCostData.cost}");
-  //   log("Maximum cost date: ${maxCostData.date}, Cost: ${maxCostData.cost}");
-  // }
 
 
 }

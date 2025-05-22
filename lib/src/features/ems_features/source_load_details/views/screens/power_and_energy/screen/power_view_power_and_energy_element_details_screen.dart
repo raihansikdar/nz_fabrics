@@ -306,18 +306,29 @@ class _PowerViewPowerAndEnergyElementDetailsScreenState extends State<PowerViewP
                                      else if(dailyDataController.hasError){
                                        return Lottie.asset(AssetsPath.errorJson, height: size.height * 0.25);
                                      }
-        
-        
-                                    return GetBuilder<FilterSpecificNodeDataController>(
+
+
+                                     return GetBuilder<FilterSpecificNodeDataController>(
                                          builder: (controller) {
                                            return SizedBox(
-                                               height: size.height * .35,
-                                               child: controller.selectedButton == 2 ?
-                                               FilterSpecificChartWidget(size,controller.graphType,controller.lineChartDataList,controller.monthlyBarChartDataList,controller.yearlyBarChartDataList,controller.dateDifference)
-                                                   :  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', dailyDataList: dailyDataController.dailyDataList, /*screenName: 'powerAndEnergy', machineMaxPowerModel: plotLineController.plotMachineMaxPower,*/)
+                                             height: size.height * .35,
+                                             child: controller.selectedButton == 2
+                                                 ? FilterSpecificChartWidget(
+                                               size,
+                                               controller.graphType,
+                                               controller.lineChartDataList,
+                                               controller.monthlyBarChartDataList,
+                                               controller.yearlyBarChartDataList,
+                                               controller.dateDifference,
+                                             )
+                                                 : DailyLineChartWidget(
+                                               elementName: widget.elementName,
+                                               viewName: controller.graphType, // 👈 Fix is here
+                                               dailyDataList: dailyDataController.dailyDataList,
+                                             ),
                                            );
-                                         }
-                                     );
+                                         },
+                                         );
                                      // return SizedBox(
                                      //    height: size.height * .28,
                                      //    child:  DailyLineChartWidget(elementName: widget.elementName,viewName: 'powerView', dailyDataList: dailyDataController.dailyDataList, screenName: 'powerAndEnergy',));
