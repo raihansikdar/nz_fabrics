@@ -241,12 +241,6 @@ class _UtilityDataScreenState extends State<UtilityDataScreen> {
 
 
 
-  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
-    enablePinching: true,
-    enablePanning: true,
-    zoomMode: ZoomMode.x,
-    enableDoubleTapZooming: true,
-  );
 
   @override
   Widget build(BuildContext context) {
