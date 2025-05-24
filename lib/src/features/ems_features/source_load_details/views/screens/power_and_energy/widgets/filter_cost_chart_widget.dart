@@ -119,7 +119,12 @@ class FilterCostChartWidget extends StatelessWidget {
         return 240.0;
       }
     }
-
+    final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+        enablePinching: true,
+        enablePanning: true,
+        zoomMode: ZoomMode.x,
+        enableDoubleTapZooming:true,
+        );
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: graphType == 'Line-Chart'
@@ -143,7 +148,7 @@ class FilterCostChartWidget extends StatelessWidget {
           isVisible: false,
           position: LegendPosition.top,
         ),
-      //  tooltipBehavior: TooltipBehavior(enable: true),
+        zoomPanBehavior: _zoomPanBehavior,
         trackballBehavior: TrackballBehavior(
           enable: true,
           tooltipAlignment: ChartAlignment.near,
@@ -167,7 +172,7 @@ class FilterCostChartWidget extends StatelessWidget {
       )
           : graphType == 'Monthly-Bar-Chart'
           ? SfCartesianChart(
-      //  tooltipBehavior: TooltipBehavior(enable: true),
+        zoomPanBehavior: _zoomPanBehavior,
         trackballBehavior: TrackballBehavior(
           enable: true,
           tooltipAlignment: ChartAlignment.near,
@@ -204,7 +209,7 @@ class FilterCostChartWidget extends StatelessWidget {
         ],
       )
           : SfCartesianChart(
-       // tooltipBehavior: TooltipBehavior(enable: true),
+        zoomPanBehavior: _zoomPanBehavior,
         trackballBehavior: TrackballBehavior(
           enable: true,
           tooltipAlignment: ChartAlignment.near,

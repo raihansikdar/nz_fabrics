@@ -145,6 +145,14 @@ class WaterDailyLineChartWidget extends StatelessWidget {
     String valueLabel = viewName == 'powerView' ? 'Water Flow' : 'Cost';
     String unit = viewName == 'powerView' ? 'm³/h' : 'BDT';
 
+    final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+        enablePinching: true,
+        enablePanning: true,
+        zoomMode: ZoomMode.x,
+        enableDoubleTapZooming:true,
+        );
+
+
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         body: Container(
@@ -171,6 +179,7 @@ class WaterDailyLineChartWidget extends StatelessWidget {
                 labelFormat: '{value}',
 
               ),
+              zoomPanBehavior: _zoomPanBehavior,
               trackballBehavior: TrackballBehavior(
                 enable: true,
                 activationMode: ActivationMode.singleTap,

@@ -96,6 +96,14 @@ class _WaterMonthlyDetailsBarChartWidgetState extends State<WaterMonthlyDetailsB
     );
   }
 
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      zoomMode: ZoomMode.x,
+      enableDoubleTapZooming:true,
+      );
+
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -114,6 +122,7 @@ class _WaterMonthlyDetailsBarChartWidgetState extends State<WaterMonthlyDetailsB
         child: Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.height * k16TextSize),
           child: SfCartesianChart(
+            zoomPanBehavior: _zoomPanBehavior,
             trackballBehavior: _trackballBehavior,
             legend: _legend,
             primaryXAxis: _xAxis!,

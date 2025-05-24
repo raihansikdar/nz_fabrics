@@ -115,11 +115,24 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
   final FilterOverAllMonthlyBarChartDataModel barChartModel;
   final OverAllSourceDataController controller;
 
-  const OverAllMonthlyBarChartWidget({
+   OverAllMonthlyBarChartWidget({
     super.key,
     required this.barChartModel,
     required this.controller,
   });
+
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      zoomMode: ZoomMode.x,
+      enableDoubleTapZooming:true,
+      );
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -187,6 +200,7 @@ class OverAllMonthlyBarChartWidget extends StatelessWidget {
                     isVisible: true,
                     position: LegendPosition.top,
                   ),
+                  zoomPanBehavior: _zoomPanBehavior,
                   trackballBehavior: TrackballBehavior(
                     enable: true,
                     tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,

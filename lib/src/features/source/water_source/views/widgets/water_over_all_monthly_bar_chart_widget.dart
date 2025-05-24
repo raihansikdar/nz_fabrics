@@ -162,11 +162,19 @@ class WaterOverAllMonthlyBarChartWidget extends StatelessWidget {
   final FilterOverAllWaterMonthlyBarChartDataModel barChartModel;
   final OverAllWaterSourceDataController controller;
 
-  const WaterOverAllMonthlyBarChartWidget({
+   WaterOverAllMonthlyBarChartWidget({
     super.key,
     required this.barChartModel,
     required this.controller,
   });
+
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      zoomMode: ZoomMode.x,
+      enableDoubleTapZooming:true,
+      );
+
 
   @override
   Widget build(BuildContext context) {
@@ -233,6 +241,7 @@ class WaterOverAllMonthlyBarChartWidget extends StatelessWidget {
                     isVisible: true,
                     position: LegendPosition.top,
                   ),
+                  zoomPanBehavior: _zoomPanBehavior,
                   trackballBehavior: TrackballBehavior(
                     enable: true,
                     tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,

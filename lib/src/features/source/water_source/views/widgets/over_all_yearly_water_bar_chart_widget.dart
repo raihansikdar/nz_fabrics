@@ -113,11 +113,22 @@ class OverAllWaterYearlyBarChartWidget extends StatelessWidget {
   final FilterOverAllWaterYearlyBarChartDataModel barChartModel; // Changed to Yearly model
   final OverAllWaterSourceDataController controller;
 
-  const OverAllWaterYearlyBarChartWidget({
+   OverAllWaterYearlyBarChartWidget({
     super.key,
     required this.barChartModel,
     required this.controller,
   });
+
+
+
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+    enablePinching: true,
+    enablePanning: true,
+    zoomMode: ZoomMode.x,
+    enableDoubleTapZooming: true,
+  );
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -183,6 +194,7 @@ class OverAllWaterYearlyBarChartWidget extends StatelessWidget {
                     isVisible: true,
                     position: LegendPosition.top,
                   ),
+                  zoomPanBehavior: _zoomPanBehavior,
                   trackballBehavior: TrackballBehavior(
                     enable: true,
                     tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,

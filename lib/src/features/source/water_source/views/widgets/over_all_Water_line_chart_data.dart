@@ -152,7 +152,19 @@ import '../../model/filter_over_all_water_line_chart_model.dart'
 
 class OverAllLineWaterChartDataWidget extends StatelessWidget {
   final FilterOverAllLineChartModel lineChartModel;
-  const OverAllLineWaterChartDataWidget({super.key, required this.lineChartModel});
+   OverAllLineWaterChartDataWidget({super.key, required this.lineChartModel});
+
+
+
+
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      zoomMode: ZoomMode.x,
+      enableDoubleTapZooming:true,
+      );
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -181,6 +193,8 @@ class OverAllLineWaterChartDataWidget extends StatelessWidget {
     double chartWidth = (dataLength * pixelsPerDataPoint)
         .clamp(minWidth, maxWidth)
         .clamp(0, (screenWidth * 0.8).clamp(minWidth, maxWidth));
+
+
 
     return SizedBox(
       height: 400,
@@ -228,6 +242,7 @@ class OverAllLineWaterChartDataWidget extends StatelessWidget {
                     isVisible: true,
                     position: LegendPosition.top,
                   ),
+                  zoomPanBehavior: _zoomPanBehavior,
                   trackballBehavior: TrackballBehavior(
                     enable: true,
                     tooltipDisplayMode: TrackballDisplayMode.groupAllPoints,

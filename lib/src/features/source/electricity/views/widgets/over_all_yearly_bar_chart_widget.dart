@@ -7,7 +7,16 @@ import 'package:intl/intl.dart';
 class OverAllYearlyBarChartWidget extends StatelessWidget {
   final FilterOverAllYearlyBarChartDataModel barChartModel;
 
-  const OverAllYearlyBarChartWidget({super.key, required this.barChartModel});
+   OverAllYearlyBarChartWidget({super.key, required this.barChartModel});
+
+
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      zoomMode: ZoomMode.x,
+      enableDoubleTapZooming:true,
+      );
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +33,7 @@ class OverAllYearlyBarChartWidget extends StatelessWidget {
           overflowMode: LegendItemOverflowMode.wrap,
           position: LegendPosition.top,
         ),
+        zoomPanBehavior: _zoomPanBehavior,
         trackballBehavior: TrackballBehavior(
           enable: true,
           tooltipAlignment: ChartAlignment.near,

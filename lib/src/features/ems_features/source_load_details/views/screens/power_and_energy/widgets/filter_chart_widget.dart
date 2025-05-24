@@ -72,7 +72,12 @@ class FilterSpecificChartWidget extends StatelessWidget {
         return 240.0;
       }
     }
-
+    final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+        enablePinching: true,
+        enablePanning: true,
+        zoomMode: ZoomMode.x,
+        enableDoubleTapZooming: true,
+        );
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -101,6 +106,7 @@ class FilterSpecificChartWidget extends StatelessWidget {
               intervalType: DateTimeIntervalType.minutes,
               minorGridLines: const MinorGridLines(width: 0),
                       ),
+                zoomPanBehavior: _zoomPanBehavior,
                       trackballBehavior: TrackballBehavior(
               enable: true,
               tooltipAlignment: ChartAlignment.near,
@@ -130,6 +136,7 @@ class FilterSpecificChartWidget extends StatelessWidget {
             child: SizedBox(
              width: dateDifference > 15 ? 2400 : 1200,
               child: SfCartesianChart(
+                zoomPanBehavior: _zoomPanBehavior,
                       trackballBehavior: TrackballBehavior(
               enable: true,
               tooltipAlignment: ChartAlignment.near,
@@ -160,6 +167,7 @@ class FilterSpecificChartWidget extends StatelessWidget {
             ),
           )
           : SfCartesianChart(
+        zoomPanBehavior: _zoomPanBehavior,
         trackballBehavior: TrackballBehavior(
           enable: true,
           tooltipAlignment: ChartAlignment.near,

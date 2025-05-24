@@ -154,6 +154,7 @@ class YearlyBarChartWidget extends StatelessWidget {
             ],
           ) : SfCartesianChart(
             margin: const EdgeInsets.fromLTRB(10, 10, 10, 15),
+            zoomPanBehavior: _zoomPanBehavior,
             trackballBehavior: TrackballBehavior(
               enable: true,
               tooltipAlignment: ChartAlignment.near,

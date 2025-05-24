@@ -76,6 +76,12 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
       }
     }
 
+    final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+        enablePinching: true,
+        enablePanning: true,
+        zoomMode: ZoomMode.x,
+        enableDoubleTapZooming:true,
+        );
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
@@ -104,6 +110,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
               intervalType: DateTimeIntervalType.minutes,
               minorGridLines: const MinorGridLines(width: 0),
                       ),
+                zoomPanBehavior: _zoomPanBehavior,
                       trackballBehavior: TrackballBehavior(
               enable: true,
               tooltipAlignment: ChartAlignment.near,
@@ -133,6 +140,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
             child: SizedBox(
              width: dateDifference > 15 ? 2400 : 1200,
               child: SfCartesianChart(
+                zoomPanBehavior: _zoomPanBehavior,
                       trackballBehavior: TrackballBehavior(
               enable: true,
               tooltipAlignment: ChartAlignment.near,
@@ -163,6 +171,7 @@ class WaterFilterSpecificChartWidget extends StatelessWidget {
             ),
           )
           : SfCartesianChart(
+        zoomPanBehavior: _zoomPanBehavior,
         trackballBehavior: TrackballBehavior(
           enable: true,
           tooltipAlignment: ChartAlignment.near,
