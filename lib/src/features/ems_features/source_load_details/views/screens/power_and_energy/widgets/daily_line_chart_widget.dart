@@ -250,6 +250,13 @@ class DailyLineChartWidget extends StatelessWidget {
     String valueLabel = viewName == 'powerView' ? 'Cost' : 'Power';
     String unit = viewName == 'powerView' ? 'BDT' : 'kW';
 
+    final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+        enablePinching: true,
+        enablePanning: true,
+        zoomMode: ZoomMode.x,
+        enableDoubleTapZooming:true,
+        );
+
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
         body: Container(
@@ -276,6 +283,7 @@ class DailyLineChartWidget extends StatelessWidget {
                 labelFormat: '{value}',
 
               ),
+              zoomPanBehavior: _zoomPanBehavior,
               trackballBehavior: TrackballBehavior(
                 enable: true,
                 activationMode: ActivationMode.singleTap,

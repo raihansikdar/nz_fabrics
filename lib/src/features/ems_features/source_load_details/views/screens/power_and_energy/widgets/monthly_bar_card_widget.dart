@@ -364,7 +364,12 @@ class _MonthlyDetailsBarChartWidgetState extends State<MonthlyDetailsBarChartWid
       majorTickLines: MajorTickLines(size: widget.viewName == 'powerView' ? 4 : 0),
     );
   }
-
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+      enablePinching: true,
+      enablePanning: true,
+      zoomMode: ZoomMode.x,
+      enableDoubleTapZooming:true,
+  );
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -384,6 +389,7 @@ class _MonthlyDetailsBarChartWidgetState extends State<MonthlyDetailsBarChartWid
           padding: EdgeInsets.all(MediaQuery.of(context).size.height * k16TextSize),
           child: SfCartesianChart(
             trackballBehavior: _trackballBehavior,
+            zoomPanBehavior: _zoomPanBehavior,
             legend: _legend,
             primaryXAxis: _xAxis!,
             primaryYAxis: _yAxis,

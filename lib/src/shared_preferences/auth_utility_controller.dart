@@ -11,33 +11,8 @@ class AuthUtilityController{
   static String? get refreshToken => _refreshToken;
   static String? get userRole => _userRole;
 
-  static String? _userName;
-  static String? get userName => _userName;
-
-  /*----------------> Access Token <------------------*/
-  static Future<void> setUserName({required String email}) async {
-    // Save email to SharedPreferences
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('user_email', email);
-  }
-
-  static Future<String?> getUserName() {
-    // Retrieve email from SharedPreferences
-    return SharedPreferences.getInstance().then((prefs) => prefs.getString('user_email'));
-  }
-
-  static Future<void> clearUserName() async {
-    // Clear saved email
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('user_email');
-  }
-
-
-
-
-
-
   static Rxn<String> accessTokenForApiCall = Rxn<String>();
+
 
 /*----------------> Access Token <------------------*/
   static Future<void> setAccessToken({required String? token}) async {
@@ -110,11 +85,31 @@ class AuthUtilityController{
     debugPrint("====>Get User Role: $_userRole");
   }
 
-  static Future<void> clearInfo()async{
+  // static Future<void> clearInfo()async{
+  //   accessTokenForApiCall.value = null;
+  //   final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   sharedPreferences.clear();
+  // }
+
+
+  static Future<void> clearInfo() async {
     accessTokenForApiCall.value = null;
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.clear();
+
+    await sharedPreferences.remove('accessToken');
+    await sharedPreferences.remove('refreshToken');
+    await sharedPreferences.remove('userRole');
+
+    _accessToken = null;
+    _refreshToken = null;
+    _userRole = null;
+
+    debugPrint("====> Cleared Auth Info");
   }
+
+
+
+
   static bool get isLoggedIn{
     return _accessToken != null;
   }

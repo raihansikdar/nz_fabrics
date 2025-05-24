@@ -1,8 +1,10 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:nz_fabrics/src/features/authentication/login/controller/login_controller.dart';
 import 'package:nz_fabrics/src/features/authentication/login/views/screen/login_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/views/screen/ems_dashboard.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
+import 'package:nz_fabrics/src/shared_preferences/save_user_info_controller.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
 import 'package:nz_fabrics/src/utility/style/constant.dart';
@@ -31,6 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
     await AuthUtilityController.getAccessToken();
     await AuthUtilityController.getRefreshToken();
     await AuthUtilityController.getUserRole();
+    await SaveUserInfoController.getUserEmail();
+    debugPrint(Get.find<LoginController>().saveUser.toString());
     Future.delayed(const Duration(seconds: 6), () {
       Get.offAll(()=> AuthUtilityController.isLoggedIn ? const EmsDashboardScreen() :  LoginScreen(),transition: Transition.fadeIn,duration: const Duration(seconds: 1));
     });

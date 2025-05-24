@@ -8,6 +8,7 @@ import 'package:nz_fabrics/src/features/authentication/login/controller/login_co
 import 'package:nz_fabrics/src/features/authentication/register/views/screen/create_account_info_screen.dart';
 import 'package:nz_fabrics/src/features/ems_features/dashboard/dashboard/views/screen/ems_dashboard.dart';
 import 'package:nz_fabrics/src/shared_preferences/auth_utility_controller.dart';
+import 'package:nz_fabrics/src/shared_preferences/save_user_info_controller.dart';
 import 'package:nz_fabrics/src/utility/app_toast/app_toast.dart';
 import 'package:nz_fabrics/src/utility/assets_path/assets_path.dart';
 import 'package:nz_fabrics/src/utility/style/app_colors.dart';
@@ -28,10 +29,10 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
 
-    // // Initialize email field with saved email
-    // Get.find<LoginController>().email.isNotEmpty
-    //     ? _emailTEController.text = Get.find<LoginController>().email
-    //     : null;
+    final loginController = Get.find<LoginController>();
+    if (loginController.saveUser && SaveUserInfoController.userEmail?.isNotEmpty == true) {
+      _emailTEController.text = SaveUserInfoController.userEmail!;
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -81,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                 Image.asset(AssetsPath.loginGif, height: size.height * 0.25),
                 SizedBox(height: size.height * 0.02),
                 CustomTextFormFieldWidget(
-                  controller: _emailTEController,
+                  controller:   _emailTEController,
                   hintText: 'E-mail',
                   keyboardType: TextInputType.emailAddress,
                   validator: (String? email) {
@@ -121,30 +122,27 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // GetBuilder<LoginController>(
-                    //   builder: (loginController) {
-                    //     return Row(
-                    //       children: [
-                    //         Checkbox(
-                    //           value: loginController.saveUser,
-                    //           activeColor: AppColors.primaryColor,
-                    //           onChanged: (value) {
-                    //             loginController.toggleSaveUser(
-                    //               email: _emailTEController.text.trim(),
-                    //             );
-                    //             _emailTEController.text = loginController.email;
-                    //           },
-                    //         ),
-                    //         TextComponent(
-                    //           text: 'Save User',
-                    //           color: AppColors.primaryTextColor,
-                    //           fontFamily: regularFontFamily,
-                    //           fontSize: size.height * 0.016,
-                    //         ),
-                    //       ],
-                    //     );
-                    //   },
-                    // ),
+                    GetBuilder<LoginController>(
+                      builder: (loginController) {
+                        return Row(
+                          children: [
+                            Checkbox(
+                              value: loginController.saveUser,
+                              activeColor: AppColors.primaryColor,
+                              onChanged: (value) {
+                                loginController.toggleSaveUser(value: value ?? false);
+                              },
+                            ),
+                            TextComponent(
+                              text: 'Save Email',
+                              color: AppColors.primaryTextColor,
+                              fontFamily: regularFontFamily,
+                              fontSize: size.height * 0.016,
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                     Spacer(),
                     GestureDetector(
                       onTap: () {

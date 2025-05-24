@@ -77,7 +77,12 @@ class YearlyBarChartWidget extends StatelessWidget {
     });
 
 
-
+    final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+        enablePinching: true,
+        enablePanning: true,
+        zoomMode: ZoomMode.x,
+        enableDoubleTapZooming:true,
+        );
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -86,6 +91,7 @@ class YearlyBarChartWidget extends StatelessWidget {
           padding: EdgeInsets.all(size.height * k16TextSize),
           child: viewName == 'powerView' ? SfCartesianChart(
             margin: const EdgeInsets.fromLTRB(10, 10, 10, 15),
+            zoomPanBehavior: _zoomPanBehavior,
             trackballBehavior: TrackballBehavior(
               enable: true,
               tooltipAlignment: ChartAlignment.near,
