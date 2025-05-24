@@ -32,6 +32,11 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
   bool _isComeFromBackGround = false;
   bool _isStopApiCall = false;
 
+  @override
+  void onInit() {
+    WidgetsBinding.instance.addObserver(this);
+    super.onInit();
+  }
 
 
   @override
@@ -40,12 +45,11 @@ class ElectricityLongSLDLiveAllNodePowerController extends GetxController
         state == AppLifecycleState.hidden ||
         state == AppLifecycleState.inactive) {
       _isComeFromBackGround = true;
-      log("===> isComeFromBackGround true");
       _stopPeriodicApiCall();
     } else if (state == AppLifecycleState.resumed) {
       log("===> App resumed");
       if (!_isStopApiCall && _isComeFromBackGround) {
-        log("===> Resuming API calls...");
+
         startApiCallOnScreenChange();
         _isComeFromBackGround = false;
       }

@@ -69,6 +69,14 @@ class MainBusBarController extends GetxController with InternetConnectivityCheck
   //   super.onInit();
   // }
 
+  @override
+  void onInit() {
+    WidgetsBinding.instance.addObserver(this);
+    super.onInit();
+  }
+
+
+
   void enterGridScreenMethod(bool value){
     _isEnterGridScreen = value;
     update();

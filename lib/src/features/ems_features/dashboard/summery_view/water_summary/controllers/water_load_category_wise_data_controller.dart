@@ -45,6 +45,11 @@ class WaterLoadCategoryWiseDataController extends GetxController with InternetCo
   //     }
   //   });
   // }
+  @override
+  void onInit() {
+    WidgetsBinding.instance.addObserver(this);
+    super.onInit();
+  }
 
 
   @override

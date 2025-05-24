@@ -47,6 +47,11 @@ class WaterLongSLDLtProductionVsCapacityController extends GetxController with I
   //   });
   // }
 
+  @override
+  void onInit() {
+    WidgetsBinding.instance.addObserver(this);
+    super.onInit();
+  }
 
 
   @override

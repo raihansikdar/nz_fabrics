@@ -46,6 +46,11 @@ class WaterSourceCategoryWiseDataController extends GetxController with Internet
   //   });
   // }
 
+  @override
+  void onInit() {
+    WidgetsBinding.instance.addObserver(this);
+    super.onInit();
+  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {

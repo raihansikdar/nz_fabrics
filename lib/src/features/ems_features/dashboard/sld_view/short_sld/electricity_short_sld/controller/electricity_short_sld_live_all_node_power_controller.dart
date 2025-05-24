@@ -48,20 +48,24 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
   // }
 
 
+  @override
+  void onInit() {
+    WidgetsBinding.instance.addObserver(this);
+    super.onInit();
+  }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.paused || state == AppLifecycleState.hidden || state == AppLifecycleState.inactive) {
       _isComeFromBackGround  = true;
-      log("===> isComeFromBackGround true");
+      stopApiCallOnScreenChange();
       _stopPeriodicApiCallWhenBackGround();
       update();
-
     } else if (state == AppLifecycleState.resumed) {
-      log("===> App resumed");
+
       if (!_isStopApiCall && _isComeFromBackGround) {
-        log("===> Resuming API calls...");
+        fetchLiveAllNodePower();
         _startPeriodicApiCall();
         _isComeFromBackGround = false;
         _isStopApiCall = false;
@@ -69,6 +73,12 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
       }
 
     }
+  }
+
+  void _stopPeriodicApiCallWhenBackGround() {
+    _timer?.cancel();
+    _timer = null;
+    update();
   }
 
   void _startPeriodicApiCall() {
@@ -87,14 +97,6 @@ class ElectricityShortSLDLiveAllNodePowerController extends GetxController with 
     _timer = null;
     // update();
   }
-
-
-  void _stopPeriodicApiCallWhenBackGround() {
-    _timer?.cancel();
-    _timer = null;
-    update();
-  }
-
 
 
 

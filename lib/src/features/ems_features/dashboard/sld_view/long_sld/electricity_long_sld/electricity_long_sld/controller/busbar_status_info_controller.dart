@@ -30,22 +30,38 @@ class BusBarStatusInfoController extends GetxController with InternetConnectivit
   bool _isComeFromBackGround = false;
 
   @override
+  void onInit() {
+    WidgetsBinding.instance.addObserver(this);
+    super.onInit();
+  }
+
+  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused ||
-        state == AppLifecycleState.hidden ||
-        state == AppLifecycleState.inactive) {
-      _isComeFromBackGround = true;
-      log("===> isComeFromBackGround true");
-      _stopPeriodicApiCall();
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.hidden || state == AppLifecycleState.inactive) {
+      _isComeFromBackGround  = true;
+      stopApiCallOnScreenChange();
+      _stopPeriodicApiCallWhenBackGround();
+      update();
     } else if (state == AppLifecycleState.resumed) {
-      log("===> App resumed");
+
       if (!_isStopApiCall && _isComeFromBackGround) {
-        log("===> Resuming API calls...");
-        startApiCallOnScreenChange();
+        fetchBusBarStatusData();
+        _startPeriodicApiCall();
         _isComeFromBackGround = false;
+        _isStopApiCall = false;
+        update();
       }
+
     }
   }
+
+  void _stopPeriodicApiCallWhenBackGround() {
+    _timer?.cancel();
+    _timer = null;
+    update();
+  }
+
 
   void _startPeriodicApiCall() {
     _stopPeriodicApiCall();
