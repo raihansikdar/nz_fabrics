@@ -23,18 +23,42 @@ class RefreshTokenApiController extends GetxController with InternetConnectivity
 
 
 
+  // @override
+  // void onInit() {
+  //  _timer = Timer.periodic(const Duration(minutes: 4), (_){
+  //    getRefreshToken(refreshToken: AuthUtilityController.refreshToken ?? '');
+  //
+  //  });
+  //   super.onInit();
+  // }
+
   @override
   void onInit() {
-   _timer = Timer.periodic(const Duration(minutes: 4), (_){
-     getRefreshToken(refreshToken: AuthUtilityController.refreshToken ?? '');
-
-   });
+    AuthUtilityController.loadAuthTokens().then((_) {
+      if (AuthUtilityController.refreshToken != null && AuthUtilityController.refreshToken!.isNotEmpty) {
+        _timer = Timer.periodic(const Duration(minutes: 4), (_) {
+          getRefreshToken(refreshToken: AuthUtilityController.refreshToken!);
+        });
+      } else {
+        log('No refresh token available. Skipping token refresh.');
+      }
+    });
     super.onInit();
   }
 
 
 
   Future<bool>getRefreshToken({required String refreshToken}) async{
+
+    if (refreshToken.isEmpty) {
+      _isRefreshInProgress = false;
+      _errorMessage = 'No refresh token available';
+      log('Error: No refresh token available');
+      update();
+      AuthUtilityController.clearAuthTokens();
+      Get.offAllNamed('/login');
+      return false;
+    }
 
     _isRefreshInProgress = true;
     update();

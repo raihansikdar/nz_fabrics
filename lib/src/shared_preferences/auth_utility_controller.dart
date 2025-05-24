@@ -61,9 +61,21 @@ class AuthUtilityController{
     debugPrint("====>get Refresh Token: $_refreshToken");
   }
 
+  static Future<void> loadAuthTokens() async {
+    final prefs = await SharedPreferences.getInstance();
+    _accessToken = prefs.getString('access_token');
+    _refreshToken = prefs.getString('refresh_token');
+  }
 
 
 
+  static Future<void> clearAuthTokens() async {
+    _accessToken = null;
+    _refreshToken = null;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('access_token');
+    await prefs.remove('refresh_token');
+  }
 
   /*----------------> User Role <------------------*/
   static Future<void>setUserRole({required String? userRole}) async {
