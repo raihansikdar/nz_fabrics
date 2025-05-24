@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:math' as math;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,17 +35,14 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
   bool isLoading = true;
   int selectedButton = 1;
 
-  void updateSelectedButton({required int value}){
-  setState(() {
-    selectedButton = value;
-  });
+  void updateSelectedButton({required int value}) {
+    setState(() {
+      selectedButton = value;
+    });
   }
-
 
   final double imageWidth = 1970;
   final double imageHeight = 1220;
-
-
 
   double scale = 1.0;
   double rotation = 0.0;
@@ -53,9 +51,8 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
   final PhotoViewController _photoViewController = PhotoViewController();
   final String token = AuthUtilityController.accessToken ?? '';
 
-  // Track the actual display size
   Size viewportSize = Size.zero;
-  bool isAnimating = true; // Set to true to enable animation
+  bool isAnimating = true;
 
   @override
   void initState() {
@@ -66,7 +63,6 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
       duration: const Duration(seconds: 6),
     );
 
-    // Start the animation
     if (isAnimating) {
       _controller.repeat(reverse: false);
     }
@@ -74,8 +70,8 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
     _photoViewController.outputStateStream.listen((state) {
       setState(() {
         scale = state.scale ?? 1.0;
-        position = state.position ;
-        rotation = state.rotation ;
+        position = state.position;
+        rotation = state.rotation;
       });
     });
   }
@@ -89,23 +85,25 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
 
   Future<void> fetchLayoutData() async {
     try {
+      setState(() => isLoading = true);
       var response = await http.get(
-          Uri.parse(Urls.getLayoutNodePositionUrl),
-          headers: {"Authorization": token}
+        Uri.parse(Urls.getLayoutNodePositionUrl),
+        headers: {"Authorization": token},
       );
 
       if (response.statusCode == 200) {
         List<dynamic> nodes = json.decode(response.body);
-        layoutNodes = nodes.where((node) => node["picture_name"] == widget.layoutName).toList();
+        layoutNodes = nodes
+            .where((node) => node["picture_name"] == widget.layoutName)
+            .toList();
         layoutLines = layoutNodes.expand((node) => node["lines"] ?? []).toList();
-
-        // Fetch live data for each node
         await fetchLiveDataForNodes();
+      } else {
+        log("Error fetching layout data: ${response.statusCode}");
       }
-
-      setState(() => isLoading = false);
     } catch (e) {
       log("Error fetching layout data: $e");
+    } finally {
       setState(() => isLoading = false);
     }
   }
@@ -113,12 +111,10 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
   Future<void> fetchLiveDataForNodes() async {
     try {
       List<Future> futures = [];
-
       for (var node in layoutNodes) {
         String nodeName = node["node_name"];
         futures.add(fetchNodeLiveData(nodeName));
       }
-
       await Future.wait(futures);
     } catch (e) {
       log("Error fetching live data for nodes: $e");
@@ -129,9 +125,8 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
     try {
       var encodedNodeName = Uri.encodeComponent(nodeName);
       var response = await http.get(
-        //   Uri.parse("http://175.29.189.138/react/get-live-data/$encodedNodeName/"),
-          Uri.parse(Urls.getLiveDataUrl(encodedNodeName)),
-          headers: {"Authorization": token}
+        Uri.parse(Urls.imagegetdata(encodedNodeName)),
+        headers: {"Authorization": token},
       );
 
       if (response.statusCode == 200) {
@@ -145,133 +140,190 @@ class _LayoutImageDetailsState extends State<LayoutImageDetails> with SingleTick
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     viewportSize = screenSize;
 
+    // Filter nodes based on selectedButton and resource_type
+    String resourceType;
+    switch (selectedButton) {
+      case 2:
+        resourceType = "Water";
+        break;
+      case 3:
+        resourceType = "Steam";
+        break;
+      case 1:
+      default:
+        resourceType = "Electricity";
+    }
+
+    final filteredNodes = layoutNodes
+        .where((node) => node["resource_type"] == resourceType)
+        .toList();
+
+    // Filter lines to only include those connected to filtered nodes
+    final filteredNodeIds = filteredNodes.map((node) => node["id"]).toSet();
+    final filteredLines = layoutLines
+        .where((line) => filteredNodeIds.contains(line["startItemId"]))
+        .toList();
+
     return Scaffold(
-      appBar: CustomLayoutAppBar(layoutName: widget.layoutName,selectedButton: selectedButton, backPreviousScreen: true),
+      appBar: CustomLayoutAppBar(
+        layoutName: widget.layoutName,
+        selectedButton: selectedButton,
+        backPreviousScreen: true,
+      ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          double scaleX = constraints.maxWidth / 1970;
-          double scaleY = constraints.maxHeight / 1220;
+          double scaleX = constraints.maxWidth / imageWidth;
+          double scaleY = constraints.maxHeight / imageHeight;
           double scale = math.min(scaleX, scaleY);
 
-          if (selectedButton == 2) {
-            return const Center(child: Text("Water"));
-          }else if(selectedButton == 3){
-            return const Center(child: Text("Steam"));
-          }
-          return PhotoViewGallery.builder(
-            itemCount: 1,
-            builder: (context, index) {
-              return PhotoViewGalleryPageOptions.customChild(
-                childSize: Size(1970 * scale, 1220 * scale),
-                minScale: PhotoViewComputedScale.contained * 0.2,
-                maxScale: PhotoViewComputedScale.contained * 4.0,
-                initialScale: PhotoViewComputedScale.contained,
-                basePosition: Alignment.center,
-                child: FittedBox(
-                  fit: BoxFit.contain,
-                  child: SizedBox(
-                    width: 1970,
-                    height: 1220,
-                    child: Stack(
-                      children: [
-
-                        CachedNetworkImage(
-                          imageUrl: widget.layoutImageUrl,
-                          width: 1970,
-                          height: 1220,
-                          fit: BoxFit.contain,
-                          placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.red),
+          return Stack(
+            children: [
+              PhotoViewGallery.builder(
+                itemCount: 1,
+                builder: (context, index) {
+                  return PhotoViewGalleryPageOptions.customChild(
+                    childSize: Size(imageWidth * scale, imageHeight * scale),
+                    minScale: PhotoViewComputedScale.contained * 0.2,
+                    maxScale: PhotoViewComputedScale.contained * 4.0,
+                    initialScale: PhotoViewComputedScale.contained,
+                    basePosition: Alignment.center,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: SizedBox(
+                        width: imageWidth,
+                        height: imageHeight,
+                        child: Stack(
+                          children: [
+                            // Display the same image for all resource types
+                            CachedNetworkImage(
+                              imageUrl: widget.layoutImageUrl,
+                              width: imageWidth,
+                              height: imageHeight,
+                              fit: BoxFit.contain,
+                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => const Icon(Icons.error, color: Colors.red),
+                            ),
+                            // Overlay nodes
+                            ...filteredNodes.map((node) {
+                              return NodeWidget(
+                                node: node,
+                                imageWidth: imageWidth,
+                                imageHeight: imageHeight,
+                                liveData: nodeLiveData[node["node_name"]],
+                                onTap: () {
+                                  Get.to(
+                                        () => PowerAndEnergyElementDetailsScreen(
+                                      elementName: node["node_name"] ?? '',
+                                      gaugeValue: nodeLiveData[node["node_name"]]["power"] ?? 0.00,
+                                      gaugeUnit: resourceType == "Water" ? "m³/h" : resourceType == "Steam" ? "kg/h" : "kW",
+                                      elementCategory: resourceType,
+                                      solarCategory: "Load",
+                                    ),
+                                    transition: Transition.rightToLeft,
+                                    duration: const Duration(seconds: 1),
+                                  );
+                                },
+                              );
+                            }),
+                            // Lines
+                            CustomPaint(
+                              painter: LinePainter(
+                                layoutLines: filteredLines,
+                                animation: _controller,
+                                nodeLiveData: nodeLiveData,
+                                layoutNodes: filteredNodes,
+                              ),
+                            ),
+                          ],
                         ),
-
-                        // Overlay nodes
-                        ...layoutNodes.map((node) {
-                          return NodeWidget(
-                            node: node,
-                            imageWidth: 1970,
-                            imageHeight: 1220,
-                            liveData: nodeLiveData[node["node_name"]],
-                            onTap: () {
-
-                              Get.to(()=>  PowerAndEnergyElementDetailsScreen(
-                                elementName: node["node_name"] ?? '',
-                                gaugeValue: nodeLiveData[node["node_name"]]["power"] ?? 0.00,
-                                gaugeUnit: 'kW',
-                                elementCategory: 'Power',
-                                solarCategory: "Load",
-                              ),transition: Transition.rightToLeft,duration: const Duration(seconds: 1) );
-                            },
-                          );
-                        }),
-
-                        // Lines
-                        CustomPaint(
-                          painter: LinePainter(
-                            layoutLines: layoutLines,
-                            animation: _controller,
-                            nodeLiveData: nodeLiveData,
-                            layoutNodes: layoutNodes,
-                          ),
-                        ),
-
-
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              ) ;
-            },
-            scrollDirection: Axis.horizontal,
-            backgroundDecoration: const BoxDecoration(color: Colors.white),
-            gaplessPlayback: true,
+                  );
+                },
+                scrollDirection: Axis.horizontal,
+                backgroundDecoration: const BoxDecoration(color: Colors.white),
+                gaplessPlayback: true,
+              ),
+              // Show loading indicator if data is being fetched
+              if (isLoading)
+                const Center(child: CircularProgressIndicator()),
+            ],
           );
         },
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            heroTag: 'steam_button',
-            shape: const CircleBorder(),
-            backgroundColor: AppColors.whiteTextColor,
-            onPressed: () {
-              updateSelectedButton(value: 3);
-            },
-            child: Icon(Icons.stream),
-          ),
-          const SizedBox(height: 10),
-          FloatingActionButton(
-            heroTag: 'water_button',
-            shape: const CircleBorder(),
-            backgroundColor: AppColors.whiteTextColor,
-            onPressed: () {
-              updateSelectedButton(value: 2);
-            },
-            child: Icon(Icons.water),
-          ),
-          const SizedBox(height: 10),
-          FloatingActionButton(
+          FloatingActionButton.extended(
             heroTag: 'electric_button',
-            shape: const CircleBorder(),
-            backgroundColor: AppColors.whiteTextColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              side: selectedButton == 1
+                  ? BorderSide(color: Colors.purpleAccent, width: 2)
+                  : BorderSide.none,
+            ),
+            backgroundColor: selectedButton == 1 ? Colors.purpleAccent : AppColors.whiteTextColor,
+            elevation: selectedButton == 1 ? 8.0 : 2.0,
             onPressed: () {
               updateSelectedButton(value: 1);
             },
-            child: Icon(Icons.electric_bolt),
+            icon: const Icon(Icons.electric_bolt, color: Colors.black),
+            label: Text(
+              'Electricity',
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+          const SizedBox(height: 5),
+          FloatingActionButton.extended(
+            heroTag: 'water_button',
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              side: selectedButton == 2
+                  ? BorderSide(color: Colors.orange, width: 2)
+                  : BorderSide.none,
+            ),
+            backgroundColor: selectedButton == 2 ? Colors.orange : AppColors.whiteTextColor,
+            elevation: selectedButton == 2 ? 8.0 : 2.0,
+            onPressed: () {
+              updateSelectedButton(value: 2);
+            },
+            icon: const Icon(Icons.water, color: Colors.black),
+            label: Text(
+              'Water',
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+          const SizedBox(height: 5),
+          FloatingActionButton.extended(
+            heroTag: 'steam_button',
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              side: selectedButton == 3
+                  ? BorderSide(color: Colors.redAccent, width: 2)
+                  : BorderSide.none,
+            ),
+            backgroundColor: selectedButton == 3 ? Colors.redAccent : AppColors.whiteTextColor,
+            elevation: selectedButton == 3 ? 8.0 : 2.0,
+            onPressed: () {
+              updateSelectedButton(value: 3);
+            },
+            icon: const Icon(Icons.stream, color: Colors.black),
+            label: Text(
+              'Steam',
+              style: const TextStyle(color: Colors.black),
+            ),
           ),
         ],
       ),
-
     );
   }
-
 }
+
 
 class NodeWidget extends StatelessWidget {
   final dynamic node;
@@ -294,18 +346,21 @@ class NodeWidget extends StatelessWidget {
     final nodeX = node["position_x"].toDouble() + 17;
     final nodeY = node["position_y"].toDouble() + 60;
     final nodeWidth = node["width"].toDouble();
-    //final nodeHeight = node["height"].toDouble();
 
-    // Get color from live data if available
     Color? nodeColor;
     String powerValue = "0.0";
+    String unit = "kW";
     bool sensorStatus = false;
 
     if (liveData != null) {
       try {
-        // Use the color of live data
-        nodeColor = _hexToColor(liveData["color"]);
-        powerValue = "${liveData["power"].toStringAsFixed(2)} kW";
+        // Safely handle color
+        nodeColor = liveData["color"] != null ? _hexToColor(liveData["color"]) : Colors.green;
+        // Safely handle power
+        powerValue = liveData["power"] != null ? "${liveData["power"].toStringAsFixed(1)}" : "0.0";
+        // Determine unit based on resource_type
+        unit = node["resource_type"] == "Water" ? "m³/h" : node["resource_type"] == "Steam" ? "kg/h" : "kW";
+        // Safely handle sensor_status
         sensorStatus = liveData["sensor_status"] ?? false;
       } catch (e) {
         log("Error parsing live data for node ${node["node_name"]}: $e");
@@ -322,33 +377,33 @@ class NodeWidget extends StatelessWidget {
           width: nodeWidth,
           height: 27,
           decoration: BoxDecoration(
-            color: nodeColor,
+            color: nodeColor ?? Colors.green, // Fallback to green if nodeColor is null
             borderRadius: BorderRadius.circular(5),
             border: Border.all(color: Colors.white, width: 1),
             boxShadow: [
               BoxShadow(
-                color: sensorStatus ? Colors.greenAccent.withOpacity(0.3) : Colors.redAccent.withOpacity(0.3),
+                color: sensorStatus
+                    ? Colors.greenAccent.withOpacity(0.3)
+                    : Colors.redAccent.withOpacity(0.3),
                 spreadRadius: 1,
                 blurRadius: 3,
                 offset: const Offset(0, 1),
               ),
             ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (liveData != null)
-                Text(
-                  "${node["node_name"]}: $powerValue",
-                  // textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 10,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-
-            ],
+          child: Center(
+            child: liveData != null
+                ? AutoSizeText(
+              "${node["node_name"]}: $powerValue $unit",
+              maxLines: 1,
+              minFontSize: 6,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
+            )
+                : const SizedBox.shrink(),
           ),
         ),
       ),
@@ -359,12 +414,10 @@ class NodeWidget extends StatelessWidget {
     try {
       return Color(int.parse('0xFF${hex.replaceAll('#', '')}'));
     } catch (e) {
-      return Colors.green;
+      return Colors.green; // Default color
     }
   }
 }
-
-
 class LinePainter extends CustomPainter {
   final List<dynamic> layoutLines;
   final Animation<double> animation;
@@ -587,13 +640,6 @@ class _CustomLayoutAppBarState extends State<CustomLayoutAppBar> {
 
       automaticallyImplyLeading: widget.backPreviousScreen,
       titleSpacing: 0,
-      // title: Text(
-      //   widget.layoutName,
-      //   style:  TextStyle(
-      //     color: AppColors.primaryTextColor,
-      //     fontWeight: FontWeight.bold,
-      //   ),
-      // ),
       title: TextComponent(text: widget.layoutName, fontSize: 22),
       centerTitle: true,
       bottom: PreferredSize(
@@ -603,9 +649,9 @@ class _CustomLayoutAppBarState extends State<CustomLayoutAppBar> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
+
               if(widget.selectedButton == 1)
-                 SingleChildScrollView(
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: summaryList.map((summary) =>
@@ -645,9 +691,9 @@ class _CustomLayoutAppBarState extends State<CustomLayoutAppBar> {
                     ),
                   )
 
-              
-           
-              
+
+
+
             ],
           ),
         ),

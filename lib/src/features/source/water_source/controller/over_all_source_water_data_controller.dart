@@ -78,23 +78,23 @@ class OverAllWaterSourceDataController extends GetxController with InternetConne
     //   DateFormat("dd-MM-yyyy").parse(fromDate).toUtc(),
     // );
 
-     formattedFromDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(
+    formattedFromDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(
       DateFormat("dd-MM-yyyy").parse(fromDate).toLocal(),
     );
 
     final parsedToDate = DateFormat("dd-MM-yyyy").parse(toDate);
     final adjustedToDate = parsedToDate.add(const Duration(hours: 23, minutes: 59, seconds: 59));
-     formattedToDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(adjustedToDate.toUtc());
- update();
+    formattedToDate = DateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(adjustedToDate.toUtc());
+    update();
 
     Map<String, String> requestBody = {
       "start": formattedFromDate,
       "end": formattedToDate,
     };
 
-  //  log("Request Custom Body Date: $requestBody");
-  //  log("formattedFromDate: $formattedFromDate");
-   // log("formattedToDate: $formattedToDate");
+    //  log("Request Custom Body Date: $requestBody");
+    //  log("formattedFromDate: $formattedFromDate");
+    // log("formattedToDate: $formattedToDate");
 
     try {
       await internetConnectivityCheck();
@@ -180,11 +180,9 @@ class OverAllWaterSourceDataController extends GetxController with InternetConne
 
         // Define column widths for better readability
         sheet.getRangeByIndex(1, 1, 1, 1).columnWidth = 15; // Date
-        sheet.getRangeByIndex(1, 2, 1, 2).columnWidth = 20; // Plant Name
-        sheet.getRangeByIndex(1, 3, 1, 3).columnWidth = 15; // AC Power / Cumulative PR
-        sheet.getRangeByIndex(1, 4, 1, 4).columnWidth = 15; // PR / POA Day Avg
-        sheet.getRangeByIndex(1, 5, 1, 5).columnWidth = 15; // Irradiation East
-        sheet.getRangeByIndex(1, 6, 1, 6).columnWidth = 15; // Irradiation West
+        sheet.getRangeByIndex(1, 2, 1, 2).columnWidth = 20; // Node Name
+        sheet.getRangeByIndex(1, 3, 1, 3).columnWidth = 15; // Instant Flow / Volume
+        sheet.getRangeByIndex(1, 4, 1, 4).columnWidth = 15; // Cost
 
         // Add header row with styling
         final Style headerStyle = workbook.styles.add('HeaderStyle');
@@ -215,22 +213,25 @@ class OverAllWaterSourceDataController extends GetxController with InternetConne
           sheet.getRangeByIndex(1, i + 1).cellStyle = headerStyle;
         }
 
-        // Add data rows based on graph type
+        // Sort and add data rows based on graph type
         if (_graphType == "Line-Chart" && lineChartModel.data?.isNotEmpty == true) {
-          for (int i = 0; i < lineChartModel.data!.length; i++) {
+          // Sort data by timedate
+          final sortedData = lineChartModel.data!..sort((a, b) => DateTime.parse(a.timedate!).compareTo(DateTime.parse(b.timedate!)));
+          for (int i = 0; i < sortedData.length; i++) {
             final rowIndex = i + 2; // Start from row 2 (after header)
-            final data = lineChartModel.data![i];
+            final data = sortedData[i];
             String formattedDate = DateFormat('dd/MMM/yyyy HH:mm:ss').format(DateTime.parse(data.timedate!));
             sheet.getRangeByIndex(rowIndex, 1).setText(formattedDate);
             sheet.getRangeByIndex(rowIndex, 2).setText(data.node ?? 'N/A');
             sheet.getRangeByIndex(rowIndex, 3).setNumber(data.instantFlow?.toDouble() ?? 0);
             sheet.getRangeByIndex(rowIndex, 4).setNumber(data.cost?.toDouble() ?? 0);
-
           }
         } else if (_graphType == "Monthly-Bar-Chart" && monthlyBarchartModel.data?.isNotEmpty == true) {
-          for (int i = 0; i < monthlyBarchartModel.data!.length; i++) {
+          // Sort data by date
+          final sortedData = monthlyBarchartModel.data!..sort((a, b) => DateTime.parse(a.date!).compareTo(DateTime.parse(b.date!)));
+          for (int i = 0; i < sortedData.length; i++) {
             final rowIndex = i + 2; // Start from row 2 (after header)
-            final data = monthlyBarchartModel.data![i];
+            final data = sortedData[i];
             String formattedDate = DateFormat('dd/MMM/yyyy').format(DateTime.parse(data.date!));
             sheet.getRangeByIndex(rowIndex, 1).setText(formattedDate);
             sheet.getRangeByIndex(rowIndex, 2).setText(data.node ?? 'N/A');
@@ -238,9 +239,11 @@ class OverAllWaterSourceDataController extends GetxController with InternetConne
             sheet.getRangeByIndex(rowIndex, 4).setNumber(data.cost?.toDouble() ?? 0);
           }
         } else if (_graphType == "Yearly-Bar-Chart" && yearlyBarChartModel.data?.isNotEmpty == true) {
-          for (int i = 0; i < yearlyBarChartModel.data!.length; i++) {
+          // Sort data by date
+          final sortedData = yearlyBarChartModel.data!..sort((a, b) => DateTime.parse(a.date!).compareTo(DateTime.parse(b.date!)));
+          for (int i = 0; i < sortedData.length; i++) {
             final rowIndex = i + 2; // Start from row 2 (after header)
-            final data = yearlyBarChartModel.data![i];
+            final data = sortedData[i];
             String formattedDate = DateFormat('dd/MMM/yyyy').format(DateTime.parse(data.date!));
             sheet.getRangeByIndex(rowIndex, 1).setText(formattedDate);
             sheet.getRangeByIndex(rowIndex, 2).setText(data.node ?? 'N/A');
@@ -279,12 +282,12 @@ class OverAllWaterSourceDataController extends GetxController with InternetConne
               ..writeAsBytesSync(bytes);
 
             Get.snackbar(
-                "Success",
-                "File downloaded successfully",
-                snackPosition: SnackPosition.BOTTOM,
-                backgroundColor: AppColors.greenColor,
-                colorText: Colors.white,
-                margin: const EdgeInsets.all(16)
+              "Success",
+              "File downloaded successfully",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: AppColors.greenColor,
+              colorText: Colors.white,
+              margin: const EdgeInsets.all(16),
             );
 
             FlutterSmartDownloadDialog.show(
@@ -322,10 +325,6 @@ class OverAllWaterSourceDataController extends GetxController with InternetConne
       openAppSettings();
     }
   }
-
-
-
-
 
 
 

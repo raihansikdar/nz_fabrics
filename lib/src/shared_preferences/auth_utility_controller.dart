@@ -11,6 +11,32 @@ class AuthUtilityController{
   static String? get refreshToken => _refreshToken;
   static String? get userRole => _userRole;
 
+  static String? _userName;
+  static String? get userName => _userName;
+
+  /*----------------> Access Token <------------------*/
+  static Future<void> setUserName({required String email}) async {
+    // Save email to SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_email', email);
+  }
+
+  static Future<String?> getUserName() {
+    // Retrieve email from SharedPreferences
+    return SharedPreferences.getInstance().then((prefs) => prefs.getString('user_email'));
+  }
+
+  static Future<void> clearUserName() async {
+    // Clear saved email
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('user_email');
+  }
+
+
+
+
+
+
   static Rxn<String> accessTokenForApiCall = Rxn<String>();
 
 /*----------------> Access Token <------------------*/

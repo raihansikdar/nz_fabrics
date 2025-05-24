@@ -210,7 +210,7 @@ class _WaterSourceScreenState extends State<WaterSourceScreen> {
                                   ),
                                   child: Center(
                                     child: TextComponent(
-                                      text: "Energy Chart",
+                                      text: "Consumption Chart",
                                       color: AppColors.whiteTextColor,
                                       fontSize: size.height * k18TextSize,
                                     ),

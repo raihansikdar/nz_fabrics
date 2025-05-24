@@ -202,8 +202,7 @@ class _PowerViewPowerAndEnergyElementDetailsScreenState extends State<PowerViewP
                                         builder: (thisYearController) {
                                           return GetBuilder<TodayRuntimeDataController>(
                                               builder: (controller) {
-        
-        
+
                                                 return RunTimeInformationWidget(
                                                   viewName: "powerView",
                                                   elementCategory: "Energy",

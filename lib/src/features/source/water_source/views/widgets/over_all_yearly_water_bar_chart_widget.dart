@@ -197,13 +197,13 @@ class OverAllWaterYearlyBarChartWidget extends StatelessWidget {
                     maximum: maxY,
                   ),
                   series: <CartesianSeries>[
-                    ColumnSeries<ChartData, String>(
-                      dataSource: totalSourceData,
-                      xValueMapper: (ChartData data, _) => DateFormat('MMM/yy').format(data.x), // Adjusted for yearly format
-                      yValueMapper: (ChartData data, _) => data.y,
-                      name: 'Total Source (m³)',
-                      color: Colors.deepPurple,
-                    ),
+                    // ColumnSeries<ChartData, String>(
+                    //   dataSource: totalSourceData,
+                    //   xValueMapper: (ChartData data, _) => DateFormat('MMM/yy').format(data.x), // Adjusted for yearly format
+                    //   yValueMapper: (ChartData data, _) => data.y,
+                    //   name: 'Total Source (m³)',
+                    //   color: Colors.deepPurple,
+                    // ),
                     ColumnSeries<ChartData, String>(
                       dataSource: subMersibleData,
                       xValueMapper: (ChartData data, _) => DateFormat('MMM/yy').format(data.x),

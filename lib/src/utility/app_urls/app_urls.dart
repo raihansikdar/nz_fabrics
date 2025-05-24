@@ -202,8 +202,9 @@ class Urls{
  /*----------------- Plant Summary Data --------------------*/
  static String getLayoutImageUrl = "$_baseUrl/get-images/";
  static String getLayoutSummaryDetailsUrl(String layoutName) => "$_baseUrl/api/layout-summary-detailed/$layoutName/";
- static String getLayoutNodePositionUrl = "$_baseUrl/api/layout-node-positions/";
-
+ //static String getLayoutNodePositionUrl = "$_baseUrl/api/layout-node-positions/";
+ static String imagegetdata(String sourceName) => "$_baseUrl/get-live-data/$sourceName/";
+ static String getLayoutNodePositionUrl = "$_baseUrl/api/layout-node-positions/?page_type=pl";
 
  /*----------------- get-machine-max-power --------------------*/
  static String getMachineMaxPowerUrl(String nodeName) => "$_baseUrl/api/get-machine-max-power/$nodeName/";
@@ -229,5 +230,7 @@ class Urls{
  //static String logoutUrl = "$_baseUrl/logout/";
  static String logoutUrl = "$_baseUrl/api-logout-V2/";
  static String postDgrFilterPlantDataUrl = "$_baseUrl/filter-plant-dynamic-data/";
+
+
 
 }

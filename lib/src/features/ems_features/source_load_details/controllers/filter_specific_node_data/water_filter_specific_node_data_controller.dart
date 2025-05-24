@@ -261,7 +261,7 @@ class WaterFilterSpecificNodeDataController extends GetxController with Internet
         headerStyle.bold = true;
         headerStyle.hAlign = HAlignType.center;
         headerStyle.backColor = '#D9E1F2';
-        final List<String> headers = ['Date', 'Energy', 'Cost'];
+        final List<String> headers = ['Date', 'Volume', 'Cost'];
         for (int i = 0; i < headers.length; i++) {
           sheet.getRangeByIndex(1, i + 1).setText(headers[i]);
           sheet.getRangeByIndex(1, i + 1).cellStyle = headerStyle;
